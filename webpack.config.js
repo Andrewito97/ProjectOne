@@ -1,17 +1,16 @@
 const path = require('path')
 const nodeExternals = require('webpack-node-externals');
 
-const config = {
+const serverConfig = {
     mode: 'development',
     target: 'node',
     externals: [ nodeExternals() ],
     entry: {
-        'generated.server': './server/server.js',
-        'generated.client': './client/main.js'
+        server: './server/server.js',
     },
     output: {
         path: path.resolve(__dirname, 'build'),
-        filename: '[name].js',
+        filename: 'generated.server.js',
         publicPath: 'build/'
     },
     module: {
@@ -24,7 +23,22 @@ const config = {
                     presets: [ '@babel/preset-env' ]
                 }
             }
-        },{
+        }]
+    }
+}
+
+const clientConfig = {
+    mode: 'development',
+    entry: {
+        client: './client/main.js'
+    },
+    output: {
+        path: path.resolve(__dirname, 'build'),
+        filename: 'generated.client.js',
+        publicPath: 'build/'
+    },
+    module: {
+        rules: [{
             test: /\.jsx$/,
             exclude: /node_modules/,
             use: {
@@ -37,4 +51,4 @@ const config = {
     }
 }
 
-module.exports = config
+module.exports = [ clientConfig, serverConfig ]

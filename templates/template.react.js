@@ -12,7 +12,8 @@ function template() {
            </style>
         </head>
         <body style="margin: 0">
-           <div id="root">Hello!</div>
+           <div id="root"><h1>Hello Andrew!!!</h1></div>
+           <script type="text/javascript" src="/build/generated.client.js"></script>
         </body>
       </html>`
     )
