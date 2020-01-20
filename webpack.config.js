@@ -1,5 +1,5 @@
 const path = require('path')
-const nodeExternals = require('webpack-node-externals');
+const nodeExternals = require('webpack-node-externals')
 
 const serverConfig = {
     mode: 'development',
@@ -39,7 +39,7 @@ const clientConfig = {
     },
     module: {
         rules: [{
-            test: /\.jsx$/,
+            test: /\.jsx?$/,
             exclude: /node_modules/,
             use: {
                 loader: 'babel-loader',

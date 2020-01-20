@@ -7,8 +7,8 @@ import postApi from './routes/post.routes'
 
 
 const app = express()
-
-app.use('/build', express.static(path.join(__dirname, 'build')))
+const CURRENT_WORKING_DIR = process.cwd()
+app.use('/build', express.static(path.join(CURRENT_WORKING_DIR, 'build')))
 
 app.use('/', userApi)
 app.use('/', postApi)
