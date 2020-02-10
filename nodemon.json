@@ -1,4 +1,0 @@
-{
-    "watch": [ "server/", "client/" ],
-    "exec": "webpack && node build/generated.server.js"
-}

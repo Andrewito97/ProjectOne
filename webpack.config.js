@@ -30,7 +30,7 @@ const serverConfig = {
 const clientConfig = {
     mode: 'development',
     entry: {
-        client: './client/main.js'
+        client: './client/App.js'
     },
     output: {
         path: path.resolve(__dirname, 'build'),
