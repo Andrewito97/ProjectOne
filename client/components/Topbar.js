@@ -1,30 +1,43 @@
 import React from 'react'
 import { Link, withRouter } from 'react-router-dom'
 import { AppBar, Toolbar, Button } from '@material-ui/core'
+import Profile from './Profile'
+import Searchbar from './Searchbar'
 
 const styles = {
+    topbar: {
+        backgroundColor: '#38C18A',
+    },
     newsFeedTab: {
-        marginLeft: 150
+        marginLeft: '12%',
+        minWidth: 120
     },
     musicTab: {
-        marginLeft: 50
+        marginLeft: '4%',
     },
     moviesTab: {
-        marginLeft: 50
-    }
+        marginLeft: '4%',
+    },
+    activeTab: {
+        color: 'white',
+        textShadow: '0.5px 1px white'
+    },
+    inactiveTab: {
+        color: '#D3D3D3'
+    },
 }
 
 function isActive(history, path) {
     if(history.location.pathname === path) {
-        return {color: 'white'}
+        return styles.activeTab
     } else {
-        return {color: '#A4B5A3'}
+        return styles.inactiveTab
     }
-};
+}
 
 const Topbar = withRouter( ({history}) => (
-        <AppBar position='static'>
-            <Toolbar>
+        <AppBar position='sticky'>
+            <Toolbar style={styles.topbar}>
                 <Button style={styles.newsFeedTab}>
                     <Link to='/' style={isActive(history, '/')}>News Feed</Link>
                 </Button>
@@ -33,7 +46,9 @@ const Topbar = withRouter( ({history}) => (
                 </Button>
                 <Button style={styles.moviesTab}> 
                     <Link to='/movies' style={isActive(history, '/movies')}>Movies</Link>
-                </Button>                       
+                </Button>   
+                <Searchbar/>
+                <Profile/>
             </Toolbar>
         </AppBar>
     

@@ -10,47 +10,43 @@ import RightSidebar from './components/RightSidebar'
 const styles = {
     container: {
         display: 'flex', 
-        marginTop: 30, 
-        marginLeft: 150, 
-        marginRight: 150
+        marginTop: '2.5%', 
+        marginLeft: '12%', 
+        marginRight: '12%'
     },
     list: {
-        flexGrow: 2, 
+        width: '60%', 
         backgroundColor: '#F9F9F9', 
-        margin: 40, 
-        padding: 40
+        margin: '3%', 
+        padding: '3%'
     },
     aside: {
-        flexGrow: 1, 
+        width: '20%', 
         backgroundColor: '#F9F9F9', 
-        margin: 40, 
+        margin: '3%', 
         minHeight: 600, 
-        padding: 40, 
+        minWidth: 180,
+        padding: '3%', 
         maxWidth: '20%'
     }
 }
 
-class App extends React.Component {
-    render() {
-        return (
-            <BrowserRouter>
-                <Topbar/>
-                <div style={styles.container}>
-                    <div style={styles.list}>
-                        <Switch >    
-                            <Route exact path='/' component={NewsFeed} />
-                            <Route path='/music' component={MusicList} />  
-                            <Route path='/movies' component={MoviesList} />  
-                        </Switch>
-                    </div>
-                    <div style={styles.aside}>
-                        <RightSidebar/>
-                    </div>
-
-                </div>
-            </BrowserRouter>
-        )
-    }
-}
+const App = () => (
+    <BrowserRouter>
+        <Topbar/>
+        <div style={styles.container}>
+            <div style={styles.list}>
+                <Switch >    
+                    <Route exact path='/' component={NewsFeed} />
+                    <Route path='/music' component={MusicList} />  
+                    <Route path='/movies' component={MoviesList} />  
+                </Switch>
+            </div>
+            <div style={styles.aside}>
+                <RightSidebar/>
+            </div>
+        </div>
+    </BrowserRouter>
+)
 
 ReactDOM.render(<App/>, document.getElementById('root'))

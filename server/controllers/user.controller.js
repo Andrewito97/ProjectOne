@@ -1,7 +1,11 @@
-const userController = {
-    showHi(request, response) {
-        response.status(200).send('Heey bitch!!!...')
-    }
-}
+import User from '../models/user.model'
 
-export default userController
+// const userController = {
+//     create(request, response) {
+//         const user = new User(req.body)
+
+//         response.status(200).send('Heey bitch!!!...')
+//     }
+// }
+
+// export default userController
