@@ -3,6 +3,6 @@ import userController from '../controllers/user.controller'
 
 const userApi = express.Router()
 
-// userApi.route('/myapi/users').get(userController.showHi)
+userApi.route('/myapi/signup').post(userController.create)
 
 export default userApi

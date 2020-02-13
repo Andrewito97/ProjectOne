@@ -6,6 +6,8 @@ import MusicList from './components/MusicList'
 import MoviesList from './components/MoviesList'
 import NewsFeed from './components/NewsFeed'
 import RightSidebar from './components/RightSidebar'
+import SignUpForm from './components/SignUpForm'
+import LoginForm from './components/LoginForm'
 
 const styles = {
     container: {
@@ -40,6 +42,8 @@ const App = () => (
                     <Route exact path='/' component={NewsFeed} />
                     <Route path='/music' component={MusicList} />  
                     <Route path='/movies' component={MoviesList} />  
+                    <Route path='/signup' component={SignUpForm} />
+                    <Route path='/login' component={LoginForm} />
                 </Switch>
             </div>
             <div style={styles.aside}>

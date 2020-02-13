@@ -34,7 +34,11 @@ app.get('*', (request, response) => {
     response.send( template() )
 })
 
-mongoose.connect(mongoUri, {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(mongoUri, {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true, 
+    useCreateIndex: true
+})
 mongoose.connection.on('error', () => {
     throw new Error('Unable to connect to database !')
 })
@@ -42,6 +46,16 @@ mongoose.connection.once('open', () => {
     console.log('Successfully connected to database !')
 })
 
-app.listen(port, function() {
+// Catch unauthorised errors
+app.use((err, req, res, next) => {
+    if (err.name === 'UnauthorizedError') {
+      res.status(401).json({"error" : err.name + ": " + err.message})
+    }
+  })
+
+app.listen(port, function(error) {
+    if(error) {
+        console.log(error)
+    }
     console.log(`Server is running on port ${port} in ${node_env} mode...`)
 })
