@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
         required: [true, 'Name is required!'],
         validate: {
             validator: function(value) {
-                if(value.length < 2) {
+                if(value.length < 3) {
                     this.invalidate('name', 'Name is too short!')
                 }
                 if(value.length > 20) {
@@ -17,7 +17,7 @@ const UserSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        unique: [true, 'This email is alreay exists'],
+        unique: true,
         required: [true, 'Email is required!'],
         match: [/.+\@.+\..+/, 'Please fill a valid email address']
     },

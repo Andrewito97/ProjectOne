@@ -46,16 +46,6 @@ mongoose.connection.once('open', () => {
     console.log('Successfully connected to database !')
 })
 
-// Catch unauthorised errors
-app.use((err, req, res, next) => {
-    if (err.name === 'UnauthorizedError') {
-      res.status(401).json({"error" : err.name + ": " + err.message})
-    }
-  })
-
-app.listen(port, function(error) {
-    if(error) {
-        console.log(error)
-    }
+app.listen(port, () => {
     console.log(`Server is running on port ${port} in ${node_env} mode...`)
 })
