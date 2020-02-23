@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import crypto from 'crypto'
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -21,22 +22,33 @@ const UserSchema = new mongoose.Schema({
         required: [true, 'Email is required!'],
         match: [/.+\@.+\..+/, 'Please fill a valid email address !']
     },
-    password: {
-        type: String,
-        required: [true, 'Password is required!'],
-        validate: {
-            validator: function(value) {
-                if(value.length < 6) {
-                    this.invalidate('password', 'Password is too short !')
-                }
-            }
-        }
+    hash : String, 
+    salt : String
+})
+
+UserSchema
+  .virtual('password')
+  .set(function(password) {
+
+    //castom validation
+    if(!password) {
+        this.invalidate('password', 'Password is required !')
     }
+    if (password.length < 6) {
+        this.invalidate('password', 'Password must be at least 6 characters !')
+    }
+
+    //creating a unique salt for a particular user 
+    this.salt = crypto.randomBytes(16).toString('hex'); 
+     
+    //hashing user's salt and password with 1000 iterations, 64 length and sha512 digest 
+    this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex'); 
 })
 
 UserSchema.methods = {
     authenticate: function(requestedPassword) {
-        return requestedPassword === this.password
+        let hash = crypto.pbkdf2Sync(requestedPassword, this.salt, 1000, 64, 'sha512').toString('hex')
+        return this.hash === hash; 
     }
 }
 
