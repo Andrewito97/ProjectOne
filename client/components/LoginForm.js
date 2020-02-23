@@ -62,7 +62,7 @@ const LoginForm = () => {
                            onChange={(event) => setEmail(event.target.value)}
                 />
                 <br/>
-                {<Typography color='error'>{emailError}</Typography> || emailError}
+                { emailError ? (<Typography color='error'>{emailError}</Typography>) : null }
 
                 <TextField style={styles.textInput} 
                            label='Password' 
@@ -71,7 +71,7 @@ const LoginForm = () => {
                            onChange={(event) => setPassword(event.target.value)}
                 />
                 <br/>
-                {<Typography color='error'>{passwordError}</Typography> || passwordError}
+                { passwordError ? (<Typography color='error'>{passwordError}</Typography>) : null }
 
                 <div style={styles.linkContainer}>
                     <Link to='/signup'>Create new account</Link>

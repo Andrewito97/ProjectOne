@@ -7,6 +7,6 @@ userApi.route('/myapi/signup').post(userController.create)
 
 userApi.route('/myapi/login').post(userController.login)
 
-userApi.route('/myapi/signout').get(userController.signout)
+userApi.route('/myapi/logout').get(userController.logout)
 
 export default userApi

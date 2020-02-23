@@ -12,11 +12,6 @@ const authenticationHelper = {
     if (typeof window !== "undefined")
       sessionStorage.setItem('jsonWebToken', JSON.stringify(jsonWebToken))
     callback()
-  },
-  signout(callback) {
-    if (typeof window !== "undefined")
-      sessionStorage.removeItem('jsonWebToken')
-    callback()
   }
 }
 

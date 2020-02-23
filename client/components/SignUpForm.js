@@ -76,7 +76,7 @@ const SignUpForm = () => {
                            onChange={(event) => setName(event.target.value)}
                 />
                 <br/>
-                {<Typography color='error'>{nameError}</Typography> || nameError}
+                { nameError ? (<Typography color='error'>{nameError}</Typography>) : null }
 
                 <TextField style={styles.textInput} 
                            label='Email' 
@@ -85,7 +85,7 @@ const SignUpForm = () => {
                            onChange={(event) => setEmail(event.target.value)}
                 />
                 <br/>
-                {<Typography color='error'>{emailError}</Typography> || emailError}
+                { emailError ? (<Typography color='error'>{emailError}</Typography>) : null }
 
                 <TextField style={styles.textInput} 
                            label='Password' 
@@ -94,7 +94,7 @@ const SignUpForm = () => {
                            onChange={(event) => setPassword(event.target.value)}
                 />
                 <br/>
-                {<Typography color='error'>{passwordError}</Typography> || passwordError}
+                { passwordError ? (<Typography color='error'>{passwordError}</Typography>) : null }
 
                 <div style={styles.linkContainer}>
                     <Link to='/login'>Allready have an account? Login</Link>

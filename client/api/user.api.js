@@ -35,17 +35,20 @@ const userApi = {
             return console.log(err)
         }
     },
-    async signout() {
+    async logout() {
         try {
-            const response = await fetch('/myapi/signout', {
+            const response = await fetch('/myapi/logout', {
                 method: 'GET',
             })
+            if (typeof window !== "undefined") {
+                sessionStorage.removeItem('jsonWebToken')
+            }
             return response.json()
         }
         catch (err) {
             return console.log(err)
         }
-      }
+    }
 }
 
 

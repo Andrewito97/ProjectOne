@@ -41,7 +41,7 @@ const userController = {
                 }})
         })
     },
-    signout(request, response) {
+    logout(request, response) {
         response.clearCookie("token")
         return response.status(200).json({
           message: "Signed out !"

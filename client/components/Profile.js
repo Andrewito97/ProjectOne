@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Person } from '@material-ui/icons'
 import { IconButton, Menu, MenuItem } from '@material-ui/core'
 import authenticationHelper from '../helpers/authentication.helper'
+import userApi from '../api/user.api'
 
 const styles = {
     container: {
@@ -28,7 +29,12 @@ const Profile = () => {
     
     const handleClose = () => {
         setAnchorEl(null)
-    }; 
+    }
+
+    const handleLogout = () => {
+        userApi.logout()
+        setAnchorEl(null)
+    }
 
     return (
         <div style={styles.container}>
@@ -41,25 +47,23 @@ const Profile = () => {
                 onClose={handleClose}
             >
                 { 
-                !authenticationHelper.isAuthenticated() &&
+                authenticationHelper.isAuthenticated() ?
+                <div>
+                    <MenuItem onClick={handleClose}>            
+                        <Link style={styles.link} to='/signup'>Profile</Link>
+                    </MenuItem>
+                    <MenuItem onClick={handleLogout}>
+                        <Link style={styles.link} to='/'>Logout</Link>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>Settings</MenuItem>
+                </div>
+                :
                 <div>
                     <MenuItem onClick={handleClose}>            
                         <Link style={styles.link} to='/signup'>Sign Up</Link>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>
                         <Link style={styles.link} to='/login'>Login</Link>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>Settings</MenuItem>
-                </div>
-                }
-                { 
-                authenticationHelper.isAuthenticated() &&
-                <div>
-                    <MenuItem onClick={handleClose}>            
-                        <Link style={styles.link} to='/signup'>Profile</Link>
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>
-                        <Link style={styles.link} to='/login'>Logout</Link>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>Settings</MenuItem>
                 </div>

@@ -3,14 +3,14 @@ import mongoose from 'mongoose'
 const UserSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, 'Name is required!'],
+        required: [true, 'Name is required !'],
         validate: {
             validator: function(value) {
                 if(value.length < 3) {
-                    this.invalidate('name', 'Name is too short!')
+                    this.invalidate('name', 'Name is too short !')
                 }
                 if(value.length > 20) {
-                    this.invalidate('name', 'Name is too long!')
+                    this.invalidate('name', 'Name is too long !')
                 }
             }
         }
@@ -19,7 +19,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         unique: true,
         required: [true, 'Email is required!'],
-        match: [/.+\@.+\..+/, 'Please fill a valid email address']
+        match: [/.+\@.+\..+/, 'Please fill a valid email address !']
     },
     password: {
         type: String,
@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema({
         validate: {
             validator: function(value) {
                 if(value.length < 6) {
-                    this.invalidate('password', 'Password is too short!')
+                    this.invalidate('password', 'Password is too short !')
                 }
             }
         }
