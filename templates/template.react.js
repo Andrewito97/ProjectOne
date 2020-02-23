@@ -1,4 +1,4 @@
-function template(markup) {
+function template(markup, css) {
     return (
      `<!doctype html>
       <html lang="en">
@@ -12,6 +12,7 @@ function template(markup) {
                text-decoration: none 
             } 
            </style>
+           <style id="jss-server-side">${css}</style>
         </head>
         <body style="margin: 0">
            <div id="root">${markup}</div>

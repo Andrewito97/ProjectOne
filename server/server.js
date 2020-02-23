@@ -18,6 +18,7 @@ import postApi from './routes/post.routes'
 import React from 'react'
 import ReactDOMServer from 'react-dom/server'
 import ReactRouter from 'react-router-dom/'
+import { ServerStyleSheets } from '@material-ui/core/styles';
 import RootComponent from '../client/RootComponent'
 
 //initialize express server
@@ -43,14 +44,18 @@ app.use('/build', express.static(path.join(CURRENT_WORKING_DIR, 'build')))
 app.use('/', userApi)
 app.use('/', postApi)
 
-//sending template with ssr markup and bundeled client code at every endpoint
+//sending template with ssr markup, css and bundeled client code at every endpoint
 app.get('*', (request, response) => {
+    const sheets = new ServerStyleSheets();
     const markup = ReactDOMServer.renderToString(
-        <ReactRouter.StaticRouter location={request.url}>
-            <RootComponent/>
-        </ReactRouter.StaticRouter>
+        sheets.collect(
+            <ReactRouter.StaticRouter location={request.url}>
+                <RootComponent/>
+            </ReactRouter.StaticRouter>
+        )
     )
-    response.send( template(markup) )
+    const css = sheets.toString();
+    response.send( template(markup, css) )
 })
 
 //connect to db
