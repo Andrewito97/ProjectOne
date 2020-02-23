@@ -23,6 +23,15 @@ const serverConfig = {
                     presets: [ '@babel/preset-env' ]
                 }
             }
+        },{
+            test: /\.jsx?$/,   // need for server side rendering
+            exclude: /node_modules/,
+            use: {
+                loader: 'babel-loader',
+                options: {
+                    presets: [ '@babel/preset-react' ]
+                }
+            }
         }]
     }
 }

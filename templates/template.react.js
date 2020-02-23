@@ -1,4 +1,4 @@
-function template() {
+function template(markup) {
     return (
      `<!doctype html>
       <html lang="en">
@@ -14,7 +14,7 @@ function template() {
            </style>
         </head>
         <body style="margin: 0">
-           <div id="root"></div>
+           <div id="root">${markup}</div>
            <script type="text/javascript" src="/build/generated.client.js"></script>
         </body>
       </html>`

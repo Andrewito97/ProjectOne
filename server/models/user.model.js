@@ -34,4 +34,10 @@ const UserSchema = new mongoose.Schema({
     }
 })
 
+UserSchema.methods = {
+    authenticate: function(requestedPassword) {
+        return requestedPassword === this.password
+    }
+}
+
 export default mongoose.model('User', UserSchema)

@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { Person } from '@material-ui/icons'
 import { IconButton, Menu, MenuItem } from '@material-ui/core'
+import authenticationHelper from '../helpers/authentication.helper'
 
 const styles = {
     container: {
@@ -39,13 +40,30 @@ const Profile = () => {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
             >
-                <MenuItem onClick={handleClose}>            
-                    <Link style={styles.link} to='/signup'>Sign Up</Link>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>
-                    <Link style={styles.link} to='/login'>Login</Link>
-                </MenuItem>
-                <MenuItem onClick={handleClose}>Settings</MenuItem>
+                { 
+                !authenticationHelper.isAuthenticated() &&
+                <div>
+                    <MenuItem onClick={handleClose}>            
+                        <Link style={styles.link} to='/signup'>Sign Up</Link>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                        <Link style={styles.link} to='/login'>Login</Link>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>Settings</MenuItem>
+                </div>
+                }
+                { 
+                authenticationHelper.isAuthenticated() &&
+                <div>
+                    <MenuItem onClick={handleClose}>            
+                        <Link style={styles.link} to='/signup'>Profile</Link>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>
+                        <Link style={styles.link} to='/login'>Logout</Link>
+                    </MenuItem>
+                    <MenuItem onClick={handleClose}>Settings</MenuItem>
+                </div>
+                }
             </Menu>
         </div>
     )

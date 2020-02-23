@@ -11,7 +11,7 @@ import { Card,
          DialogContent,
          DialogContentText,
          DialogActions } from '@material-ui/core'
-import userApi from '../api/userApi'
+import userApi from '../api/user.api'
 
 const styles = {
     container: {

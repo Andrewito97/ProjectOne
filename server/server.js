@@ -11,6 +11,11 @@ import template from '../templates/template.react'
 import userApi from './routes/user.routes'
 import postApi from './routes/post.routes'
 
+import React from 'react'
+import ReactDOMServer from 'react-dom/server'
+import ReactRouter from 'react-router-dom/'
+import RootComponent from '../client/RootComponent'
+
 const { node_env, port, mongoUri } = config
 
 const app = express()
@@ -31,7 +36,12 @@ app.use('/', userApi)
 app.use('/', postApi)
 
 app.get('*', (request, response) => {
-    response.send( template() )
+    const markup = ReactDOMServer.renderToString(
+        <ReactRouter.StaticRouter location={request.url} context={context}>
+            <RootComponent/>
+        </ReactRouter.StaticRouter>
+    )
+    response.send( template(markup) )
 })
 
 mongoose.connect(mongoUri, {
