@@ -9,4 +9,6 @@ userApi.route('/myapi/login').post(userController.login)
 
 userApi.route('/myapi/logout').get(userController.logout)
 
+userApi.route('/myapi/recover').post(userController.recoverPassword)
+
 export default userApi

@@ -44,8 +44,21 @@ const userController = {
     logout(request, response) {
         response.clearCookie("token")
         return response.status(200).json({
-          message: "Signed out !"
+          message: 'Signed out !'
         })
+    },
+    recoverPassword(request, response) {
+        User.findOne({ 'email': request.body.email }, (error, user) => {
+            if(error || !user) {
+                return response.status(401).json({ 
+                    emailError: 'This email is not registered !' 
+                });
+            };
+            user.recoverPassword(request.body.email);
+            return response.status(200).json({
+                message: 'Password has been sent successfully on your email address !'
+            });
+        });
     },
     requireSignin() {
         return expressJsonWebToken({
@@ -54,13 +67,13 @@ const userController = {
         })
     },
     hasAuthorization (request, response, nextHandler) {
-        const authorized = request.profile && request.auth && request.profile._id == req.auth._id
+        const authorized = request.profile && request.auth && request.profile._id == req.auth._id;
         if (!authorized) {
           return response.status(403).json({
             error: "User is not authorized !"
-          })
-        }
-        nextHandler()
+          });
+        };
+        nextHandler();
     }
 }
 

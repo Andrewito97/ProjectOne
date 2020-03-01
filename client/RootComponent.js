@@ -1,12 +1,13 @@
-import React from 'react'
-import { Switch, Route } from 'react-router-dom'
-import Topbar from './components/Topbar'
-import MusicList from './components/MusicList'
-import MoviesList from './components/MoviesList'
-import NewsFeed from './components/NewsFeed'
-import RightSidebar from './components/RightSidebar'
-import SignUpForm from './components/SignUpForm'
-import LoginForm from './components/LoginForm'
+import React from 'react';
+import { Switch, Route } from 'react-router-dom';
+import Topbar from './components/Topbar';
+import MusicList from './components/MusicList';
+import MoviesList from './components/MoviesList';
+import NewsFeed from './components/NewsFeed';
+import RightSidebar from './components/RightSidebar';
+import SignUpForm from './components/SignUpForm';
+import LoginForm from './components/LoginForm';
+import RecoveryForm from './components/RecoveryForm';
 
 
 const styles = {
@@ -44,6 +45,7 @@ const RootComponent = () => (
                     <Route path='/movies' component={MoviesList} />  
                     <Route path='/signup' component={SignUpForm} />
                     <Route path='/login' component={LoginForm} />
+                    <Route path='/recovery' component={RecoveryForm} />
                 </Switch>
             </div>
             <div style={styles.aside}>

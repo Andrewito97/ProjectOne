@@ -76,6 +76,9 @@ const LoginForm = () => {
                 <div style={styles.linkContainer}>
                     <Link to='/signup'>Create new account</Link>
                 </div>
+                <div style={styles.linkContainer}>
+                    <Link to='/recovery'>Forgot your password? Recover !</Link>
+                </div>
                 <CardActions>
                     <Button style={styles.button} onClick={onLogin}>Login</Button>
                 </CardActions>
