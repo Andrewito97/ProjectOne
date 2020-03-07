@@ -1,8 +1,8 @@
-import React from 'react'
-import { Link, withRouter } from 'react-router-dom'
-import { AppBar, Toolbar, Button } from '@material-ui/core'
-import Profile from './Profile'
-import Searchbar from './Searchbar'
+import React from 'react';
+import { Link, withRouter } from 'react-router-dom';
+import { AppBar, Toolbar, Button } from '@material-ui/core';
+import Profile from './Profile';
+import Searchbar from './Searchbar';
 
 const styles = {
     topbar: {
@@ -29,11 +29,11 @@ const styles = {
 
 function isActive(history, path) {
     if(history.location.pathname === path) {
-        return styles.activeTab
+        return styles.activeTab;
     } else {
-        return styles.inactiveTab
+        return styles.inactiveTab;
     }
-}
+};
 
 const Topbar = withRouter( ({history}) => (
         <AppBar position='sticky'>
@@ -52,6 +52,6 @@ const Topbar = withRouter( ({history}) => (
             </Toolbar>
         </AppBar>
     
-))
+));
 
 export default Topbar;

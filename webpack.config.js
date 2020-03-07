@@ -1,5 +1,5 @@
-const path = require('path')
-const nodeExternals = require('webpack-node-externals')
+const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 const serverConfig = {
     mode: 'development',
@@ -20,7 +20,16 @@ const serverConfig = {
             use: {
                 loader: 'babel-loader',
                 options: {
-                    presets: [ '@babel/preset-env' ]
+                    presets: [     
+                        [
+                            "@babel/preset-env",
+                            {
+                                targets: {
+                                    "esmodules": true
+                                }
+                            }
+                        ] 
+                    ]
                 }
             }
         },{
@@ -34,7 +43,7 @@ const serverConfig = {
             }
         }]
     }
-}
+};
 
 const clientConfig = {
     mode: 'development',
@@ -59,6 +68,6 @@ const clientConfig = {
             }
         }]
     }
-}
+};
 
-module.exports = [ clientConfig, serverConfig ]
+module.exports = [ clientConfig, serverConfig ];

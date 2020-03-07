@@ -32,7 +32,7 @@ const styles = {
         padding: '3%', 
         maxWidth: '20%'
     }
-}
+};
 
 const RootComponent = () => (
     <div>
@@ -53,6 +53,6 @@ const RootComponent = () => (
             </div>
         </div>
     </div>
-)
+);
 
-export default RootComponent
+export default RootComponent;

@@ -1,13 +1,13 @@
-import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
+import React from 'react';
+import { Link, Redirect } from 'react-router-dom';
 import { Card, 
          CardContent, 
          Typography, 
          TextField,
          Button,
-         CardActions } from '@material-ui/core'
-import userApi from '../api/user.api'
-import authenticationHelper from '../helpers/authentication.helper'
+         CardActions } from '@material-ui/core';
+import userApi from '../api/user.api';
+import authenticationHelper from '../helpers/authentication.helper';
 
 const styles = {
     container: {
@@ -26,7 +26,7 @@ const styles = {
         color: 'white',
         marginTop: 60
     }
-}
+};
 
 const LoginForm = () => {
     const [requestedEmail, setEmail] = React.useState('')
@@ -85,6 +85,6 @@ const LoginForm = () => {
             </CardContent>
         </Card>
     )
-}
+};
 
-export default LoginForm
+export default LoginForm;

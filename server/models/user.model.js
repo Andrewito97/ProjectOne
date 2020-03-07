@@ -2,11 +2,10 @@ import mongoose from 'mongoose';
 import crypto from 'crypto';
 import sgMail from '@sendgrid/mail';
 import config from '../../config';
-import regeneratorRuntime from 'regenerator-runtime';
 
 function makeRandomString(length) {
-    let result           = '';
-    const characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     for ( let i = 0; i < length; i++ ) {
        result += characters.charAt(Math.floor(Math.random() * characters.length));
     }

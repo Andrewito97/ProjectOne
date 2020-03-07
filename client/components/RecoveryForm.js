@@ -30,7 +30,7 @@ const styles = {
         color: 'white',
         marginTop: 60
     }
-}
+};
 
 const RecoverForm = () => {
     const [requestedEmail, setEmail] = React.useState('');
@@ -44,7 +44,7 @@ const RecoverForm = () => {
         const data = await userApi.recoverPassword(userData);
         data.emailError ? setEmailError(data.emailError) : setEmailError('');
         data.message ? setSuccessed(true) : null;
-    }
+    };
     
     return (
         <div>

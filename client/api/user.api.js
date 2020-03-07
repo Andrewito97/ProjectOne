@@ -1,6 +1,3 @@
-//allows to use 'async'
-import regeneratorRuntime from 'regenerator-runtime'
-
 const userApi = {
     async create(user) {
         try {
@@ -65,7 +62,6 @@ const userApi = {
             return console.log(err)
         }
     }
-}
+};
 
-
-export default userApi
+export default userApi;

@@ -1,9 +1,9 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
-import { Person } from '@material-ui/icons'
-import { IconButton, Menu, MenuItem } from '@material-ui/core'
-import authenticationHelper from '../helpers/authentication.helper'
-import userApi from '../api/user.api'
+import React from 'react';
+import { Link } from 'react-router-dom';
+import { Person } from '@material-ui/icons';
+import { IconButton, Menu, MenuItem } from '@material-ui/core';
+import authenticationHelper from '../helpers/authentication.helper';
+import userApi from '../api/user.api';
 
 const styles = {
     container: {
@@ -18,23 +18,23 @@ const styles = {
     link: {
         color: 'black'
     }
-}
+};
 
 const Profile = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = event => {
-        setAnchorEl(event.currentTarget)
-    }
+        setAnchorEl(event.currentTarget);
+    };
     
     const handleClose = () => {
-        setAnchorEl(null)
-    }
+        setAnchorEl(null);
+    };
 
     const handleLogout = () => {
-        userApi.logout()
-        setAnchorEl(null)
-    }
+        userApi.logout();
+        setAnchorEl(null);
+    };
 
     return (
         <div style={styles.container}>
@@ -48,7 +48,7 @@ const Profile = () => {
             >
                 { 
                 authenticationHelper.isAuthenticated() ?
-                <div>
+                (<div>
                     <MenuItem onClick={handleClose}>            
                         <Link style={styles.link} to='/signup'>Profile</Link>
                     </MenuItem>
@@ -56,9 +56,9 @@ const Profile = () => {
                         <Link style={styles.link} to='/'>Logout</Link>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>Settings</MenuItem>
-                </div>
+                </div>)
                 :
-                <div>
+                (<div>
                     <MenuItem onClick={handleClose}>            
                         <Link style={styles.link} to='/signup'>Sign Up</Link>
                     </MenuItem>
@@ -66,11 +66,11 @@ const Profile = () => {
                         <Link style={styles.link} to='/login'>Login</Link>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>Settings</MenuItem>
-                </div>
+                </div>)
                 }
             </Menu>
         </div>
     )
-}
+};
 
-export default Profile
+export default Profile;

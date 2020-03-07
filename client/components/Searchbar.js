@@ -1,6 +1,6 @@
-import React from 'react'
-import { InputBase } from '@material-ui/core'
-import { Search } from '@material-ui/icons'
+import React from 'react';
+import { InputBase } from '@material-ui/core';
+import { Search } from '@material-ui/icons';
 
 const styles = {
     container: {
@@ -14,14 +14,14 @@ const styles = {
         marginRight: 7,
         pointerEvents: 'none'
     },
-}
+};
 
 const Searchbar = () => {
-    const [isFocused, catchFocus] = React.useState(false)
+    const [isFocused, catchFocus] = React.useState(false);
 
     const focusHandler = () => {
-        catchFocus(!isFocused)
-    }
+        catchFocus(!isFocused);
+    };
 
     return (
         <div style={styles.container}>
@@ -33,6 +33,6 @@ const Searchbar = () => {
             />       
         </div>
     )
-}
+};
 
-export default Searchbar
+export default Searchbar;

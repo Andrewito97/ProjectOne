@@ -1,5 +1,5 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card,
          CardContent, 
          Typography, 
@@ -10,8 +10,8 @@ import { Card,
          DialogTitle,
          DialogContent,
          DialogContentText,
-         DialogActions } from '@material-ui/core'
-import userApi from '../api/user.api'
+         DialogActions } from '@material-ui/core';
+import userApi from '../api/user.api';
 
 const styles = {
     container: {
@@ -30,39 +30,39 @@ const styles = {
         color: 'white',
         marginTop: 60
     }
-}
+};
 
 const SignUpForm = () => {
-    const [requestedName, setName] = React.useState('')
-    const [requestedEmail, setEmail] = React.useState('')
-    const [requestedPassword, setPassword] = React.useState('')
-    const [nameError, setNameError] = React.useState('')
-    const [emailError, setEmailError] = React.useState('')
-    const [passwordError, setPasswordError] = React.useState('')
-    const [successed, setSuccessed] = React.useState(false)
+    const [requestedName, setName] = React.useState('');
+    const [requestedEmail, setEmail] = React.useState('');
+    const [requestedPassword, setPassword] = React.useState('');
+    const [nameError, setNameError] = React.useState('');
+    const [emailError, setEmailError] = React.useState('');
+    const [passwordError, setPasswordError] = React.useState('');
+    const [successed, setSuccessed] = React.useState(false);
 
     const onCreate = async () => {
         const userData = {
             name: requestedName,
             email: requestedEmail,
             password: requestedPassword
-        }
-        const data = await userApi.create(userData)
+        };
+        const data = await userApi.create(userData);
         if(data.message) {
-            setEmailError('')
-            setNameError('')
-            setPasswordError('')
-            setSuccessed(true)
+            setEmailError('');
+            setNameError('');
+            setPasswordError('');
+            setSuccessed(true);
         } else {
             if(data.error.code) {
-                setEmailError('Email is already existss!')
+                setEmailError('Email is already existss!');
             } else {
-                data.error.errors.email ? setEmailError(data.error.errors.email.message) : setEmailError('')
-                data.error.errors.name ? setNameError(data.error.errors.name.message) : setNameError('')
-                data.error.errors.password ? setPasswordError(data.error.errors.password.message) : setPasswordError('')
+                data.error.errors.email ? setEmailError(data.error.errors.email.message) : setEmailError('');
+                data.error.errors.name ? setNameError(data.error.errors.name.message) : setNameError('');
+                data.error.errors.password ? setPasswordError(data.error.errors.password.message) : setPasswordError('');
             }
-        }
-    }
+        };
+    };
     
     return (
         <div>
@@ -122,6 +122,6 @@ const SignUpForm = () => {
         </Dialog>
         </div>
     )
-}
+};
 
-export default SignUpForm
+export default SignUpForm;

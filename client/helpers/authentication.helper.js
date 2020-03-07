@@ -1,18 +1,18 @@
 const authenticationHelper = {
   isAuthenticated() {
     if (typeof window == "undefined")
-      return false
+      return false;
 
     if (sessionStorage.getItem('jsonWebToken'))
       return JSON.parse(sessionStorage.getItem('jsonWebToken'))
     else
-      return false
+      return false;
   },
   authenticate(jsonWebToken, callback) {
     if (typeof window !== "undefined")
       sessionStorage.setItem('jsonWebToken', JSON.stringify(jsonWebToken))
-    callback()
+    callback();
   }
 }
 
-export default authenticationHelper
+export default authenticationHelper;
