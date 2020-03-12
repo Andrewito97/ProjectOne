@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import RootComponent from './RootComponent';
 
 const App = () => {
-    //remove server side rendered css
+    //remove server side injected css
     React.useEffect(() => {
         const jssStyles = document.querySelector('#jss-server-side');
         if (jssStyles) {

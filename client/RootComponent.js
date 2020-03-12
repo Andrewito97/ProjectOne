@@ -3,12 +3,11 @@ import { Switch, Route } from 'react-router-dom';
 import Topbar from './components/Topbar';
 import MusicList from './components/MusicList';
 import MoviesList from './components/MoviesList';
-import NewsFeed from './components/NewsFeed';
+import NewsFeedList from './components/NewsFeedList';
 import RightSidebar from './components/RightSidebar';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
 import RecoveryForm from './components/RecoveryForm';
-
 
 const styles = {
     container: {
@@ -40,7 +39,7 @@ const RootComponent = () => (
         <div style={styles.container}>
             <div style={styles.list}>
                 <Switch >    
-                    <Route exact path='/' component={NewsFeed} />
+                    <Route exact path='/' component={NewsFeedList} />
                     <Route path='/music' component={MusicList} />  
                     <Route path='/movies' component={MoviesList} />  
                     <Route path='/signup' component={SignUpForm} />

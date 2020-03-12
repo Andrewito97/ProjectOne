@@ -38,7 +38,8 @@ const userController = {
                         _id: user._id, 
                         name: user.name, 
                         email: user.email, 
-                }});
+                    }
+            });
         });
     },
     logout(request, response) {
@@ -77,4 +78,4 @@ const userController = {
     }
 }
 
-export default userController
+export default userController;
