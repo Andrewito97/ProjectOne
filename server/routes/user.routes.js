@@ -11,4 +11,8 @@ userApi.route('/myapi/logout').get(userController.logout);
 
 userApi.route('/myapi/recover').post(userController.recoverPassword);
 
+userApi.route('/myapi/reset/:resetToken')
+    .get(userController.getResetPasswordForm)
+    .post(userController.resetPassword)
+
 export default userApi;

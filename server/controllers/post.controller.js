@@ -21,13 +21,14 @@ const postController = {
             post.save((error, result) => {
                 if(error) {
                     return response.status(400).json({
-                        error
+                        errorMessage: error.message
                     });
                 };
                 response.json(result);
             });
         });
     },
+
     listNewsFeed(request, response) {
         Post.find((error, posts) => {
             if(error) {
@@ -38,6 +39,7 @@ const postController = {
             response.json(posts)
         }).select('title image text postedBy created').sort('-created');
     },
+
     getPostByID(request, response, nextHendlear, id){
         Post.findById(id)
             .exec((error, post) => {
@@ -50,6 +52,7 @@ const postController = {
             nextHendlear();
         });
     },
+
     loadImage(request, response, nextHendlear) {
         response.set('Content-Type', request.post.image.contentType)
         return response.send(request.post.image.data)

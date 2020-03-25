@@ -1,16 +1,5 @@
 import mongoose from 'mongoose';
 import crypto from 'crypto';
-import sgMail from '@sendgrid/mail';
-import config from '../../config';
-
-function makeRandomString(length) {
-    let result = '';
-    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-    for ( let i = 0; i < length; i++ ) {
-       result += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-    return result;
-}
 
 const UserSchema = new mongoose.Schema({
     name: {
@@ -27,16 +16,29 @@ const UserSchema = new mongoose.Schema({
             }
         }
     },
+
     email: {
         type: String,
         unique: true,
         required: [true, 'Email is required!'],
         match: [/.+\@.+\..+/, 'Please fill a valid email address !']
     },
+
     hash : String, 
+
     salt : String,
-    initialVector: String
-});
+
+    resetPasswordToken: {
+        type: String,
+        required: false
+    },
+
+    resetPasswordExpires: {
+        type: Date,
+        required: false
+    }
+
+}, {timestamps: true});
 
 UserSchema
   .virtual('password')
@@ -50,34 +52,18 @@ UserSchema
         this.invalidate('password', 'Password must be at least 6 characters !');
     }
 
-    this.salt = makeRandomString(32);
-    this.initialVector = makeRandomString(16);
+    //creating a unique salt for a particular user 
+    this.salt = crypto.randomBytes(16).toString('hex'); 
      
-    let encryptKey = crypto.createCipheriv('aes256', this.salt, this.initialVector);
-    let encryptString = encryptKey.update(password, 'utf8', 'hex');
-    this.hash = encryptString + encryptKey.final('hex');
+    //hashing user's salt and password with 1000 iterations, 64 length and sha512 digest 
+    this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex'); 
 });
 
 UserSchema.methods = {
     authenticate: function(requestedPassword) {
-        let encryptKey = crypto.createCipheriv('aes256', this.salt, this.initialVector);
-        let encryptString = encryptKey.update(requestedPassword, 'utf8', 'hex');
-        let hash = encryptString + encryptKey.final('hex');
-        return hash === this.hash;
+        let hash = crypto.pbkdf2Sync(requestedPassword, this.salt, 1000, 64, 'sha512').toString('hex')
+        return this.hash === hash; 
     },
-    recoverPassword: function(requestedEmail) {
-        let decryptKey = crypto.createDecipheriv('aes256', this.salt, this.initialVector);
-        let decryptString = decryptKey.update(this.hash, 'hex', 'utf8');
-        let password = decryptString + decryptKey.final('utf8');
-        sgMail.setApiKey(config.sendgridKey);
-        const message = {
-            to: requestedEmail,
-            from: 'oneproject.support@test.com',
-            subject: 'Password Recovery',
-            text: `Your password: ${password}`,
-        };
-        sgMail.send(message);
-    }
 };
 
 export default mongoose.model('User', UserSchema);

@@ -61,6 +61,22 @@ const userApi = {
         catch (err) {
             return console.log(err)
         }
+    },
+    async resetPassword(user, resetToken) {
+        try {
+            const response = await fetch('/myapi/reset/' + resetToken, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
+            })
+            return response.json()
+        }
+        catch (err) {
+            return console.log(err)
+        }
     }
 };
 

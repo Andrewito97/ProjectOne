@@ -14,7 +14,7 @@ function template(markup, css) {
            </style>
            <style id="jss-server-side">${css}</style>
         </head>
-        <body style="margin: 0">
+        <body style="margin: 0; background: #F3F8EE">
            <div id="root">${markup}</div>
            <script type="text/javascript" src="/build/generated.client.js"></script>
         </body>

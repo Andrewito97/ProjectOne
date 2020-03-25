@@ -5,18 +5,22 @@ const PostSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+
     image: {
         data: Buffer,
         contentType: String
     },
+
     text: {
         type: String,
         required: true
     },
+
     postedBy: {
         type: mongoose.Schema.ObjectId, 
         ref: 'User'
     },
+    
     created: {
         type: Date,
         default: Date.now

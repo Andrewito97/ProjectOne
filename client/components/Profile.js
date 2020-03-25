@@ -34,6 +34,7 @@ const Profile = () => {
     const handleLogout = () => {
         userApi.logout();
         setAnchorEl(null);
+        location.reload();
     };
 
     return (

@@ -8,28 +8,27 @@ import RightSidebar from './components/RightSidebar';
 import SignUpForm from './components/SignUpForm';
 import LoginForm from './components/LoginForm';
 import RecoveryForm from './components/RecoveryForm';
+import ResetPasswordForm from './components/ResetPasswordForm';
 
 const styles = {
     container: {
         display: 'flex', 
-        marginTop: '2.5%', 
-        marginLeft: '12%', 
-        marginRight: '12%'
+        marginTop: '6%', 
+        marginLeft: '15%', 
+        marginRight: '8%'
     },
     list: {
-        width: '60%', 
-        backgroundColor: '#F9F9F9', 
-        margin: '3%', 
-        padding: '3%'
+        width: '64%', 
+        margin: '3%'
     },
     aside: {
-        width: '20%', 
+        width: '16%', 
         backgroundColor: '#F9F9F9', 
-        margin: '3%', 
         minHeight: 600, 
         minWidth: 180,
         padding: '3%', 
-        maxWidth: '20%'
+        maxWidth: '20%',
+        margin: '3%'
     }
 };
 
@@ -45,6 +44,7 @@ const RootComponent = () => (
                     <Route path='/signup' component={SignUpForm} />
                     <Route path='/login' component={LoginForm} />
                     <Route path='/recovery' component={RecoveryForm} />
+                    <Route path='/reset/:resetToken' component={ResetPasswordForm} />
                 </Switch>
             </div>
             <div style={styles.aside}>

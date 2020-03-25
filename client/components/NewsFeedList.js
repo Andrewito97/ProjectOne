@@ -3,10 +3,12 @@ import Post from './Post';
 import NewPostForm from './NewPostForm';
 import authenticationHelper from '../helpers/authentication.helper';
 import postApi from '../api/post.api';
+import DummyPost from './DummyPost';
 
 const NewsFeedList = () => {
     const [ posts, setPosts ] = React.useState([]);
-    const [ shouldUpdate, setUpdate] = React.useState(false);
+    const [ shouldUpdate, setUpdate ] = React.useState(false);
+    const [ dummyData, setDummyData ] = React.useState(true);
 
     React.useEffect(() => {
         loadPosts();
@@ -16,12 +18,15 @@ const NewsFeedList = () => {
     }, []);
 
     const loadPosts = async () => {
+        setDummyData(true)
         const data = await postApi.list();
         if(data.error) {
             console.log(data.error);
         } else {
-            setPosts(data)
-        }
+            setDummyData(false);
+            setPosts(data);
+
+        };
     };
 
     const updateList = (post) => {
@@ -33,9 +38,13 @@ const NewsFeedList = () => {
 
     return (
         <div>
-            <NewPostForm addPost={updateList}/>
-            <div style={{marginTop: 25}}>
-                {posts.map( (item, index) => <Post post={item} key={index}/> )}
+            {authenticationHelper.isAuthenticated() ? (<NewPostForm addPost={updateList}/>) : null}
+            <div>
+                { 
+                dummyData ? <DummyPost/>    
+                :
+                posts.map( (item, index) => <Post post={item} key={index}/> )
+                }
             </div>
         </div>
     )

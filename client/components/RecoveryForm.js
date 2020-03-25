@@ -32,7 +32,7 @@ const styles = {
     }
 };
 
-const RecoverForm = () => {
+const RecoveryForm = () => {
     const [requestedEmail, setEmail] = React.useState('');
     const [emailError, setEmailError] = React.useState('');
     const [successed, setSuccessed] = React.useState(false);
@@ -62,7 +62,7 @@ const RecoverForm = () => {
                 { emailError ? (<Typography color='error'>{emailError}</Typography>) : null }
 
                 <CardActions>
-                    <Button style={styles.button} onClick={onRecover}>Send password</Button>
+                    <Button style={styles.button} onClick={onRecover}>Send recovery link</Button>
                 </CardActions>
             </CardContent>
         </Card>
@@ -70,7 +70,7 @@ const RecoverForm = () => {
             <DialogTitle>Recovery</DialogTitle>
             <DialogContent>
                 <DialogContentText>
-                    Password has been sent successfully on your email address !
+                    Recovery link has been sent successfully on your email address !
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
@@ -85,4 +85,4 @@ const RecoverForm = () => {
     )
 };
 
-export default RecoverForm;
+export default RecoveryForm;
