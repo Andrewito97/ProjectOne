@@ -75,7 +75,7 @@ const userController = {
 
             //send email
             sgMail.setApiKey(config.sendgridKey);
-            let link = "http://" + request.headers.host + "/myapi/reset/" + user.resetPasswordToken;
+            let link = `http://${request.headers.host}/myapi/reset/${user.email}/${user.resetPasswordToken}`;
             const mailOptions = {
                 to: user.email,
                 from: 'oneproject.support@test.com',
@@ -91,7 +91,11 @@ const userController = {
     },
 
     getResetPasswordForm(request, response) {
-        User.findOne({resetPasswordToken: request.params.resetToken, resetPasswordExpires: {$gt: Date.now()}})
+        User.findOne({
+                email:request.params.email, 
+                resetPasswordToken: request.params.resetToken, 
+                resetPasswordExpires: {$gt: Date.now()}
+            })
             .exec((error, user) => {
                 if(error || !user) {
                     return response.status(401).json({
@@ -99,12 +103,17 @@ const userController = {
                     });
                 };
                 //Redirect user to form with the email address
-                response.redirect(301, `http://${request.headers.host}/reset/${request.params.resetToken}`)
+                let link = `http://${request.headers.host}/reset/${request.params.email}/${request.params.resetToken}`
+                response.redirect(301, link)
             });
     },
 
     resetPassword(request, response) {
-        User.findOne({resetPasswordToken: request.params.resetToken, resetPasswordExpires: {$gt: Date.now()}})
+        User.findOne({
+                email:request.params.email, 
+                resetPasswordToken: request.params.resetToken, 
+                resetPasswordExpires: {$gt: Date.now()}
+            })
             .exec((error, user) => {
                 //recheck if token is still valid
                 if(error || !user) {
@@ -112,7 +121,7 @@ const userController = {
                         passwordError: 'Password reset token is invalid or has expired.'
                     });
                     
-                //custom validation
+                //custom password validation
                 } else if(!request.body.password) {
                     return response.status(401).json({
                         passwordError: 'Password is required !'

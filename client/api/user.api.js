@@ -62,9 +62,9 @@ const userApi = {
             return console.log(err)
         }
     },
-    async resetPassword(user, resetToken) {
+    async resetPassword(user, email, resetToken) {
         try {
-            const response = await fetch('/myapi/reset/' + resetToken, {
+            const response = await fetch(`/myapi/reset/${email}/${resetToken}`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

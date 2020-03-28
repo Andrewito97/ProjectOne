@@ -17,7 +17,7 @@ const styles = {
     },
     postDate: {
         color: 'grey',
-        marginTop: 40
+        marginTop: 50
     }
 };
 
@@ -37,8 +37,8 @@ const Post = (props) => {
                     : 
                     null 
                     }
-                    <Typography>
-                        {/* <p style={styles.postDate}>{new Date(props.post.created).toDateString()}</p> */}
+                    <Typography style={styles.postDate}>
+                        {new Date(props.post.created).toDateString()}
                     </Typography>
                 </CardContent>
             </Card>

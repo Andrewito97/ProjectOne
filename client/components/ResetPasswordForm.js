@@ -39,14 +39,14 @@ const ResetPasswordForm = () => {
     const [passwordError, setPasswordError] = React.useState('');
     const [successed, setSuccessed] = React.useState(false);
 
-    let { resetToken } = useParams();
+    let { email, resetToken } = useParams();
 
     const onChangePassword = async () => {
         const userData = {
             password: requestedPassword,
             confirmedPassword: confirmedPassword
         };
-        const data = await userApi.resetPassword(userData, resetToken);
+        const data = await userApi.resetPassword(userData, email, resetToken);
         data.passwordError ? setPasswordError(data.passwordError) : setPasswordError('');
         data.message ? setSuccessed(true) : null;
     };

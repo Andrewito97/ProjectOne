@@ -44,7 +44,7 @@ const RootComponent = () => (
                     <Route path='/signup' component={SignUpForm} />
                     <Route path='/login' component={LoginForm} />
                     <Route path='/recovery' component={RecoveryForm} />
-                    <Route path='/reset/:resetToken' component={ResetPasswordForm} />
+                    <Route path='/reset/:email/:resetToken' component={ResetPasswordForm} />
                 </Switch>
             </div>
             <div style={styles.aside}>
