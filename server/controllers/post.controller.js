@@ -9,7 +9,7 @@ const postController = {
         form.parse(request, (error, fields, files) => {
             if(error) {
                 return response.status(400).json({
-                    errorMessage: "Image could not be uploaded"
+                    errorMessage: 'Image could not be uploaded'
                 });
             };
             let post = new Post(fields);

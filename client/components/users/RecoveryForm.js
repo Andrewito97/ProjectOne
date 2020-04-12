@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Card, 
          CardContent, 
          Typography, 
@@ -11,7 +11,7 @@ import { Card,
          DialogContent,
          DialogContentText,
          DialogActions } from '@material-ui/core';
-import userApi from '../api/user.api';
+import userApi from '../../api/user.api';
 
 const styles = {
     container: {

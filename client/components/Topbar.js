@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { AppBar, Toolbar, Button } from '@material-ui/core';
-import Profile from './Profile';
+import Profile from './users/Profile';
 import Searchbar from './Searchbar';
 
 const styles = {
@@ -51,7 +51,6 @@ const Topbar = withRouter( ({history}) => (
                 <Profile/>
             </Toolbar>
         </AppBar>
-    
 ));
 
 export default Topbar;

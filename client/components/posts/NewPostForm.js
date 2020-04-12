@@ -7,8 +7,8 @@ import { Card,
          Button,
          CardActions } from '@material-ui/core';
 import { PhotoCamera } from '@material-ui/icons';
-import authenticationHelper from '../helpers/authentication.helper';
-import postApi from '../api/post.api';
+import authenticationHelper from '../../helpers/authentication.helper';
+import postApi from '../../api/post.api';
 
 const styles = {
     container: {
@@ -71,7 +71,7 @@ const NewPostForm = (props) => {
                     <TextField 
                         placeholder='Content...'
                         multiline
-                        rows='7'
+                        rows='20'
                         value={postText}
                         style={styles.textInput}
                         onChange={ 
@@ -89,7 +89,7 @@ const NewPostForm = (props) => {
                         }
                     />
                     <label htmlFor='icon-button-file'>
-                        <IconButton>
+                        <IconButton component='span'>
                             <PhotoCamera/>
                         </IconButton>
                     </label>

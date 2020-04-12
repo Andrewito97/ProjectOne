@@ -1,8 +1,8 @@
 import React from 'react';
 import Post from './Post';
 import NewPostForm from './NewPostForm';
-import authenticationHelper from '../helpers/authentication.helper';
-import postApi from '../api/post.api';
+import authenticationHelper from '../../helpers/authentication.helper';
+import postApi from '../../api/post.api';
 import DummyPost from './DummyPost';
 
 const NewsFeedList = () => {
@@ -25,7 +25,6 @@ const NewsFeedList = () => {
         } else {
             setDummyData(false);
             setPosts(data);
-
         };
     };
 

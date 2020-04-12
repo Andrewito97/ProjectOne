@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Person } from '@material-ui/icons';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
-import authenticationHelper from '../helpers/authentication.helper';
-import userApi from '../api/user.api';
+import authenticationHelper from '../../helpers/authentication.helper';
+import userApi from '../../api/user.api';
 
 const styles = {
     container: {

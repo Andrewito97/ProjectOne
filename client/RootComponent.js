@@ -1,14 +1,14 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Topbar from './components/Topbar';
-import MusicList from './components/MusicList';
-import MoviesList from './components/MoviesList';
-import NewsFeedList from './components/NewsFeedList';
+import MusicList from './components/music/MusicList';
+import MoviesList from './components/movies/MoviesList';
+import NewsFeedList from './components/posts/NewsFeedList';
 import RightSidebar from './components/RightSidebar';
-import SignUpForm from './components/SignUpForm';
-import LoginForm from './components/LoginForm';
-import RecoveryForm from './components/RecoveryForm';
-import ResetPasswordForm from './components/ResetPasswordForm';
+import SignUpForm from './components/users/SignUpForm';
+import LoginForm from './components/users/LoginForm';
+import RecoveryForm from './components/users/RecoveryForm';
+import ResetPasswordForm from './components/users/ResetPasswordForm';
 
 const styles = {
     container: {

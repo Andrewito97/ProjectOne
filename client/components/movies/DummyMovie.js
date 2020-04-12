@@ -6,9 +6,9 @@ const styles = {
         marginTop: 30,
         marginBottom: 30
     }
-}
+};
 
-const DummyPost = () => {
+const DummyMovie = () => {
     return (
         <div>
             <Skeleton animation='wave' height={50} width='60%'/> 
@@ -27,4 +27,4 @@ const DummyPost = () => {
     )
 };
 
-export default DummyPost;
+export default DummyMovie;

@@ -1,4 +1,6 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
+import breaks from 'remark-breaks';
 import { Card, 
          CardContent, 
          CardHeader,
@@ -24,11 +26,12 @@ const styles = {
 const Post = (props) => {
     return (
         <div style={styles.post}>
+            
             <Card style={styles.container}>
                 <CardHeader title={props.post.title}/>
                 <CardContent>
-                    <Typography>
-                        {props.post.text}
+                    <Typography component='span'>
+                        <ReactMarkdown source={props.post.text} plugins={[breaks]}/>   
                     </Typography>
                     {
                     props.post.image ? 

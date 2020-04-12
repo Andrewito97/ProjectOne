@@ -6,8 +6,8 @@ import { Card,
          TextField,
          Button,
          CardActions } from '@material-ui/core';
-import userApi from '../api/user.api';
-import authenticationHelper from '../helpers/authentication.helper';
+import userApi from '../../api/user.api';
+import authenticationHelper from '../../helpers/authentication.helper';
 
 const styles = {
     container: {
