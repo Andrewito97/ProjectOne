@@ -32,9 +32,10 @@ const styles = {
 
 const NewPostForm = (props) => {
     const [ postTitle, setTitle ] = React.useState('');
+    const [ titleError, setTitleError ] = React.useState('');
     const [ postText, setText ] = React.useState('');
+    const [ textError, setTextError ] = React.useState('');
     const [ postImage, setImage ] = React.useState('');
-    const [ postError, setError ] = React.useState('');
     // const [ user, setUser ] = React.useState({}); add post author in future
 
     const createPost = async () => {
@@ -44,13 +45,16 @@ const NewPostForm = (props) => {
         postData.set('image', postImage)
         const token = authenticationHelper.isAuthenticated().accessToken;
         const data = await postApi.create(token, postData);
-        if(data.errorMessage) {
-            setError(data.errorMessage);
-        } else {
+        if(data.success) {
             setTitle('');
             setText('')
             setImage('');
+            setTitleError('');
+            setTextError('');
             props.addPost(data);
+        } else {
+            data.error.errors.title ? setTitleError(data.error.errors.title.message) : setTitleError('');
+            data.error.errors.text ? setTextError(data.error.errors.text.message) : setTextError('');
         };
     };
     const isEnabled = postTitle === '' || postText === ''
@@ -68,6 +72,8 @@ const NewPostForm = (props) => {
                         }
                     />
                     <br/>
+                    { titleError ? (<Typography color='error'>{titleError}</Typography>) : null }
+
                     <TextField 
                         placeholder='Content...'
                         multiline
@@ -79,6 +85,8 @@ const NewPostForm = (props) => {
                         }
                     />
                     <br/>
+                    { textError ? (<Typography color='error'>{textError}</Typography>) : null }
+
                     <input 
                         accept='image/*' 
                         style={styles.fileInput}
@@ -95,7 +103,6 @@ const NewPostForm = (props) => {
                     </label>
                     <span>{postImage ? postImage.name : null}</span>
                     <br/>
-                    { postError ? (<Typography color='error'>{postError}</Typography>) : null }
                 </CardContent>
                 <CardActions>
                     <Button 

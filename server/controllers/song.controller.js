@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 //import Grid from 'gridfs-stream';
 import formidable from 'formidable';
 import fs from 'fs';
-import Movie from '../models/movie.model';
+import Song from '../models/song.model';
 
 const Grid = require('gridfs-stream')
 eval(`Grid.prototype.findOne = ${Grid.prototype.findOne.toString().replace('nextObject', 'next')}`);
@@ -13,63 +13,63 @@ mongoose.connection.on('connected', () => {
   gridfs = Grid(mongoose.connection.db);
 });
 
-const movieController = {
+const songController = {
     create(request, response) {
         let form = new formidable.IncomingForm();
         form.keepExtensions = true;
         form.parse(request, (error, fields, files) => {
             if(error) {
                 return response.status(400).json({
-                    errorMessage: 'Video could not be uploaded !'
+                    errorMessage: 'Audio could not be uploaded !'
                 });
             };
-            let movie = new Movie(fields);
-            movie.postedBy= request.profile;
-            if(files.video) {
-                let writestream = gridfs.createWriteStream({_id: movie._id})
-                fs.createReadStream(files.video.path).pipe(writestream)
+            let song = new Song(fields);
+            song.postedBy= request.profile;
+            if(files.audio) {
+                let writestream = gridfs.createWriteStream({_id: song._id})
+                fs.createReadStream(files.audio.path).pipe(writestream)
             };
-            movie.save((error, result) => {
+            song.save((error, result) => {
                 if(error) {
                     return response.status(400).json({
                         error
                     });
                 } else {
                     return response.status(201).json({
-                        success: 'Movie is uploaded !'
+                        success: 'Song is uploaded !'
                     });
                 };
             });
         });
     },
 
-    getMovieByID(request, response, nextHendlear, id){
-        Movie.findById(id)
-            .exec((error, movie) => {
-            if(error || !movie) {
+    getSongByID(request, response, nextHendlear, id){
+        Song.findById(id)
+            .exec((error, song) => {
+            if(error || !song) {
                 return response.status(400).json({
-                    errorMessage: 'Movie not found !'
+                    errorMessage: 'Audio not found !'
                 });
             }
-            request.movie = movie;
+            request.song = song;
             nextHendlear();
         });
     },
 
-    listMovies(request, response) {
-        Movie.find((error, movies) => {
+    listSongs(request, response) {
+        Song.find((error, songs) => {
             if(error) {
                 return response.status(400).json({
                     error
                 });
             };
-            response.json(movies)
+            response.json(songs)
         }).sort('-created');
     },
 
-    loadMovie(request, response) {
+    loadSong(request, response) {
         gridfs.findOne({
-            _id: request.movie._id
+            _id: request.song._id
         }, (error, file) => {
             if (error) {
                 return response.status(400).send({
@@ -78,7 +78,7 @@ const movieController = {
             }
             if (!file) {
                 return response.status(404).send({
-                    errorMessage: 'Video not found !'
+                    errorMessage: 'Audio not found !'
                 })
             }
     
@@ -117,4 +117,4 @@ const movieController = {
     }
 }
 
-export default movieController;
+export default songController;

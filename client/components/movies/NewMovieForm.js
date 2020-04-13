@@ -37,10 +37,12 @@ const styles = {
 
 const NewVideoForm = (props) => {
     const [ videoTitle, setTitle ] = React.useState('');
+    const [ titleError, setTitleError ] = React.useState('');
     const [ videoGenre, setGenre ] = React.useState('');
+    const [ genreError, setGenreError ] = React.useState('');
     const [ videoDescription, setDescription ] = React.useState('');
+    const [ descriptionError, setDescrError ] = React.useState('');
     const [ newVideo, setVideo ] = React.useState('');
-    const [ videoError, setError ] = React.useState('');
     // const [ user, setUser ] = React.useState({}); add post author in future
 
     const submitVideo = async () => {
@@ -51,24 +53,27 @@ const NewVideoForm = (props) => {
         videoData.set('video', newVideo)
         const token = authenticationHelper.isAuthenticated().accessToken;
         const data = await videoApi.create(token, videoData);
-        if(data.errorMessage) {
-            setError(data.errorMessage);
-        } else {
+        if(data.success) {
             setTitle('');
             setGenre('');
             setDescription('');
             setVideo('');
+            setTitleError('');
+            setGenreError('');
+            setDescrError('')
             props.addVideo(data);
+        } else {
+            data.error.errors.title ? setTitleError(data.error.errors.title.message) : setTitleError('');
+            data.error.errors.genre ? setGenreError(data.error.errors.genre.message) : setGenreError('');
+            data.error.errors.description ? setDescrError(data.error.errors.description.message) : setDescrError('');
         };
     };
-    const isEnabled = videoTitle === '' || 
-                      videoGenre === '' || 
-                      videoDescription === '';
+    const isDisabled = newVideo === '';
     return (
         <div>
             <Card style={styles.container}>
                 <CardContent>
-                    <Typography>Add your trailer</Typography>
+                    <Typography>Add trailer</Typography>
                     <TextField 
                         placeholder='Title...'
                         value={videoTitle}
@@ -78,6 +83,8 @@ const NewVideoForm = (props) => {
                         }
                     />
                     <br/>
+                    { titleError ? (<Typography color='error'>{titleError}</Typography>) : null }
+
                     <TextField 
                         placeholder='Genre...'
                         multiline
@@ -89,6 +96,8 @@ const NewVideoForm = (props) => {
                         }
                     />
                     <br/>
+                    { genreError ? (<Typography color='error'>{genreError}</Typography>) : null }
+
                     <TextField 
                         placeholder='Description...'
                         multiline
@@ -100,6 +109,9 @@ const NewVideoForm = (props) => {
                         }
                     />
                     <br/>
+                    <div>
+                    { descriptionError ? (<Typography color='error'>{descriptionError}</Typography>) : null }
+                    </div>
                     <input 
                         accept='video/*' 
                         style={styles.fileInput}
@@ -116,14 +128,13 @@ const NewVideoForm = (props) => {
                     </label>
                     <span>{newVideo ? newVideo.name : null}</span>
                     <br/>
-                    { videoError ? (<Typography color='error'>{videoError}</Typography>) : null }
                 </CardContent>
                 <CardActions>
                     <Button 
-                        disabled={isEnabled} 
+                        disabled={isDisabled} 
                         onClick={submitVideo}
                         style={{
-                            backgroundColor: isEnabled ? '#BCC0B8' : '#1976D2',
+                            backgroundColor: isDisabled ? '#BCC0B8' : '#1976D2',
                             color: 'white',
                             marginTop: 15
                         }}>

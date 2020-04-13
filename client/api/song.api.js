@@ -1,23 +1,23 @@
-const movieApi = {
-    async create(token, movie) {
+const songApi = {
+    async create(token, song) {
         try {
-            const response = await fetch('/myapi/movies', {
+          const response = await fetch('/myapi/music', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + token
                 },
-                body: movie
+                body: song
             });
             return response.json();
-        }
+            }
         catch (error) {
             console.log(error);
         }
     },
     async list() {
         try {
-            const response = await fetch('/myapi/movies', {
+            const response = await fetch('/myapi/music', {
                 method: 'GET',
             });
             return response.json();
@@ -28,4 +28,4 @@ const movieApi = {
     }
 };
 
-export default movieApi;
+export default songApi;

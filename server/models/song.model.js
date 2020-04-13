@@ -1,19 +1,14 @@
 import mongoose from 'mongoose';
 
-const MovieSchema = new mongoose.Schema({
-    title: {
+const SongSchema = new mongoose.Schema({
+    author: {
         type: String,
-        required: [true, 'Title is required !']
+        required: [true, 'Author is required !']
     },
 
     genre: {
         type: String,
         required: [true, 'Genre is required !']
-    },
-
-    description: {
-        type: String,
-        required: [true, 'Description is required !']
     },
 
     postedBy: {
@@ -27,4 +22,4 @@ const MovieSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model('Movie', MovieSchema);
+export default mongoose.model('Song', SongSchema);

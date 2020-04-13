@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const PostSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: true
+        required: [true, 'Title is required !']
     },
 
     image: {
@@ -13,7 +13,7 @@ const PostSchema = new mongoose.Schema({
 
     text: {
         type: String,
-        required: true
+        required: [true, 'Title is required !']
     },
 
     postedBy: {
