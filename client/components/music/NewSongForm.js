@@ -35,30 +35,31 @@ const NewSongForm = (props) => {
     const [ authorError, setAuthorError ] = React.useState('');
     const [ songGenre, setGenre ] = React.useState('');
     const [ genreError, setGenreError ] = React.useState('');
-    const [ newSong, setSong ] = React.useState('');
+    const [ newSongs, setSongs ] = React.useState([]);
     // const [ user, setUser ] = React.useState({}); add post author in future
 
     const submitSong = async () => {
         let songData = new FormData()
         songData.set('author', songAuthor)
         songData.set('genre', songGenre)
-        songData.set('audio', newSong)
+        for(let song of newSongs) {
+            songData.append('audios', song)
+        }
         const token = authenticationHelper.isAuthenticated().accessToken;
         const data = await songApi.create(token, songData);
-        console.log(data)
         if(data.success) {
             setAuthor('')
             setGenre('')
-            setSong('')
+            setSongs('')
             setAuthorError('')
             setGenreError('')
-            props.addSong(data)
+            props.updateMusicList()
         } else {
             data.error.errors.author ? setAuthorError(data.error.errors.author.message) : setAuthorError('');
             data.error.errors.genre ? setGenreError(data.error.errors.genre.message) : setGenreError('');
         }
     };
-    const isDisabled = newSong === '';
+    const isDisabled = newSongs.length === 0;
     return (
         <div>
             <Card style={styles.container}>
@@ -94,7 +95,7 @@ const NewSongForm = (props) => {
                         type='file'
                         id='icon-button-file'
                         onChange={ 
-                            (event) => setSong(event.target.files[0])
+                            (event) => setSongs(prevSongs => [...prevSongs, event.target.files[0]])
                         }
                     />
                     <label htmlFor='icon-button-file'>
@@ -102,7 +103,10 @@ const NewSongForm = (props) => {
                             <PhotoCamera/>
                         </IconButton>
                     </label>
-                    <span>{newSong ? newSong.name : null}</span>
+                    {/* <span>{newSongs ? newSong.name : null}</span> */}
+                    <span>
+                    {newSongs ? newSongs.map( (item, i) => <p key={i}>{item.name}</p>) : null}
+                    </span>
                     <br/>
                 </CardContent>
                 <CardActions>

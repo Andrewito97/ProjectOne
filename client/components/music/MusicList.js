@@ -19,25 +19,23 @@ const MusicList = () => {
 
     const loadSongs = async () => {
         setDummyData(true)
-        const data = await songApi.list();
-        if(data.error) {
-            console.log(data.error);
-        } else {
+        const songsData = await songApi.listMusic();
+        if(songsData.error) {
+            console.log(songsData.error);
+        } 
+        else {
             setDummyData(false);
-            setSongs(data);
+            setSongs(songsData);
         };
     };
 
-    const updateList = (song) => {
-        const updatedSongs = songs;
-        updatedSongs.unshift(song);
-        setSongs(updatedSongs);
+    const updateMusicList = () => {
         setUpdate(!shouldUpdate);
     };
 
     return (
         <div>
-            {authenticationHelper.isAuthenticated() ? (<NewSongForm addSong={updateList}/>) : null}
+            {authenticationHelper.isAuthenticated() ? (<NewSongForm updateMusicList={updateMusicList}/>) : null}
             <div>
                 { 
                 dummyData ? <DummySong/>    

@@ -7,7 +7,8 @@ postApi.route('/myapi/newsfeed')
     .get(postController.listNewsFeed)
     .post(postController.create);
 
-postApi.route('/myapi/post/image/:postId').get(postController.loadImage);
+postApi.route('/myapi/post/image/:postId')
+    .get(postController.loadImage);
 
 postApi.param('postId', postController.getPostByID);
 

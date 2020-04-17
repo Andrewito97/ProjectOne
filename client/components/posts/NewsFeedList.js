@@ -28,16 +28,13 @@ const NewsFeedList = () => {
         };
     };
 
-    const updateList = (post) => {
-        const updatedPosts = posts;
-        updatedPosts.unshift(post);
-        setPosts(updatedPosts);
+    const updateNewsFeed = () => {
         setUpdate(!shouldUpdate);
     };
 
     return (
         <div>
-            {authenticationHelper.isAuthenticated() ? (<NewPostForm addPost={updateList}/>) : null}
+            {authenticationHelper.isAuthenticated() ? (<NewPostForm updateNewsFeed={updateNewsFeed}/>) : null}
             <div>
                 { 
                 dummyData ? <DummyPost/>    

@@ -7,7 +7,8 @@ movieApi.route('/myapi/movies')
     .get(movieController.listMovies)
     .post(movieController.create);
 
-movieApi.route('/myapi/movies/:movieId').get(movieController.loadMovie);
+movieApi.route('/myapi/movies/:movieId')
+    .get(movieController.loadMovie);
 
 movieApi.param('movieId', movieController.getMovieByID);
 

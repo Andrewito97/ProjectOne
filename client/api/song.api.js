@@ -15,9 +15,20 @@ const songApi = {
             console.log(error);
         }
     },
-    async list() {
+    async listMusic() {
         try {
             const response = await fetch('/myapi/music', {
+                method: 'GET',
+            });
+            return response.json();
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    async listAudios() {
+        try {
+            const response = await fetch('/myapi/music/audios', {
                 method: 'GET',
             });
             return response.json();

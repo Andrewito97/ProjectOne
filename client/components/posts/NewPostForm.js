@@ -51,13 +51,12 @@ const NewPostForm = (props) => {
             setImage('');
             setTitleError('');
             setTextError('');
-            props.addPost(data);
+            props.updateNewsFeed();
         } else {
             data.error.errors.title ? setTitleError(data.error.errors.title.message) : setTitleError('');
             data.error.errors.text ? setTextError(data.error.errors.text.message) : setTextError('');
         };
     };
-    const isEnabled = postTitle === '' || postText === ''
     return (
         <div>
             <Card style={styles.container}>
@@ -106,10 +105,9 @@ const NewPostForm = (props) => {
                 </CardContent>
                 <CardActions>
                     <Button 
-                        disabled={isEnabled} 
                         onClick={createPost}
                         style={{
-                            backgroundColor: isEnabled ? '#BCC0B8' : '#1976D2',
+                            backgroundColor: '#1976D2',
                             color: 'white',
                             marginTop: 15
                         }}>

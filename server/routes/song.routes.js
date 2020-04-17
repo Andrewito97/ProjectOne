@@ -7,8 +7,11 @@ songApi.route('/myapi/music')
     .get(songController.listSongs)
     .post(songController.create);
 
-songApi.route('/myapi/music/:musicId').get(songController.loadSong);
+songApi.route('/myapi/music/audios')
+    .get(songController.listAudios);
 
-songApi.param('musicId', songController.getSongByID);
+songApi.route('/myapi/music/audios/:audioName').get(songController.loadAudio);
+
+songApi.param('audioName', songController.getAudioByName);
 
 export default songApi;

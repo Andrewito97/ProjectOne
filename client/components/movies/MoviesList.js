@@ -28,16 +28,13 @@ const MoviesList = () => {
         };
     };
 
-    const updateList = (movie) => {
-        const updatedMovies = movies;
-        updatedMovies.unshift(movie);
-        setMovies(updatedMovies);
+    const updateMoviesList = () => {
         setUpdate(!shouldUpdate);
     };
 
     return (
         <div>
-            {authenticationHelper.isAuthenticated() ? (<NewMovieForm addVideo={updateList}/>) : null}
+            {authenticationHelper.isAuthenticated() ? (<NewMovieForm updateMoviesList={updateMoviesList}/>) : null}
             <div>
                 { 
                 dummyData ? <DummyVideo/>    

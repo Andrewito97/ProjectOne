@@ -14,7 +14,7 @@ const styles = {
     },
     video: {
         width: '100%',
-        height: 420,
+        minHeight: 420,
         marginTop: 30,
         backgroundColor: 'black'
     },
@@ -33,9 +33,14 @@ const Song = (props) => {
                     subheader={props.song.genre}
                 />
                 <CardContent>
-                    <audio controls>
-                        <source src={'/myapi/music/' + props.song._id} />
-                    </audio>
+                    {props.song.audios.map((name, index) => <div key={index}>
+                        <audio controls>
+                            <source src={'/myapi/music/audios/' + name} />
+                        </audio>
+                        </div>
+                    )}
+
+
                     {/* <ReactPlayer 
                         url={'/myapi/music/' + props.song._id}
                         controls

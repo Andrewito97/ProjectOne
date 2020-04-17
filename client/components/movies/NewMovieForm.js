@@ -61,7 +61,7 @@ const NewVideoForm = (props) => {
             setTitleError('');
             setGenreError('');
             setDescrError('')
-            props.addVideo(data);
+            props.updateMoviesList();
         } else {
             data.error.errors.title ? setTitleError(data.error.errors.title.message) : setTitleError('');
             data.error.errors.genre ? setGenreError(data.error.errors.genre.message) : setGenreError('');
