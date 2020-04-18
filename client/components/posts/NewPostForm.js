@@ -100,7 +100,14 @@ const NewPostForm = (props) => {
                             <PhotoCamera/>
                         </IconButton>
                     </label>
-                    <span>{postImage ? postImage.name : null}</span>
+                    {
+                        postImage ? (
+                            <div>
+                                <span>{postImage.name}</span>
+                                <button onClick={() => setImage('')}>X</button>
+                            </div>
+                        ) : null
+                    }
                     <br/>
                 </CardContent>
                 <CardActions>

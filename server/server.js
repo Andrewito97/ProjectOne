@@ -14,7 +14,7 @@ import template from '../templates/template.react';
 import userApi from './routes/user.routes';
 import postApi from './routes/post.routes';
 import movieApi from './routes/movie.routes';
-import songApi from './routes/song.routes';
+import musicApi from './routes/music.routes';
 
 //server side rendering
 import React from 'react';
@@ -45,8 +45,8 @@ app.use('/build', express.static(path.join(CURRENT_WORKING_DIR, 'build')));
 //api endpoints
 app.use('/', userApi);
 app.use('/', postApi);
+app.use('/', musicApi);
 app.use('/', movieApi);
-app.use('/', songApi);
 
 //sending template with ssr markup, css and bundeled client code at every endpoint
 app.get('*', (request, response) => {

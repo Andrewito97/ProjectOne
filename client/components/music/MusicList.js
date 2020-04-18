@@ -1,31 +1,31 @@
 import React from 'react';
-import Song from './Song';
-import NewSongForm from './NewSongForm';
+import Music from './Music';
+import NewMusicForm from './NewMusicForm';
 import authenticationHelper from '../../helpers/authentication.helper';
-import songApi from '../../api/song.api';
+import musicApi from '../../api/music.api';
 import DummySong from './DummySong';
 
 const MusicList = () => {
-    const [ songs, setSongs ] = React.useState([]);
+    const [ music, setMusic ] = React.useState([]);
     const [ shouldUpdate, setUpdate ] = React.useState(false);
     const [ dummyData, setDummyData ] = React.useState(true);
 
     React.useEffect(() => {
-        loadSongs();
+        loadMusic();
         if(shouldUpdate) {
-            loadSongs();
+            loadMusic();
         }
     }, []);
 
-    const loadSongs = async () => {
+    const loadMusic = async () => {
         setDummyData(true)
-        const songsData = await songApi.listMusic();
-        if(songsData.error) {
-            console.log(songsData.error);
+        const musicData = await musicApi.listMusic();
+        if(musicData.error) {
+            console.log(musicData.error);
         } 
         else {
             setDummyData(false);
-            setSongs(songsData);
+            setMusic(musicData);
         };
     };
 
@@ -35,12 +35,12 @@ const MusicList = () => {
 
     return (
         <div>
-            {authenticationHelper.isAuthenticated() ? (<NewSongForm updateMusicList={updateMusicList}/>) : null}
+            {authenticationHelper.isAuthenticated() ? (<NewMusicForm updateMusicList={updateMusicList}/>) : null}
             <div>
                 { 
                 dummyData ? <DummySong/>    
                 :
-                songs.map( (item, index) => <Song song={item} key={index}/> )
+                music.map( (item, index) => <Music music={item} key={index}/> )
                 }
             </div>
         </div>

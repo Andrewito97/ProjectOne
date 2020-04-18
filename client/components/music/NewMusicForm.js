@@ -8,7 +8,7 @@ import { Card,
          CardActions } from '@material-ui/core';
 import { PhotoCamera } from '@material-ui/icons';
 import authenticationHelper from '../../helpers/authentication.helper';
-import songApi from '../../api/song.api';
+import musicApi from '../../api/music.api';
 
 const styles = {
     container: {
@@ -31,26 +31,26 @@ const styles = {
 };
 
 const NewSongForm = (props) => {
-    const [ songAuthor, setAuthor ] = React.useState('');
+    const [ musicAuthor, setAuthor ] = React.useState('');
     const [ authorError, setAuthorError ] = React.useState('');
-    const [ songGenre, setGenre ] = React.useState('');
+    const [ musicGenre, setGenre ] = React.useState('');
     const [ genreError, setGenreError ] = React.useState('');
-    const [ newSongs, setSongs ] = React.useState([]);
+    const [ audios, setAudio ] = React.useState([]);
     // const [ user, setUser ] = React.useState({}); add post author in future
 
     const submitSong = async () => {
-        let songData = new FormData()
-        songData.set('author', songAuthor)
-        songData.set('genre', songGenre)
-        for(let song of newSongs) {
-            songData.append('audios', song)
+        let musicData = new FormData()
+        musicData.set('author', musicAuthor)
+        musicData.set('genre', musicGenre)
+        for(let audio of audios) {
+            musicData.append('audios', audio)
         }
         const token = authenticationHelper.isAuthenticated().accessToken;
-        const data = await songApi.create(token, songData);
+        const data = await musicApi.create(token, musicData);
         if(data.success) {
             setAuthor('')
             setGenre('')
-            setSongs('')
+            setAudio('')
             setAuthorError('')
             setGenreError('')
             props.updateMusicList()
@@ -59,7 +59,14 @@ const NewSongForm = (props) => {
             data.error.errors.genre ? setGenreError(data.error.errors.genre.message) : setGenreError('');
         }
     };
-    const isDisabled = newSongs.length === 0;
+
+    const removeItem = (index) => {
+        let updatedAudios = [...audios];
+        updatedAudios.splice(index, 1);
+        setAudio(updatedAudios);
+    };
+
+    const isDisabled = audios.length === 0 || audios.length > 10;
     return (
         <div>
             <Card style={styles.container}>
@@ -67,7 +74,7 @@ const NewSongForm = (props) => {
                     <Typography>Add music</Typography>
                     <TextField 
                         placeholder='Author...'
-                        value={songAuthor}
+                        value={musicAuthor}
                         style={styles.authorInput}
                         onChange={ 
                             (event) => setAuthor(event.target.value)
@@ -80,7 +87,7 @@ const NewSongForm = (props) => {
                         placeholder='Genre...'
                         multiline
                         rows='2'
-                        value={songGenre}
+                        value={musicGenre}
                         style={styles.genreInput}
                         onChange={ 
                             (event) => setGenre(event.target.value)
@@ -95,7 +102,7 @@ const NewSongForm = (props) => {
                         type='file'
                         id='icon-button-file'
                         onChange={ 
-                            (event) => setSongs(prevSongs => [...prevSongs, event.target.files[0]])
+                            (event) => setAudio(prevSongs => [...prevSongs, event.target.files[0]])
                         }
                     />
                     <label htmlFor='icon-button-file'>
@@ -103,9 +110,16 @@ const NewSongForm = (props) => {
                             <PhotoCamera/>
                         </IconButton>
                     </label>
-                    {/* <span>{newSongs ? newSong.name : null}</span> */}
                     <span>
-                    {newSongs ? newSongs.map( (item, i) => <p key={i}>{item.name}</p>) : null}
+                    {
+                        audios ? audios.map( (item, i) => (
+                            <div key={i}>
+                                <span>{item.name}</span>
+                                <button onClick={() => removeItem(i)}>X</button>
+                            </div>
+                            )
+                        ) : null
+                    }
                     </span>
                     <br/>
                 </CardContent>

@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const SongSchema = new mongoose.Schema({
+const MusicSchema = new mongoose.Schema({
     author: {
         type: String,
         required: [true, 'Author is required !']
@@ -28,4 +28,4 @@ const SongSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model('Song', SongSchema);
+export default mongoose.model('Music', MusicSchema);

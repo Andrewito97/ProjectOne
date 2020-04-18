@@ -8,7 +8,7 @@ import { Card,
          CardActions } from '@material-ui/core';
 import { PhotoCamera } from '@material-ui/icons';
 import authenticationHelper from '../../helpers/authentication.helper';
-import videoApi from '../../api/movie.api';
+import movieApi from '../../api/movie.api';
 
 const styles = {
     container: {
@@ -35,24 +35,24 @@ const styles = {
     }
 };
 
-const NewVideoForm = (props) => {
-    const [ videoTitle, setTitle ] = React.useState('');
+const NewMovieForm = (props) => {
+    const [ movieTitle, setTitle ] = React.useState('');
     const [ titleError, setTitleError ] = React.useState('');
-    const [ videoGenre, setGenre ] = React.useState('');
+    const [ movieGenre, setGenre ] = React.useState('');
     const [ genreError, setGenreError ] = React.useState('');
-    const [ videoDescription, setDescription ] = React.useState('');
+    const [ movieDescription, setDescription ] = React.useState('');
     const [ descriptionError, setDescrError ] = React.useState('');
-    const [ newVideo, setVideo ] = React.useState('');
+    const [ video, setVideo ] = React.useState('');
     // const [ user, setUser ] = React.useState({}); add post author in future
 
     const submitVideo = async () => {
-        let videoData = new FormData()
-        videoData.set('title', videoTitle)
-        videoData.set('genre', videoGenre)
-        videoData.set('description', videoDescription)
-        videoData.set('video', newVideo)
+        let movieData = new FormData()
+        movieData.set('title', movieTitle)
+        movieData.set('genre', movieGenre)
+        movieData.set('description', movieDescription)
+        movieData.set('video', video)
         const token = authenticationHelper.isAuthenticated().accessToken;
-        const data = await videoApi.create(token, videoData);
+        const data = await movieApi.create(token, movieData);
         if(data.success) {
             setTitle('');
             setGenre('');
@@ -68,7 +68,8 @@ const NewVideoForm = (props) => {
             data.error.errors.description ? setDescrError(data.error.errors.description.message) : setDescrError('');
         };
     };
-    const isDisabled = newVideo === '';
+
+    const isDisabled = video === '';
     return (
         <div>
             <Card style={styles.container}>
@@ -76,7 +77,7 @@ const NewVideoForm = (props) => {
                     <Typography>Add trailer</Typography>
                     <TextField 
                         placeholder='Title...'
-                        value={videoTitle}
+                        value={movieTitle}
                         style={styles.titleInput}
                         onChange={ 
                             (event) => setTitle(event.target.value)
@@ -89,7 +90,7 @@ const NewVideoForm = (props) => {
                         placeholder='Genre...'
                         multiline
                         rows='2'
-                        value={videoGenre}
+                        value={movieGenre}
                         style={styles.genreInput}
                         onChange={ 
                             (event) => setGenre(event.target.value)
@@ -102,7 +103,7 @@ const NewVideoForm = (props) => {
                         placeholder='Description...'
                         multiline
                         rows='16'
-                        value={videoDescription}
+                        value={movieDescription}
                         style={styles.descriptionInput}
                         onChange={ 
                             (event) => setDescription(event.target.value)
@@ -126,7 +127,14 @@ const NewVideoForm = (props) => {
                             <PhotoCamera/>
                         </IconButton>
                     </label>
-                    <span>{newVideo ? newVideo.name : null}</span>
+                    {
+                        video ? (
+                            <div>
+                                <span>{video.name}</span>
+                                <button onClick={() => setVideo('')}>X</button>
+                            </div>
+                        ) : null
+                    }
                     <br/>
                 </CardContent>
                 <CardActions>
@@ -146,4 +154,4 @@ const NewVideoForm = (props) => {
     );
 };
 
-export default NewVideoForm;
+export default NewMovieForm;

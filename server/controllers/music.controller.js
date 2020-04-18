@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 //import Grid from 'gridfs-stream';
 import formidable from 'formidable';
 import fs from 'fs';
-import Song from '../models/song.model';
+import Music from '../models/music.model';
 
 const Grid = require('gridfs-stream')
 eval(`Grid.prototype.findOne = ${Grid.prototype.findOne.toString().replace('nextObject', 'next')}`);
@@ -13,7 +13,7 @@ mongoose.connection.on('connected', () => {
   gridfs = Grid(mongoose.connection.db);
 });
 
-const songController = {
+const musicController = {
     create(request, response) {
         let form = new formidable.IncomingForm();
         form.keepExtensions = true;
@@ -24,17 +24,18 @@ const songController = {
                     errorMessage: 'Audio could not be uploaded !'
                 });
             };
-            let song = new Song(fields);
-            song.postedBy= request.profile;
-            if(Array.isArray(files.audios)) { //if receive multiple audios
+            let music = new Music(fields);
+            music.postedBy = request.profile;
+
+            if(Array.isArray(files.audios)) { //if receive multiple audios      
                 for(let audio of files.audios) {
                     let writestream = gridfs
                         .createWriteStream({
                             filename: audio.name, 
                             aliases: 'music'
-                        })
-                    fs.createReadStream(audio.path).pipe(writestream)
-                    song.audios.push(audio.name)
+                        });
+                    fs.createReadStream(audio.path).pipe(writestream);
+                    music.audios.push(audio.name);
                 };
             } else {
                 let writestream = gridfs
@@ -42,10 +43,11 @@ const songController = {
                         filename: files.audios.name, 
                         aliases: 'music'
                     });
-                fs.createReadStream(files.audios.path).pipe(writestream)
-                song.audios.push(files.audios.name)
+                fs.createReadStream(files.audios.path).pipe(writestream);
+                music.audios.push(files.audios.name);
             };
-            song.save((error, result) => {
+            
+            music.save((error, result) => {
                 if(error) {
                     return response.status(400).json({
                         error
@@ -71,21 +73,26 @@ const songController = {
         });
     },
 
-    listSongs(request, response) {
-        Song.find((error, songs) => {
+    listMusic(request, response) {
+        Music.find((error, music) => {
             if(error) {
                 return response.status(400).json({
                     error
                 });
             };
-            response.status(200).json(songs)
+            response.status(200).json(music);
         }).sort('-created');
     },
 
     listAudios(request, response) {
         gridfs.files.find({aliases: 'music'})
             .toArray((error, files) => {
-                response.status(200).json(files)
+                if(error) {
+                    return response.status(400).json({
+                        error
+                    });
+                };
+                response.status(200).json(files);
         });
     },
 
@@ -96,13 +103,13 @@ const songController = {
                 if (error) {
                     return response.status(400).send({
                         error
-                    })
-                }
+                    });
+                };
                 if (!file) {
                     return response.status(404).send({
                         errorMessage: 'Audio not found !'
                     })
-                }
+                };
         
                 if (request.headers['range']) {
                     let parts = request.headers['range'].replace(/bytes=/, '').split('-')
@@ -118,7 +125,7 @@ const songController = {
                         'Content-Length': chunksize,
                         'Content-Range': 'bytes ' + start + '-' + end + '/' + file.length,
                         'Content-Type': file.contentType
-                    })
+                    });
         
                     gridfs.createReadStream({
                         _id: file._id,
@@ -126,17 +133,17 @@ const songController = {
                             startPos: start,
                             endPos: end
                         }
-                    }).pipe(response)
+                    }).pipe(response);
                 } else {
                     response.header('Content-Length', file.length)
                     response.header('Content-Type', file.contentType)
         
                     gridfs.createReadStream({
                         _id: file._id
-                    }).pipe(response)
-                }
+                    }).pipe(response);
+                };
             });
     }
 }
 
-export default songController;
+export default musicController;

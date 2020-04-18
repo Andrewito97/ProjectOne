@@ -25,10 +25,8 @@ const movieController = {
             };
             let movie = new Movie(fields);
             movie.postedBy= request.profile;
-            if(files.video) {
-                let writestream = gridfs.createWriteStream({_id: movie._id})
-                fs.createReadStream(files.video.path).pipe(writestream)
-            };
+            let writestream = gridfs.createWriteStream({_id: movie._id})
+            fs.createReadStream(files.video.path).pipe(writestream)
             movie.save((error, result) => {
                 if(error) {
                     return response.status(400).json({

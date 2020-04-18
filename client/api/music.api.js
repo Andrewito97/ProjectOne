@@ -1,4 +1,4 @@
-const songApi = {
+const musicApi = {
     async create(token, song) {
         try {
           const response = await fetch('/myapi/music', {
@@ -39,4 +39,4 @@ const songApi = {
     }
 };
 
-export default songApi;
+export default musicApi;
