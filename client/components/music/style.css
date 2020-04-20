@@ -1,0 +1,31 @@
+audio {
+    border: solid 1px #38C18A;
+    height: 37px;
+    border-radius: 30px;
+    background-color: #38C18A;
+    width: 100%;
+ }
+  
+ audio::-webkit-media-controls-panel {
+    background-color: #3FD599;
+ }
+  
+ audio::-webkit-media-controls-play-button {
+    background-color: #2D986D;
+    height: 30px;
+    border-radius: 20px;
+ }
+  
+ audio::-webkit-media-controls-mute-button {
+    background-color: #2D986D;
+    height: 30px;
+    width: 40px;
+    border-radius: 30px;
+    margin: auto
+ }
+ 
+ audio::-webkit-media-controls-timeline {
+    background-color: #3FD599;
+    height: 17px;
+ }
+  

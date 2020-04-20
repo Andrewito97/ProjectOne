@@ -7,14 +7,10 @@ import DummyVideo from './DummyMovie';
 
 const MoviesList = () => {
     const [ movies, setMovies ] = React.useState([]);
-    const [ shouldUpdate, setUpdate ] = React.useState(false);
     const [ dummyData, setDummyData ] = React.useState(true);
 
     React.useEffect(() => {
         loadMovies();
-        if(shouldUpdate) {
-            loadMovies();
-        }
     }, []);
 
     const loadMovies = async () => {
@@ -28,8 +24,10 @@ const MoviesList = () => {
         };
     };
 
-    const updateMoviesList = () => {
-        setUpdate(!shouldUpdate);
+    const updateMoviesList = (item) => {
+        let updatedMovies = [...movies];
+        updatedMovies.unshift(item);
+        setMovies(updatedMovies);
     };
 
     return (

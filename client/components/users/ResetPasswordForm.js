@@ -16,18 +16,23 @@ import userApi from '../../api/user.api';
 
 const styles = {
     container: {
-        width: '70%',
+        width: '63%',
         minHeight: 200,
         padding: 30
     },
-    textInput: {
-        width: '70%'
+    passwordInput: {
+        marginTop: 40,
+        width: '90%'
+    },
+    confirmPassword: {
+        marginTop: 30,
+        width: '90%'
     },
     linkContainer: {
         marginTop: 30
     },
     button: {
-        backgroundColor: '#1976D2' ,
+        backgroundColor: '#2D986D' ,
         color: 'white',
         marginTop: 60
     }
@@ -55,20 +60,28 @@ const ResetPasswordForm = () => {
         <div>
         <Card style={styles.container}>
             <CardContent style={styles.content}>
-                <Typography>Set new password</Typography>
+                <Typography variant='h5'>Set new password</Typography>
 
-                <TextField style={styles.textInput} 
-                           label='Password' 
-                           type='password'
-                           value={requestedPassword} 
-                           onChange={(event) => setPassword(event.target.value)}
+                <TextField 
+                    required
+                    label='Password' 
+                    variant='outlined'
+                    placeholder='Type your new password...'
+                    type='password'
+                    value={requestedPassword} 
+                    style={styles.passwordInput} 
+                    onChange={(event) => setPassword(event.target.value)}
                 />
                 <br/>
-                <TextField style={styles.textInput} 
-                           label='Confirm password' 
-                           type='password'
-                           value={confirmedPassword} 
-                           onChange={(event) => setConfirmedPassword(event.target.value)}
+                <TextField 
+                    required
+                    label='Confirm password' 
+                    variant='outlined'
+                    placeholder='Confirm password...'
+                    type='password'
+                    value={confirmedPassword} 
+                    style={styles.confirmPassword} 
+                    onChange={(event) => setConfirmedPassword(event.target.value)}
                 />
                 <br/>
                 { passwordError ? (<Typography color='error'>{passwordError}</Typography>) : null }

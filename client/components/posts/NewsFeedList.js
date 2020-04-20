@@ -7,14 +7,10 @@ import DummyPost from './DummyPost';
 
 const NewsFeedList = () => {
     const [ posts, setPosts ] = React.useState([]);
-    const [ shouldUpdate, setUpdate ] = React.useState(false);
     const [ dummyData, setDummyData ] = React.useState(true);
 
     React.useEffect(() => {
         loadPosts();
-        if(shouldUpdate) {
-            loadPosts();
-        }
     }, []);
 
     const loadPosts = async () => {
@@ -28,8 +24,10 @@ const NewsFeedList = () => {
         };
     };
 
-    const updateNewsFeed = () => {
-        setUpdate(!shouldUpdate);
+    const updateNewsFeed = (item) => {
+        let updatedPosts = [...posts];
+        updatedPosts.unshift(item);
+        setPosts(updatedPosts);
     };
 
     return (

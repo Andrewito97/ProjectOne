@@ -7,14 +7,10 @@ import DummySong from './DummySong';
 
 const MusicList = () => {
     const [ music, setMusic ] = React.useState([]);
-    const [ shouldUpdate, setUpdate ] = React.useState(false);
     const [ dummyData, setDummyData ] = React.useState(true);
 
     React.useEffect(() => {
         loadMusic();
-        if(shouldUpdate) {
-            loadMusic();
-        }
     }, []);
 
     const loadMusic = async () => {
@@ -29,8 +25,10 @@ const MusicList = () => {
         };
     };
 
-    const updateMusicList = () => {
-        setUpdate(!shouldUpdate);
+    const updateMusicList = (item) => {
+        let updatedMusic = [...music];
+        updatedMusic.unshift(item);
+        setMusic(updatedMusic);
     };
 
     return (

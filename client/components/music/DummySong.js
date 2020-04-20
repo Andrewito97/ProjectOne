@@ -2,9 +2,9 @@ import React from 'react';
 import { Skeleton } from '@material-ui/lab';
 
 const styles = {
-    dummyText: {
-        marginTop: 30,
-        marginBottom: 30
+    dummySong: {
+        marginTop: 10,
+        marginBottom: 10
     }
 };
 
@@ -12,17 +12,19 @@ const DummySong = () => {
     return (
         <div>
             <Skeleton animation='wave' height={50} width='60%'/> 
-            <div style={styles.dummyText}>
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
+            <Skeleton animation='wave' height={50} width='45%'/> 
+            <div style={styles.dummySong}>
+                <Skeleton width='90%' height={100} animation='wave'/> 
             </div>
-            <Skeleton variant='rect' animation='wave' height={500}/> 
+            <div style={styles.dummySong}>
+                <Skeleton width='90%' height={100} animation='wave'/> 
+            </div>
+            <div style={styles.dummySong}>
+                <Skeleton width='90%' height={100} animation='wave'/> 
+            </div>
+            <div style={styles.dummySong}>
+                <Skeleton width='90%' height={100} animation='wave'/> 
+            </div>
         </div>
     )
 };

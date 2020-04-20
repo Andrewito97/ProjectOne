@@ -3,14 +3,22 @@ import mongoose from 'mongoose';
 import formidable from 'formidable';
 import fs from 'fs';
 import Music from '../models/music.model';
+import config from '../../config';
 
 const Grid = require('gridfs-stream')
 eval(`Grid.prototype.findOne = ${Grid.prototype.findOne.toString().replace('nextObject', 'next')}`);
 Grid.mongo = mongoose.mongo;
 
 let gridfs = null;
-mongoose.connection.on('connected', () => {
-  gridfs = Grid(mongoose.connection.db);
+const musicConnection = mongoose.createConnection(config.musicMongoUri, {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true, 
+    useCreateIndex: true
+});
+
+musicConnection.once('open', function () {
+    console.log('Connected to db with music documents !')
+    gridfs = Grid(musicConnection.db);
 });
 
 const musicController = {
@@ -24,27 +32,29 @@ const musicController = {
                     errorMessage: 'Audio could not be uploaded !'
                 });
             };
+
+            let names = JSON.parse(fields.audionames)
             let music = new Music(fields);
             music.postedBy = request.profile;
 
-            if(Array.isArray(files.audios)) { //if receive multiple audios      
-                for(let audio of files.audios) {
+            if(Array.isArray(files.audios)) { //if receive multiple audios     
+                for(let i = 0; i < files.audios.length; i++) {
                     let writestream = gridfs
                         .createWriteStream({
-                            filename: audio.name, 
+                            filename: names[i].audioname, 
                             aliases: 'music'
                         });
-                    fs.createReadStream(audio.path).pipe(writestream);
-                    music.audios.push(audio.name);
+                    fs.createReadStream(files.audios[i].path).pipe(writestream);
+                    music.audios.push(names[i].audioname);
                 };
-            } else {
+            } else { // if receive single audio
                 let writestream = gridfs
                     .createWriteStream({
-                        filename: files.audios.name, 
+                        filename: names[0].audioname, 
                         aliases: 'music'
                     });
                 fs.createReadStream(files.audios.path).pipe(writestream);
-                music.audios.push(files.audios.name);
+                music.audios.push(names[0].audioname);
             };
             
             music.save((error, result) => {
@@ -54,7 +64,7 @@ const musicController = {
                     });
                 } else {
                     return response.status(201).json({
-                        success: 'Song is uploaded !'
+                        success: result
                     });
                 };
             });

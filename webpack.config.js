@@ -41,7 +41,10 @@ const serverConfig = {
                     presets: [ '@babel/preset-react' ]
                 }
             }
-        }]
+        },{
+            test: /\.css$/i,
+            use: ['css-loader'],
+          },]
     }
 };
 
@@ -66,7 +69,10 @@ const clientConfig = {
                     presets: [ '@babel/preset-react' ]
                 }
             }
-        }]
+        },{
+            test: /\.css$/i,
+            use: ['style-loader', 'css-loader'],
+          },]
     }
 };
 

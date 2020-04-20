@@ -7,6 +7,7 @@ import { Card,
          Button,
          CardActions } from '@material-ui/core';
 import { PhotoCamera } from '@material-ui/icons';
+import DeleteIcon from '@material-ui/icons/Delete';
 import authenticationHelper from '../../helpers/authentication.helper';
 import postApi from '../../api/post.api';
 
@@ -25,8 +26,10 @@ const styles = {
         marginBottom: 30,
         width: '85%'
     },
-    fileInput: {
-        display: 'none'
+    icons: {
+        backgroundColor: '#2D986D',
+        color: 'white',
+        marginLeft: 8
     }
 };
 
@@ -51,7 +54,7 @@ const NewPostForm = (props) => {
             setImage('');
             setTitleError('');
             setTextError('');
-            props.updateNewsFeed();
+            props.updateNewsFeed(data.success);
         } else {
             data.error.errors.title ? setTitleError(data.error.errors.title.message) : setTitleError('');
             data.error.errors.text ? setTextError(data.error.errors.text.message) : setTextError('');
@@ -61,9 +64,12 @@ const NewPostForm = (props) => {
         <div>
             <Card style={styles.container}>
                 <CardContent>
-                    <Typography>Create your post</Typography>
+                    <Typography variant='h5'>Create your post</Typography>
                     <TextField 
-                        placeholder='Title...'
+                        required
+                        label='Title'
+                        variant='outlined'
+                        placeholder='Type title...'
                         value={postTitle}
                         style={styles.titleInput}
                         onChange={ 
@@ -74,7 +80,10 @@ const NewPostForm = (props) => {
                     { titleError ? (<Typography color='error'>{titleError}</Typography>) : null }
 
                     <TextField 
-                        placeholder='Content...'
+                        required
+                        label='Text content'
+                        variant='outlined'
+                        placeholder='Type content...'
                         multiline
                         rows='20'
                         value={postText}
@@ -88,7 +97,7 @@ const NewPostForm = (props) => {
 
                     <input 
                         accept='image/*' 
-                        style={styles.fileInput}
+                        style={{display: 'none'}}
                         type='file'
                         id='icon-button-file'
                         onChange={ 
@@ -96,15 +105,21 @@ const NewPostForm = (props) => {
                         }
                     />
                     <label htmlFor='icon-button-file'>
-                        <IconButton component='span'>
+                        <IconButton style={styles.icons} component='span'>
                             <PhotoCamera/>
                         </IconButton>
                     </label>
                     {
                         postImage ? (
                             <div>
-                                <span>{postImage.name}</span>
-                                <button onClick={() => setImage('')}>X</button>
+                                <Typography component='span'>{postImage.name}</Typography>
+                                <IconButton 
+                                    onClick={() => setImage('')} 
+                                    size='small'
+                                    style={styles.icons}
+                                >
+                                    <DeleteIcon/>
+                                </IconButton>
                             </div>
                         ) : null
                     }
@@ -114,7 +129,7 @@ const NewPostForm = (props) => {
                     <Button 
                         onClick={createPost}
                         style={{
-                            backgroundColor: '#1976D2',
+                            backgroundColor: '#2D986D',
                             color: 'white',
                             marginTop: 15
                         }}>

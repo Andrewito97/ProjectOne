@@ -15,18 +15,19 @@ import userApi from '../../api/user.api';
 
 const styles = {
     container: {
-        width: '70%',
+        width: '63%',
         minHeight: 200,
         padding: 30
     },
-    textInput: {
-        width: '70%'
+    emailInput: {
+        marginTop: 40,
+        width: '90%'
     },
     linkContainer: {
         marginTop: 30
     },
     button: {
-        backgroundColor: '#1976D2' ,
+        backgroundColor: '#2D986D' ,
         color: 'white',
         marginTop: 60
     }
@@ -50,13 +51,17 @@ const RecoveryForm = () => {
         <div>
         <Card style={styles.container}>
             <CardContent style={styles.content}>
-                <Typography>Recovery</Typography>
+                <Typography variant='h5'>Recovery</Typography>
 
-                <TextField style={styles.textInput} 
-                           label='Email' 
-                           type='email'
-                           value={requestedEmail} 
-                           onChange={(event) => setEmail(event.target.value)}
+                <TextField 
+                    required
+                    label='Email' 
+                    variant='outlined'
+                    placeholder='Type your email...'
+                    type='email'
+                    value={requestedEmail} 
+                    style={styles.emailInput} 
+                    onChange={(event) => setEmail(event.target.value)}
                 />
                 <br/>
                 { emailError ? (<Typography color='error'>{emailError}</Typography>) : null }

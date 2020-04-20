@@ -1,5 +1,5 @@
 const musicApi = {
-    async create(token, song) {
+    async create(token, songs) {
         try {
           const response = await fetch('/myapi/music', {
                 method: 'POST',
@@ -7,7 +7,7 @@ const musicApi = {
                     'Accept': 'application/json',
                     'Authorization': 'Bearer ' + token
                 },
-                body: song
+                body: songs
             });
             return response.json();
             }

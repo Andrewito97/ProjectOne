@@ -6,7 +6,8 @@ import { Card,
          IconButton,
          Button,
          CardActions } from '@material-ui/core';
-import { PhotoCamera } from '@material-ui/icons';
+import MovieCreationIcon from '@material-ui/icons/MovieCreation';
+import DeleteIcon from '@material-ui/icons/Delete';
 import authenticationHelper from '../../helpers/authentication.helper';
 import movieApi from '../../api/movie.api';
 
@@ -30,8 +31,10 @@ const styles = {
         marginBottom: 30,
         width: '85%'
     },
-    fileInput: {
-        display: 'none'
+    icons: {
+        backgroundColor: '#2D986D',
+        color: 'white',
+        marginLeft: 8
     }
 };
 
@@ -45,7 +48,7 @@ const NewMovieForm = (props) => {
     const [ video, setVideo ] = React.useState('');
     // const [ user, setUser ] = React.useState({}); add post author in future
 
-    const submitVideo = async () => {
+    const submitMovie = async () => {
         let movieData = new FormData()
         movieData.set('title', movieTitle)
         movieData.set('genre', movieGenre)
@@ -61,7 +64,7 @@ const NewMovieForm = (props) => {
             setTitleError('');
             setGenreError('');
             setDescrError('')
-            props.updateMoviesList();
+            props.updateMoviesList(data.success);
         } else {
             data.error.errors.title ? setTitleError(data.error.errors.title.message) : setTitleError('');
             data.error.errors.genre ? setGenreError(data.error.errors.genre.message) : setGenreError('');
@@ -74,9 +77,12 @@ const NewMovieForm = (props) => {
         <div>
             <Card style={styles.container}>
                 <CardContent>
-                    <Typography>Add trailer</Typography>
+                    <Typography variant='h5'>Add trailer</Typography>
                     <TextField 
-                        placeholder='Title...'
+                        required
+                        label='Title'
+                        variant='outlined'
+                        placeholder='Type title...'
                         value={movieTitle}
                         style={styles.titleInput}
                         onChange={ 
@@ -87,9 +93,10 @@ const NewMovieForm = (props) => {
                     { titleError ? (<Typography color='error'>{titleError}</Typography>) : null }
 
                     <TextField 
-                        placeholder='Genre...'
-                        multiline
-                        rows='2'
+                        required
+                        label='Genre'
+                        variant='outlined'
+                        placeholder='Type genre...'
                         value={movieGenre}
                         style={styles.genreInput}
                         onChange={ 
@@ -100,7 +107,10 @@ const NewMovieForm = (props) => {
                     { genreError ? (<Typography color='error'>{genreError}</Typography>) : null }
 
                     <TextField 
-                        placeholder='Description...'
+                        required
+                        label='Description'
+                        variant='outlined'
+                        placeholder='Type description...'
                         multiline
                         rows='16'
                         value={movieDescription}
@@ -115,7 +125,7 @@ const NewMovieForm = (props) => {
                     </div>
                     <input 
                         accept='video/*' 
-                        style={styles.fileInput}
+                        style={{display: 'none'}}
                         type='file'
                         id='icon-button-file'
                         onChange={ 
@@ -123,15 +133,21 @@ const NewMovieForm = (props) => {
                         }
                     />
                     <label htmlFor='icon-button-file'>
-                        <IconButton component='span'>
-                            <PhotoCamera/>
+                        <IconButton style={styles.icons} component='span'>
+                            <MovieCreationIcon/>
                         </IconButton>
                     </label>
                     {
                         video ? (
                             <div>
-                                <span>{video.name}</span>
-                                <button onClick={() => setVideo('')}>X</button>
+                                <Typography component='span'>{video.name}</Typography>
+                                <IconButton 
+                                    onClick={() => setVideo('')} 
+                                    size='small'
+                                    style={styles.icons}
+                                >
+                                    <DeleteIcon/>
+                                </IconButton>
                             </div>
                         ) : null
                     }
@@ -140,9 +156,9 @@ const NewMovieForm = (props) => {
                 <CardActions>
                     <Button 
                         disabled={isDisabled} 
-                        onClick={submitVideo}
+                        onClick={submitMovie}
                         style={{
-                            backgroundColor: isDisabled ? '#BCC0B8' : '#1976D2',
+                            backgroundColor: isDisabled ? '#BCC0B8' : '#2D986D',
                             color: 'white',
                             marginTop: 15
                         }}>

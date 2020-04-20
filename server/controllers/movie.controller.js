@@ -3,14 +3,22 @@ import mongoose from 'mongoose';
 import formidable from 'formidable';
 import fs from 'fs';
 import Movie from '../models/movie.model';
+import config from '../../config';
 
 const Grid = require('gridfs-stream')
 eval(`Grid.prototype.findOne = ${Grid.prototype.findOne.toString().replace('nextObject', 'next')}`);
 Grid.mongo = mongoose.mongo;
 
 let gridfs = null;
-mongoose.connection.on('connected', () => {
-  gridfs = Grid(mongoose.connection.db);
+const movieConnection = mongoose.createConnection(config.movieMongoUri, {
+    useNewUrlParser: true, 
+    useUnifiedTopology: true, 
+    useCreateIndex: true
+});
+
+movieConnection.once('open', function () {
+    console.log('Connected to db with movie documents !')
+    gridfs = Grid(movieConnection.db);
 });
 
 const movieController = {
@@ -34,7 +42,7 @@ const movieController = {
                     });
                 } else {
                     return response.status(201).json({
-                        success: 'Movie is uploaded !'
+                        success: result
                     });
                 };
             });

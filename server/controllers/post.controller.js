@@ -25,7 +25,7 @@ const postController = {
                     });
                 } else {
                     return response.status(201).json({
-                        success: 'Post is uploaded !'
+                        success: result
                     });
                 };  
             });

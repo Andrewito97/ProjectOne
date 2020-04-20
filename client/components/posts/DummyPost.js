@@ -13,16 +13,16 @@ const DummyPost = () => {
         <div>
             <Skeleton animation='wave' height={50} width='60%'/> 
             <div style={styles.dummyText}>
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
-                <Skeleton animation='wave'/> 
+                <Skeleton width='90%' animation='wave'/> 
+                <Skeleton width='90%' animation='wave'/> 
+                <Skeleton width='90%' animation='wave'/> 
+                <Skeleton width='90%' animation='wave'/> 
+                <Skeleton width='90%' animation='wave'/> 
+                <Skeleton width='90%' animation='wave'/> 
+                <Skeleton width='90%' animation='wave'/> 
+                <Skeleton width='90%' animation='wave'/> 
             </div>
-            <Skeleton variant='rect' animation='wave' height={500}/> 
+            <Skeleton variant='rect' width='90%' animation='wave' height={500}/> 
         </div>
     )
 };

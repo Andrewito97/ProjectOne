@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactPlayer from 'react-player';
+import AudioPlayer from './AudioPlayer';
 import { Card, 
          CardContent, 
          CardHeader,
@@ -33,20 +33,7 @@ const Music = (props) => {
                     subheader={props.music.genre}
                 />
                 <CardContent>
-                    {
-                    props.music.audios.map((name, index) => (
-                        <div key={index}>
-                            <audio controls>
-                                <source src={'/myapi/music/audios/' + name} />
-                            </audio>
-                        </div>
-                        )      
-                    )
-                    }
-                    {/* <ReactPlayer 
-                        url={'/myapi/music/' + props.song._id}
-                        controls
-                    /> */}
+                { props.music.audios.map((name, index) => <AudioPlayer key={index} name={name}/>) }
                     <Typography style={styles.songDate}>
                         {new Date(props.music.created).toDateString()}
                     </Typography>

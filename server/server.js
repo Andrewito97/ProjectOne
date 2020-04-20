@@ -63,7 +63,7 @@ app.get('*', (request, response) => {
 });
 
 //connect to db
-mongoose.connect(config.mongoUri, {
+mongoose.connect(config.mainMongoUri, {
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
     useCreateIndex: true

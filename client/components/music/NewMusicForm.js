@@ -5,8 +5,13 @@ import { Card,
          TextField,
          IconButton,
          Button,
-         CardActions } from '@material-ui/core';
-import { PhotoCamera } from '@material-ui/icons';
+         CardActions,
+         List,
+         ListItem } from '@material-ui/core';
+import MusicNoteIcon from '@material-ui/icons/MusicNote';
+import EditIcon from '@material-ui/icons/Edit';
+import SaveIcon from '@material-ui/icons/Save';
+import DeleteIcon from '@material-ui/icons/Delete';
 import authenticationHelper from '../../helpers/authentication.helper';
 import musicApi from '../../api/music.api';
 
@@ -25,26 +30,33 @@ const styles = {
         marginBottom: 30,
         width: '85%'
     },
-    fileInput: {
-        display: 'none'
+    audioNameInput: {
+        width: '70%'
+    },
+    icons: {
+        backgroundColor: '#2D986D',
+        color: 'white',
+        marginLeft: 8
     }
 };
 
-const NewSongForm = (props) => {
+const NewMusicForm = (props) => {
     const [ musicAuthor, setAuthor ] = React.useState('');
     const [ authorError, setAuthorError ] = React.useState('');
     const [ musicGenre, setGenre ] = React.useState('');
     const [ genreError, setGenreError ] = React.useState('');
     const [ audios, setAudio ] = React.useState([]);
+    const [ audioNames, setAudioNames ] = React.useState([]);
     // const [ user, setUser ] = React.useState({}); add post author in future
 
-    const submitSong = async () => {
+    const submitMusic = async () => {
         let musicData = new FormData()
         musicData.set('author', musicAuthor)
         musicData.set('genre', musicGenre)
         for(let audio of audios) {
             musicData.append('audios', audio)
         }
+        musicData.append('audionames', JSON.stringify(audioNames))
         const token = authenticationHelper.isAuthenticated().accessToken;
         const data = await musicApi.create(token, musicData);
         if(data.success) {
@@ -53,27 +65,53 @@ const NewSongForm = (props) => {
             setAudio('')
             setAuthorError('')
             setGenreError('')
-            props.updateMusicList()
+            props.updateMusicList(data.success)
         } else {
             data.error.errors.author ? setAuthorError(data.error.errors.author.message) : setAuthorError('');
             data.error.errors.genre ? setGenreError(data.error.errors.genre.message) : setGenreError('');
         }
     };
 
+    const setEditingStatus = (index) => {
+        let updatedStatus = [...audioNames];
+        updatedStatus[index].shouldEdit = true;
+        setAudioNames(updatedStatus);
+    };
+
+    const handleAudioNameChange = (index, event) => {
+        let updatedNames = [...audioNames];
+        updatedNames[index].audioname = event.target.value;
+        setAudioNames(updatedNames);
+    };
+
+    const saveAudioName = (index) => {
+        let updatedStatus = [...audioNames];
+        updatedStatus[index].shouldEdit = false;
+        setAudioNames(updatedStatus);
+    };
+
     const removeItem = (index) => {
         let updatedAudios = [...audios];
         updatedAudios.splice(index, 1);
         setAudio(updatedAudios);
+
+        let updatedStatus = [...audioNames];
+        updatedStatus.splice(index, 1);
+        setAudioNames(updatedStatus);
     };
 
     const isDisabled = audios.length === 0 || audios.length > 10;
+
     return (
         <div>
             <Card style={styles.container}>
                 <CardContent>
-                    <Typography>Add music</Typography>
+                    <Typography variant='h5'>Add music</Typography>
                     <TextField 
-                        placeholder='Author...'
+                        required
+                        label='Author'
+                        placeholder='Type author...'
+                        variant='outlined'
                         value={musicAuthor}
                         style={styles.authorInput}
                         onChange={ 
@@ -84,9 +122,10 @@ const NewSongForm = (props) => {
                     { authorError ? (<Typography color='error'>{authorError}</Typography>) : null } 
 
                     <TextField 
-                        placeholder='Genre...'
-                        multiline
-                        rows='2'
+                        required
+                        label='Genre'
+                        placeholder='Type genre...'
+                        variant='outlined'
                         value={musicGenre}
                         style={styles.genreInput}
                         onChange={ 
@@ -98,37 +137,82 @@ const NewSongForm = (props) => {
 
                     <input 
                         accept='audio/*' 
-                        style={styles.fileInput}
+                        style={{display: 'none'}}
                         type='file'
                         id='icon-button-file'
                         onChange={ 
-                            (event) => setAudio(prevSongs => [...prevSongs, event.target.files[0]])
+                            (event) => {
+                                event.persist()
+                                setAudio(prevSongs => [...prevSongs, event.target.files[0]])
+                                setAudioNames(prevNames => [...prevNames, {
+                                    shouldEdit: false,
+                                    audioname: event.target.files[0].name
+                                }])
+                            } 
                         }
                     />
                     <label htmlFor='icon-button-file'>
-                        <IconButton component='span'>
-                            <PhotoCamera/>
+                        <IconButton style={styles.icons} component='span'>
+                            <MusicNoteIcon/>
                         </IconButton>
                     </label>
-                    <span>
+                    <List>
                     {
                         audios ? audios.map( (item, i) => (
-                            <div key={i}>
-                                <span>{item.name}</span>
-                                <button onClick={() => removeItem(i)}>X</button>
-                            </div>
+                            <ListItem button key={i}>
+                                {   
+                                    audioNames[i].shouldEdit ?
+                                    <TextField
+                                        variant='outlined'
+                                        defaultValue={item.name}
+                                        style={styles.audioNameInput}
+                                        onChange={ 
+                                            (event) => handleAudioNameChange(i, event)
+                                        }
+                                    />
+                                    :
+                                    <Typography component='span'>
+                                        {audioNames[i].audioname}
+                                    </Typography> 
+                                }
+                                {
+                                    audioNames[i].shouldEdit ?
+                                    (<IconButton 
+                                        onClick={() => saveAudioName(i)} 
+                                        size='small'
+                                        style={styles.icons}
+                                    >
+                                        <SaveIcon/>
+                                    </IconButton>)
+                                    :
+                                    (<IconButton 
+                                        onClick={() => setEditingStatus(i)} 
+                                        size='small'
+                                        style={styles.icons}
+                                    >
+                                        <EditIcon/>
+                                    </IconButton>)
+                                }
+                                <IconButton 
+                                    onClick={() => removeItem(i)} 
+                                    size='small'
+                                    style={styles.icons}
+                                >
+                                    <DeleteIcon/>
+                                </IconButton>
+                            </ListItem>
                             )
                         ) : null
                     }
-                    </span>
+                    </List>
                     <br/>
                 </CardContent>
                 <CardActions>
                     <Button 
                         disabled={isDisabled} 
-                        onClick={submitSong}
+                        onClick={submitMusic}
                         style={{
-                            backgroundColor: isDisabled ? '#BCC0B8' : '#1976D2',
+                            backgroundColor: isDisabled ? '#BCC0B8' : '#2D986D',
                             color: 'white',
                             marginTop: 15
                         }}>
@@ -140,4 +224,4 @@ const NewSongForm = (props) => {
     );
 };
 
-export default NewSongForm;
+export default NewMusicForm;

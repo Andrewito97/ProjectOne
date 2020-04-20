@@ -15,18 +15,28 @@ import userApi from '../../api/user.api';
 
 const styles = {
     container: {
-        width: '70%',
+        width: '63%',
         minHeight: 350,
         padding: 30
     },
-    textInput: {
-        width: '70%'
+    nameInput: {
+        marginTop: 40,
+        width: '90%'
+    },
+    emailInput: {
+        marginTop: 30,
+        width: '90%'
+    },
+    passwordInput: {
+        marginTop: 30,
+        marginBottom: 30,
+        width: '90%'
     },
     linkContainer: {
         marginTop: 30
     },
     button: {
-        backgroundColor: '#1976D2' ,
+        backgroundColor: '#2D986D' ,
         color: 'white',
         marginTop: 60
     }
@@ -68,30 +78,42 @@ const SignUpForm = () => {
         <div>
         <Card style={styles.container}>
             <CardContent style={styles.content}>
-                <Typography>Sign Up</Typography>
+                <Typography variant='h5'>Sign Up</Typography>
 
-                <TextField style={styles.textInput} 
-                           label='Name' 
-                           value={requestedName} 
-                           onChange={(event) => setName(event.target.value)}
+                <TextField 
+                    required
+                    label='Name' 
+                    variant='outlined'
+                    placeholder='Type your name...'
+                    value={requestedName} 
+                    style={styles.nameInput} 
+                    onChange={(event) => setName(event.target.value)}
                 />
                 <br/>
                 { nameError ? (<Typography color='error'>{nameError}</Typography>) : null }
 
-                <TextField style={styles.textInput} 
-                           label='Email' 
-                           type='email'
-                           value={requestedEmail}
-                           onChange={(event) => setEmail(event.target.value)}
+                <TextField 
+                    required
+                    label='Email' 
+                    variant='outlined'
+                    placeholder='Type your email...'
+                    type='email'
+                    value={requestedEmail}
+                    style={styles.emailInput}
+                    onChange={(event) => setEmail(event.target.value)}
                 />
                 <br/>
                 { emailError ? (<Typography color='error'>{emailError}</Typography>) : null }
 
-                <TextField style={styles.textInput} 
-                           label='Password' 
-                           type='password'
-                           value={requestedPassword}
-                           onChange={(event) => setPassword(event.target.value)}
+                <TextField 
+                    required
+                    label='Password' 
+                    variant='outlined'
+                    placeholder='Type your password...'
+                    type='password'
+                    value={requestedPassword}
+                    style={styles.passwordInput} 
+                    onChange={(event) => setPassword(event.target.value)}
                 />
                 <br/>
                 { passwordError ? (<Typography color='error'>{passwordError}</Typography>) : null }
