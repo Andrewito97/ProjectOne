@@ -16,17 +16,17 @@ import userApi from '../../api/user.api';
 
 const styles = {
     container: {
-        width: '63%',
+        width: '55%',
         minHeight: 200,
-        padding: 30
+        padding: 50
     },
     passwordInput: {
         marginTop: 40,
-        width: '90%'
+        width: '100%'
     },
     confirmPassword: {
         marginTop: 30,
-        width: '90%'
+        width: '100%'
     },
     linkContainer: {
         marginTop: 30

@@ -17,21 +17,24 @@ import musicApi from '../../api/music.api';
 
 const styles = {
     container: {
-        padding: 37,
+        paddingTop: 50,
+        paddingBottom: 50,
+        paddingRight: 60,
+        paddingLeft: 60,
         minHeight: 200,
         marginBottom: 80
     },
     authorInput: {
-        marginTop: 18,
-        width: '85%'
+        marginTop: 30,
+        width: '100%'
     },
     genreInput: {
         marginTop: 30,
         marginBottom: 30,
-        width: '85%'
+        width: '100%'
     },
     audioNameInput: {
-        width: '70%'
+        width: '80%'
     },
     icons: {
         backgroundColor: '#2D986D',

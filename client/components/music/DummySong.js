@@ -14,16 +14,16 @@ const DummySong = () => {
             <Skeleton animation='wave' height={50} width='60%'/> 
             <Skeleton animation='wave' height={50} width='45%'/> 
             <div style={styles.dummySong}>
-                <Skeleton width='90%' height={100} animation='wave'/> 
+                <Skeleton width='70%' height={75} animation='wave'/> 
             </div>
             <div style={styles.dummySong}>
-                <Skeleton width='90%' height={100} animation='wave'/> 
+                <Skeleton width='70%' height={75} animation='wave'/> 
             </div>
             <div style={styles.dummySong}>
-                <Skeleton width='90%' height={100} animation='wave'/> 
+                <Skeleton width='70%' height={75} animation='wave'/> 
             </div>
             <div style={styles.dummySong}>
-                <Skeleton width='90%' height={100} animation='wave'/> 
+                <Skeleton width='70%' height={75} animation='wave'/> 
             </div>
         </div>
     )

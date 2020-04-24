@@ -1,24 +1,24 @@
 import mongoose from 'mongoose';
-//import Grid from 'gridfs-stream';
 import formidable from 'formidable';
 import fs from 'fs';
-import Music from '../models/music.model';
+import MusicSchema from '../models/music.model';
 import config from '../../config';
 
-const Grid = require('gridfs-stream')
-eval(`Grid.prototype.findOne = ${Grid.prototype.findOne.toString().replace('nextObject', 'next')}`);
-Grid.mongo = mongoose.mongo;
-
-let gridfs = null;
-const musicConnection = mongoose.createConnection(config.musicMongoUri, {
+//create connection to specific database
+const connection = mongoose.createConnection(config.musicMongoUri, {
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
     useCreateIndex: true
 });
 
-musicConnection.once('open', function () {
-    console.log('Connected to db with music documents !')
-    gridfs = Grid(musicConnection.db);
+//append specifid schema to the connection and initialize constructor
+const Music = connection.model('Music', MusicSchema);
+
+////append grid-fs-bucket to the connection and initialize constructor
+let gridFSBucket = null;
+connection.once('open', function () {
+    gridFSBucket = new mongoose.mongo.GridFSBucket(connection.db);
+    console.log('Connected to db with music documents !');
 });
 
 const musicController = {
@@ -39,18 +39,18 @@ const musicController = {
 
             if(Array.isArray(files.audios)) { //if receive multiple audios     
                 for(let i = 0; i < files.audios.length; i++) {
-                    let writestream = gridfs
-                        .createWriteStream({
-                            filename: names[i].audioname, 
+                    let writestream = gridFSBucket
+                        .openUploadStream(
+                            names[i].audioname, {
                             aliases: 'music'
                         });
                     fs.createReadStream(files.audios[i].path).pipe(writestream);
                     music.audios.push(names[i].audioname);
                 };
             } else { // if receive single audio
-                let writestream = gridfs
-                    .createWriteStream({
-                        filename: names[0].audioname, 
+                let writestream = gridFSBucket
+                    .openUploadStream(
+                        names[0].audioname, {
                         aliases: 'music'
                     });
                 fs.createReadStream(files.audios.path).pipe(writestream);
@@ -72,13 +72,13 @@ const musicController = {
     },
 
     getAudioByName(request, response, nextHendlear, audioName){
-        gridfs.findOne({filename: audioName}, (error, audio) => {
-            if(error || !audio) {
+        gridFSBucket.find({filename: audioName}).toArray((error, audios) => {
+            if(error || !audios) {
                 return response.status(400).json({
                     errorMessage: 'Audio not found !'
                 });
             };
-            request.profile = audio;
+            request.profile = audios[0];
             nextHendlear();
         });
     },
@@ -95,8 +95,7 @@ const musicController = {
     },
 
     listAudios(request, response) {
-        gridfs.files.find({aliases: 'music'})
-            .toArray((error, files) => {
+        gridFSBucket.find({aliases: 'music'}).toArray((error, files) => {
                 if(error) {
                     return response.status(400).json({
                         error
@@ -107,9 +106,11 @@ const musicController = {
     },
 
     loadAudio(request, response) {
-            gridfs.findOne({
+        gridFSBucket.find({
                 filename: request.profile.filename
-            }, (error, file) => {
+            }).toArray((error, files) => {
+                let file = files[0];
+                
                 if (error) {
                     return response.status(400).send({
                         error
@@ -120,37 +121,36 @@ const musicController = {
                         errorMessage: 'Audio not found !'
                     })
                 };
-        
-                if (request.headers['range']) {
+                
+                if (request.headers['range']) { //load audio from the specific range
                     let parts = request.headers['range'].replace(/bytes=/, '').split('-')
                     let partialstart = parts[0]
                     let partialend = parts[1]
         
-                    let start = parseInt(partialstart, 10)
-                    let end = partialend ? parseInt(partialend, 10) : file.length - 1
-                    let chunksize = (end - start) + 1
+                    let startPosition = parseInt(partialstart, 10)
+                    let endPosition = partialend ? parseInt(partialend, 10) : file.length - 1
+                    let chunksize = (endPosition - startPosition) + 1
         
                     response.writeHead(206, {
                         'Accept-Ranges': 'bytes',
                         'Content-Length': chunksize,
-                        'Content-Range': 'bytes ' + start + '-' + end + '/' + file.length,
-                        'Content-Type': file.contentType
+                        'Content-Range': 'bytes ' + startPosition + '-' + endPosition + '/' + file.length,
+                        'Content-Type': 'binary/octet-stream'
                     });
-        
-                    gridfs.createReadStream({
-                        _id: file._id,
-                        range: {
-                            startPos: start,
-                            endPos: end
+                    
+                    gridFSBucket.openDownloadStream(
+                        file._id, {
+                            start: startPosition,
+                            end: endPosition
                         }
-                    }).pipe(response);
-                } else {
+                    ).pipe(response);
+                } else { //load full audio by default
                     response.header('Content-Length', file.length)
-                    response.header('Content-Type', file.contentType)
+                    response.header('Content-Type', 'binary/octet-stream')
         
-                    gridfs.createReadStream({
-                        _id: file._id
-                    }).pipe(response);
+                    gridFSBucket.openDownloadStream(
+                        file._id
+                    ).pipe(response);
                 };
             });
     }

@@ -1,24 +1,24 @@
 import mongoose from 'mongoose';
-//import Grid from 'gridfs-stream';
 import formidable from 'formidable';
 import fs from 'fs';
-import Movie from '../models/movie.model';
+import MovieSchema from '../models/movie.model';
 import config from '../../config';
 
-const Grid = require('gridfs-stream')
-eval(`Grid.prototype.findOne = ${Grid.prototype.findOne.toString().replace('nextObject', 'next')}`);
-Grid.mongo = mongoose.mongo;
-
-let gridfs = null;
-const movieConnection = mongoose.createConnection(config.movieMongoUri, {
+//create connection to specific database
+const connection = mongoose.createConnection(config.movieMongoUri, {
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
     useCreateIndex: true
 });
 
-movieConnection.once('open', function () {
-    console.log('Connected to db with movie documents !')
-    gridfs = Grid(movieConnection.db);
+//append specifid schema to the connection and initialize constructor
+const Movie = connection.model('Movie', MovieSchema);
+
+////append grid-fs-bucket to the connection and initialize constructor
+let gridFSBucket = null;
+connection.once('open', function () {
+    gridFSBucket = new mongoose.mongo.GridFSBucket(connection.db);
+    console.log('Connected to db with music documents !');
 });
 
 const movieController = {
@@ -33,7 +33,11 @@ const movieController = {
             };
             let movie = new Movie(fields);
             movie.postedBy= request.profile;
-            let writestream = gridfs.createWriteStream({_id: movie._id})
+            let writestream = gridFSBucket.
+                openUploadStreamWithId(
+                    movie._id,
+                    files.video.name
+                );
             fs.createReadStream(files.video.path).pipe(writestream)
             movie.save((error, result) => {
                 if(error) {
@@ -74,9 +78,10 @@ const movieController = {
     },
 
     loadMovie(request, response) {
-        gridfs.findOne({
+        gridFSBucket.find({
             _id: request.movie._id
-        }, (error, file) => {
+        }).toArray((error, files) => {
+            let file = files[0];
             if (error) {
                 return response.status(400).send({
                     error
@@ -88,36 +93,35 @@ const movieController = {
                 })
             }
     
-            if (request.headers['range']) {
+            if (request.headers['range']) { //load video from the specific range
                 let parts = request.headers['range'].replace(/bytes=/, '').split('-')
                 let partialstart = parts[0]
                 let partialend = parts[1]
     
-                let start = parseInt(partialstart, 10)
-                let end = partialend ? parseInt(partialend, 10) : file.length - 1
-                let chunksize = (end - start) + 1
+                let startPosition = parseInt(partialstart, 10)
+                let endPosition = partialend ? parseInt(partialend, 10) : file.length - 1
+                let chunksize = (endPosition - startPosition) + 1
     
                 response.writeHead(206, {
                     'Accept-Ranges': 'bytes',
                     'Content-Length': chunksize,
-                    'Content-Range': 'bytes ' + start + '-' + end + '/' + file.length,
-                    'Content-Type': file.contentType
+                    'Content-Range': 'bytes ' + startPosition + '-' + endPosition + '/' + file.length,
+                    'Content-Type': 'binary/octet-stream'
                 })
     
-                gridfs.createReadStream({
-                    _id: file._id,
-                    range: {
-                        startPos: start,
-                        endPos: end
+                gridFSBucket.openDownloadStream(
+                    file._id, {
+                        start: startPosition,
+                        end: endPosition
                     }
-                }).pipe(response)
-            } else {
+                ).pipe(response)
+            } else { //load full video by default
                 response.header('Content-Length', file.length)
-                response.header('Content-Type', file.contentType)
+                response.header('Content-Type', 'binary/octet-stream')
     
-                gridfs.createReadStream({
-                    _id: file._id
-                }).pipe(response)
+                gridFSBucket.openDownloadStream(
+                    file._id
+                ).pipe(response)
             }
         })
     }

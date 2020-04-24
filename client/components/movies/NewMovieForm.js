@@ -13,23 +13,26 @@ import movieApi from '../../api/movie.api';
 
 const styles = {
     container: {
-        padding: 37,
+        paddingTop: 50,
+        paddingBottom: 50,
+        paddingLeft: 60,
+        paddingRight: 60,
         minHeight: 200,
         marginBottom: 80
     },
     titleInput: {
-        marginTop: 18,
-        width: '85%'
+        marginTop: 30,
+        width: '100%'
     },
     genreInput: {
         marginTop: 30,
         marginBottom: 30,
-        width: '85%'
+        width: '100%'
     },
     descriptionInput: {
         marginTop: 30,
         marginBottom: 30,
-        width: '85%'
+        width: '100%'
     },
     icons: {
         backgroundColor: '#2D986D',
