@@ -29,6 +29,10 @@ const styles = {
     },
     passwordInput: {
         marginTop: 30,
+        width: '100%'
+    },
+    confirmPasswordInput: {
+        marginTop: 30,
         marginBottom: 30,
         width: '100%'
     },
@@ -46,16 +50,20 @@ const SignUpForm = () => {
     const [requestedName, setName] = React.useState('');
     const [requestedEmail, setEmail] = React.useState('');
     const [requestedPassword, setPassword] = React.useState('');
+    const [confirmedPassword, setConfirmedPassword] = React.useState('');
     const [nameError, setNameError] = React.useState('');
     const [emailError, setEmailError] = React.useState('');
     const [passwordError, setPasswordError] = React.useState('');
     const [successed, setSuccessed] = React.useState(false);
 
     const onCreate = async () => {
+        if(requestedPassword !== confirmedPassword) {
+            return setPasswordError('Passwords don\'t match !')
+        };
         const userData = {
             name: requestedName,
             email: requestedEmail,
-            password: requestedPassword
+            password: requestedPassword,
         };
         const data = await userApi.create(userData);
         if(data.message) {
@@ -114,6 +122,18 @@ const SignUpForm = () => {
                     value={requestedPassword}
                     style={styles.passwordInput} 
                     onChange={(event) => setPassword(event.target.value)}
+                />
+                <br/>
+
+                <TextField 
+                    required
+                    label='Confrm password' 
+                    variant='outlined'
+                    placeholder='Confirm your password...'
+                    type='password'
+                    value={confirmedPassword}
+                    style={styles.confirmPasswordInput} 
+                    onChange={(event) => setConfirmedPassword(event.target.value)}
                 />
                 <br/>
                 { passwordError ? (<Typography color='error'>{passwordError}</Typography>) : null }

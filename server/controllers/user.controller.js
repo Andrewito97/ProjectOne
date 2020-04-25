@@ -10,11 +10,11 @@ const userController = {
         const user = new User(request.body);
         user.save( (error, result) => {
             if(error) {
-                response.status(400).json({ 
+                response.status(401).json({ 
                     error 
                 });
             } else {
-                response.status(200).json({ 
+                response.status(201).json({ 
                     message: 'Successfully signed up !' 
                 });
             };
@@ -36,12 +36,32 @@ const userController = {
             const accessToken = jsonWebToken.sign({ _id: user._id }, config.jwtSecret );
             response.cookie('token', accessToken, { expire: new Date() + 9999 });
             return response.json({ 
-                    accessToken, user: { 
+                    accessToken, 
+                    user: { 
                         _id: user._id, 
                         name: user.name, 
                         email: user.email, 
                     }
             });
+        });
+    },
+
+    checkIfGoogleAccExists(request, response) {
+        User.findOne({ 'email': request.body.email }, (error, user) => {
+            if(error || !user) {
+                return response.json({ 
+                    notExist: 'User not found !' 
+                });
+            };
+            if(user.isGoogleAccount) {
+                return response.json({ 
+                    isGoogleAccount: 'User is created with google auth !' 
+                });
+            } else {
+                return response.json({ 
+                    isNotGoogleAccount: 'User is created without google auth !' 
+                });
+            }
         });
     },
 

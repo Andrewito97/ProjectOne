@@ -14,7 +14,7 @@ const connection = mongoose.createConnection(config.musicMongoUri, {
 //append specifid schema to the connection and initialize constructor
 const Music = connection.model('Music', MusicSchema);
 
-////append grid-fs-bucket to the connection and initialize constructor
+//append grid-fs-bucket to the connection and initialize constructor
 let gridFSBucket = null;
 connection.once('open', function () {
     gridFSBucket = new mongoose.mongo.GridFSBucket(connection.db);

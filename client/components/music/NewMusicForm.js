@@ -43,6 +43,60 @@ const styles = {
     }
 };
 
+const AudioList = (props) => {
+    return (
+        <List>
+        {
+            props.audios ? props.audios.map( (item, i) => (
+                <ListItem button key={i}>
+                    {   
+                        props.audioNames[i].shouldEdit ?
+                        <TextField
+                            variant='outlined'
+                            defaultValue={item.name}
+                            style={styles.audioNameInput}
+                            onChange={ 
+                                (event) => props.handleAudioNameChange(i, event)
+                            }
+                        />
+                        :
+                        <Typography component='span'>
+                            {props.audioNames[i].audioname}
+                        </Typography> 
+                    }
+                    {
+                        props.audioNames[i].shouldEdit ?
+                        (<IconButton 
+                            onClick={() => props.saveAudioName(i)} 
+                            size='small'
+                            style={styles.icons}
+                        >
+                            <SaveIcon/>
+                        </IconButton>)
+                        :
+                        (<IconButton 
+                            onClick={() => props.setEditingStatus(i)} 
+                            size='small'
+                            style={styles.icons}
+                        >
+                            <EditIcon/>
+                        </IconButton>)
+                    }
+                    <IconButton 
+                        onClick={() => props.removeItem(i)} 
+                        size='small'
+                        style={styles.icons}
+                    >
+                        <DeleteIcon/>
+                    </IconButton>
+                </ListItem>
+                )
+            ) : null
+        }
+        </List>
+    )
+};
+
 const NewMusicForm = (props) => {
     const [ musicAuthor, setAuthor ] = React.useState('');
     const [ authorError, setAuthorError ] = React.useState('');
@@ -159,55 +213,16 @@ const NewMusicForm = (props) => {
                             <MusicNoteIcon/>
                         </IconButton>
                     </label>
-                    <List>
-                    {
-                        audios ? audios.map( (item, i) => (
-                            <ListItem button key={i}>
-                                {   
-                                    audioNames[i].shouldEdit ?
-                                    <TextField
-                                        variant='outlined'
-                                        defaultValue={item.name}
-                                        style={styles.audioNameInput}
-                                        onChange={ 
-                                            (event) => handleAudioNameChange(i, event)
-                                        }
-                                    />
-                                    :
-                                    <Typography component='span'>
-                                        {audioNames[i].audioname}
-                                    </Typography> 
-                                }
-                                {
-                                    audioNames[i].shouldEdit ?
-                                    (<IconButton 
-                                        onClick={() => saveAudioName(i)} 
-                                        size='small'
-                                        style={styles.icons}
-                                    >
-                                        <SaveIcon/>
-                                    </IconButton>)
-                                    :
-                                    (<IconButton 
-                                        onClick={() => setEditingStatus(i)} 
-                                        size='small'
-                                        style={styles.icons}
-                                    >
-                                        <EditIcon/>
-                                    </IconButton>)
-                                }
-                                <IconButton 
-                                    onClick={() => removeItem(i)} 
-                                    size='small'
-                                    style={styles.icons}
-                                >
-                                    <DeleteIcon/>
-                                </IconButton>
-                            </ListItem>
-                            )
-                        ) : null
-                    }
-                    </List>
+                    
+                    <AudioList 
+                        audios={audios}
+                        audioNames={audioNames}
+                        setEditingStatus={setEditingStatus}
+                        handleAudioNameChange={handleAudioNameChange}
+                        saveAudioName={saveAudioName}
+                        removeItem={removeItem}
+                    />
+
                     <br/>
                 </CardContent>
                 <CardActions>

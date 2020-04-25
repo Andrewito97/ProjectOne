@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
 import { Card, 
          CardContent, 
          Typography, 
@@ -7,6 +8,7 @@ import { Card,
          Button,
          CardActions } from '@material-ui/core';
 import userApi from '../../api/user.api';
+import config from '../../../config';
 import authenticationHelper from '../../helpers/authentication.helper';
 
 const styles = {
@@ -27,10 +29,14 @@ const styles = {
     linkContainer: {
         marginTop: 30
     },
-    button: {
+    loginButton: {
         backgroundColor: '#2D986D' ,
         color: 'white',
         marginTop: 60
+    },
+    googleButton: {
+        marginTop: 60,
+        marginLeft: 60
     }
 };
 
@@ -41,6 +47,34 @@ const LoginForm = () => {
     const [passwordError, setPasswordError] = React.useState('')
     const [redirectToHomePage, setRedirectToHomePage] = React.useState(false)
 
+    const responseGoogle = async (response) => {
+        const googleProfile = response.getBasicProfile();
+        console.log(googleProfile);
+        const userData = {
+            name: googleProfile.getName(),
+            email: googleProfile.getEmail(),
+            password: googleProfile.getId(),
+            isGoogleAccount: true
+        };
+        const data = await userApi.checkIfGoogleAccExists(userData);
+        if(data.notExist) {
+            const signInData = await userApi.create(userData);
+            if(signInData.message) {
+                const loginData = await userApi.login(userData);
+                loginData.accessToken ? authenticationHelper
+                    .authenticate(loginData, () => setRedirectToHomePage(true)) : null
+            };
+        };
+        if(data.isGoogleAccount) {
+            const loginData = await userApi.login(userData);
+            loginData.accessToken ? authenticationHelper
+                .authenticate(loginData, () => setRedirectToHomePage(true)) : null
+        };
+        if(data.isNotGoogleAccount) {
+            setEmailError('This email is already registered without google auth !')
+        };
+    };
+
     const onLogin = async () => {
         const userData = {
             email: requestedEmail,
@@ -50,7 +84,7 @@ const LoginForm = () => {
         data.emailError ? setEmailError(data.emailError) : setEmailError('')
         data.passwordError ? setPasswordError(data.passwordError) : setPasswordError('')
         data.accessToken ? authenticationHelper.authenticate(data, () => setRedirectToHomePage(true)) : null
-    }
+    };
 
     if(redirectToHomePage) {
         return <Redirect to='/'/>
@@ -94,7 +128,17 @@ const LoginForm = () => {
                     <Link to='/recovery'>Forgot your password? Recover !</Link>
                 </div>
                 <CardActions>
-                    <Button style={styles.button} onClick={onLogin}>Login</Button>
+                    <Button style={styles.loginButton} onClick={onLogin}>Login</Button>
+                    <div style={styles.googleButton}>
+                        <GoogleLogin
+                            clientId={config.googleClientId}
+                            buttonText='Sign In'    
+                            isSignedIn={false} 
+                            onSuccess={responseGoogle}
+                            onFailure={() => console.log('Google auth cancel')} 
+                            cookiePolicy={'single_host_origin'}                   
+                        />
+                    </div>
                 </CardActions>
             </CardContent>
         </Card>

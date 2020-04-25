@@ -50,6 +50,9 @@ const serverConfig = {
 
 const clientConfig = {
     mode: 'development',
+    node: {
+        fs: 'empty'
+    },
     devtool: 'eval-source-map',
     entry: {
         client: './client/App.js'

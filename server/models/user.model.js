@@ -36,7 +36,12 @@ const UserSchema = new mongoose.Schema({
     resetPasswordExpires: {
         type: Date,
         required: false
-    }
+    },
+
+    isGoogleAccount: {
+        type: Boolean,
+        default: false
+    },
 
 }, {timestamps: true});
 

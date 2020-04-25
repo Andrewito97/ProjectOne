@@ -14,7 +14,7 @@ const connection = mongoose.createConnection(config.movieMongoUri, {
 //append specifid schema to the connection and initialize constructor
 const Movie = connection.model('Movie', MovieSchema);
 
-////append grid-fs-bucket to the connection and initialize constructor
+//append grid-fs-bucket to the connection and initialize constructor
 let gridFSBucket = null;
 connection.once('open', function () {
     gridFSBucket = new mongoose.mongo.GridFSBucket(connection.db);
