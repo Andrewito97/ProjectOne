@@ -7,7 +7,7 @@ userApi.route('/myapi/signup').post(userController.create);
 
 userApi.route('/myapi/login').post(userController.login);
 
-userApi.route('/myapi/google').post(userController.checkIfGoogleAccExists);
+userApi.route('/myapi/media').post(userController.checkIfMediaAccExists);
 
 userApi.route('/myapi/logout').get(userController.logout);
 

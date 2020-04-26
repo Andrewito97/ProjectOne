@@ -38,9 +38,9 @@ const UserSchema = new mongoose.Schema({
         required: false
     },
 
-    isGoogleAccount: {
-        type: Boolean,
-        default: false
+    createdWithMedia: {
+        type: String,
+        default: 'none'
     },
 
 }, {timestamps: true});

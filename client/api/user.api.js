@@ -16,9 +16,9 @@ const userApi = {
         }
     },
 
-    async checkIfGoogleAccExists(user) {
+    async checkIfMediaAccExists(user) {
         try {
-            const response = await fetch('/myapi/google', {
+            const response = await fetch('/myapi/media', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -55,7 +55,7 @@ const userApi = {
             const response = await fetch('/myapi/logout', {
                 method: 'GET',
             })
-            if (typeof window !== "undefined") {
+            if (typeof window !== 'undefined') {
                 sessionStorage.removeItem('jsonWebToken')
             }
             return response.json()

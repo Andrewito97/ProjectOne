@@ -31,8 +31,8 @@ const Profile = () => {
         setAnchorEl(null);
     };
 
-    const handleLogout = () => {
-        userApi.logout();
+    const handleLogout = async () => {
+        await userApi.logout();
         setAnchorEl(null);
         location.reload();
     };

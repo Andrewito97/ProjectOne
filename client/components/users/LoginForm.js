@@ -1,15 +1,19 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
+import FacebookLogin from 'react-facebook-login';
 import { Card, 
          CardContent, 
          Typography, 
          TextField,
+         IconButton,
          Button,
          CardActions } from '@material-ui/core';
+import FacebookIcon from '@material-ui/icons/Facebook';
 import userApi from '../../api/user.api';
 import config from '../../../config';
 import authenticationHelper from '../../helpers/authentication.helper';
+import '../style.css';
 
 const styles = {
     container: {
@@ -36,7 +40,12 @@ const styles = {
     },
     googleButton: {
         marginTop: 60,
-        marginLeft: 60
+        marginLeft: '18%',
+        width: 35
+    },
+    facebookButton: {
+        marginTop: 60,
+        marginLeft: '25%',
     }
 };
 
@@ -47,16 +56,26 @@ const LoginForm = () => {
     const [passwordError, setPasswordError] = React.useState('')
     const [redirectToHomePage, setRedirectToHomePage] = React.useState(false)
 
-    const responseGoogle = async (response) => {
-        const googleProfile = response.getBasicProfile();
-        console.log(googleProfile);
-        const userData = {
-            name: googleProfile.getName(),
-            email: googleProfile.getEmail(),
-            password: googleProfile.getId(),
-            isGoogleAccount: true
+    const responseMedia = async (response) => {
+        let isGoogle = response.getBasicProfile ? true : false;
+        let userData;
+        if(isGoogle) {
+            const googleProfile = response.getBasicProfile();
+            userData = {
+                name: googleProfile.getName(),
+                email: googleProfile.getEmail(),
+                password: googleProfile.getId(),
+                createdWithMedia: 'google'
+            };
+        } else { 
+            userData = {
+                name: response.name,
+                email: response.email,
+                password: response.id,
+                createdWithMedia: 'facebook'
+            };
         };
-        const data = await userApi.checkIfGoogleAccExists(userData);
+        const data = await userApi.checkIfMediaAccExists(userData);
         if(data.notExist) {
             const signInData = await userApi.create(userData);
             if(signInData.message) {
@@ -66,12 +85,25 @@ const LoginForm = () => {
             };
         };
         if(data.isGoogleAccount) {
-            const loginData = await userApi.login(userData);
-            loginData.accessToken ? authenticationHelper
-                .authenticate(loginData, () => setRedirectToHomePage(true)) : null
+            if(isGoogle) {
+                const loginData = await userApi.login(userData);
+                loginData.accessToken ? authenticationHelper
+                    .authenticate(loginData, () => setRedirectToHomePage(true)) : null
+            } else {
+                setEmailError('Email is already registered with google !');
+            };
         };
-        if(data.isNotGoogleAccount) {
-            setEmailError('This email is already registered without google auth !')
+        if(data.isFacebookAccount) {
+            if(!isGoogle) {
+                const loginData = await userApi.login(userData);
+                loginData.accessToken ? authenticationHelper
+                    .authenticate(loginData, () => setRedirectToHomePage(true)) : null
+            } else {
+                setEmailError('Email is already registered with facebook !');
+            };
+        };
+        if(data.isNotMediaAccount) {
+            setEmailError('Email is already registered without social media !')
         };
     };
 
@@ -129,14 +161,26 @@ const LoginForm = () => {
                 </div>
                 <CardActions>
                     <Button style={styles.loginButton} onClick={onLogin}>Login</Button>
-                    <div style={styles.googleButton}>
+                    <div style={styles.googleButton} id='google_button_container'>
                         <GoogleLogin
                             clientId={config.googleClientId}
-                            buttonText='Sign In'    
+                            buttonText='Google'
                             isSignedIn={false} 
-                            onSuccess={responseGoogle}
-                            onFailure={() => console.log('Google auth cancel')} 
-                            cookiePolicy={'single_host_origin'}                   
+                            onSuccess={responseMedia}
+                            onFailure={() => console.log('Google auth was canceled')} 
+                            cookiePolicy={'single_host_origin'}                
+                        />
+                    </div>
+                    <div style={styles.facebookButton}>
+                        <FacebookLogin
+                            appId={config.facebookAppId}
+                            autoLoad={false}
+                            fields='name,email'
+                            textButton='Facebook'
+                            cssClass='facebook-button'
+                            icon={<FacebookIcon/>}
+                            callback={responseMedia}
+                            onFailure={() => console.log('Facebook auth was canceled')} 
                         />
                     </div>
                 </CardActions>

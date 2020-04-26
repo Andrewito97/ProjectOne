@@ -46,20 +46,24 @@ const userController = {
         });
     },
 
-    checkIfGoogleAccExists(request, response) {
+    checkIfMediaAccExists(request, response) {
         User.findOne({ 'email': request.body.email }, (error, user) => {
             if(error || !user) {
                 return response.json({ 
                     notExist: 'User not found !' 
                 });
             };
-            if(user.isGoogleAccount) {
+            if(user.createdWithMedia === 'google') {
                 return response.json({ 
                     isGoogleAccount: 'User is created with google auth !' 
                 });
+            } else if(user.createdWithMedia === 'facebook') {
+                return response.json({ 
+                    isFacebookAccount: 'User is created with facebook auth !' 
+                });
             } else {
                 return response.json({ 
-                    isNotGoogleAccount: 'User is created without google auth !' 
+                    isNotMediaAccount: 'User is created without google or facebook auth !' 
                 });
             }
         });

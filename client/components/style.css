@@ -6,17 +6,17 @@ audio {
     width: 100%;
  }
   
- audio::-webkit-media-controls-panel {
+audio::-webkit-media-controls-panel {
     background-color: #3FD599;
  }
   
- audio::-webkit-media-controls-play-button {
+audio::-webkit-media-controls-play-button {
     background-color: #2D986D;
     height: 30px;
     border-radius: 20px;
  }
   
- audio::-webkit-media-controls-mute-button {
+audio::-webkit-media-controls-mute-button {
     background-color: #2D986D;
     height: 30px;
     width: 40px;
@@ -24,8 +24,14 @@ audio {
     margin: auto
  }
  
- audio::-webkit-media-controls-timeline {
+audio::-webkit-media-controls-timeline {
     background-color: #3FD599;
     height: 17px;
  }
   
+.facebook-button {
+   background-color: #415E9B;
+   color: white;
+   padding: 6px;
+   font-weight: bold;
+}
