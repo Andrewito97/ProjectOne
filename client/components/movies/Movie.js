@@ -6,6 +6,7 @@ import { Card,
          CardContent, 
          CardHeader,
          Typography } from '@material-ui/core';
+import addWhitespaces from '../../helpers/addWhitespaces';
 
 const styles = {
     movie: {
@@ -27,6 +28,7 @@ const styles = {
 };
 
 const Movie = (props) => {
+    const description = addWhitespaces(props.movie.description);
     return (
         <div style={styles.movie}>
             <Card style={styles.container}>
@@ -36,7 +38,7 @@ const Movie = (props) => {
                 />
                 <CardContent>
                     <Typography component='span'>
-                        <ReactMarkdown source={props.movie.description} plugins={[breaks]}/>   
+                        <ReactMarkdown source={description} plugins={[breaks]}/>   
                     </Typography>
                     <ReactPlayer 
                         url={'/myapi/movies/' + props.movie._id} 

@@ -5,6 +5,7 @@ import { Card,
          CardContent, 
          CardHeader,
          Typography } from '@material-ui/core';
+import addWhitespaces from '../../helpers/addWhitespaces';
 
 const styles = {
     post: {
@@ -24,6 +25,7 @@ const styles = {
 };
 
 const Post = (props) => {
+    const text = addWhitespaces(props.post.text);
     return (
         <div style={styles.post}>
             
@@ -31,7 +33,7 @@ const Post = (props) => {
                 <CardHeader title={props.post.title}/>
                 <CardContent>
                     <Typography component='span'>
-                        <ReactMarkdown source={props.post.text} plugins={[breaks]}/>   
+                        <ReactMarkdown source={text} plugins={[breaks]}/>  
                     </Typography>
                     {
                     props.post.image ? 
