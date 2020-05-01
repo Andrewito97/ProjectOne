@@ -73,9 +73,14 @@ const musicController = {
 
     getAudioByName(request, response, nextHendlear, audioName){
         gridFSBucket.find({filename: audioName}).toArray((error, audios) => {
-            if(error || !audios) {
+            if(error) {
                 return response.status(400).json({
                     errorMessage: 'Audio not found !'
+                });
+            };
+            if(audios[0] === undefined) {
+                return response.status(400).json({
+                    errorMessage: 'Audio didn\'t loaded yet !'
                 });
             };
             request.profile = audios[0];
