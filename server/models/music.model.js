@@ -16,10 +16,10 @@ const MusicSchema = new mongoose.Schema({
         of: String,
         required: [true, 'Audio is required !']
     },
-
+    
     postedBy: {
-        type: mongoose.Schema.ObjectId, 
-        ref: 'User'
+        type: String, 
+        required: [true, 'Author is required !']
     },
 
     created: {

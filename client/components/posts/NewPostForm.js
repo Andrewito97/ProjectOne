@@ -42,13 +42,19 @@ const NewPostForm = (props) => {
     const [ postText, setText ] = React.useState('');
     const [ textError, setTextError ] = React.useState('');
     const [ postImage, setImage ] = React.useState('');
-    // const [ user, setUser ] = React.useState({}); add post author in future
+    const [ userId, setUserId ] = React.useState('');
+
+    React.useEffect( () => {
+        const user = authenticationHelper.isAuthenticated().user;
+        setUserId(user._id);
+    }, []);
 
     const createPost = async () => {
-        let postData = new FormData()
-        postData.set('title', postTitle)
-        postData.set('text', postText)
-        postData.set('image', postImage)
+        let postData = new FormData();
+        postData.set('title', postTitle);
+        postData.set('text', postText);
+        postData.set('image', postImage);
+        postData.set('postedBy', userId);
         const token = authenticationHelper.isAuthenticated().accessToken;
         const data = await postApi.create(token, postData);
         if(data.success) {
@@ -63,6 +69,7 @@ const NewPostForm = (props) => {
             data.error.errors.text ? setTextError(data.error.errors.text.message) : setTextError('');
         };
     };
+
     return (
         <div>
             <Card style={styles.container}>

@@ -13,7 +13,6 @@ const postController = {
                 });
             };
             let post = new Post(fields);
-            post.postedBy= request.profile;
             if(files.image) {
                 post.image.data = fs.readFileSync(files.image.path);
                 post.image.contentType = files.image.type;
@@ -33,26 +32,41 @@ const postController = {
     },
 
     listNewsFeed(request, response) {
-        Post.find((error, posts) => {
+        Post.find()
+            .sort('-created')
+            .exec( (error, posts) => {
             if(error) {
                 return response.status(400).json({
                     error
                 });
             };
             response.json(posts)
-        }).select('title image text postedBy created').sort('-created');
+        });
     },
 
-    getPostByID(request, response, nextHendlear, id){
+    listUserNewsFeed(request, response) {
+        Post.find({postedBy: request.profile._id})
+            .sort('-created')
+            .exec( (error, posts) => {
+                if(error || !posts) {
+                    return response.status(400).json({
+                        errorMessage: 'Posts not found !'
+                    });
+                }
+                response.json(posts)
+        });
+    },
+
+    getPostByID(request, response, nextHendlear, id) {
         Post.findById(id)
-            .exec((error, post) => {
-            if(error || !post) {
-                return response.status(400).json({
-                    errorMessage: 'Post not found !'
-                });
-            }
-            request.post = post;
-            nextHendlear();
+            .exec( (error, post) => {
+                if(error || !post) {
+                    return response.status(400).json({
+                        errorMessage: 'Post not found !'
+                    });
+                }
+                request.post = post;
+                nextHendlear();
         });
     },
 

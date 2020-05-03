@@ -35,7 +35,6 @@ const musicController = {
 
             let names = JSON.parse(fields.audionames)
             let music = new Music(fields);
-            music.postedBy = request.profile;
 
             if(Array.isArray(files.audios)) { //if receive multiple audios     
                 for(let i = 0; i < files.audios.length; i++) {
@@ -72,35 +71,56 @@ const musicController = {
     },
 
     getAudioByName(request, response, nextHendlear, audioName){
-        gridFSBucket.find({filename: audioName}).toArray((error, audios) => {
-            if(error) {
-                return response.status(400).json({
-                    errorMessage: 'Audio not found !'
-                });
-            };
-            if(audios[0] === undefined) {
-                return response.status(400).json({
-                    errorMessage: 'Audio didn\'t loaded yet !'
-                });
-            };
-            request.profile = audios[0];
-            nextHendlear();
+        gridFSBucket
+            .find({ filename: audioName })
+            .toArray( (error, audios) => {
+                if(error) {
+                    return response.status(400).json({
+                        errorMessage: 'Audio not found !'
+                    });
+                };
+                if(audios[0] === undefined) {
+                    return response.status(400).json({
+                        errorMessage: 'Audio didn\'t loaded yet !'
+                    });
+                };
+                request.profile = audios[0];
+                nextHendlear();
         });
     },
 
     listMusic(request, response) {
-        Music.find((error, music) => {
-            if(error) {
-                return response.status(400).json({
-                    error
-                });
-            };
-            response.status(200).json(music);
-        }).sort('-created');
+        Music
+            .find()
+            .sort('-created')
+            .exec( (error, music) => {
+                if(error) {
+                    return response.status(400).json({
+                        error
+                    });
+                };
+                response.status(200).json(music);
+        });
+    },
+
+    listUserMusic(request, response) {
+        Music
+            .find({postedBy: request.profile._id})
+            .sort('-created')
+            .exec( (error, music) => {
+                if(error || !music) {
+                    return response.status(400).json({
+                        errorMessage: 'Music not found !'
+                    });
+                }
+                response.json(music)
+        });
     },
 
     listAudios(request, response) {
-        gridFSBucket.find({aliases: 'music'}).toArray((error, files) => {
+        gridFSBucket
+            .find({ aliases: 'music' })
+            .toArray( (error, files) => {
                 if(error) {
                     return response.status(400).json({
                         error
@@ -111,11 +131,11 @@ const musicController = {
     },
 
     loadAudio(request, response) {
-        gridFSBucket.find({
-                filename: request.profile.filename
-            }).toArray((error, files) => {
-                let file = files[0];
-                
+        gridFSBucket
+            .find({ filename: request.profile.filename })
+            .toArray( (error, files) => {
+                let file = files[0];   
+
                 if (error) {
                     return response.status(400).send({
                         error
@@ -127,7 +147,8 @@ const musicController = {
                     })
                 };
                 
-                if (request.headers['range']) { //load audio from the specific range
+                if (request.headers['range']) { 
+                    //load audio from the specific range
                     let parts = request.headers['range'].replace(/bytes=/, '').split('-')
                     let partialstart = parts[0]
                     let partialend = parts[1]
@@ -143,21 +164,25 @@ const musicController = {
                         'Content-Type': 'binary/octet-stream'
                     });
                     
-                    gridFSBucket.openDownloadStream(
-                        file._id, {
-                            start: startPosition,
-                            end: endPosition
-                        }
-                    ).pipe(response);
-                } else { //load full audio by default
+                    gridFSBucket
+                        .openDownloadStream(
+                            file._id, {
+                                start: startPosition,
+                                end: endPosition
+                            }
+                        )
+                        .pipe(response);
+
+                } else { 
+                    //load full audio by default
                     response.header('Content-Length', file.length)
                     response.header('Content-Type', 'binary/octet-stream')
         
-                    gridFSBucket.openDownloadStream(
-                        file._id
-                    ).pipe(response);
+                    gridFSBucket
+                        .openDownloadStream( file._id )
+                        .pipe(response);
                 };
-            });
+        });
     }
 }
 

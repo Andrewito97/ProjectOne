@@ -5,7 +5,7 @@ import { Card,
          CardContent, 
          CardHeader,
          Typography } from '@material-ui/core';
-import addWhitespaces from '../../helpers/addWhitespaces';
+import addWhitespaces from '../../helpers/addWhitespaces.helper';
 
 const styles = {
     post: {

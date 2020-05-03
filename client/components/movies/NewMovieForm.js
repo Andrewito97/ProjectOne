@@ -49,7 +49,12 @@ const NewMovieForm = (props) => {
     const [ movieDescription, setDescription ] = React.useState('');
     const [ descriptionError, setDescrError ] = React.useState('');
     const [ video, setVideo ] = React.useState('');
-    // const [ user, setUser ] = React.useState({}); add post author in future
+    const [ userId, setUserId ] = React.useState('');
+
+    React.useEffect( () => {
+        const user = authenticationHelper.isAuthenticated().user;
+        setUserId(user._id);
+    }, []);
 
     const submitMovie = async () => {
         let movieData = new FormData()
@@ -57,6 +62,7 @@ const NewMovieForm = (props) => {
         movieData.set('genre', movieGenre)
         movieData.set('description', movieDescription)
         movieData.set('video', video)
+        movieData.set('postedBy', userId)
         const token = authenticationHelper.isAuthenticated().accessToken;
         const data = await movieApi.create(token, movieData);
         if(data.success) {

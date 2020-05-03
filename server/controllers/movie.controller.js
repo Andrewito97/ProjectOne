@@ -32,7 +32,6 @@ const movieController = {
                 });
             };
             let movie = new Movie(fields);
-            movie.postedBy= request.profile;
             let writestream = gridFSBucket.
                 openUploadStreamWithId(
                     movie._id,
@@ -54,77 +53,100 @@ const movieController = {
     },
 
     getMovieByID(request, response, nextHendlear, id){
-        Movie.findById(id)
-            .exec((error, movie) => {
-            if(error || !movie) {
-                return response.status(400).json({
-                    errorMessage: 'Movie not found !'
-                });
-            }
-            request.movie = movie;
-            nextHendlear();
+        Movie
+            .findById(id)
+            .exec( (error, movie) => {
+                if(error || !movie) {
+                    return response.status(400).json({
+                        errorMessage: 'Movie not found !'
+                    });
+                }
+                request.movie = movie;
+                nextHendlear();
         });
     },
 
     listMovies(request, response) {
-        Movie.find((error, movies) => {
-            if(error) {
-                return response.status(400).json({
-                    error
-                });
-            };
-            response.json(movies)
-        }).sort('-created');
+        Movie
+            .find()
+            .sort('-created')
+            .exec( (error, movies) => {
+                if(error) {
+                    return response.status(400).json({
+                        error
+                    });
+                };
+                response.json(movies)
+        });
+    },
+    
+    listUserMovies(request, response) {
+        Movie.find({ postedBy: request.profile._id })
+            .sort('-created')
+            .exec( (error, movies) => {
+                if(error || !movies) {
+                    return response.status(400).json({
+                        errorMessage: 'Movies not found !'
+                    });
+                }
+                response.json(movies)
+        });
     },
 
     loadMovie(request, response) {
-        gridFSBucket.find({
-            _id: request.movie._id
-        }).toArray((error, files) => {
-            let file = files[0];
-            if (error) {
-                return response.status(400).send({
-                    error
-                })
-            }
-            if (!file) {
-                return response.status(404).send({
-                    errorMessage: 'Video not found !'
-                })
-            }
-    
-            if (request.headers['range']) { //load video from the specific range
-                let parts = request.headers['range'].replace(/bytes=/, '').split('-')
-                let partialstart = parts[0]
-                let partialend = parts[1]
-    
-                let startPosition = parseInt(partialstart, 10)
-                let endPosition = partialend ? parseInt(partialend, 10) : file.length - 1
-                let chunksize = (endPosition - startPosition) + 1
-    
-                response.writeHead(206, {
-                    'Accept-Ranges': 'bytes',
-                    'Content-Length': chunksize,
-                    'Content-Range': 'bytes ' + startPosition + '-' + endPosition + '/' + file.length,
-                    'Content-Type': 'binary/octet-stream'
-                })
-    
-                gridFSBucket.openDownloadStream(
-                    file._id, {
-                        start: startPosition,
-                        end: endPosition
-                    }
-                ).pipe(response)
-            } else { //load full video by default
-                response.header('Content-Length', file.length)
-                response.header('Content-Type', 'binary/octet-stream')
-    
-                gridFSBucket.openDownloadStream(
-                    file._id
-                ).pipe(response)
-            }
-        })
+        gridFSBucket
+            .find({ _id: request.movie._id })
+            .toArray( (error, files) => {
+                let file = files[0];
+
+                if (error) {
+                    return response.status(400).send({
+                        error
+                    })
+                };
+                if (!file) {
+                    return response.status(404).send({
+                        errorMessage: 'Video not found !'
+                    })
+                };
+        
+                if (request.headers['range']) { 
+                    //load video from the specific range
+                    let parts = request.headers['range'].replace(/bytes=/, '').split('-')
+                    let partialstart = parts[0]
+                    let partialend = parts[1]
+        
+                    let startPosition = parseInt(partialstart, 10)
+                    let endPosition = partialend ? parseInt(partialend, 10) : file.length - 1
+                    let chunksize = (endPosition - startPosition) + 1
+        
+                    response.writeHead(206, {
+                        'Accept-Ranges': 'bytes',
+                        'Content-Length': chunksize,
+                        'Content-Range': 'bytes ' + startPosition + '-' + endPosition + '/' + file.length,
+                        'Content-Type': 'binary/octet-stream'
+                    })
+        
+                    gridFSBucket
+                        .openDownloadStream(
+                            file._id, {
+                                start: startPosition,
+                                end: endPosition
+                            }
+                        )
+                        .pipe(response);
+
+                } else { 
+                    //load full video by default
+                    response.header('Content-Length', file.length)
+                    response.header('Content-Type', 'binary/octet-stream')
+        
+                    gridFSBucket
+                        .openDownloadStream( file._id )
+                        .pipe(response);
+                };
+        });
     }
-}
+};
 
 export default movieController;

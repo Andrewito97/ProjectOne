@@ -5,10 +5,11 @@ import MusicList from './components/music/MusicList';
 import MoviesList from './components/movies/MoviesList';
 import NewsFeedList from './components/posts/NewsFeedList';
 import RightSidebar from './components/RightSidebar';
-import SignUpForm from './components/users/SignUpForm';
-import LoginForm from './components/users/LoginForm';
-import RecoveryForm from './components/users/RecoveryForm';
-import ResetPasswordForm from './components/users/ResetPasswordForm';
+import SignUpForm from './components/user/SignUpForm';
+import LoginForm from './components/user/LoginForm';
+import RecoveryForm from './components/user/RecoveryForm';
+import ResetPasswordForm from './components/user/ResetPasswordForm';
+import Profile from './components/user/Profile'
 
 const styles = {
     container: {
@@ -45,6 +46,7 @@ const RootComponent = () => (
                     <Route path='/login' component={LoginForm} />
                     <Route path='/recovery' component={RecoveryForm} />
                     <Route path='/reset/:email/:resetToken' component={ResetPasswordForm} />
+                    <Route path='/profile/:userId' component={Profile} />
                 </Switch>
             </div>
             <div style={styles.aside}>

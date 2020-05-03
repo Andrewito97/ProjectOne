@@ -15,9 +15,20 @@ const movieApi = {
             console.log(error);
         }
     },
-    async list() {
+    async listMovies() {
         try {
             const response = await fetch('/myapi/movies', {
+                method: 'GET',
+            });
+            return response.json();
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    async getUserMovies(userId) {
+        try {
+            const response = await fetch(`/myapi/profile/${userId}/movies`, {
                 method: 'GET',
             });
             return response.json();

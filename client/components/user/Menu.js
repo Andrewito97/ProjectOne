@@ -20,7 +20,7 @@ const styles = {
     }
 };
 
-const Profile = () => {
+const _Menu = () => {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const handleClick = event => {
@@ -51,7 +51,10 @@ const Profile = () => {
                 authenticationHelper.isAuthenticated() ?
                 (<div>
                     <MenuItem onClick={handleClose}>            
-                        <Link style={styles.link} to='/signup'>Profile</Link>
+                        <Link style={styles.link} 
+                              to={'/profile/' + authenticationHelper.isAuthenticated().user._id}>
+                                Profile
+                        </Link>
                     </MenuItem>
                     <MenuItem onClick={handleLogout}>
                         <Link style={styles.link} to='/'>Logout</Link>
@@ -74,4 +77,4 @@ const Profile = () => {
     )
 };
 
-export default Profile;
+export default _Menu;

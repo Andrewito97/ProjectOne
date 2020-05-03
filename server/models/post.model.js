@@ -17,8 +17,8 @@ const PostSchema = new mongoose.Schema({
     },
 
     postedBy: {
-        type: mongoose.Schema.ObjectId, 
-        ref: 'User'
+        type: String, 
+        required: [true, 'Author is required !']
     },
     
     created: {

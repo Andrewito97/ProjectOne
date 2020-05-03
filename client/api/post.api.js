@@ -15,9 +15,20 @@ const postApi = {
             console.log(error);
         }
     },
-    async list() {
+    async listNewsFeed() {
         try {
             const response = await fetch('/myapi/newsfeed', {
+                method: 'GET',
+            });
+            return response.json();
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    async getUserNewsFeed(userId) {
+        try {
+            const response = await fetch(`/myapi/profile/${userId}/newsfeed`, {
                 method: 'GET',
             });
             return response.json();

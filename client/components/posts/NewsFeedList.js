@@ -15,7 +15,7 @@ const NewsFeedList = () => {
 
     const loadPosts = async () => {
         setDummyData(true)
-        const data = await postApi.list();
+        const data = await postApi.listNewsFeed();
         if(data.error) {
             console.log(data.error);
         } else {

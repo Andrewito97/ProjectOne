@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { AppBar, Toolbar, Button } from '@material-ui/core';
-import Profile from './users/Profile';
+import Menu from './user/Menu';
 import Searchbar from './Searchbar';
 
 const styles = {
@@ -48,7 +48,7 @@ const Topbar = withRouter( ({history}) => (
                     <Link to='/movies' style={isActive(history, '/movies')}>Movies</Link>
                 </Button>   
                 <Searchbar/>
-                <Profile/>
+                <Menu/>
             </Toolbar>
         </AppBar>
 ));

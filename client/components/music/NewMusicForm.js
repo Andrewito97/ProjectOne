@@ -104,12 +104,18 @@ const NewMusicForm = (props) => {
     const [ genreError, setGenreError ] = React.useState('');
     const [ audios, setAudio ] = React.useState([]);
     const [ audioNames, setAudioNames ] = React.useState([]);
-    // const [ user, setUser ] = React.useState({}); add post author in future
+    const [ userId, setUserId ] = React.useState('');
+
+    React.useEffect( () => {
+        const user = authenticationHelper.isAuthenticated().user;
+        setUserId(user._id);
+    }, []);
 
     const submitMusic = async () => {
         let musicData = new FormData()
         musicData.set('author', musicAuthor)
         musicData.set('genre', musicGenre)
+        musicData.set('postedBy', userId)
         for(let audio of audios) {
             musicData.append('audios', audio)
         }

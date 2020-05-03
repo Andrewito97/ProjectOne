@@ -15,7 +15,7 @@ const MoviesList = () => {
 
     const loadMovies = async () => {
         setDummyData(true)
-        const data = await movieApi.list();
+        const data = await movieApi.listMovies();
         if(data.error) {
             console.log(data.error);
         } else {

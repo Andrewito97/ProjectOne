@@ -6,7 +6,6 @@ import { Card,
          CardContent, 
          Typography, 
          TextField,
-         IconButton,
          Button,
          CardActions } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
