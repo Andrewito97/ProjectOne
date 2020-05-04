@@ -39,10 +39,10 @@ const styles = {
 };
 
 const ResetPasswordForm = () => {
-    const [requestedPassword, setPassword] = React.useState('');
-    const [confirmedPassword, setConfirmedPassword] = React.useState('');
-    const [passwordError, setPasswordError] = React.useState('');
-    const [successed, setSuccessed] = React.useState(false);
+    const [ requestedPassword, setPassword ] = React.useState('');
+    const [ confirmedPassword, setConfirmedPassword ] = React.useState('');
+    const [ passwordError, setPasswordError ] = React.useState('');
+    const [ successed, setSuccessed ] = React.useState(false);
 
     let { email, resetToken } = useParams();
 

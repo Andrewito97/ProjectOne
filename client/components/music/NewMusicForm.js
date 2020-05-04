@@ -5,15 +5,11 @@ import { Card,
          TextField,
          IconButton,
          Button,
-         CardActions,
-         List,
-         ListItem } from '@material-ui/core';
+         CardActions } from '@material-ui/core';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
-import EditIcon from '@material-ui/icons/Edit';
-import SaveIcon from '@material-ui/icons/Save';
-import DeleteIcon from '@material-ui/icons/Delete';
 import authenticationHelper from '../../helpers/authentication.helper';
 import musicApi from '../../api/music.api';
+import AudioList from './NewMusicAudioList';
 
 const styles = {
     container: {
@@ -33,68 +29,11 @@ const styles = {
         marginBottom: 30,
         width: '100%'
     },
-    audioNameInput: {
-        width: '80%'
-    },
     icons: {
         backgroundColor: '#2D986D',
         color: 'white',
         marginLeft: 8
     }
-};
-
-const AudioList = (props) => {
-    return (
-        <List>
-        {
-            props.audios ? props.audios.map( (item, i) => (
-                <ListItem button key={i}>
-                    {   
-                        props.audioNames[i].shouldEdit ?
-                        <TextField
-                            variant='outlined'
-                            defaultValue={item.name}
-                            style={styles.audioNameInput}
-                            onChange={ 
-                                (event) => props.handleAudioNameChange(i, event)
-                            }
-                        />
-                        :
-                        <Typography component='span'>
-                            {props.audioNames[i].audioname}
-                        </Typography> 
-                    }
-                    {
-                        props.audioNames[i].shouldEdit ?
-                        (<IconButton 
-                            onClick={() => props.saveAudioName(i)} 
-                            size='small'
-                            style={styles.icons}
-                        >
-                            <SaveIcon/>
-                        </IconButton>)
-                        :
-                        (<IconButton 
-                            onClick={() => props.setEditingStatus(i)} 
-                            size='small'
-                            style={styles.icons}
-                        >
-                            <EditIcon/>
-                        </IconButton>)
-                    }
-                    <IconButton 
-                        onClick={() => props.removeItem(i)} 
-                        size='small'
-                        style={styles.icons}
-                    >
-                        <DeleteIcon/>
-                    </IconButton>
-                </ListItem>
-                )
-            ) : null
-        }
-        </List>
-    )
 };
 
 const NewMusicForm = (props) => {
@@ -163,7 +102,11 @@ const NewMusicForm = (props) => {
         setAudioNames(updatedStatus);
     };
 
-    const isDisabled = audios.length === 0 || audios.length > 10;
+    let isDisabled = audios.length === 0 || audios.length > 10;
+
+    for(let item of audioNames) {
+        if(item.shouldEdit) isDisabled = true;
+    };
 
     return (
         <div>

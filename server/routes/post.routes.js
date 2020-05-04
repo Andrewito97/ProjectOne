@@ -14,6 +14,9 @@ postApi.route('/myapi/post/image/:postId')
 postApi.route('/myapi/profile/:userId/newsfeed')
     .get(postController.listUserNewsFeed);
 
+postApi.route('/myapi/newsfeed/:postId')
+    .delete(postController.deletePost);
+
 postApi.param('userId', userController.getUserByID);
 postApi.param('postId', postController.getPostByID);
 

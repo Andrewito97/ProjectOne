@@ -4,7 +4,9 @@ import breaks from 'remark-breaks';
 import { Card, 
          CardContent, 
          CardHeader,
-         Typography } from '@material-ui/core';
+         Typography,
+         IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import addWhitespaces from '../../helpers/addWhitespaces.helper';
 
 const styles = {
@@ -21,6 +23,10 @@ const styles = {
     postDate: {
         color: 'grey',
         marginTop: 50
+    },
+    deleteIcon: {
+        backgroundColor: '#2D986D',
+        color: 'white'
     }
 };
 
@@ -45,6 +51,17 @@ const Post = (props) => {
                     <Typography style={styles.postDate}>
                         {new Date(props.post.created).toDateString()}
                     </Typography>
+                    { 
+                        props.isProfile ? 
+                        <IconButton
+                            style={styles.deleteIcon}
+                            onClick={ () => props.deletePost(props.post._id) }
+                        >
+                            <DeleteIcon/>
+                        </IconButton>
+                        : 
+                        null 
+                    }
                 </CardContent>
             </Card>
         </div>

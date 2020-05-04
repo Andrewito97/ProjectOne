@@ -36,6 +36,36 @@ const movieApi = {
         catch (error) {
             console.log(error);
         }
+    },
+    async deleteMovie(movieId) {
+        try {
+            const response = await fetch(`/myapi/movies/${movieId}`, {
+                method: 'DELETE',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                }
+            });
+            return response.json(); 
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    async deleteVideo(videoId) {
+        try {
+            const response = await fetch(`/myapi/movies/video/${videoId}`, {
+                method: 'DELETE',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                }
+            });
+            return response.json(); 
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 };
 

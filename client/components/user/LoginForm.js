@@ -49,11 +49,11 @@ const styles = {
 };
 
 const LoginForm = () => {
-    const [requestedEmail, setEmail] = React.useState('')
-    const [requestedPassword, setPassword] = React.useState('')
-    const [emailError, setEmailError] = React.useState('')
-    const [passwordError, setPasswordError] = React.useState('')
-    const [redirectToHomePage, setRedirectToHomePage] = React.useState(false)
+    const [ requestedEmail, setEmail ] = React.useState('')
+    const [ requestedPassword, setPassword ] = React.useState('')
+    const [ emailError, setEmailError ] = React.useState('')
+    const [ passwordError, setPasswordError ] = React.useState('')
+    const [ redirectToHomePage, setRedirectToHomePage ] = React.useState(false)
 
     const responseMedia = async (response) => {
         let isGoogle = response.getBasicProfile ? true : false;

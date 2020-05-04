@@ -17,7 +17,7 @@ const styles = {
 };
 
 const Searchbar = () => {
-    const [isFocused, catchFocus] = React.useState(false);
+    const [ isFocused, catchFocus ] = React.useState(false);
 
     const focusHandler = () => {
         catchFocus(!isFocused);

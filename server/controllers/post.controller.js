@@ -32,7 +32,8 @@ const postController = {
     },
 
     listNewsFeed(request, response) {
-        Post.find()
+        Post
+            .find()
             .sort('-created')
             .exec( (error, posts) => {
             if(error) {
@@ -45,7 +46,8 @@ const postController = {
     },
 
     listUserNewsFeed(request, response) {
-        Post.find({postedBy: request.profile._id})
+        Post
+            .find({postedBy: request.profile._id})
             .sort('-created')
             .exec( (error, posts) => {
                 if(error || !posts) {
@@ -57,8 +59,9 @@ const postController = {
         });
     },
 
-    getPostByID(request, response, nextHendlear, id) {
-        Post.findById(id)
+    getPostByID(request, response, nextHendlear, postId) {
+        Post
+            .findById(postId)
             .exec( (error, post) => {
                 if(error || !post) {
                     return response.status(400).json({
@@ -68,6 +71,21 @@ const postController = {
                 request.post = post;
                 nextHendlear();
         });
+    },
+
+    deletePost(request, response) {
+        Post
+            .findByIdAndDelete(request.post._id, (error) => {
+                if(error) {
+                    return response.status(400).json({
+                        error
+                    });
+                } else {
+                    return response.status(200).json({
+                        success: 'Post has been deleted !'
+                    });
+                } 
+            });
     },
 
     loadImage(request, response, nextHendlear) {

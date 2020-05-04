@@ -81,7 +81,8 @@ const movieController = {
     },
     
     listUserMovies(request, response) {
-        Movie.find({ postedBy: request.profile._id })
+        Movie
+            .find({ postedBy: request.profile._id })
             .sort('-created')
             .exec( (error, movies) => {
                 if(error || !movies) {
@@ -91,6 +92,36 @@ const movieController = {
                 }
                 response.json(movies)
         });
+    },
+
+    deleteMovie(request, response) {
+        Movie
+            .findByIdAndDelete(request.movie._id, (error) => {
+                if(error) {
+                    return response.status(400).json({
+                        movieError: error
+                    });
+                } else {
+                    return response.status(200).json({
+                        success: 'Movie has been deleted !'
+                    });
+                } 
+            });
+    },
+
+    deleteVideo(request, response) {
+        gridFSBucket
+            .delete(request.movie._id, (error) => {
+                if(error) {
+                    return response.status(400).json({
+                        videoError: error
+                    });
+                } else {
+                    return response.status(200).json({
+                        success: 'Video has been deleted !'
+                    });
+                } 
+            });
     },
 
     loadMovie(request, response) {

@@ -36,6 +36,21 @@ const postApi = {
         catch (error) {
             console.log(error);
         }
+    },
+    async deletePost(postId) {
+        try {
+            const response = await fetch(`/myapi/newsfeed/${postId}`, {
+                method: 'DELETE',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                }
+            });
+            return response.json(); 
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
 }
 

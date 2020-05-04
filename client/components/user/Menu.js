@@ -21,7 +21,7 @@ const styles = {
 };
 
 const _Menu = () => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    const [ anchorEl, setAnchorEl ] = React.useState(null);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);

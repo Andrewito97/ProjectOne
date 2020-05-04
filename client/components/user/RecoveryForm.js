@@ -31,9 +31,9 @@ const styles = {
 };
 
 const RecoveryForm = () => {
-    const [requestedEmail, setEmail] = React.useState('');
-    const [emailError, setEmailError] = React.useState('');
-    const [successed, setSuccessed] = React.useState(false);
+    const [ requestedEmail, setEmail ] = React.useState('');
+    const [ emailError, setEmailError ] = React.useState('');
+    const [ successed, setSuccessed ] = React.useState(false);
 
     const onRecover = async () => {
         const userData = {

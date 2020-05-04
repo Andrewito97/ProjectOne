@@ -8,16 +8,21 @@ musicApi.route('/myapi/music')
     .get(musicController.listMusic)
     .post(musicController.create);
 
+musicApi.route('/myapi/music/:musicId')
+    .delete(musicController.deleteMusic)
+
 musicApi.route('/myapi/music/audios')
     .get(musicController.listAudios);
 
 musicApi.route('/myapi/music/audios/:audioName')
-    .get(musicController.loadAudio);
+    .get(musicController.loadAudio)
+    .delete(musicController.deleteAudio);
 
 musicApi.route('/myapi/profile/:userId/music')
     .get(musicController.listUserMusic);
 
 musicApi.param('userId', userController.getUserByID);
+musicApi.param('musicId', musicController.getMusicByID);
 musicApi.param('audioName', musicController.getAudioByName);
 
 export default musicApi;

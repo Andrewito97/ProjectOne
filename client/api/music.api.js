@@ -47,7 +47,38 @@ const musicApi = {
         catch (error) {
             console.log(error);
         }
+    },
+    async deleteMusic(musicId) {
+        try {
+            const response = await fetch(`/myapi/music/${musicId}`, {
+                method: 'DELETE',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                }
+            });
+            return response.json(); 
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    async deleteAudio(audioName) {
+        try {
+            const response = await fetch(`/myapi/music/audios/${audioName}`, {
+                method: 'DELETE',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                }
+            });
+            return response.json(); 
+        }
+        catch (error) {
+            console.log(error);
+        }
     }
+
 };
 
 export default musicApi;

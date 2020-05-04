@@ -47,14 +47,14 @@ const styles = {
 };
 
 const SignUpForm = () => {
-    const [requestedName, setName] = React.useState('');
-    const [requestedEmail, setEmail] = React.useState('');
-    const [requestedPassword, setPassword] = React.useState('');
-    const [confirmedPassword, setConfirmedPassword] = React.useState('');
-    const [nameError, setNameError] = React.useState('');
-    const [emailError, setEmailError] = React.useState('');
-    const [passwordError, setPasswordError] = React.useState('');
-    const [successed, setSuccessed] = React.useState(false);
+    const [ requestedName, setName ] = React.useState('');
+    const [ requestedEmail, setEmail ] = React.useState('');
+    const [ requestedPassword, setPassword ] = React.useState('');
+    const [ confirmedPassword, setConfirmedPassword ] = React.useState('');
+    const [ nameError, setNameError ] = React.useState('');
+    const [ emailError, setEmailError ] = React.useState('');
+    const [ passwordError, setPasswordError ] = React.useState('');
+    const [ successed, setSuccessed ] = React.useState(false);
 
     const onCreate = async () => {
         if(requestedPassword !== confirmedPassword) {

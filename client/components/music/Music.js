@@ -3,7 +3,9 @@ import AudioPlayer from './AudioPlayer';
 import { Card, 
          CardContent, 
          CardHeader,
-         Typography } from '@material-ui/core';
+         Typography,
+         IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 const styles = {
     song: {
@@ -21,6 +23,10 @@ const styles = {
     songDate: {
         color: 'grey',
         marginTop: 50
+    },
+    deleteIcon: {
+        backgroundColor: '#2D986D',
+        color: 'white'
     }
 };
 
@@ -37,6 +43,17 @@ const Music = (props) => {
                     <Typography style={styles.songDate}>
                         {new Date(props.music.created).toDateString()}
                     </Typography>
+                    { 
+                        props.isProfile ? 
+                        <IconButton
+                            style={styles.deleteIcon}
+                            onClick={ () => props.deleteMusic(props.music._id) }
+                        >
+                            <DeleteIcon/>
+                        </IconButton>
+                        : 
+                        null 
+                    }
                 </CardContent>
             </Card>
         </div>

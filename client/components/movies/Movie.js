@@ -5,7 +5,9 @@ import ReactPlayer from 'react-player';
 import { Card, 
          CardContent, 
          CardHeader,
-         Typography } from '@material-ui/core';
+         Typography,
+         IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
 import addWhitespaces from '../../helpers/addWhitespaces.helper';
 
 const styles = {
@@ -24,6 +26,10 @@ const styles = {
     movieDate: {
         color: 'grey',
         marginTop: 50
+    },
+    deleteIcon: {
+        backgroundColor: '#2D986D',
+        color: 'white'
     }
 };
 
@@ -50,6 +56,17 @@ const Movie = (props) => {
                     <Typography style={styles.movieDate}>
                         {new Date(props.movie.created).toDateString()}
                     </Typography>
+                    { 
+                        props.isProfile ? 
+                        <IconButton
+                            style={styles.deleteIcon}
+                            onClick={ () => props.deleteMovie(props.movie._id) }
+                        >
+                            <DeleteIcon/>
+                        </IconButton>
+                        : 
+                        null 
+                    }
                 </CardContent>
             </Card>
         </div>

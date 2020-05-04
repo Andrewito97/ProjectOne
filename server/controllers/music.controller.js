@@ -130,6 +130,56 @@ const musicController = {
         });
     },
 
+    getMusicByID(request, response, nextHendlear, musicId) {
+        Music
+            .findById(musicId)
+            .exec( (error, music) => {
+                if(error || !music) {
+                    return response.status(400).json({
+                        errorMessage: 'Music not found !'
+                    });
+                }
+                request.music = music;
+                nextHendlear();
+        });
+    },
+
+    deleteMusic(request, response) {
+        Music
+            .findByIdAndDelete(request.music._id, (error) => {
+                if(error) {
+                    return response.status(400).json({
+                        musicError: error
+                    });
+                } else {
+                    return response.status(200).json({
+                        success: 'Music has been deleted !'
+                    });
+                } 
+            });
+    },
+
+    deleteAudio(request, response) {
+        gridFSBucket
+            .find({ filename: request.profile.filename })
+            .toArray( (error, files) => {
+                let file = files[0]
+                let audioId = file._id;
+                gridFSBucket
+                    .delete(audioId, (error) => {
+                        if(error) {
+                            return response.status(400).json({
+                                audioError: error
+                            });
+                        } else {
+                            return response.status(200).json({
+                                success: 'Audio has been deleted !'
+                            });
+                        } 
+                    });
+            });
+    },
+
     loadAudio(request, response) {
         gridFSBucket
             .find({ filename: request.profile.filename })
