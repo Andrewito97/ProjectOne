@@ -66,7 +66,8 @@ app.get('*', (request, response) => {
 mongoose.connect(config.mainMongoUri, {
     useNewUrlParser: true, 
     useUnifiedTopology: true, 
-    useCreateIndex: true
+    useCreateIndex: true,
+    useFindAndModify: false
 });
 mongoose.connection.on('error', () => {
     throw new Error('Unable to connect to database !');

@@ -143,7 +143,7 @@ const NewPostForm = (props) => {
                             color: 'white',
                             marginTop: 15
                         }}>
-                        POST
+                        ADD POST
                     </Button>
                 </CardActions>
             </Card>

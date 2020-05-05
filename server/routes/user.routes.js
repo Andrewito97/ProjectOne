@@ -10,7 +10,8 @@ userApi.route('/myapi/login')
     .post(userController.login);
 
 userApi.route('/myapi/profile/:userId')
-    .get(userController.getUserProfile);
+    .get(userController.getUserProfile)
+    .put(userController.updateUser);
 
 userApi.route('/myapi/media')
     .post(userController.checkIfMediaAccExists);

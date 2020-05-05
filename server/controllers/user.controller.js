@@ -195,13 +195,37 @@ const userController = {
     },
 
     hasAuthorization(request, response, nextHandler) {
-        const authorized = request.profile && request.auth && request.profile._id == req.auth._id;
+        const authorized = request.profile && 
+                           request.auth && 
+                           request.profile._id == req.auth._id;
         if (!authorized) {
           return response.status(403).json({
             error: 'User is not authorized !'
           });
         };
         nextHandler();
+    },
+
+    updateUser(request, response) {
+        User 
+            .findByIdAndUpdate(
+                request.profile._id, 
+                request.body, { 
+                    new: true,
+                    runValidators : true
+                },
+                (error, newUser) => {
+                    if(error) {
+                        return response.status(401).json({
+                            error
+                        });
+                    } else {
+                        return response.status(201).json({
+                            success: 'User has been updated !'
+                        });
+                    };
+                }
+            );
     },
 
     getUserByID(request, response, nextHandler, userId) {

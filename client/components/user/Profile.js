@@ -3,7 +3,13 @@ import { Card,
          CardContent, 
          Typography,
          TextField,
-         IconButton } from '@material-ui/core';
+         IconButton,
+         Button,
+         Dialog,
+         DialogTitle,
+         DialogContent,
+         DialogContentText,
+         DialogActions } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import userApi from '../../api/user.api';
@@ -42,25 +48,69 @@ const styles = {
         right: 10,
         bottom: 0
     },
+    saveButton: {
+        backgroundColor: '#2D986D',
+        color: 'white',
+        marginTop: 60
+    }
 };
 
 const Profile = () => {
     const [ userName, setUserName ] = React.useState('');
+    const [ userNameError, setUserNameError ] = React.useState('');
     const [ shouldEditName, setEditNameStatus ] = React.useState(false);
     const [ userEmail, setUserEmail ] = React.useState('');
+    const [ userEmailError, setUserEmailError ] = React.useState('');
     const [ shouldEditEmail, setEditEmailStatus ] = React.useState(false);
+    const [ successed, setSuccessed ] = React.useState(false);
+
+    //for preventing to save no changed data 
+    const [ savedName, setSavedName ] = React.useState('');
+    const [ savedEmail, setSavedEmail ] = React.useState('');
 
     React.useEffect( () => {
         loadUser();
     }, []);
 
     const loadUser = async () => {
-        const userId = authenticationHelper.isAuthenticated().user._id
+        const userId = authenticationHelper.isAuthenticated().user._id;
         const user = await userApi.getUserProfile(userId);
         setUserName(user.name);
         setUserEmail(user.email);
+        setSavedName(user.name);
+        setSavedEmail(user.email);
     };
 
+    const updateUser = async () => {
+        const updatedUser = {
+            name: userName,
+            email: userEmail
+        };
+        const userId = authenticationHelper.isAuthenticated().user._id;
+        const data = await userApi.updateUserProfile(userId, updatedUser);
+        if(data.success) {
+            setUserEmailError('');
+            setUserNameError('');
+            setSuccessed(true);
+            setSavedName(userName);
+            setSavedEmail(userEmail);
+        } else {
+            if(data.error.code) {
+                setUserEmailError('Email is already existss !');
+            } else {
+                data.error.errors.email ? 
+                    setUserEmailError(data.error.errors.email.message) : 
+                    setUserEmailError('');
+                data.error.errors.name ? 
+                    setUserNameError('Inappropriate name length !') : 
+                    setUserNameError('');
+            };
+        };
+    };
+
+    let isDisabled = shouldEditName || shouldEditEmail;
+    isDisabled = savedName === userName ? (savedEmail === userEmail ? true : false) : false;
+  
     return (
         <div>
         <Card style={styles.container}>
@@ -102,6 +152,7 @@ const Profile = () => {
                         <EditIcon/>
                     </IconButton>
                 }
+                { userNameError ? (<Typography color='error'>{userNameError}</Typography>) : null }
                 </div>
                 <br/>
                 <div style={styles.emailContainer}>
@@ -140,10 +191,38 @@ const Profile = () => {
                         <EditIcon/>
                     </IconButton>
                 }
+                { userEmailError ? (<Typography color='error'>{userEmailError}</Typography>) : null }
                 </div>
+                <br/>
+                <Button 
+                    disabled={isDisabled} 
+                    onClick={updateUser} 
+                    style={{
+                        backgroundColor: isDisabled ? '#BCC0B8' : '#2D986D',
+                        color: 'white',
+                    }}
+                >
+                    Save
+                </Button>
                 <ProfileTabs />
             </CardContent>
         </Card>
+        <Dialog open={successed} disableBackdropClick={true}>
+                <DialogTitle>Success</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Account data changed successfully
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button 
+                        style={styles.icons}
+                        onClick={ () => setSuccessed(false) }
+                    >
+                        OK
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 };

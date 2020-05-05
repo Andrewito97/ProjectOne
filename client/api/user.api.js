@@ -75,6 +75,22 @@ const userApi = {
             return console.log(err)
         }
     },
+    async updateUserProfile(userId, user) {
+        try {
+            const response = await fetch(`/myapi/profile/${userId}`, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(user)
+            })
+            return response.json()
+        }
+        catch (err) {
+            return console.log(err)
+        }
+    },
     async recoverPassword(user) {
         try {
             const response = await fetch('/myapi/recover', {
