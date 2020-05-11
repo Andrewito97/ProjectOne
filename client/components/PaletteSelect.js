@@ -15,7 +15,7 @@ const styles = {
         width: '100%',
     },
     applyButton: {
-        marginTop: 12,
+        marginTop: 15,
         color: 'white'
     }
 };

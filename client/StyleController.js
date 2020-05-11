@@ -20,11 +20,12 @@ class StyleController {
         this.blackBlue = '#05192F';
         this.highBlackBlue = '#041324';
 
-        this.mainColor = this.blue
-        this.additionalColor = this.lightBlue
-        this.textColor = this.black
-        this.tabsTextColor = this.silver
-        this.backgroundColor = this.paleSeaBlue
+        //set default colors for initial page loading until palette has been chosen
+        this.mainColor = this.silver
+        this.additionalColor = this.white
+        this.textColor = this.white
+        this.tabsTextColor = this.white
+        this.backgroundColor = this.white
         this.cardColor = this.white
 
         //overriding default mui-outlined-input

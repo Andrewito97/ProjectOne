@@ -17,15 +17,17 @@ const App = () => {
     const [ cookies, setCookie ] = useCookies(['OneProjectPalette']);
     const [ palette, setPalette ] = React.useState(cookies.OneProjectPalette);
 
-    styleController.choosePalette(palette);
-
     React.useEffect(() => {
+
       //remove server side injected css
         const jssStyles = document.querySelector('#jss-server-side');
         if(jssStyles) {
             jssStyles.parentElement.removeChild(jssStyles);
         }
+   
     }, []);
+
+    styleController.choosePalette(palette);
 
     if(palette === 'standart') styleController.overrideInput(blue);
     if(palette === 'dark') styleController.overrideInput(ivory, ivory, ivory);
