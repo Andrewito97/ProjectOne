@@ -13,9 +13,10 @@ import { Card,
          DialogContentText,
          DialogActions } from '@material-ui/core';
 import userApi from '../../api/user.api';
+import styleController from '../../StyleController';
 
 const styles = {
-    container: {
+    card: {
         width: '55%',
         minHeight: 200,
         padding: 50
@@ -31,8 +32,11 @@ const styles = {
     linkContainer: {
         marginTop: 30
     },
-    button: {
-        backgroundColor: '#2D986D' ,
+    changePasswordButton: {
+        color: 'white',
+        marginTop: 60
+    },
+    loginButton: {
         color: 'white',
         marginTop: 60
     }
@@ -58,54 +62,79 @@ const ResetPasswordForm = () => {
     
     return (
         <div>
-        <Card style={styles.container}>
-            <CardContent style={styles.content}>
-                <Typography variant='h5'>Set new password</Typography>
+            <Card 
+                style={{
+                    backgroundColor: styleController.cardColor,
+                    ...styles.card
+                }}
+            >   
+                <CardContent>
+                    <Typography 
+                        variant='h5'
+                        style={{
+                            color: styleController.textColor
+                        }}
+                    >
+                        Set new password
+                    </Typography>
 
-                <TextField 
-                    required
-                    label='Password' 
-                    variant='outlined'
-                    placeholder='Type your new password...'
-                    type='password'
-                    value={requestedPassword} 
-                    style={styles.passwordInput} 
-                    onChange={(event) => setPassword(event.target.value)}
-                />
-                <br/>
-                <TextField 
-                    required
-                    label='Confirm password' 
-                    variant='outlined'
-                    placeholder='Confirm password...'
-                    type='password'
-                    value={confirmedPassword} 
-                    style={styles.confirmPassword} 
-                    onChange={(event) => setConfirmedPassword(event.target.value)}
-                />
-                <br/>
-                { passwordError ? (<Typography color='error'>{passwordError}</Typography>) : null }
+                    <TextField 
+                        required
+                        label='Password' 
+                        variant='outlined'
+                        placeholder='Type your new password...'
+                        type='password'
+                        value={requestedPassword} 
+                        style={styles.passwordInput} 
+                        onChange={(event) => setPassword(event.target.value)}
+                    />
+                    <br/>
+                    <TextField 
+                        required
+                        label='Confirm password' 
+                        variant='outlined'
+                        placeholder='Confirm password...'
+                        type='password'
+                        value={confirmedPassword} 
+                        style={styles.confirmPassword} 
+                        onChange={(event) => setConfirmedPassword(event.target.value)}
+                    />
+                    <br/>
+                    { passwordError ? (<Typography color='error'>{passwordError}</Typography>) : null }
 
-                <CardActions>
-                    <Button style={styles.button} onClick={onChangePassword}>Change password</Button>
-                </CardActions>
-            </CardContent>
-        </Card>
-        <Dialog open={successed} disableBackdropClick={true}>
-            <DialogTitle>Success</DialogTitle>
-            <DialogContent>
-                <DialogContentText>
-                    Password has been changed successfully !
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-            <Link to="/login">
-                <Button style={styles.button} >
-                    Login
-                </Button>
-            </Link>
-            </DialogActions>
-        </Dialog>
+                    <CardActions>
+                        <Button
+                            onClick={onChangePassword}
+                            style={{
+                                backgroundColor: styleController.mainColor,
+                                ...styles.changePasswordButton
+                            }} 
+                        >
+                            Change password
+                        </Button>
+                    </CardActions>
+                </CardContent>
+            </Card>
+            <Dialog open={successed} disableBackdropClick={true}>
+                <DialogTitle>Success</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Password has been changed successfully !
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Link to="/login">
+                    <Button 
+                        style={{
+                            backgroundColor: styleController.mainColor,
+                            ...styles.loginButton
+                        }}
+                    >
+                        Login
+                    </Button>
+                </Link>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 };

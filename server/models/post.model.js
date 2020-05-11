@@ -13,7 +13,7 @@ const PostSchema = new mongoose.Schema({
 
     text: {
         type: String,
-        required: [true, 'Title is required !']
+        required: [true, 'Text is required !']
     },
 
     postedBy: {

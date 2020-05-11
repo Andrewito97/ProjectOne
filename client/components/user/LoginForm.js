@@ -12,10 +12,11 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import userApi from '../../api/user.api';
 import config from '../../../config';
 import authenticationHelper from '../../helpers/authentication.helper';
+import styleController from '../../StyleController';
 import '../style.css';
 
 const styles = {
-    container: {
+    card: {
         width: '55%',
         minHeight: 200,
         padding: 50
@@ -33,7 +34,6 @@ const styles = {
         marginTop: 30
     },
     loginButton: {
-        backgroundColor: '#2D986D' ,
         color: 'white',
         marginTop: 60
     },
@@ -122,9 +122,21 @@ const LoginForm = () => {
     };
     
     return (
-        <Card style={styles.container}>
+        <Card 
+            style={{
+                backgroundColor: styleController.cardColor,
+                ...styles.card
+            }}
+        >
             <CardContent style={styles.content}>
-                <Typography variant='h5'>Sign In</Typography>
+                <Typography 
+                    variant='h5'
+                    style={{
+                        color: styleController.textColor
+                    }}
+                >
+                    Sign In
+                </Typography>
 
                 <TextField 
                     required
@@ -159,7 +171,15 @@ const LoginForm = () => {
                     <Link to='/recovery'>Forgot your password? Recover !</Link>
                 </div>
                 <CardActions>
-                    <Button style={styles.loginButton} onClick={onLogin}>Login</Button>
+                    <Button 
+                        onClick={onLogin}
+                        style={{
+                            backgroundColor: styleController.mainColor,
+                            ...styles.loginButton
+                        }}
+                    >
+                        Login
+                    </Button>
                     <div style={styles.googleButton} id='google_button_container'>
                         <GoogleLogin
                             clientId={config.googleClientId}

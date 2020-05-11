@@ -10,9 +10,10 @@ import MovieCreationIcon from '@material-ui/icons/MovieCreation';
 import DeleteIcon from '@material-ui/icons/Delete';
 import authenticationHelper from '../../helpers/authentication.helper';
 import movieApi from '../../api/movie.api';
+import styleController from '../../StyleController';
 
 const styles = {
-    container: {
+    card: {
         paddingTop: 50,
         paddingBottom: 50,
         paddingLeft: 60,
@@ -35,9 +36,12 @@ const styles = {
         width: '100%'
     },
     icons: {
-        backgroundColor: '#2D986D',
         color: 'white',
         marginLeft: 8
+    },
+    addVideoButton: {
+        color: 'white',
+        marginTop: 15
     }
 };
 
@@ -82,100 +86,122 @@ const NewMovieForm = (props) => {
     };
 
     const isDisabled = video === '';
+
     return (
-        <div>
-            <Card style={styles.container}>
-                <CardContent>
-                    <Typography variant='h5'>Add trailer</Typography>
-                    <TextField 
-                        required
-                        label='Title'
-                        variant='outlined'
-                        placeholder='Type title...'
-                        value={movieTitle}
-                        style={styles.titleInput}
-                        onChange={ 
-                            (event) => setTitle(event.target.value)
-                        }
-                    />
-                    <br/>
-                    { titleError ? (<Typography color='error'>{titleError}</Typography>) : null }
-
-                    <TextField 
-                        required
-                        label='Genre'
-                        variant='outlined'
-                        placeholder='Type genre...'
-                        value={movieGenre}
-                        style={styles.genreInput}
-                        onChange={ 
-                            (event) => setGenre(event.target.value)
-                        }
-                    />
-                    <br/>
-                    { genreError ? (<Typography color='error'>{genreError}</Typography>) : null }
-
-                    <TextField 
-                        required
-                        label='Description'
-                        variant='outlined'
-                        placeholder='Type description...'
-                        multiline
-                        rows='16'
-                        value={movieDescription}
-                        style={styles.descriptionInput}
-                        onChange={ 
-                            (event) => setDescription(event.target.value)
-                        }
-                    />
-                    <br/>
-                    <div>
-                    { descriptionError ? (<Typography color='error'>{descriptionError}</Typography>) : null }
-                    </div>
-                    <input 
-                        accept='video/*' 
-                        style={{display: 'none'}}
-                        type='file'
-                        id='icon-button-file'
-                        onChange={ 
-                            (event) => setVideo(event.target.files[0])
-                        }
-                    />
-                    <label htmlFor='icon-button-file'>
-                        <IconButton style={styles.icons} component='span'>
-                            <MovieCreationIcon/>
-                        </IconButton>
-                    </label>
-                    {
-                        video ? (
-                            <div>
-                                <Typography component='span'>{video.name}</Typography>
-                                <IconButton 
-                                    onClick={() => setVideo('')} 
-                                    size='small'
-                                    style={styles.icons}
-                                >
-                                    <DeleteIcon/>
-                                </IconButton>
-                            </div>
-                        ) : null
+        <Card 
+            style={{
+                backgroundColor: styleController.cardColor,
+                ...styles.card
+            }}
+        >
+            <CardContent>
+                <Typography 
+                    variant='h5'
+                    style={{ color: styleController.textColor }}
+                >
+                    Add trailer
+                </Typography>
+                <TextField 
+                    required
+                    label='Title'
+                    variant='outlined'
+                    placeholder='Type title...'
+                    value={movieTitle}
+                    style={styles.titleInput}
+                    onChange={ 
+                        (event) => setTitle(event.target.value)
                     }
-                    <br/>
-                </CardContent>
-                <CardActions>
-                    <Button 
-                        disabled={isDisabled} 
-                        onClick={submitMovie}
+                />
+                <br/>
+                { titleError ? (<Typography color='error'>{titleError}</Typography>) : null }
+
+                <TextField 
+                    required
+                    label='Genre'
+                    variant='outlined'
+                    placeholder='Type genre...'
+                    value={movieGenre}
+                    style={styles.genreInput}
+                    onChange={ 
+                        (event) => setGenre(event.target.value)
+                    }
+                />
+                <br/>
+                { genreError ? (<Typography color='error'>{genreError}</Typography>) : null }
+
+                <TextField 
+                    required
+                    label='Description'
+                    variant='outlined'
+                    placeholder='Type description...'
+                    multiline
+                    rows='16'
+                    value={movieDescription}
+                    style={styles.descriptionInput}
+                    onChange={ 
+                        (event) => setDescription(event.target.value)
+                    }
+                />
+                <br/>
+                <div>
+                { descriptionError ? (<Typography color='error'>{descriptionError}</Typography>) : null }
+                </div>
+                <input 
+                    accept='video/*' 
+                    style={{display: 'none'}}
+                    type='file'
+                    id='icon-button-file'
+                    onChange={ 
+                        (event) => setVideo(event.target.files[0])
+                    }
+                />
+                <label htmlFor='icon-button-file'>
+                    <IconButton 
+                        component='span'
                         style={{
-                            backgroundColor: isDisabled ? '#BCC0B8' : '#2D986D',
-                            color: 'white',
-                            marginTop: 15
-                        }}>
-                        ADD VIDEO
-                    </Button>
-                </CardActions>
-            </Card>
-        </div>
+                            backgroundColor: styleController.mainColor, 
+                            ...styles.icons
+                        }} 
+                    >
+                        <MovieCreationIcon/>
+                    </IconButton>
+                </label>
+                {
+                    video ? (
+                        <div>
+                            <Typography 
+                                component='span'
+                                style={{color: styleController.textColor}}
+                            >
+                                {video.name}
+                            </Typography>
+                            <IconButton 
+                                onClick={() => setVideo('')} 
+                                size='small'
+                                style={{
+                                    backgroundColor: styleController.mainColor,
+                                    ...styles.icons
+                                }}
+                            >
+                                <DeleteIcon/>
+                            </IconButton>
+                        </div>
+                    ) : null
+                }
+                <br/>
+            </CardContent>
+            <CardActions>
+                <Button 
+                    disabled={isDisabled} 
+                    onClick={submitMovie}
+                    style={{
+                        backgroundColor: isDisabled ? styleController.grey : styleController.mainColor,
+                        ...styles.addVideoButton
+                    }}>
+                    ADD VIDEO
+                </Button>
+            </CardActions>
+        </Card>
     );
 };
 

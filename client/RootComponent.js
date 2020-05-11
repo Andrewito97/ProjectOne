@@ -9,34 +9,36 @@ import SignUpForm from './components/user/SignUpForm';
 import LoginForm from './components/user/LoginForm';
 import RecoveryForm from './components/user/RecoveryForm';
 import ResetPasswordForm from './components/user/ResetPasswordForm';
-import Profile from './components/user/Profile'
+import Profile from './components/user/Profile';
+import styleController from './StyleController';
 
 const styles = {
     container: {
         display: 'flex', 
-        marginTop: '6%', 
-        marginLeft: '15%', 
-        marginRight: '8%'
+        paddingTop: '6%',
+        paddingLeft: '15%', 
+        paddingRight: '8%',
     },
     list: {
         width: '64%', 
         margin: '3%'
     },
     aside: {
-        width: '16%', 
-        backgroundColor: '#F9F9F9', 
-        minHeight: 600, 
-        minWidth: 180,
-        padding: '3%', 
-        maxWidth: '20%',
+        width: '22%', 
+        minHeight: 800, 
         margin: '3%'
     }
 };
 
-const RootComponent = () => (
+const RootComponent = (props) => (
     <div>
         <Topbar/>
-        <div style={styles.container}>
+        <div 
+            style={{
+                backgroundColor: styleController.backgroundColor,
+                ...styles.container
+            }}
+        >
             <div style={styles.list}>
                 <Switch >    
                     <Route exact path='/' component={NewsFeedList} />
@@ -50,7 +52,7 @@ const RootComponent = () => (
                 </Switch>
             </div>
             <div style={styles.aside}>
-                <RightSidebar/>
+                <RightSidebar palette={props.palette} setPalette={props.setPalette}/>
             </div>
         </div>
     </div>

@@ -89,6 +89,17 @@ const userController = {
                         emailError: 'This email is not registered !' 
                     });
                 };
+                if(user.createdWithMedia === 'google') {
+                    return response.status(401).json({
+                        emailError: 'This email is registered with google so it does not require password to login !' 
+                    });
+                };
+
+                if(user.createdWithMedia === 'facebook') {
+                    return response.status(401).json({
+                        emailError: 'This email is registered with facebook so it does not require password to login !' 
+                    });
+                };
 
                 //generate and set password reset token
                 user.resetPasswordToken = crypto.randomBytes(16).toString('hex');
@@ -211,13 +222,18 @@ const userController = {
             .findByIdAndUpdate(
                 request.profile._id, 
                 request.body, { 
-                    new: true,
                     runValidators : true
                 },
-                (error, newUser) => {
+                (error, oldUser) => {
+                    let noChanges = request.body.name === oldUser.name && 
+                                    request.body.email === oldUser.email
                     if(error) {
                         return response.status(401).json({
                             error
+                        });
+                    } else if(noChanges) {
+                        return response.json({
+                            noChanges: 'No changes found !'
                         });
                     } else {
                         return response.status(201).json({

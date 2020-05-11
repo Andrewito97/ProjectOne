@@ -9,12 +9,12 @@ import { Card,
          IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import addWhitespaces from '../../helpers/addWhitespaces.helper';
+import styleController from '../../StyleController';
+import color from '@material-ui/core/colors/amber';
 
 const styles = {
-    movie: {
-        marginBottom: 60
-    },
-    container: {
+    card: {
+        marginBottom: 60,
         padding: 37
     },
     video: {
@@ -23,12 +23,17 @@ const styles = {
         marginTop: 30,
         backgroundColor: 'black'
     },
-    movieDate: {
-        color: 'grey',
+    movieFooter: {
+        position: 'relative',
         marginTop: 50
     },
+    movieDate: {
+        color: 'grey',
+    },
     deleteIcon: {
-        backgroundColor: '#2D986D',
+        position: 'absolute',
+        right: 10,
+        bottom: 0,
         color: 'white'
     }
 };
@@ -36,41 +41,58 @@ const styles = {
 const Movie = (props) => {
     const description = addWhitespaces(props.movie.description);
     return (
-        <div style={styles.movie}>
-            <Card style={styles.container}>
-                <CardHeader
-                    title={props.movie.title}
-                    subheader={props.movie.genre}
+        <Card 
+            style={{
+                backgroundColor: styleController.cardColor,
+                ...styles.card
+            }}
+        >
+            <CardHeader
+                title={props.movie.title}
+                subheader={props.movie.genre}
+                subheaderTypographyProps={{color: 'inherit'}}
+                style={{
+                    color: styleController.textColor,
+                }}
+            />
+            <CardContent>
+                <Typography 
+                    component='span'
+                    style={{
+                        color: styleController.textColor
+                    }}
+                >
+                    <ReactMarkdown source={description} plugins={[breaks]}/>   
+                </Typography>
+                <ReactPlayer 
+                    url={'/myapi/movies/' + props.movie._id} 
+                    width={styles.video.width}
+                    height={styles.video.height}
+                    style={styles.video}
+                    controls
                 />
-                <CardContent>
-                    <Typography component='span'>
-                        <ReactMarkdown source={description} plugins={[breaks]}/>   
-                    </Typography>
-                    <ReactPlayer 
-                        url={'/myapi/movies/' + props.movie._id} 
-                        width={styles.video.width}
-                        height={styles.video.height}
-                        style={styles.video}
-                        controls
-                    />
+                <div style={styles.movieFooter}>
                     <Typography style={styles.movieDate}>
                         {new Date(props.movie.created).toDateString()}
                     </Typography>
                     { 
                         props.isProfile ? 
                         <IconButton
-                            style={styles.deleteIcon}
                             onClick={ () => props.deleteMovie(props.movie._id) }
+                            style={{
+                                backgroundColor: styleController.mainColor,
+                                ...styles.deleteIcon
+                            }}
                         >
                             <DeleteIcon/>
                         </IconButton>
-                        : 
+                            : 
                         null 
                     }
-                </CardContent>
-            </Card>
-        </div>
-    );
+                </div>
+            </CardContent>
+        </Card>
+    )
 };
 
 export default Movie;

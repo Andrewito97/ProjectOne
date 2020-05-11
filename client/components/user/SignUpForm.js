@@ -12,9 +12,10 @@ import { Card,
          DialogContentText,
          DialogActions } from '@material-ui/core';
 import userApi from '../../api/user.api';
+import styleController from '../../StyleController';
 
 const styles = {
-    container: {
+    card: {
         width: '55%',
         minHeight: 350,
         padding: 50
@@ -39,8 +40,11 @@ const styles = {
     linkContainer: {
         marginTop: 30
     },
-    button: {
-        backgroundColor: '#2D986D' ,
+    createButton: {
+        color: 'white',
+        marginTop: 60
+    },
+    loginButton: {
         color: 'white',
         marginTop: 60
     }
@@ -84,84 +88,109 @@ const SignUpForm = () => {
     
     return (
         <div>
-        <Card style={styles.container}>
-            <CardContent style={styles.content}>
-                <Typography variant='h5'>Sign Up</Typography>
+            <Card 
+                style={{
+                    backgroundColor: styleController.cardColor,
+                    ...styles.card
+                }}
+            >
+                <CardContent style={styles.content}>     
+                    <Typography 
+                        variant='h5'
+                        style={{
+                            color: styleController.textColor
+                        }}
+                    >
+                        Sign Up
+                    </Typography>
 
-                <TextField 
-                    required
-                    label='Name' 
-                    variant='outlined'
-                    placeholder='Type your name...'
-                    value={requestedName} 
-                    style={styles.nameInput} 
-                    onChange={(event) => setName(event.target.value)}
-                />
-                <br/>
-                { nameError ? (<Typography color='error'>{nameError}</Typography>) : null }
+                    <TextField 
+                        required
+                        label='Name' 
+                        variant='outlined'
+                        placeholder='Type your name...'
+                        value={requestedName} 
+                        style={styles.nameInput} 
+                        onChange={(event) => setName(event.target.value)}
+                    />
+                    <br/>
+                    { nameError ? (<Typography color='error'>{nameError}</Typography>) : null }
 
-                <TextField 
-                    required
-                    label='Email' 
-                    variant='outlined'
-                    placeholder='Type your email...'
-                    type='email'
-                    value={requestedEmail}
-                    style={styles.emailInput}
-                    onChange={(event) => setEmail(event.target.value)}
-                />
-                <br/>
-                { emailError ? (<Typography color='error'>{emailError}</Typography>) : null }
+                    <TextField 
+                        required
+                        label='Email' 
+                        variant='outlined'
+                        placeholder='Type your email...'
+                        type='email'
+                        value={requestedEmail}
+                        style={styles.emailInput}
+                        onChange={(event) => setEmail(event.target.value)}
+                    />
+                    <br/>
+                    { emailError ? (<Typography color='error'>{emailError}</Typography>) : null }
 
-                <TextField 
-                    required
-                    label='Password' 
-                    variant='outlined'
-                    placeholder='Type your password...'
-                    type='password'
-                    value={requestedPassword}
-                    style={styles.passwordInput} 
-                    onChange={(event) => setPassword(event.target.value)}
-                />
-                <br/>
+                    <TextField 
+                        required
+                        label='Password' 
+                        variant='outlined'
+                        placeholder='Type your password...'
+                        type='password'
+                        value={requestedPassword}
+                        style={styles.passwordInput} 
+                        onChange={(event) => setPassword(event.target.value)}
+                    />
+                    <br/>
 
-                <TextField 
-                    required
-                    label='Confrm password' 
-                    variant='outlined'
-                    placeholder='Confirm your password...'
-                    type='password'
-                    value={confirmedPassword}
-                    style={styles.confirmPasswordInput} 
-                    onChange={(event) => setConfirmedPassword(event.target.value)}
-                />
-                <br/>
-                { passwordError ? (<Typography color='error'>{passwordError}</Typography>) : null }
+                    <TextField 
+                        required
+                        label='Confrm password' 
+                        variant='outlined'
+                        placeholder='Confirm your password...'
+                        type='password'
+                        value={confirmedPassword}
+                        style={styles.confirmPasswordInput} 
+                        onChange={(event) => setConfirmedPassword(event.target.value)}
+                    />
+                    <br/>
+                    { passwordError ? (<Typography color='error'>{passwordError}</Typography>) : null }
 
-                <div style={styles.linkContainer}>
-                    <Link to='/login'>Allready have an account? Login</Link>
-                </div>
+                    <div style={styles.linkContainer}>
+                        <Link to='/login'>Allready have an account? Login</Link>
+                    </div>
 
-                <CardActions>
-                    <Button style={styles.button} onClick={onCreate}>Create</Button>
-                </CardActions>
-            </CardContent>
-        </Card>
-        <Dialog open={successed} disableBackdropClick={true}>
-            <DialogTitle>New Account</DialogTitle>
-            <DialogContent>
-                <DialogContentText>
-                    New account successfully created.
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-            <Link to="/login">
-                <Button style={styles.button} >
-                    Login
-                </Button>
-            </Link>
-            </DialogActions>
-        </Dialog>
+                    <CardActions>
+                        <Button 
+                            onClick={onCreate}
+                            style={{
+                                backgroundColor: styleController.mainColor,
+                                ...styles.createButton
+                            }}
+                        >
+                            Create
+                        </Button>
+                    </CardActions>
+                </CardContent>
+            </Card>
+            <Dialog open={successed} disableBackdropClick={true}>
+                <DialogTitle>New Account</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        New account successfully created.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                <Link to="/login">
+                    <Button 
+                        style={{
+                            backgroundColor: styleController.mainColor,
+                            ...styles.loginButton
+                        }}
+                    >
+                        Login
+                    </Button>
+                </Link>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 };

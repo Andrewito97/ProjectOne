@@ -1,11 +1,11 @@
 import React from 'react';
 import { InputBase } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
+import styleController from '../StyleController';
 
 const styles = {
     container: {
         display: 'flex',
-        backgroundColor: '#5BD0A1',
         borderRadius: 5,
         marginLeft: '12%',
     },
@@ -14,6 +14,10 @@ const styles = {
         marginRight: 7,
         pointerEvents: 'none'
     },
+    inputBase: {
+        borderRadius: 5,
+        color: 'white'
+    }
 };
 
 const Searchbar = () => {
@@ -24,12 +28,28 @@ const Searchbar = () => {
     };
 
     return (
-        <div style={styles.container}>
-            <Search style={styles.icon}/>
-            <InputBase style={{width: isFocused ? 300 : 120, transitionDuration: '1s'}} 
-                    onFocus={focusHandler} 
-                    onBlur={focusHandler}
-                    placeholder="Search…" 
+        <div 
+            style={{
+                backgroundColor: styleController.additionalColor,
+                ...styles.container
+            }}
+        >
+            <Search 
+                style={{ 
+                    backgroundColor: styleController.additionalColor,
+                    ...styles.icon
+                }}
+            />
+            <InputBase 
+                onFocus={focusHandler} 
+                onBlur={focusHandler}
+                placeholder="Search…" 
+                style={{
+                    width: isFocused ? 300 : 120, transitionDuration: '0.4s',
+                    backgroundColor: styleController.additionalColor,
+                    ...styles.inputBase
+
+                }} 
             />       
         </div>
     )

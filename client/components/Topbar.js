@@ -3,10 +3,11 @@ import { Link, withRouter } from 'react-router-dom';
 import { AppBar, Toolbar, Button } from '@material-ui/core';
 import Menu from './user/Menu';
 import Searchbar from './Searchbar';
+import styleController from '../StyleController';
 
 const styles = {
     topbar: {
-        backgroundColor: '#38C18A',
+        position: 'relative',
     },
     newsFeedTab: {
         marginLeft: '12%',
@@ -23,34 +24,69 @@ const styles = {
         textShadow: '0.5px 1px white'
     },
     inactiveTab: {
-        color: '#D3D3D3'
+        
     },
+    menu: {
+        position: 'absolute',
+        right: 150
+    }
 }
 
-function isActive(history, path) {
-    if(history.location.pathname === path) {
-        return styles.activeTab;
-    } else {
-        return styles.inactiveTab;
-    }
-};
-
-const Topbar = withRouter( ({history}) => (
+const Topbar = withRouter(({ history }) => {
+    return (
         <AppBar position='sticky'>
-            <Toolbar style={styles.topbar}>
+            <Toolbar 
+                style={{
+                    backgroundColor: styleController.mainColor, 
+                    ...styles.topbar
+                }}
+            >
                 <Button style={styles.newsFeedTab}>
-                    <Link to='/' style={isActive(history, '/')}>News Feed</Link>
+                    <Link 
+                        to='/' 
+                        style={
+                            history.location.pathname === '/' ? 
+                            {color: 'white', textShadow: '0.5px 1px white'}
+                            :
+                            {color: styleController.tabsTextColor}
+                        }
+                    >
+                        News Feed
+                    </Link>
                 </Button>
                 <Button style={styles.musicTab}>
-                    <Link to='/music' style={isActive(history, '/music')}>Music</Link>
+                    <Link 
+                        to='/music' 
+                        style={
+                            history.location.pathname === '/music' ? 
+                            {color: 'white', textShadow: '0.5px 1px white'}
+                            :
+                            {color: styleController.tabsTextColor}
+                        }
+                    >
+                        Music
+                    </Link>
                 </Button>
                 <Button style={styles.moviesTab}> 
-                    <Link to='/movies' style={isActive(history, '/movies')}>Movies</Link>
+                    <Link 
+                        to='/movies' 
+                        style={
+                            history.location.pathname === '/movies' ? 
+                            {color: 'white', textShadow: '0.5px 1px white'}
+                            :
+                            {color: styleController.tabsTextColor}
+                        }
+                    >
+                        Movies
+                    </Link>
                 </Button>   
                 <Searchbar/>
-                <Menu/>
+                <div style={styles.menu}>
+                    <Menu/>
+                </div>
             </Toolbar>
         </AppBar>
-));
+    )
+});
 
 export default Topbar;

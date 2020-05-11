@@ -15,12 +15,11 @@ import SaveIcon from '@material-ui/icons/Save';
 import userApi from '../../api/user.api';
 import authenticationHelper from '../../helpers/authentication.helper';
 import ProfileTabs from './ProfileTabs';
+import styleController from '../../StyleController';
 
 const styles = {
-    container: {
-        width: '100%',
-        minHeight: 200,
-        padding: 50
+    card: {
+        padding: 37
     },
     pageHeader: {
         marginBottom: 40
@@ -41,7 +40,6 @@ const styles = {
         width: '60%'
     },
     icons: {
-        backgroundColor: '#2D986D',
         color: 'white',
         marginLeft: 8,
         position: 'absolute',
@@ -49,7 +47,9 @@ const styles = {
         bottom: 0
     },
     saveButton: {
-        backgroundColor: '#2D986D',
+        color: 'white',
+    },
+    okButton: {
         color: 'white',
         marginTop: 60
     }
@@ -63,10 +63,7 @@ const Profile = () => {
     const [ userEmailError, setUserEmailError ] = React.useState('');
     const [ shouldEditEmail, setEditEmailStatus ] = React.useState(false);
     const [ successed, setSuccessed ] = React.useState(false);
-
-    //for preventing to save no changed data 
-    const [ savedName, setSavedName ] = React.useState('');
-    const [ savedEmail, setSavedEmail ] = React.useState('');
+    const [ noChanges, setNoChanges ] = React.useState(false);
 
     React.useEffect( () => {
         loadUser();
@@ -77,8 +74,6 @@ const Profile = () => {
         const user = await userApi.getUserProfile(userId);
         setUserName(user.name);
         setUserEmail(user.email);
-        setSavedName(user.name);
-        setSavedEmail(user.email);
     };
 
     const updateUser = async () => {
@@ -91,10 +86,12 @@ const Profile = () => {
         if(data.success) {
             setUserEmailError('');
             setUserNameError('');
+            setNoChanges('')
             setSuccessed(true);
-            setSavedName(userName);
-            setSavedEmail(userEmail);
+        } else if(data.noChanges) {
+            setNoChanges(data.noChanges)
         } else {
+            setNoChanges('')
             if(data.error.code) {
                 setUserEmailError('Email is already existss !');
             } else {
@@ -109,105 +106,136 @@ const Profile = () => {
     };
 
     let isDisabled = shouldEditName || shouldEditEmail;
-    isDisabled = savedName === userName ? (savedEmail === userEmail ? true : false) : false;
   
     return (
         <div>
-        <Card style={styles.container}>
-            <CardContent style={styles.content}>
-                <Typography variant='h5' style={styles.pageHeader}>Profile</Typography>
-                <div style={styles.nameContainer}>
-                { 
-                    shouldEditName ? 
-                    <TextField
-                        size='small'
-                        variant='outlined'
-                        defaultValue={userName}
-                        style={styles.nameField}
-                        onChange={ (event) => setUserName(event.target.value)}
-                    />
-                    :
+            <Card 
+                style={{
+                    backgroundColor: styleController.cardColor,
+                    ...styles.card
+                }}
+            >
+                <CardContent>
                     <Typography 
-                        variant='h6'
-                        style={styles.nameField}
+                        variant='h5' 
+                        style={{
+                            color: styleController.textColor,
+                            ...styles.pageHeader
+                        }}
                     >
-                        {userName}
+                        Profile
                     </Typography>
-                }   
-                {       
-                    shouldEditName ? 
-                    <IconButton
-                        onClick={() => setEditNameStatus(false)} 
-                        size='small'
-                        style={styles.icons}
+                    <div style={styles.nameContainer}>
+                    { 
+                        shouldEditName ? 
+                        <TextField
+                            size='small'
+                            variant='outlined'
+                            defaultValue={userName}
+                            style={styles.nameField}
+                            onChange={ (event) => setUserName(event.target.value) }
+                        />
+                        :
+                        <Typography 
+                            variant='h6'
+                            style={{
+                                color: styleController.textColor,
+                                ...styles.nameField
+                            }}
+                        >
+                            {userName}
+                        </Typography>
+                    }   
+                    {       
+                        shouldEditName ? 
+                        <IconButton
+                            onClick={() => setEditNameStatus(false)} 
+                            size='small'
+                            style={{
+                                backgroundColor: styleController.mainColor,
+                                ...styles.icons
+                            }}
+                        >
+                            <SaveIcon/>
+                        </IconButton>
+                        :
+                        <IconButton
+                            onClick={() => setEditNameStatus(true)} 
+                            size='small'
+                            style={{
+                                backgroundColor: styleController.mainColor,
+                                ...styles.icons
+                            }}
+                        >
+                            <EditIcon/>
+                        </IconButton>
+                    }
+                    { userNameError ? (<Typography color='error'>{userNameError}</Typography>) : null }
+                    </div>
+                    <br/>
+                    <div style={styles.emailContainer}>
+                    {
+                        shouldEditEmail ?
+                        <TextField
+                            size='small'
+                            variant='outlined'
+                            defaultValue={userEmail}
+                            style={styles.emailField}
+                            onChange={ (event) => setUserEmail(event.target.value)}
+                        />           
+                        :
+                        <Typography 
+                            variant='h6'
+                            style={{
+                                color: styleController.textColor,
+                                ...styles.emailField
+                            }}
+                        >
+                            {userEmail}
+                        </Typography>      
+                    }
+                    {
+                        shouldEditEmail ? 
+                        <IconButton
+                            onClick={() => setEditEmailStatus(false)} 
+                            size='small'
+                            style={{
+                                backgroundColor: styleController.mainColor,
+                                ...styles.icons
+                            }}
+                        >
+                            <SaveIcon/>
+                        </IconButton>
+                        :
+                        <IconButton
+                            onClick={() => setEditEmailStatus(true)} 
+                            size='small'
+                            style={{
+                                backgroundColor: styleController.mainColor,
+                                ...styles.icons
+                            }}
+                        >
+                            <EditIcon/>
+                        </IconButton>
+                    }
+                    { userEmailError ? (<Typography color='error'>{userEmailError}</Typography>) : null }
+                    </div>
+                    <br/>
+                    <Button 
+                        disabled={isDisabled} 
+                        onClick={updateUser} 
+                        style={{
+                            backgroundColor: isDisabled ? styleController.grey : styleController.mainColor,
+                            ...styles.saveButton
+                        }}
                     >
-                        <SaveIcon/>
-                    </IconButton>
-                    :
-                    <IconButton
-                        onClick={() => setEditNameStatus(true)} 
-                        size='small'
-                        style={styles.icons}
-                    >
-                        <EditIcon/>
-                    </IconButton>
-                }
-                { userNameError ? (<Typography color='error'>{userNameError}</Typography>) : null }
-                </div>
-                <br/>
-                <div style={styles.emailContainer}>
-                {
-                    shouldEditEmail ?
-                    <TextField
-                        size='small'
-                        variant='outlined'
-                        defaultValue={userEmail}
-                        style={styles.emailField}
-                        onChange={ (event) => setUserEmail(event.target.value)}
-                    />           
-                    :
-                    <Typography 
-                        variant='h6'
-                        style={styles.emailField}
-                    >
-                        {userEmail}
-                    </Typography>      
-                }
-                {
-                    shouldEditEmail ? 
-                    <IconButton
-                        onClick={() => setEditEmailStatus(false)} 
-                        size='small'
-                        style={styles.icons}
-                    >
-                        <SaveIcon/>
-                    </IconButton>
-                    :
-                    <IconButton
-                        onClick={() => setEditEmailStatus(true)} 
-                        size='small'
-                        style={styles.icons}
-                    >
-                        <EditIcon/>
-                    </IconButton>
-                }
-                { userEmailError ? (<Typography color='error'>{userEmailError}</Typography>) : null }
-                </div>
-                <br/>
-                <Button 
-                    disabled={isDisabled} 
-                    onClick={updateUser} 
-                    style={{
-                        backgroundColor: isDisabled ? '#BCC0B8' : '#2D986D',
-                        color: 'white',
-                    }}
-                >
-                    Save
-                </Button>
-                <ProfileTabs />
-            </CardContent>
-        </Card>
-        <Dialog open={successed} disableBackdropClick={true}>
+                        Save
+                    </Button>
+                    { noChanges ? (<Typography style={{color: 'orange'}}>{noChanges}</Typography>) : null }
+                </CardContent>
+            </Card>
+            <ProfileTabs />
+            <Dialog open={successed} disableBackdropClick={true}>
                 <DialogTitle>Success</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
@@ -216,8 +244,11 @@ const Profile = () => {
                 </DialogContent>
                 <DialogActions>
                     <Button 
-                        style={styles.icons}
                         onClick={ () => setSuccessed(false) }
+                        style={{
+                            backgroundColor: styleController.mainColor,
+                            ...styles.okButton
+                        }}
                     >
                         OK
                     </Button>

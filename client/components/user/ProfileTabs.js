@@ -15,10 +15,13 @@ import postApi from '../../api/post.api';
 import musicApi from '../../api/music.api';
 import movieApi from '../../api/movie.api';
 import authenticationHelper from '../../helpers/authentication.helper';
+import styleController from '../../StyleController';
 
 const styles = {
-    button: {
-        backgroundColor: '#2D986D' ,
+    tabs: {
+        color: 'white'
+    },
+    okButton: {
         color: 'white',
         marginTop: 60
     }
@@ -94,9 +97,14 @@ const ProfileTabs = () => {
         <div>
             <AppBar/>
             <Tabs
+                onChange={ (event, newValue) => setValue(newValue) }
                 value={value}
                 centered={true}
-                onChange={ (event, newValue) => setValue(newValue) }
+                style={{
+                    backgroundColor: styleController.mainColor,
+                    ...styles.tabs
+                }}
+                
             >
                 <Tab label='Posts'/>
                 <Tab label='Music'/>
@@ -146,9 +154,13 @@ const ProfileTabs = () => {
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
-                    <Button 
-                        style={styles.button}
+                    <Button
                         onClick={ () => location.reload() }
+                        style={{
+                            backgroundColor: styleController.mainColor,
+                            ...styles.okButton
+                        }}
+                        
                     >
                         OK
                     </Button>

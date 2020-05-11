@@ -4,16 +4,11 @@ import { Person } from '@material-ui/icons';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import authenticationHelper from '../../helpers/authentication.helper';
 import userApi from '../../api/user.api';
+import styleController from '../../StyleController';
 
 const styles = {
-    container: {
-        display: 'flex', 
-        flexDirection: 'row-reverse', 
-        width: '90%',
-        marginRight: '4%'
-    },
-    icon: {
-        backgroundColor: '#33AF7D'
+    menuList: {
+        width: 150,
     },
     link: {
         color: 'black'
@@ -38,21 +33,27 @@ const _Menu = () => {
     };
 
     return (
-        <div style={styles.container}>
+        <div>
             <IconButton onClick={handleClick}>
-                <Person style={styles.icon}/>
+                <Person 
+                    style={{ 
+                        backgroundColor: styleController.additionalColor,
+                        color: 'white'
+                    }}
+                />
             </IconButton>
             <Menu 
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
+                MenuListProps={{style: styles.menuList}}
             >
                 { 
                 authenticationHelper.isAuthenticated() ?
                 (<div>
                     <MenuItem onClick={handleClose}>            
                         <Link style={styles.link} 
-                              to={'/profile/' + authenticationHelper.isAuthenticated().user._id}>
+                            to={'/profile/' + authenticationHelper.isAuthenticated().user._id}>
                                 Profile
                         </Link>
                     </MenuItem>

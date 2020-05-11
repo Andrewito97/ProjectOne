@@ -7,6 +7,7 @@ import { Typography,
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
+import styleController from '../../StyleController';
 
 const styles = {
     audioNameContainer: {
@@ -17,7 +18,6 @@ const styles = {
         width: '80%',
     },
     editIcon: {
-        backgroundColor: '#2D986D',
         position: 'absolute',
         right: 65,
         bottom: 7,
@@ -25,7 +25,6 @@ const styles = {
         marginLeft: 8
     },
     saveIcon: {
-        backgroundColor: '#2D986D',
         position: 'absolute',
         right: 65,
         bottom: 7,
@@ -33,7 +32,6 @@ const styles = {
         marginLeft: 8
     },
     deleteIcon: {
-        backgroundColor: '#2D986D',
         position: 'absolute',
         right: 12,
         bottom: 7,
@@ -60,7 +58,10 @@ const AudioList = (props) => {
                         :
                         <Typography 
                             component='span'
-                            style={styles.audioName}
+                            style={{
+                                color: styleController.color,
+                                ...styles.audioName
+                            }}
                         >
                             {props.audioNames[i].audioname}
                         </Typography> 
@@ -70,7 +71,10 @@ const AudioList = (props) => {
                         <IconButton 
                             onClick={ () => props.saveAudioName(i) } 
                             size='small'
-                            style={styles.saveIcon}
+                            style={{
+                                backgroundColor: styleController.mainColor,
+                                ...styles.saveIcon
+                            }}
                         >
                             <SaveIcon/>
                         </IconButton>
@@ -78,7 +82,10 @@ const AudioList = (props) => {
                         <IconButton 
                             onClick={ () => props.setEditingStatus(i) } 
                             size='small'
-                            style={styles.editIcon}
+                            style={{
+                                backgroundColor: styleController.mainColor,
+                                ...styles.editIcon
+                            }}
                         >
                             <EditIcon/>
                         </IconButton>
@@ -86,7 +93,10 @@ const AudioList = (props) => {
                     <IconButton 
                         onClick={ () => props.removeItem(i) } 
                         size='small'
-                        style={styles.deleteIcon}
+                        style={{
+                            backgroundColor: styleController.mainColor,
+                            ...styles.deleteIcon
+                        }}
                     >
                         <DeleteIcon/>
                     </IconButton>

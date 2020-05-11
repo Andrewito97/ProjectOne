@@ -1,5 +1,6 @@
 import React from 'react';
 import { Skeleton } from '@material-ui/lab';
+import styleController from '../../StyleController';
 
 const styles = {
     dummyText: {
@@ -11,7 +12,7 @@ const styles = {
 const DummyPost = () => {
     return (
         <div>
-            <Skeleton animation='wave' height={50} width='60%'/> 
+            <Skeleton style={{backgroundColor: styleController.mainColor}} animation='wave' height={50} width='60%'/> 
             <div style={styles.dummyText}>
                 <Skeleton width='90%' animation='wave'/> 
                 <Skeleton width='90%' animation='wave'/> 

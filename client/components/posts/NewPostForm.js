@@ -10,29 +10,33 @@ import { PhotoCamera } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
 import authenticationHelper from '../../helpers/authentication.helper';
 import postApi from '../../api/post.api';
+import styleController from '../../StyleController';
 
 const styles = {
-    container: {
+    card: {
         paddingTop: 50,
         paddingBottom: 50,
         paddingRight: 60,
         paddingLeft: 60,
-        minHeight: 350,
+        minHeight: 250,
         marginBottom: 80
     },
     titleInput: {
         marginTop: 30,
-        width: '100%'
+        width: '100%',
     },
     textInput: {
         marginTop: 30,
         marginBottom: 30,
         width: '100%'
     },
-    icons: {
-        backgroundColor: '#2D986D',
+    iconButton: {
         color: 'white',
         marginLeft: 8
+    },
+    addPostButton: {
+        color: 'white',
+        marginTop: 15
     }
 };
 
@@ -71,83 +75,102 @@ const NewPostForm = (props) => {
     };
 
     return (
-        <div>
-            <Card style={styles.container}>
-                <CardContent>
-                    <Typography variant='h5'>Create your post</Typography>
-                    <TextField 
-                        required
-                        label='Title'
-                        variant='outlined'
-                        placeholder='Type title...'
-                        value={postTitle}
-                        style={styles.titleInput}
-                        onChange={ 
-                            (event) => setTitle(event.target.value)
-                        }
-                    />
-                    <br/>
-                    { titleError ? (<Typography color='error'>{titleError}</Typography>) : null }
-
-                    <TextField 
-                        required
-                        label='Text content'
-                        variant='outlined'
-                        placeholder='Type content...'
-                        multiline
-                        rows='20'
-                        value={postText}
-                        style={styles.textInput}
-                        onChange={ 
-                            (event) => setText(event.target.value)
-                        }
-                    />
-                    <br/>
-                    { textError ? (<Typography color='error'>{textError}</Typography>) : null }
-
-                    <input 
-                        accept='image/*' 
-                        style={{display: 'none'}}
-                        type='file'
-                        id='icon-button-file'
-                        onChange={ 
-                            (event) => setImage(event.target.files[0])
-                        }
-                    />
-                    <label htmlFor='icon-button-file'>
-                        <IconButton style={styles.icons} component='span'>
-                            <PhotoCamera/>
-                        </IconButton>
-                    </label>
-                    {
-                        postImage ? (
-                            <div>
-                                <Typography component='span'>{postImage.name}</Typography>
-                                <IconButton 
-                                    onClick={() => setImage('')} 
-                                    size='small'
-                                    style={styles.icons}
-                                >
-                                    <DeleteIcon/>
-                                </IconButton>
-                            </div>
-                        ) : null
+        <Card 
+            style={{
+                backgroundColor: styleController.cardColor,
+                ...styles.card
+            }}
+        >
+            <CardContent>
+                <Typography 
+                    variant='h5'
+                    style={{color: styleController.textColor}}
+                >
+                    Create your post
+                </Typography>
+                <TextField 
+                    onChange={ 
+                        (event) => setTitle(event.target.value)
                     }
-                    <br/>
-                </CardContent>
-                <CardActions>
-                    <Button 
-                        onClick={createPost}
+                    required
+                    label='Title'
+                    variant='outlined'
+                    placeholder='Type title...'
+                    value={postTitle}
+                    style={{
+                        color: styleController.textColor,
+                        ...styles.titleInput
+                    }}
+
+                />
+                <br/>
+                { titleError ? (<Typography color='error'>{titleError}</Typography>) : null }
+
+                <TextField 
+                    required
+                    label='Text content'
+                    variant='outlined'
+                    placeholder='Type content...'
+                    multiline
+                    rows='20'
+                    value={postText}
+                    style={styles.textInput}
+                    onChange={ 
+                        (event) => setText(event.target.value)
+                    }
+                />
+                <br/>
+                { textError ? (<Typography color='error'>{textError}</Typography>) : null }
+
+                <input 
+                    accept='image/*' 
+                    style={{display: 'none'}}
+                    type='file'
+                    id='icon-button-file'
+                    onChange={ 
+                        (event) => setImage(event.target.files[0])
+                    }
+                />
+                <label htmlFor='icon-button-file'>
+                    <IconButton 
                         style={{
-                            backgroundColor: '#2D986D',
-                            color: 'white',
-                            marginTop: 15
-                        }}>
-                        ADD POST
-                    </Button>
-                </CardActions>
-            </Card>
-        </div>
+                            backgroundColor: styleController.mainColor,
+                            ...styles.iconButton
+                        }} 
+                        component='span'>
+                        <PhotoCamera/>
+                    </IconButton>
+                </label>
+                {
+                    postImage ? (
+                        <div>
+                            <Typography component='span'>{postImage.name}</Typography>
+                            <IconButton 
+                                onClick={() => setImage('')} 
+                                size='small'
+                                style={{
+                                    backgroundColor: styleController.mainColor,
+                                    ...styles.iconButton
+                                }}
+                            >
+                                <DeleteIcon/>
+                            </IconButton>
+                        </div>
+                    ) : null
+                }
+                <br/>
+            </CardContent>
+            <CardActions>
+                <Button 
+                    onClick={createPost}
+                    style={{
+                        backgroundColor: styleController.mainColor,
+                        ...styles.addPostButton
+                    }}>
+                    ADD POST
+                </Button>
+            </CardActions>
+        </Card>
     );
 };
 
