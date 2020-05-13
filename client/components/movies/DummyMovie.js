@@ -1,5 +1,6 @@
 import React from 'react';
 import { Skeleton } from '@material-ui/lab';
+import styleController from '../../StyleController';
 
 const styles = {
     dummyText: {
@@ -9,20 +10,29 @@ const styles = {
 };
 
 const DummyMovie = () => {
+
+    const fakeTitle = 
+    <Skeleton style={{backgroundColor: styleController.additionalColor}} animation='wave' height={50} width='60%'/> 
+
+    const fakeTextLine = 
+    <Skeleton style={{backgroundColor: styleController.additionalColor}} width='90%' animation='wave'/> 
+
+    const fakeVideo = 
+    <Skeleton style={{backgroundColor: styleController.additionalColor}} variant='rect' width='90%' animation='wave' height={500}/> 
     return (
         <div>
-            <Skeleton animation='wave' height={50} width='60%'/> 
+            {fakeTitle}
             <div style={styles.dummyText}>
-                <Skeleton width='90%' animation='wave'/> 
-                <Skeleton width='90%' animation='wave'/> 
-                <Skeleton width='90%' animation='wave'/> 
-                <Skeleton width='90%' animation='wave'/> 
-                <Skeleton width='90%' animation='wave'/> 
-                <Skeleton width='90%' animation='wave'/> 
-                <Skeleton width='90%' animation='wave'/> 
-                <Skeleton width='90%' animation='wave'/> 
+                {fakeTextLine}
+                {fakeTextLine}
+                {fakeTextLine}
+                {fakeTextLine}
+                {fakeTextLine}
+                {fakeTextLine}
+                {fakeTextLine}
+                {fakeTextLine}
             </div>
-            <Skeleton variant='rect' width='90%' animation='wave' height={500}/> 
+            {fakeVideo}
         </div>
     )
 };

@@ -15,14 +15,22 @@ const customStyles = styleController.muiInputStyles;
 
 const App = () => {
     const [ cookies, setCookie ] = useCookies(['OneProjectPalette']);
-    const [ palette, setPalette ] = React.useState(cookies.OneProjectPalette);
+    const [ palette, setPalette ] = React.useState();
 
     React.useEffect(() => {
 
-      //remove server side injected css
+        //remove server side injected css
         const jssStyles = document.querySelector('#jss-server-side');
         if(jssStyles) {
             jssStyles.parentElement.removeChild(jssStyles);
+        }
+
+        //initialize palette
+        const userPalette = cookies.OneProjectPalette;
+        if(userPalette) {
+            setPalette(userPalette)
+        } else {
+            setPalette('standart')
         }
    
     }, []);
