@@ -10,7 +10,7 @@ import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import authenticationHelper from '../../helpers/authentication.helper';
 import musicApi from '../../api/music.api';
 import AudioList from './NewMusicAudioList';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     card: {
@@ -115,7 +115,7 @@ const NewMusicForm = (props) => {
     return (
         <Card 
             style={{
-                backgroundColor: styleController.cardColor,
+                backgroundColor: paletteController.cardColor,
                 ...styles.card
             }}
         >
@@ -123,7 +123,7 @@ const NewMusicForm = (props) => {
                 <Typography 
                     variant='h5'
                     style={{
-                        color: styleController.textColor
+                        color: paletteController.textColor
                     }}
                 >
                     Add music
@@ -176,7 +176,7 @@ const NewMusicForm = (props) => {
                     <IconButton 
                         component='span'
                         style={{
-                            backgroundColor: styleController.mainColor,
+                            backgroundColor: paletteController.mainColor,
                             ...styles.iconButton
                         }} 
                     >
@@ -200,7 +200,7 @@ const NewMusicForm = (props) => {
                     disabled={isDisabled} 
                     onClick={submitMusic}
                     style={{
-                        backgroundColor: isDisabled ? styleController.grey : styleController.mainColor,
+                        backgroundColor: isDisabled ? paletteController.grey : paletteController.mainColor,
                         ...styles.addSongButton
                     }}>
                     ADD SONG

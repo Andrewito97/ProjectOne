@@ -3,7 +3,7 @@ import { Card,
         CardContent, 
         Typography } from '@material-ui/core';
 import PaletteSelect from './PaletteSelect';
-import styleController from '../StyleController';
+import paletteController from '../PaletteController';
 
 const styles = {
     card: {
@@ -19,7 +19,7 @@ const RightSidebar = (props) => {
     return (
         <Card 
             style={{
-                backgroundColor: styleController.cardColor,
+                backgroundColor: paletteController.cardColor,
                 ...styles.card
             }}
         >
@@ -27,7 +27,7 @@ const RightSidebar = (props) => {
                 <PaletteSelect palette={props.palette} setPalette={props.setPalette}/>
                 <Typography 
                     style={{
-                        color: styleController.textColor,
+                        color: paletteController.textColor,
                         ...styles.text
                     }}
                 >

@@ -8,7 +8,7 @@ import { Card,
          IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import addWhitespaces from '../../helpers/addWhitespaces.helper';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     card: {
@@ -39,21 +39,21 @@ const Post = (props) => {
     return (  
         <Card 
             style={{
-                backgroundColor: styleController.cardColor,
+                backgroundColor: paletteController.cardColor,
                 ...styles.card
             }}
         >
             <CardHeader 
                 title={props.post.title}
                 style={{
-                    color: styleController.textColor
+                    color: paletteController.textColor
                 }}
             />
             <CardContent>
                 <Typography 
                     component='span'
                     style={{
-                        color: styleController.textColor
+                        color: paletteController.textColor
                     }}
                 >
                     <ReactMarkdown source={text} plugins={[breaks]}/>  
@@ -76,7 +76,7 @@ const Post = (props) => {
                         <IconButton
                             onClick={ () => props.deletePost(props.post._id) }
                             style={{
-                                backgroundColor: styleController.mainColor,
+                                backgroundColor: paletteController.mainColor,
                                 ...styles.deleteIcon
                             }}
                         >

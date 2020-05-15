@@ -12,7 +12,7 @@ import FacebookIcon from '@material-ui/icons/Facebook';
 import userApi from '../../api/user.api';
 import config from '../../../config';
 import authenticationHelper from '../../helpers/authentication.helper';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 import '../style.css';
 
 const styles = {
@@ -124,7 +124,7 @@ const LoginForm = () => {
     return (
         <Card 
             style={{
-                backgroundColor: styleController.cardColor,
+                backgroundColor: paletteController.cardColor,
                 ...styles.card
             }}
         >
@@ -132,7 +132,7 @@ const LoginForm = () => {
                 <Typography 
                     variant='h5'
                     style={{
-                        color: styleController.textColor
+                        color: paletteController.textColor
                     }}
                 >
                     Sign In
@@ -174,7 +174,7 @@ const LoginForm = () => {
                     <Button 
                         onClick={onLogin}
                         style={{
-                            backgroundColor: styleController.mainColor,
+                            backgroundColor: paletteController.mainColor,
                             ...styles.loginButton
                         }}
                     >

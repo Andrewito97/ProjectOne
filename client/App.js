@@ -4,18 +4,18 @@ import { CookiesProvider, useCookies } from 'react-cookie';
 import { BrowserRouter } from 'react-router-dom';
 import RootComponent from './RootComponent';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import styleController from './StyleController';
+import paletteController from './PaletteController';
 
-const blue = styleController.blue;
-const ivory = styleController.ivory;
-const metal = styleController.metal;
-const lime = styleController.lime;
+const blue = paletteController.blue;
+const ivory = paletteController.ivory;
+const metal = paletteController.metal;
+const lime = paletteController.lime;
 
-const customStyles = styleController.muiInputStyles;
+const customStyles = paletteController.muiInputStyles;
 
 const App = () => {
     const [ cookies, setCookie ] = useCookies(['OneProjectPalette']);
-    const [ palette, setPalette ] = React.useState();
+    const [ palette, setPalette ] = React.useState('standart');
 
     React.useEffect(() => {
 
@@ -35,12 +35,12 @@ const App = () => {
    
     }, []);
 
-    styleController.choosePalette(palette);
+    paletteController.choosePalette(palette);
 
-    if(palette === 'standart') styleController.overrideInput(blue);
-    if(palette === 'dark') styleController.overrideInput(ivory, ivory, ivory);
-    if(palette === 'metal') styleController.overrideInput(metal);
-    if(palette === 'lime') styleController.overrideInput(lime);
+    if(palette === 'standart') paletteController.overrideInput(blue);
+    if(palette === 'dark') paletteController.overrideInput(ivory, ivory, ivory);
+    if(palette === 'metal') paletteController.overrideInput(metal);
+    if(palette === 'lime') paletteController.overrideInput(lime);
 
     const customTheme = createMuiTheme({
         overrides: customStyles

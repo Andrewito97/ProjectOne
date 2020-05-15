@@ -13,7 +13,7 @@ import { Card,
          DialogContentText,
          DialogActions } from '@material-ui/core';
 import userApi from '../../api/user.api';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     card: {
@@ -64,7 +64,7 @@ const ResetPasswordForm = () => {
         <div>
             <Card 
                 style={{
-                    backgroundColor: styleController.cardColor,
+                    backgroundColor: paletteController.cardColor,
                     ...styles.card
                 }}
             >   
@@ -72,7 +72,7 @@ const ResetPasswordForm = () => {
                     <Typography 
                         variant='h5'
                         style={{
-                            color: styleController.textColor
+                            color: paletteController.textColor
                         }}
                     >
                         Set new password
@@ -106,7 +106,7 @@ const ResetPasswordForm = () => {
                         <Button
                             onClick={onChangePassword}
                             style={{
-                                backgroundColor: styleController.mainColor,
+                                backgroundColor: paletteController.mainColor,
                                 ...styles.changePasswordButton
                             }} 
                         >
@@ -126,7 +126,7 @@ const ResetPasswordForm = () => {
                 <Link to="/login">
                     <Button 
                         style={{
-                            backgroundColor: styleController.mainColor,
+                            backgroundColor: paletteController.mainColor,
                             ...styles.loginButton
                         }}
                     >

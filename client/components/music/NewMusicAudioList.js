@@ -7,7 +7,7 @@ import { Typography,
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     audioNameContainer: {
@@ -59,7 +59,7 @@ const AudioList = (props) => {
                         <Typography 
                             component='span'
                             style={{
-                                color: styleController.color,
+                                color: paletteController.color,
                                 ...styles.audioName
                             }}
                         >
@@ -72,7 +72,7 @@ const AudioList = (props) => {
                             onClick={ () => props.saveAudioName(i) } 
                             size='small'
                             style={{
-                                backgroundColor: styleController.mainColor,
+                                backgroundColor: paletteController.mainColor,
                                 ...styles.saveIcon
                             }}
                         >
@@ -83,7 +83,7 @@ const AudioList = (props) => {
                             onClick={ () => props.setEditingStatus(i) } 
                             size='small'
                             style={{
-                                backgroundColor: styleController.mainColor,
+                                backgroundColor: paletteController.mainColor,
                                 ...styles.editIcon
                             }}
                         >
@@ -94,7 +94,7 @@ const AudioList = (props) => {
                         onClick={ () => props.removeItem(i) } 
                         size='small'
                         style={{
-                            backgroundColor: styleController.mainColor,
+                            backgroundColor: paletteController.mainColor,
                             ...styles.deleteIcon
                         }}
                     >

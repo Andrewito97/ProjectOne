@@ -10,7 +10,7 @@ import { PhotoCamera } from '@material-ui/icons';
 import DeleteIcon from '@material-ui/icons/Delete';
 import authenticationHelper from '../../helpers/authentication.helper';
 import postApi from '../../api/post.api';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     card: {
@@ -77,14 +77,14 @@ const NewPostForm = (props) => {
     return (
         <Card 
             style={{
-                backgroundColor: styleController.cardColor,
+                backgroundColor: paletteController.cardColor,
                 ...styles.card
             }}
         >
             <CardContent>
                 <Typography 
                     variant='h5'
-                    style={{color: styleController.textColor}}
+                    style={{color: paletteController.textColor}}
                 >
                     Create your post
                 </Typography>
@@ -98,7 +98,7 @@ const NewPostForm = (props) => {
                     placeholder='Type title...'
                     value={postTitle}
                     style={{
-                        color: styleController.textColor,
+                        color: paletteController.textColor,
                         ...styles.titleInput
                     }}
 
@@ -134,7 +134,7 @@ const NewPostForm = (props) => {
                 <label htmlFor='icon-button-file'>
                     <IconButton 
                         style={{
-                            backgroundColor: styleController.mainColor,
+                            backgroundColor: paletteController.mainColor,
                             ...styles.iconButton
                         }} 
                         component='span'>
@@ -149,7 +149,7 @@ const NewPostForm = (props) => {
                                 onClick={() => setImage('')} 
                                 size='small'
                                 style={{
-                                    backgroundColor: styleController.mainColor,
+                                    backgroundColor: paletteController.mainColor,
                                     ...styles.iconButton
                                 }}
                             >
@@ -164,7 +164,7 @@ const NewPostForm = (props) => {
                 <Button 
                     onClick={createPost}
                     style={{
-                        backgroundColor: styleController.mainColor,
+                        backgroundColor: paletteController.mainColor,
                         ...styles.addPostButton
                     }}>
                     ADD POST

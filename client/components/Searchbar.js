@@ -1,7 +1,7 @@
 import React from 'react';
 import { InputBase } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
-import styleController from '../StyleController';
+import paletteController from '../PaletteController';
 
 const styles = {
     container: {
@@ -30,13 +30,13 @@ const Searchbar = () => {
     return (
         <div 
             style={{
-                backgroundColor: styleController.additionalColor,
+                backgroundColor: paletteController.additionalColor,
                 ...styles.container
             }}
         >
             <Search 
                 style={{ 
-                    backgroundColor: styleController.additionalColor,
+                    backgroundColor: paletteController.additionalColor,
                     ...styles.icon
                 }}
             />
@@ -46,7 +46,7 @@ const Searchbar = () => {
                 placeholder="Search…" 
                 style={{
                     width: isFocused ? 300 : 120, transitionDuration: '0.4s',
-                    backgroundColor: styleController.additionalColor,
+                    backgroundColor: paletteController.additionalColor,
                     ...styles.inputBase
 
                 }} 

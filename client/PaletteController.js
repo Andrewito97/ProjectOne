@@ -1,4 +1,4 @@
-class StyleController {
+class PaletteController {
 
     constructor() {
 
@@ -90,6 +90,6 @@ class StyleController {
     };
 };
 
-const styleController = new StyleController();
+const paletteController = new PaletteController();
 
-export default styleController;
+export default paletteController;

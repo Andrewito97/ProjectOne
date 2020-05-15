@@ -3,7 +3,7 @@ import { Link, withRouter } from 'react-router-dom';
 import { AppBar, Toolbar, Button } from '@material-ui/core';
 import Menu from './user/Menu';
 import Searchbar from './Searchbar';
-import styleController from '../StyleController';
+import paletteController from '../PaletteController';
 
 const styles = {
     topbar: {
@@ -37,7 +37,7 @@ const Topbar = withRouter(({ history }) => {
         <AppBar position='sticky'>
             <Toolbar 
                 style={{
-                    backgroundColor: styleController.mainColor, 
+                    backgroundColor: paletteController.mainColor, 
                     ...styles.topbar
                 }}
             >
@@ -48,7 +48,7 @@ const Topbar = withRouter(({ history }) => {
                             history.location.pathname === '/' ? 
                             {color: 'white', textShadow: '0.5px 1px white'}
                             :
-                            {color: styleController.tabsTextColor}
+                            {color: paletteController.tabsTextColor}
                         }
                     >
                         News Feed
@@ -61,7 +61,7 @@ const Topbar = withRouter(({ history }) => {
                             history.location.pathname === '/music' ? 
                             {color: 'white', textShadow: '0.5px 1px white'}
                             :
-                            {color: styleController.tabsTextColor}
+                            {color: paletteController.tabsTextColor}
                         }
                     >
                         Music
@@ -74,7 +74,7 @@ const Topbar = withRouter(({ history }) => {
                             history.location.pathname === '/movies' ? 
                             {color: 'white', textShadow: '0.5px 1px white'}
                             :
-                            {color: styleController.tabsTextColor}
+                            {color: paletteController.tabsTextColor}
                         }
                     >
                         Movies

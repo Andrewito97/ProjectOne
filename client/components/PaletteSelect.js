@@ -5,7 +5,7 @@ import { MenuItem,
          Typography,
          Select,
          Button } from '@material-ui/core';
-import styleController from '../StyleController';
+import paletteController from '../PaletteController';
 
 const styles = {
     container: {
@@ -31,7 +31,7 @@ const PaletteSelect = (props) => {
         <div style={styles.container}>
             <Typography 
                 variant='caption'
-                style={{color: styleController.textColor}} 
+                style={{color: paletteController.textColor}} 
             >
                 Color palette
             </Typography>
@@ -50,7 +50,7 @@ const PaletteSelect = (props) => {
             <Button
                 onClick={() => setCookie('OneProjectPalette', props.palette)}
                 style={{
-                    backgroundColor: styleController.mainColor,
+                    backgroundColor: paletteController.mainColor,
                     ...styles.applyButton
                 }}
             >

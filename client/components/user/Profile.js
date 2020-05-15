@@ -15,7 +15,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import userApi from '../../api/user.api';
 import authenticationHelper from '../../helpers/authentication.helper';
 import ProfileTabs from './ProfileTabs';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     card: {
@@ -111,7 +111,7 @@ const Profile = () => {
         <div>
             <Card 
                 style={{
-                    backgroundColor: styleController.cardColor,
+                    backgroundColor: paletteController.cardColor,
                     ...styles.card
                 }}
             >
@@ -119,7 +119,7 @@ const Profile = () => {
                     <Typography 
                         variant='h5' 
                         style={{
-                            color: styleController.textColor,
+                            color: paletteController.textColor,
                             ...styles.pageHeader
                         }}
                     >
@@ -139,7 +139,7 @@ const Profile = () => {
                         <Typography 
                             variant='h6'
                             style={{
-                                color: styleController.textColor,
+                                color: paletteController.textColor,
                                 ...styles.nameField
                             }}
                         >
@@ -152,7 +152,7 @@ const Profile = () => {
                             onClick={() => setEditNameStatus(false)} 
                             size='small'
                             style={{
-                                backgroundColor: styleController.mainColor,
+                                backgroundColor: paletteController.mainColor,
                                 ...styles.icons
                             }}
                         >
@@ -163,7 +163,7 @@ const Profile = () => {
                             onClick={() => setEditNameStatus(true)} 
                             size='small'
                             style={{
-                                backgroundColor: styleController.mainColor,
+                                backgroundColor: paletteController.mainColor,
                                 ...styles.icons
                             }}
                         >
@@ -187,7 +187,7 @@ const Profile = () => {
                         <Typography 
                             variant='h6'
                             style={{
-                                color: styleController.textColor,
+                                color: paletteController.textColor,
                                 ...styles.emailField
                             }}
                         >
@@ -200,7 +200,7 @@ const Profile = () => {
                             onClick={() => setEditEmailStatus(false)} 
                             size='small'
                             style={{
-                                backgroundColor: styleController.mainColor,
+                                backgroundColor: paletteController.mainColor,
                                 ...styles.icons
                             }}
                         >
@@ -211,7 +211,7 @@ const Profile = () => {
                             onClick={() => setEditEmailStatus(true)} 
                             size='small'
                             style={{
-                                backgroundColor: styleController.mainColor,
+                                backgroundColor: paletteController.mainColor,
                                 ...styles.icons
                             }}
                         >
@@ -225,7 +225,7 @@ const Profile = () => {
                         disabled={isDisabled} 
                         onClick={updateUser} 
                         style={{
-                            backgroundColor: isDisabled ? styleController.grey : styleController.mainColor,
+                            backgroundColor: isDisabled ? paletteController.grey : paletteController.mainColor,
                             ...styles.saveButton
                         }}
                     >
@@ -246,7 +246,7 @@ const Profile = () => {
                     <Button 
                         onClick={ () => setSuccessed(false) }
                         style={{
-                            backgroundColor: styleController.mainColor,
+                            backgroundColor: paletteController.mainColor,
                             ...styles.okButton
                         }}
                     >

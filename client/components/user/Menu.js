@@ -4,7 +4,7 @@ import { Person } from '@material-ui/icons';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import authenticationHelper from '../../helpers/authentication.helper';
 import userApi from '../../api/user.api';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     menuList: {
@@ -37,7 +37,7 @@ const _Menu = () => {
             <IconButton onClick={handleClick}>
                 <Person 
                     style={{ 
-                        backgroundColor: styleController.additionalColor,
+                        backgroundColor: paletteController.additionalColor,
                         color: 'white'
                     }}
                 />

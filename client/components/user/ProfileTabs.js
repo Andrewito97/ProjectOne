@@ -15,7 +15,7 @@ import postApi from '../../api/post.api';
 import musicApi from '../../api/music.api';
 import movieApi from '../../api/movie.api';
 import authenticationHelper from '../../helpers/authentication.helper';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     tabs: {
@@ -101,7 +101,7 @@ const ProfileTabs = () => {
                 value={value}
                 centered={true}
                 style={{
-                    backgroundColor: styleController.mainColor,
+                    backgroundColor: paletteController.mainColor,
                     ...styles.tabs
                 }}
                 
@@ -157,7 +157,7 @@ const ProfileTabs = () => {
                     <Button
                         onClick={ () => location.reload() }
                         style={{
-                            backgroundColor: styleController.mainColor,
+                            backgroundColor: paletteController.mainColor,
                             ...styles.okButton
                         }}
                         

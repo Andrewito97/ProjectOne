@@ -12,7 +12,7 @@ import { Card,
          DialogContentText,
          DialogActions } from '@material-ui/core';
 import userApi from '../../api/user.api';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     card: {
@@ -90,7 +90,7 @@ const SignUpForm = () => {
         <div>
             <Card 
                 style={{
-                    backgroundColor: styleController.cardColor,
+                    backgroundColor: paletteController.cardColor,
                     ...styles.card
                 }}
             >
@@ -98,7 +98,7 @@ const SignUpForm = () => {
                     <Typography 
                         variant='h5'
                         style={{
-                            color: styleController.textColor
+                            color: paletteController.textColor
                         }}
                     >
                         Sign Up
@@ -162,7 +162,7 @@ const SignUpForm = () => {
                         <Button 
                             onClick={onCreate}
                             style={{
-                                backgroundColor: styleController.mainColor,
+                                backgroundColor: paletteController.mainColor,
                                 ...styles.createButton
                             }}
                         >
@@ -182,7 +182,7 @@ const SignUpForm = () => {
                 <Link to="/login">
                     <Button 
                         style={{
-                            backgroundColor: styleController.mainColor,
+                            backgroundColor: paletteController.mainColor,
                             ...styles.loginButton
                         }}
                     >

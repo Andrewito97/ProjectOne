@@ -12,7 +12,7 @@ import { Card,
          DialogContentText,
          DialogActions } from '@material-ui/core';
 import userApi from '../../api/user.api';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     card: {
@@ -52,7 +52,7 @@ const RecoveryForm = () => {
         <div>
             <Card 
                 style={{
-                    backgroundColor: styleController.cardColor,
+                    backgroundColor: paletteController.cardColor,
                     ...styles.card
                 }}
             >
@@ -60,7 +60,7 @@ const RecoveryForm = () => {
                     <Typography 
                         variant='h5'
                         style={{
-                            color: styleController.textColor
+                            color: paletteController.textColor
                         }}
                     >
                         Recovery
@@ -83,7 +83,7 @@ const RecoveryForm = () => {
                         <Button 
                             onClick={onRecover}
                             style={{
-                                backgroundColor: styleController.mainColor,
+                                backgroundColor: paletteController.mainColor,
                                 ...styles.sendLinkButton
                             }}
                         >
@@ -104,7 +104,7 @@ const RecoveryForm = () => {
                 <Link to="/login">
                     <Button 
                         style={{
-                            backgroundColor: styleController.mainColor,
+                            backgroundColor: paletteController.mainColor,
                             ...styles.loginButton
                         }}
                     >

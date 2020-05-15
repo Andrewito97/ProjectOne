@@ -1,4 +1,4 @@
-audio {
+/* audio {
     border: solid 1px #38C18A;
     height: 37px;
     border-radius: 30px;
@@ -28,7 +28,7 @@ audio::-webkit-media-controls-timeline {
     background-color: #3FD599;
     height: 17px;
  }
-  
+   */
 .facebook-button {
    background-color: #415E9B;
    color: white;

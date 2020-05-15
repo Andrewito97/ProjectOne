@@ -10,7 +10,7 @@ import LoginForm from './components/user/LoginForm';
 import RecoveryForm from './components/user/RecoveryForm';
 import ResetPasswordForm from './components/user/ResetPasswordForm';
 import Profile from './components/user/Profile';
-import styleController from './StyleController';
+import paletteController from './PaletteController';
 
 const styles = {
     container: {
@@ -35,7 +35,7 @@ const RootComponent = (props) => (
         <Topbar/>
         <div 
             style={{
-                backgroundColor: styleController.backgroundColor,
+                backgroundColor: paletteController.backgroundColor,
                 ...styles.container
             }}
         >

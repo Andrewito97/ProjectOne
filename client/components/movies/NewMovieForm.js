@@ -10,7 +10,7 @@ import MovieCreationIcon from '@material-ui/icons/MovieCreation';
 import DeleteIcon from '@material-ui/icons/Delete';
 import authenticationHelper from '../../helpers/authentication.helper';
 import movieApi from '../../api/movie.api';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     card: {
@@ -90,14 +90,14 @@ const NewMovieForm = (props) => {
     return (
         <Card 
             style={{
-                backgroundColor: styleController.cardColor,
+                backgroundColor: paletteController.cardColor,
                 ...styles.card
             }}
         >
             <CardContent>
                 <Typography 
                     variant='h5'
-                    style={{ color: styleController.textColor }}
+                    style={{ color: paletteController.textColor }}
                 >
                     Add trailer
                 </Typography>
@@ -159,7 +159,7 @@ const NewMovieForm = (props) => {
                     <IconButton 
                         component='span'
                         style={{
-                            backgroundColor: styleController.mainColor, 
+                            backgroundColor: paletteController.mainColor, 
                             ...styles.icons
                         }} 
                     >
@@ -171,7 +171,7 @@ const NewMovieForm = (props) => {
                         <div>
                             <Typography 
                                 component='span'
-                                style={{color: styleController.textColor}}
+                                style={{color: paletteController.textColor}}
                             >
                                 {video.name}
                             </Typography>
@@ -179,7 +179,7 @@ const NewMovieForm = (props) => {
                                 onClick={() => setVideo('')} 
                                 size='small'
                                 style={{
-                                    backgroundColor: styleController.mainColor,
+                                    backgroundColor: paletteController.mainColor,
                                     ...styles.icons
                                 }}
                             >
@@ -195,7 +195,7 @@ const NewMovieForm = (props) => {
                     disabled={isDisabled} 
                     onClick={submitMovie}
                     style={{
-                        backgroundColor: isDisabled ? styleController.grey : styleController.mainColor,
+                        backgroundColor: isDisabled ? paletteController.grey : paletteController.mainColor,
                         ...styles.addVideoButton
                     }}>
                     ADD VIDEO

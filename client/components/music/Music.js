@@ -6,7 +6,7 @@ import { Card,
          Typography,
          IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     card: {
@@ -32,7 +32,7 @@ const Music = (props) => {
     return (
         <Card 
             style={{
-                backgroundColor: styleController.cardColor,
+                backgroundColor: paletteController.cardColor,
                 ...styles.card
             }}
         >
@@ -41,7 +41,7 @@ const Music = (props) => {
                 subheader={props.music.genre}
                 subheaderTypographyProps={{color: 'inherit'}}
                 style={{
-                    color: styleController.textColor,
+                    color: paletteController.textColor,
                 }}
             />
             <CardContent>
@@ -55,7 +55,7 @@ const Music = (props) => {
                     <IconButton
                         onClick={ () => props.deleteMusic(props.music._id) }
                         style={{
-                            backgroundColor: styleController.mainColor,
+                            backgroundColor: paletteController.mainColor,
                             ...styles.deleteIcon
                         }}
                     >

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Skeleton } from '@material-ui/lab';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     dummyText: {
@@ -12,13 +12,13 @@ const styles = {
 const DummyMovie = () => {
 
     const fakeTitle = 
-    <Skeleton style={{backgroundColor: styleController.additionalColor}} animation='wave' height={50} width='60%'/> 
+    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={50} width='60%'/> 
 
     const fakeTextLine = 
-    <Skeleton style={{backgroundColor: styleController.additionalColor}} width='90%' animation='wave'/> 
+    <Skeleton style={{backgroundColor: paletteController.additionalColor}} width='90%' animation='wave'/> 
 
     const fakeVideo = 
-    <Skeleton style={{backgroundColor: styleController.additionalColor}} variant='rect' width='90%' animation='wave' height={500}/> 
+    <Skeleton style={{backgroundColor: paletteController.additionalColor}} variant='rect' width='90%' animation='wave' height={500}/> 
     return (
         <div>
             {fakeTitle}

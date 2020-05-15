@@ -1,6 +1,6 @@
 import React from 'react';
 import { Skeleton } from '@material-ui/lab';
-import styleController from '../../StyleController';
+import paletteController from '../../PaletteController';
 
 const styles = {
     dummySong: {
@@ -16,20 +16,20 @@ const DummySong = () => {
                 animation='wave' 
                 height={50} 
                 width='60%'
-                style={{backgroundColor: styleController.additionalColor}} 
+                style={{backgroundColor: paletteController.additionalColor}} 
             /> 
             <Skeleton 
                 animation='wave' 
                 height={50} 
                 width='45%'
-                style={{backgroundColor: styleController.additionalColor}} 
+                style={{backgroundColor: paletteController.additionalColor}} 
             /> 
             <div style={styles.dummySong}>
                 <Skeleton 
                     width='70%' 
                     height={75} 
                     animation='wave'
-                    style={{backgroundColor: styleController.additionalColor}} 
+                    style={{backgroundColor: paletteController.additionalColor}} 
                 /> 
             </div>
             <div style={styles.dummySong}>
@@ -37,7 +37,7 @@ const DummySong = () => {
                     width='70%' 
                     height={75} 
                     animation='wave'
-                    style={{backgroundColor: styleController.additionalColor}} 
+                    style={{backgroundColor: paletteController.additionalColor}} 
                 /> 
             </div>
             <div style={styles.dummySong}>
@@ -45,7 +45,7 @@ const DummySong = () => {
                     width='70%' 
                     height={75} 
                     animation='wave'
-                    style={{backgroundColor: styleController.additionalColor}} 
+                    style={{backgroundColor: paletteController.additionalColor}} 
                 /> 
             </div>
             <div style={styles.dummySong}>
@@ -53,7 +53,7 @@ const DummySong = () => {
                     width='70%' 
                     height={75} 
                     animation='wave'
-                    style={{backgroundColor: styleController.additionalColor}}
+                    style={{backgroundColor: paletteController.additionalColor}}
                 /> 
             </div>
         </div>

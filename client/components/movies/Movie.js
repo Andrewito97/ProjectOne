@@ -9,8 +9,7 @@ import { Card,
          IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import addWhitespaces from '../../helpers/addWhitespaces.helper';
-import styleController from '../../StyleController';
-import color from '@material-ui/core/colors/amber';
+import paletteController from '../../PaletteController';
 
 const styles = {
     card: {
@@ -43,7 +42,7 @@ const Movie = (props) => {
     return (
         <Card 
             style={{
-                backgroundColor: styleController.cardColor,
+                backgroundColor: paletteController.cardColor,
                 ...styles.card
             }}
         >
@@ -52,14 +51,14 @@ const Movie = (props) => {
                 subheader={props.movie.genre}
                 subheaderTypographyProps={{color: 'inherit'}}
                 style={{
-                    color: styleController.textColor,
+                    color: paletteController.textColor,
                 }}
             />
             <CardContent>
                 <Typography 
                     component='span'
                     style={{
-                        color: styleController.textColor
+                        color: paletteController.textColor
                     }}
                 >
                     <ReactMarkdown source={description} plugins={[breaks]}/>   
@@ -80,7 +79,7 @@ const Movie = (props) => {
                         <IconButton
                             onClick={ () => props.deleteMovie(props.movie._id) }
                             style={{
-                                backgroundColor: styleController.mainColor,
+                                backgroundColor: paletteController.mainColor,
                                 ...styles.deleteIcon
                             }}
                         >
