@@ -1,34 +1,21 @@
-/* audio {
-    border: solid 1px #38C18A;
-    height: 37px;
-    border-radius: 30px;
-    background-color: #38C18A;
-    width: 100%;
+input[type=range] {
+   -webkit-appearance: none; /* Hides the slider so that custom slider can be made */
+   width: 100%; /* Specific width is required for Firefox. */
+   height: 100%;
+   background: transparent; /* Otherwise white in Chrome */
+}
+input[type=range]:focus {
+   outline: none; /* Removes the blue border. You should probably do some kind of focus styling for accessibility reasons though. */
+}
+input[type=range]::-webkit-slider-thumb {
+   height: 34px;
+   width: 1px;
+   border-radius: 3px;
+   background: transparent;
+   cursor: pointer;
+   -webkit-appearance: none;
+   margin-top: -4px;
  }
-  
-audio::-webkit-media-controls-panel {
-    background-color: #3FD599;
- }
-  
-audio::-webkit-media-controls-play-button {
-    background-color: #2D986D;
-    height: 30px;
-    border-radius: 20px;
- }
-  
-audio::-webkit-media-controls-mute-button {
-    background-color: #2D986D;
-    height: 30px;
-    width: 40px;
-    border-radius: 30px;
-    margin: auto
- }
- 
-audio::-webkit-media-controls-timeline {
-    background-color: #3FD599;
-    height: 17px;
- }
-   */
 .facebook-button {
    background-color: #415E9B;
    color: white;

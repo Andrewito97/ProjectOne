@@ -28,8 +28,8 @@ class PaletteController {
         this.backgroundColor = this.white
         this.cardColor = this.white
 
-        //overriding default mui-outlined-input
-        this.muiInputStyles = {
+        //overriding default mui-styles
+        this.muiStyles = {
             MuiOutlinedInput: {
                 root: { '&$focused $notchedOutline': { borderColor: this.blue, borderWidth: 4 } },
                 notchedOutline: { borderColor: this.grey },
@@ -38,17 +38,28 @@ class PaletteController {
             },
             MuiInputLabel: {
                 root: { '&$focused': { color: this.blue }, color: this.grey }
+            },
+            MuiLinearProgress:{
+                determinate: {
+                    backgroundColor: this.backgroundColor,
+                },
+                bar1Determinate: {
+                    backgroundColor: this.mainColor
+                }
+                
             }
         };
     };
 
     overrideInput( borderColor, placeholderColor = this.grey, textColor = this.black ) {
-            this.muiInputStyles.MuiOutlinedInput.root['&$focused $notchedOutline'].borderColor = borderColor;
-            this.muiInputStyles.MuiOutlinedInput.input['&::placeholder'].color = placeholderColor;
-            this.muiInputStyles.MuiOutlinedInput.notchedOutline.borderColor = placeholderColor;
-            this.muiInputStyles.MuiOutlinedInput.input.color = textColor;
-            this.muiInputStyles.MuiInputLabel.root['&$focused'].color = borderColor;
-            this.muiInputStyles.MuiInputLabel.root.color = placeholderColor;
+            this.muiStyles.MuiOutlinedInput.root['&$focused $notchedOutline'].borderColor = borderColor;
+            this.muiStyles.MuiOutlinedInput.input['&::placeholder'].color = placeholderColor;
+            this.muiStyles.MuiOutlinedInput.notchedOutline.borderColor = placeholderColor;
+            this.muiStyles.MuiOutlinedInput.input.color = textColor;
+            this.muiStyles.MuiInputLabel.root['&$focused'].color = borderColor;
+            this.muiStyles.MuiInputLabel.root.color = placeholderColor;
+            this.muiStyles.MuiLinearProgress.determinate.backgroundColor = this.backgroundColor;
+            this.muiStyles.MuiLinearProgress.bar1Determinate.backgroundColor = this.mainColor;
     };
 
     choosePalette(value) {

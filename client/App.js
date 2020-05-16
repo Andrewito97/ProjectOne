@@ -11,8 +11,6 @@ const ivory = paletteController.ivory;
 const metal = paletteController.metal;
 const lime = paletteController.lime;
 
-const customStyles = paletteController.muiInputStyles;
-
 const App = () => {
     const [ cookies, setCookie ] = useCookies(['OneProjectPalette']);
     const [ palette, setPalette ] = React.useState('standart');
@@ -43,7 +41,7 @@ const App = () => {
     if(palette === 'lime') paletteController.overrideInput(lime);
 
     const customTheme = createMuiTheme({
-        overrides: customStyles
+        overrides: paletteController.muiStyles,
     });
 
     return (
