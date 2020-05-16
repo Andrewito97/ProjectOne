@@ -33,6 +33,18 @@ const styles = {
         width: '100%',
         borderRadius: 4
     },
+    timePlayed: {
+        position: 'absolute',
+        zIndex: 5,
+        left: 8,
+        top: 8
+    },
+    timeDuration: {
+        position: 'absolute',
+        zIndex: 5,
+        right: 8,
+        top: 8
+    },
     rangeInput: {
         position: 'absolute',
         width: '100%', 
@@ -58,8 +70,9 @@ const AudioPlayer = (props) => {
     const [ playing, setPlaying ] = React.useState(false);
     const [ played, setPlayed ] = React.useState(0);
     const [ displayVolume, setDisplayVolume ] = React.useState('none');
-    const [ volume, setVolume ] = React.useState(0.5)
+    const [ volume, setVolume ] = React.useState(0.5);
     const [ muted, setMuted ] = React.useState(false);
+    const [ duration, setDuration ] = React.useState();
 
     let player;
 
@@ -101,6 +114,13 @@ const AudioPlayer = (props) => {
         setVolume(0);
     };
 
+    const formateTime = (time) => {
+        const date = new Date(time * 1000);
+        const minutes = date.getUTCMinutes();
+        const seconds = ('0' + date.getUTCSeconds()).slice(-2);
+        return `${minutes}:${seconds}`;
+    };
+
     return (
         <div style={{marginBottom: 20}}>
             <Typography style={{color: paletteController.textColor}}>{props.name}</Typography>
@@ -111,7 +131,8 @@ const AudioPlayer = (props) => {
                 muted={muted}
                 volume={volume}
                 height={0}
-                onProgress={onProgress}     
+                onProgress={onProgress}
+                onDuration={(value) => setDuration(value)}
             />
             <div style={styles.audioContainer}>
                 <Button 
@@ -131,6 +152,27 @@ const AudioPlayer = (props) => {
                         value={played * 100} 
                         style={styles.playProgress} 
                     />
+
+                    <time 
+                        dateTime={`P${Math.round(duration * played)}S`}
+                        style={{
+                            color: paletteController.textColor,
+                            ...styles.timePlayed
+                        }}
+                    >
+                        {formateTime(duration * played)}
+                    </time>
+
+                    <time 
+                        dateTime={`P${Math.round(duration)}S`}
+                        style={{
+                            color: paletteController.textColor,
+                            ...styles.timeDuration
+                        }}
+                    >
+                        {formateTime(duration)}
+                    </time>
+
                     <input
                         type='range'
                         style={styles.rangeInput} 

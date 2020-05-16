@@ -59,7 +59,7 @@ const AudioList = (props) => {
                         <Typography 
                             component='span'
                             style={{
-                                color: paletteController.color,
+                                color: paletteController.textColor,
                                 ...styles.audioName
                             }}
                         >
