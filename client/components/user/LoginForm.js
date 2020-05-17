@@ -129,7 +129,8 @@ const LoginForm = () => {
             }}
         >
             <CardContent style={styles.content}>
-                <Typography 
+                <Typography
+                    id='page-title'
                     variant='h5'
                     style={{
                         color: paletteController.textColor
@@ -139,6 +140,7 @@ const LoginForm = () => {
                 </Typography>
 
                 <TextField 
+                    id='email'
                     required
                     label='Email' 
                     variant='outlined'
@@ -149,9 +151,10 @@ const LoginForm = () => {
                     onChange={(event) => setEmail(event.target.value)}
                 />
                 <br/>
-                { emailError ? (<Typography color='error'>{emailError}</Typography>) : null }
+                { emailError ? (<Typography id='email-error' color='error'>{emailError}</Typography>) : null }
 
                 <TextField   
+                    id='password'
                     required
                     label='Password' 
                     variant='outlined'
@@ -162,7 +165,7 @@ const LoginForm = () => {
                     onChange={(event) => setPassword(event.target.value)}
                 />
                 <br/>
-                { passwordError ? (<Typography color='error'>{passwordError}</Typography>) : null }
+                { passwordError ? (<Typography id='password-error' color='error'>{passwordError}</Typography>) : null }
 
                 <div style={styles.linkContainer}>
                     <Link to='/signup'>Create new account</Link>
@@ -171,7 +174,8 @@ const LoginForm = () => {
                     <Link to='/recovery'>Forgot your password? Recover !</Link>
                 </div>
                 <CardActions>
-                    <Button 
+                    <Button
+                        id='login-button'
                         onClick={onLogin}
                         style={{
                             backgroundColor: paletteController.mainColor,
@@ -180,7 +184,7 @@ const LoginForm = () => {
                     >
                         Login
                     </Button>
-                    <div style={styles.googleButton} id='google_button_container'>
+                    <div id='google-button' style={styles.googleButton}>
                         <GoogleLogin
                             clientId={config.googleClientId}
                             buttonText='Google'
@@ -190,7 +194,7 @@ const LoginForm = () => {
                             cookiePolicy={'single_host_origin'}                
                         />
                     </div>
-                    <div style={styles.facebookButton}>
+                    <div id='facebook-button' style={styles.facebookButton}>
                         <FacebookLogin
                             appId={config.facebookAppId}
                             autoLoad={false}

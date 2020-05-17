@@ -7,7 +7,7 @@
     "dev": "nodemon --watch server/ --watch client/ --exec \"webpack && node build/generated.server.js\"",
     "build": "webpack --mode=production",
     "start": "node build/generated.server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx wdio testing/webdriver-io.config.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +17,18 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AndrewLebowski/ProjectOne/issues"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "targets": {
+            "node": 12
+          }
+        }
+      ]
+    ]
   },
   "homepage": "https://github.com/AndrewLebowski/ProjectOne#readme",
   "dependencies": {
@@ -49,12 +61,21 @@
     "style-loader": "^1.1.4"
   },
   "devDependencies": {
-    "@babel/core": "^7.8.3",
+    "@babel/cli": "^7.8.4",
+    "@babel/core": "^7.9.6",
     "@babel/preset-env": "^7.8.3",
     "@babel/preset-react": "^7.8.3",
+    "@babel/register": "^7.9.0",
+    "@wdio/cli": "^6.1.11",
+    "@wdio/local-runner": "^6.1.11",
+    "@wdio/mocha-framework": "^6.1.8",
+    "@wdio/spec-reporter": "^6.1.12",
+    "@wdio/sync": "^6.1.8",
     "babel-loader": "^8.0.6",
+    "chromedriver": "^81.0.0",
     "css-loader": "^3.5.2",
     "nodemon": "^2.0.2",
+    "wdio-chromedriver-service": "^6.0.3",
     "webpack": "^4.41.5",
     "webpack-cli": "^3.3.10",
     "webpack-node-externals": "^1.7.2"

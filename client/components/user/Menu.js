@@ -34,7 +34,7 @@ const _Menu = () => {
 
     return (
         <div>
-            <IconButton onClick={handleClick}>
+            <IconButton id='profile-menu' onClick={handleClick}>
                 <Person 
                     style={{ 
                         backgroundColor: paletteController.additionalColor,
@@ -51,23 +51,23 @@ const _Menu = () => {
                 { 
                 authenticationHelper.isAuthenticated() ?
                 (<div>
-                    <MenuItem onClick={handleClose}>            
+                    <MenuItem id='profile' onClick={handleClose}>            
                         <Link style={styles.link} 
                             to={'/profile/' + authenticationHelper.isAuthenticated().user._id}>
                                 Profile
                         </Link>
                     </MenuItem>
-                    <MenuItem onClick={handleLogout}>
+                    <MenuItem id='logout' onClick={handleLogout}>
                         <Link style={styles.link} to='/'>Logout</Link>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>Settings</MenuItem>
                 </div>)
                 :
                 (<div>
-                    <MenuItem onClick={handleClose}>            
+                    <MenuItem id='sign-up' onClick={handleClose}>            
                         <Link style={styles.link} to='/signup'>Sign Up</Link>
                     </MenuItem>
-                    <MenuItem onClick={handleClose}>
+                    <MenuItem id='login' onClick={handleClose}>
                         <Link style={styles.link} to='/login'>Login</Link>
                     </MenuItem>
                     <MenuItem onClick={handleClose}>Settings</MenuItem>
