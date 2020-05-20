@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Person } from '@material-ui/icons';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import authenticationHelper from '../../helpers/authentication.helper';
@@ -53,11 +52,14 @@ const _Menu = () => {
                 { 
                 authenticationHelper.isAuthenticated() ?
                 (<div>
-                    <MenuItem id='profile' onClick={handleClose}>            
-                        <Link style={styles.link} 
-                            to={'/profile/' + authenticationHelper.isAuthenticated().user._id}>
-                                Profile
-                        </Link>
+                    <MenuItem 
+                        id='profile' 
+                        onClick={() => {
+                            handleClose();
+                            location.href = '/profile/' + authenticationHelper.isAuthenticated().user._id;
+                        }}
+                    >            
+                        Profile
                     </MenuItem>
                     <MenuItem id='logout' onClick={() => setConfirm(true)}>
                         Logout
@@ -66,11 +68,23 @@ const _Menu = () => {
                 </div>)
                 :
                 (<div>
-                    <MenuItem id='sign-up' onClick={handleClose}>            
-                        <Link style={styles.link} to='/signup'>Sign Up</Link>
+                    <MenuItem 
+                        id='sign-up' 
+                        onClick={() => {
+                            handleClose();
+                            location.href = '/signup';
+                        }}
+                    >            
+                        Sign Up
                     </MenuItem>
-                    <MenuItem id='login' onClick={handleClose}>
-                        <Link style={styles.link} to='/login'>Login</Link>
+                    <MenuItem 
+                        id='login' 
+                        onClick={() => {
+                            handleClose();
+                            location.href = '/login';
+                        }}
+                    >
+                        Login
                     </MenuItem>
                     <MenuItem onClick={handleClose}>Settings</MenuItem>
                 </div>)
