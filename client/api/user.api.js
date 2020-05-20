@@ -91,6 +91,21 @@ const userApi = {
             return console.log(err)
         }
     },
+    async deleteUserProfile(userId) {
+        try {
+            const response = await fetch(`/myapi/profile/${userId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+            })
+            return response.json()
+        }
+        catch (err) {
+            return console.log(err)
+        }
+    },
     async recoverPassword(user) {
         try {
             const response = await fetch('/myapi/recover', {

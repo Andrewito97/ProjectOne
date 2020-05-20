@@ -244,6 +244,21 @@ const userController = {
             );
     },
 
+    deleteUser(request, response) {
+        User
+            .findByIdAndDelete(request.profile._id, (error) => {
+                if(error) {
+                    return response.status(400).json({
+                        error
+                    });
+                } else {
+                    return response.status(200).json({
+                        success: 'User has been deleted !'
+                    });
+                } 
+            });
+    },
+
     getUserByID(request, response, nextHandler, userId) {
         User
             .findById(userId)

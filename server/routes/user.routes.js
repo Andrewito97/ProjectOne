@@ -11,7 +11,8 @@ userApi.route('/myapi/login')
 
 userApi.route('/myapi/profile/:userId')
     .get(userController.getUserProfile)
-    .put(userController.updateUser);
+    .put(userController.updateUser)
+    .delete(userController.deleteUser);
 
 userApi.route('/myapi/media')
     .post(userController.checkIfMediaAccExists);

@@ -4,6 +4,7 @@ import { Person } from '@material-ui/icons';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import authenticationHelper from '../../helpers/authentication.helper';
 import userApi from '../../api/user.api';
+import ConfirmWindow from '../ConfirmWindow';
 import paletteController from '../../PaletteController';
 
 const styles = {
@@ -17,6 +18,7 @@ const styles = {
 
 const _Menu = () => {
     const [ anchorEl, setAnchorEl ] = React.useState(null);
+    const [ confirm, setConfirm ] = React.useState(false);
 
     const handleClick = event => {
         setAnchorEl(event.currentTarget);
@@ -29,7 +31,7 @@ const _Menu = () => {
     const handleLogout = async () => {
         await userApi.logout();
         setAnchorEl(null);
-        location.reload();
+        location.replace('/');
     };
 
     return (
@@ -57,8 +59,8 @@ const _Menu = () => {
                                 Profile
                         </Link>
                     </MenuItem>
-                    <MenuItem id='logout' onClick={handleLogout}>
-                        <Link style={styles.link} to='/'>Logout</Link>
+                    <MenuItem id='logout' onClick={() => setConfirm(true)}>
+                        Logout
                     </MenuItem>
                     <MenuItem onClick={handleClose}>Settings</MenuItem>
                 </div>)
@@ -74,6 +76,12 @@ const _Menu = () => {
                 </div>)
                 }
             </Menu>
+            <ConfirmWindow
+                open={confirm}
+                onCancel={() => setConfirm(false)}
+                onConfirm={handleLogout}
+                title='Logout confirmation window'
+            />
         </div>
     )
 };

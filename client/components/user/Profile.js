@@ -4,18 +4,19 @@ import { Card,
          Typography,
          TextField,
          IconButton,
-         Button,
-         Dialog,
-         DialogTitle,
-         DialogContent,
-         DialogContentText,
-         DialogActions } from '@material-ui/core';
+         Button } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
+import DeleteIcon from '@material-ui/icons/Delete';
 import userApi from '../../api/user.api';
+import postApi from '../../api/post.api';
+import musicApi from '../../api/music.api';
+import movieApi from '../../api/movie.api';
 import authenticationHelper from '../../helpers/authentication.helper';
 import ProfileTabs from './ProfileTabs';
 import paletteController from '../../PaletteController';
+import ConfirmWindow from '../ConfirmWindow';
+import SuccessWindow from '../SuccessWindow';
 
 const styles = {
     card: {
@@ -46,12 +47,11 @@ const styles = {
         right: 10,
         bottom: 0
     },
-    saveButton: {
-        color: 'white',
+    cardFooterContainer: {
+        position: 'relative'
     },
-    okButton: {
-        color: 'white',
-        marginTop: 60
+    saveButton: {
+        color: 'white'
     }
 };
 
@@ -62,7 +62,9 @@ const Profile = () => {
     const [ userEmail, setUserEmail ] = React.useState('');
     const [ userEmailError, setUserEmailError ] = React.useState('');
     const [ shouldEditEmail, setEditEmailStatus ] = React.useState(false);
-    const [ successed, setSuccessed ] = React.useState(false);
+    const [ successedUpdate, setSuccessedUpdate ] = React.useState(false);
+    const [ successedDelete, setSuccessedDelete ] = React.useState(false);
+    const [ confirm, setConfirm ] = React.useState(false)
     const [ noChanges, setNoChanges ] = React.useState(false);
 
     React.useEffect( () => {
@@ -87,7 +89,7 @@ const Profile = () => {
             setUserEmailError('');
             setUserNameError('');
             setNoChanges('')
-            setSuccessed(true);
+            setSuccessedUpdate(true);
         } else if(data.noChanges) {
             setNoChanges(data.noChanges)
         } else {
@@ -103,6 +105,36 @@ const Profile = () => {
                     setUserNameError('');
             };
         };
+    };
+
+    const deleteUser = async () => {
+        const userId = authenticationHelper.isAuthenticated().user._id;
+        const userPosts = await postApi.getUserNewsFeed(userId);
+        const userMusic = await musicApi.getUserMusic(userId);
+        const userMovies = await movieApi.getUserMovies(userId);
+        for(let post of userPosts) {
+            await postApi.deletePost(post._id);
+        };
+        for(let music of userMusic) {
+            let audios = music.audios;
+            for(let audio of audios) {
+                await musicApi.deleteAudio(audio);
+            };
+            await musicApi.deleteMusic(music._id);
+        };
+        for(let movie of userMovies) {
+            const videoData = await movieApi.deleteVideo(movie._id);
+            if(videoData.success) {
+                await movieApi.deleteMovie(movie._id);
+            };
+        };
+        const data = await userApi.deleteUserProfile(userId);
+        if(data.success) setSuccessedDelete(true);
+        await userApi.logout();
+    };
+
+    const toMainPage = () => {
+        location.replace('/');
     };
 
     let isDisabled = shouldEditName || shouldEditEmail;
@@ -221,39 +253,51 @@ const Profile = () => {
                     { userEmailError ? (<Typography color='error'>{userEmailError}</Typography>) : null }
                     </div>
                     <br/>
-                    <Button 
-                        disabled={isDisabled} 
-                        onClick={updateUser} 
-                        style={{
-                            backgroundColor: isDisabled ? paletteController.grey : paletteController.mainColor,
-                            ...styles.saveButton
-                        }}
-                    >
-                        Save
-                    </Button>
-                    { noChanges ? (<Typography style={{color: 'orange'}}>{noChanges}</Typography>) : null }
+                    <div style={styles.cardFooterContainer}>
+                        <Button 
+                            disabled={isDisabled} 
+                            onClick={updateUser} 
+                            style={{
+                                backgroundColor: isDisabled ? paletteController.grey : paletteController.mainColor,
+                                ...styles.saveButton
+                            }}
+                        >
+                            Save
+                        </Button>
+                        { noChanges ? (<Typography style={{color: 'orange'}}>{noChanges}</Typography>) : null }
+
+                        <IconButton
+                            onClick={() => setConfirm(true)}
+                            style={{
+                                backgroundColor: paletteController.mainColor,
+                                ...styles.icons
+                            }}
+                        >
+                            <DeleteIcon/>
+                        </IconButton>
+                    </div>
                 </CardContent>
             </Card>
             <ProfileTabs />
-            <Dialog open={successed} disableBackdropClick={true}>
-                <DialogTitle>Success</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Account data changed successfully
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button 
-                        onClick={ () => setSuccessed(false) }
-                        style={{
-                            backgroundColor: paletteController.mainColor,
-                            ...styles.okButton
-                        }}
-                    >
-                        OK
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <SuccessWindow
+                open={successedUpdate}
+                message='Account data changed successfully'
+                onClick={() => setSuccessedUpdate(false)}
+            />
+            <SuccessWindow
+                open={successedDelete}
+                message='Account deleted successfully'
+                onClick={() => { 
+                    setSuccessedDelete(false); 
+                    toMainPage();
+                }}
+            />
+            <ConfirmWindow
+                open={confirm}
+                onCancel={() => setConfirm(false)}
+                onConfirm={deleteUser}
+                title='Delete Account confirmation'
+            />
         </div>
     )
 };
