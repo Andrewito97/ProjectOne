@@ -144,7 +144,12 @@ const NewPostForm = (props) => {
                 {
                     postImage ? (
                         <div>
-                            <Typography component='span'>{postImage.name}</Typography>
+                            <Typography 
+                                component='span'
+                                style={{color: paletteController.textColor}}
+                            >
+                                {postImage.name}
+                            </Typography>
                             <IconButton 
                                 onClick={() => setImage('')} 
                                 size='small'
