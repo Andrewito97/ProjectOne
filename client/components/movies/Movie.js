@@ -10,6 +10,7 @@ import { Card,
 import DeleteIcon from '@material-ui/icons/Delete';
 import addWhitespaces from '../../helpers/addWhitespaces.helper';
 import paletteController from '../../PaletteController';
+import ConfirmWindow from '../ConfirmWindow';
 
 const styles = {
     card: {
@@ -38,59 +39,70 @@ const styles = {
 };
 
 const Movie = (props) => {
+    const [ confirm, setConfirm ] = React.useState(false);
+
     const description = addWhitespaces(props.movie.description);
+
     return (
-        <Card 
-            style={{
-                backgroundColor: paletteController.cardColor,
-                ...styles.card
-            }}
-        >
-            <CardHeader
-                title={props.movie.title}
-                subheader={props.movie.genre}
-                subheaderTypographyProps={{color: 'inherit'}}
+        <div>
+            <Card 
                 style={{
-                    color: paletteController.textColor,
+                    backgroundColor: paletteController.cardColor,
+                    ...styles.card
                 }}
-            />
-            <CardContent>
-                <Typography 
-                    component='span'
+            >
+                <CardHeader
+                    title={props.movie.title}
+                    subheader={props.movie.genre}
+                    subheaderTypographyProps={{color: 'inherit'}}
                     style={{
-                        color: paletteController.textColor
+                        color: paletteController.textColor,
                     }}
-                >
-                    <ReactMarkdown source={description} plugins={[breaks]}/>   
-                </Typography>
-                <ReactPlayer 
-                    url={'/myapi/movies/' + props.movie._id} 
-                    width={styles.video.width}
-                    height={styles.video.height}
-                    style={styles.video}
-                    controls
                 />
-                <div style={styles.movieFooter}>
-                    <Typography style={styles.movieDate}>
-                        {new Date(props.movie.created).toDateString()}
+                <CardContent>
+                    <Typography 
+                        component='span'
+                        style={{
+                            color: paletteController.textColor
+                        }}
+                    >
+                        <ReactMarkdown source={description} plugins={[breaks]}/>   
                     </Typography>
-                    { 
-                        props.isProfile ? 
-                        <IconButton
-                            onClick={ () => props.deleteMovie(props.movie._id) }
-                            style={{
-                                backgroundColor: paletteController.mainColor,
-                                ...styles.deleteIcon
-                            }}
-                        >
-                            <DeleteIcon/>
-                        </IconButton>
-                            : 
-                        null 
-                    }
-                </div>
-            </CardContent>
-        </Card>
+                    <ReactPlayer 
+                        url={'/myapi/movies/' + props.movie._id} 
+                        width={styles.video.width}
+                        height={styles.video.height}
+                        style={styles.video}
+                        controls
+                    />
+                    <div style={styles.movieFooter}>
+                        <Typography style={styles.movieDate}>
+                            {new Date(props.movie.created).toDateString()}
+                        </Typography>
+                        { 
+                            props.isProfile ? 
+                            <IconButton
+                                onClick={() => setConfirm(true)}
+                                style={{
+                                    backgroundColor: paletteController.mainColor,
+                                    ...styles.deleteIcon
+                                }}
+                            >
+                                <DeleteIcon/>
+                            </IconButton>
+                                : 
+                            null 
+                        }
+                    </div>
+                </CardContent>
+            </Card>
+            <ConfirmWindow
+                open={confirm}
+                onCancel={() => setConfirm(false)}
+                onConfirm={() => props.deleteMovie(props.movie._id)}
+                title='Delete Movie confirmation'
+            />
+        </div>
     )
 };
 

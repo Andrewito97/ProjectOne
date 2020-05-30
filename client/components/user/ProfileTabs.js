@@ -1,13 +1,7 @@
 import React from 'react';
 import { AppBar, 
          Tabs, 
-         Tab,
-         Button,
-         Dialog,
-         DialogTitle,
-         DialogContent,
-         DialogContentText,
-         DialogActions } from '@material-ui/core';
+         Tab } from '@material-ui/core';
 import Post from '../posts/Post';
 import Music from '../music/Music';
 import Movie from '../movies/Movie';
@@ -16,6 +10,7 @@ import musicApi from '../../api/music.api';
 import movieApi from '../../api/movie.api';
 import authenticationHelper from '../../helpers/authentication.helper';
 import paletteController from '../../PaletteController';
+import SuccessWindow from '../SuccessWindow';
 
 const styles = {
     tabs: {
@@ -55,7 +50,7 @@ const ProfileTabs = () => {
         if(data.success) {
             setSuccessedPost(true);
         } else {
-            console.log(data)
+            console.log(data);
         };
     };
 
@@ -66,13 +61,13 @@ const ProfileTabs = () => {
         };
         let audios = musicPost.audios;
         for(let audio of audios) {
-            await musicApi.deleteAudio(audio)
+            await musicApi.deleteAudio(audio);
         };
         const data = await musicApi.deleteMusic(musicId);
         if(data.success) {
             setSuccessedMusic(true);
         } else {
-            console.log(data)
+            console.log(data);
         };
     };
 
@@ -146,26 +141,11 @@ const ProfileTabs = () => {
                 :
                 null
             }
-             <Dialog open={dialogWindowBoolean} disableBackdropClick={true}>
-                <DialogTitle>Success</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        {dialogWindowValue} successfully deleted
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button
-                        onClick={ () => location.reload() }
-                        style={{
-                            backgroundColor: paletteController.mainColor,
-                            ...styles.okButton
-                        }}
-                        
-                    >
-                        OK
-                    </Button>
-                </DialogActions>
-            </Dialog>
+            <SuccessWindow
+                open={dialogWindowBoolean}
+                message={`${dialogWindowValue} successfully deleted`}
+                onClick={() => location.reload()}
+            />
         </div>
     )
 };

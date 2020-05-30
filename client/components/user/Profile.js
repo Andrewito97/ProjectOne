@@ -64,7 +64,7 @@ const Profile = () => {
     const [ shouldEditEmail, setEditEmailStatus ] = React.useState(false);
     const [ successedUpdate, setSuccessedUpdate ] = React.useState(false);
     const [ successedDelete, setSuccessedDelete ] = React.useState(false);
-    const [ confirm, setConfirm ] = React.useState(false)
+    const [ confirm, setConfirm ] = React.useState(false);
     const [ noChanges, setNoChanges ] = React.useState(false);
 
     React.useEffect( () => {
@@ -279,6 +279,12 @@ const Profile = () => {
                 </CardContent>
             </Card>
             <ProfileTabs />
+            <ConfirmWindow
+                open={confirm}
+                onCancel={() => setConfirm(false)}
+                onConfirm={deleteUser}
+                title='Delete Account confirmation'
+            />
             <SuccessWindow
                 open={successedUpdate}
                 message='Account data changed successfully'
@@ -291,12 +297,6 @@ const Profile = () => {
                     setSuccessedDelete(false); 
                     toMainPage();
                 }}
-            />
-            <ConfirmWindow
-                open={confirm}
-                onCancel={() => setConfirm(false)}
-                onConfirm={deleteUser}
-                title='Delete Account confirmation'
             />
         </div>
     )

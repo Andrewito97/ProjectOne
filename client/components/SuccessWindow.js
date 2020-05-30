@@ -18,7 +18,7 @@ const styles = {
 
 const SuccessWindow = (props) => {
     return (
-        <Dialog open={props.open} disableBackdropClick={true}>
+        <Dialog open={props.open} disableBackdropClick={true} id='success-window'>
             <DialogTitle>Success</DialogTitle>
             <DialogContent>
                 <DialogContentText>
@@ -26,7 +26,8 @@ const SuccessWindow = (props) => {
                 </DialogContentText>
             </DialogContent>
             <DialogActions>
-                <Button 
+                <Button
+                    id='ok-button'
                     onClick={props.onClick}
                     style={{
                         backgroundColor: paletteController.mainColor,

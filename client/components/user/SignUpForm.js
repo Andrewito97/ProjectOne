@@ -5,14 +5,10 @@ import { Card,
          Typography, 
          TextField, 
          CardActions, 
-         Button,
-         Dialog,
-         DialogTitle,
-         DialogContent,
-         DialogContentText,
-         DialogActions } from '@material-ui/core';
+         Button } from '@material-ui/core';
 import userApi from '../../api/user.api';
 import paletteController from '../../PaletteController';
+import SuccessWindow from '../SuccessWindow';
 
 const styles = {
     card: {
@@ -77,7 +73,7 @@ const SignUpForm = () => {
             setSuccessed(true);
         } else {
             if(data.error.code) {
-                setEmailError('Email is already existss!');
+                setEmailError('Email is already existss !');
             } else {
                 data.error.errors.email ? setEmailError(data.error.errors.email.message) : setEmailError('');
                 data.error.errors.name ? setNameError(data.error.errors.name.message) : setNameError('');
@@ -95,7 +91,8 @@ const SignUpForm = () => {
                 }}
             >
                 <CardContent style={styles.content}>     
-                    <Typography 
+                    <Typography
+                        id='page-title'
                         variant='h5'
                         style={{
                             color: paletteController.textColor
@@ -104,7 +101,8 @@ const SignUpForm = () => {
                         Sign Up
                     </Typography>
 
-                    <TextField 
+                    <TextField
+                        id='name'
                         required
                         label='Name' 
                         variant='outlined'
@@ -114,9 +112,10 @@ const SignUpForm = () => {
                         onChange={(event) => setName(event.target.value)}
                     />
                     <br/>
-                    { nameError ? (<Typography color='error'>{nameError}</Typography>) : null }
+                    { nameError ? (<Typography id='name-error' color='error'>{nameError}</Typography>) : null }
 
-                    <TextField 
+                    <TextField
+                        id='email'
                         required
                         label='Email' 
                         variant='outlined'
@@ -127,9 +126,10 @@ const SignUpForm = () => {
                         onChange={(event) => setEmail(event.target.value)}
                     />
                     <br/>
-                    { emailError ? (<Typography color='error'>{emailError}</Typography>) : null }
+                    { emailError ? (<Typography id='email-error' color='error'>{emailError}</Typography>) : null }
 
-                    <TextField 
+                    <TextField
+                        id='password'
                         required
                         label='Password' 
                         variant='outlined'
@@ -142,6 +142,7 @@ const SignUpForm = () => {
                     <br/>
 
                     <TextField 
+                        id='confirm-password'
                         required
                         label='Confrm password' 
                         variant='outlined'
@@ -152,7 +153,7 @@ const SignUpForm = () => {
                         onChange={(event) => setConfirmedPassword(event.target.value)}
                     />
                     <br/>
-                    { passwordError ? (<Typography color='error'>{passwordError}</Typography>) : null }
+                    { passwordError ? (<Typography id='password-error' color='error'>{passwordError}</Typography>) : null }
 
                     <div style={styles.linkContainer}>
                         <Link to='/login'>Allready have an account? Login</Link>
@@ -160,6 +161,7 @@ const SignUpForm = () => {
 
                     <CardActions>
                         <Button 
+                            id='create-button'
                             onClick={onCreate}
                             style={{
                                 backgroundColor: paletteController.mainColor,
@@ -171,26 +173,11 @@ const SignUpForm = () => {
                     </CardActions>
                 </CardContent>
             </Card>
-            <Dialog open={successed} disableBackdropClick={true}>
-                <DialogTitle>New Account</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        New account successfully created.
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                <Link to="/login">
-                    <Button 
-                        style={{
-                            backgroundColor: paletteController.mainColor,
-                            ...styles.loginButton
-                        }}
-                    >
-                        Login
-                    </Button>
-                </Link>
-                </DialogActions>
-            </Dialog>
+            <SuccessWindow
+                open={successed}
+                message='New account has been created successfully'
+                onClick={() => setSuccessed(false)}
+            />
         </div>
     )
 };

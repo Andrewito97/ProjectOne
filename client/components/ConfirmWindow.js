@@ -25,7 +25,7 @@ const styles = {
 
 const ConfirmWindow = (props) => {
     return (
-        <Dialog open={props.open} disableBackdropClick={true}>
+        <Dialog open={props.open} disableBackdropClick={true} id='confirm-window'>
             <DialogTitle>{props.title}</DialogTitle>
             <DialogContent>
                 <DialogContentText>
@@ -46,8 +46,8 @@ const ConfirmWindow = (props) => {
                 <Button 
                     id='confirm-button'
                     onClick={() => {
-                        props.onCancel();
                         props.onConfirm();
+                        props.onCancel();
                     }}
                     style={{
                         backgroundColor: paletteController.mainColor,

@@ -8,7 +8,7 @@ class TopBar {
     };
 
     get loginListItem() {
-        return $('#login a');
+        return $('#login');
     };
 
     get profileListItem() {

@@ -1,19 +1,14 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { Card, 
          CardContent, 
          Typography, 
          TextField,
          Button,
-         CardActions,
-         Dialog,
-         DialogTitle,
-         DialogContent,
-         DialogContentText,
-         DialogActions } from '@material-ui/core';
+         CardActions } from '@material-ui/core';
 import userApi from '../../api/user.api';
 import paletteController from '../../PaletteController';
+import SuccessWindow from '../SuccessWindow';
 
 const styles = {
     card: {
@@ -69,7 +64,8 @@ const ResetPasswordForm = () => {
                 }}
             >   
                 <CardContent>
-                    <Typography 
+                    <Typography
+                        id='page-title'
                         variant='h5'
                         style={{
                             color: paletteController.textColor
@@ -78,7 +74,8 @@ const ResetPasswordForm = () => {
                         Set new password
                     </Typography>
 
-                    <TextField 
+                    <TextField
+                        id='password'
                         required
                         label='Password' 
                         variant='outlined'
@@ -89,7 +86,8 @@ const ResetPasswordForm = () => {
                         onChange={(event) => setPassword(event.target.value)}
                     />
                     <br/>
-                    <TextField 
+                    <TextField
+                        id='confirm-password'
                         required
                         label='Confirm password' 
                         variant='outlined'
@@ -100,10 +98,11 @@ const ResetPasswordForm = () => {
                         onChange={(event) => setConfirmedPassword(event.target.value)}
                     />
                     <br/>
-                    { passwordError ? (<Typography color='error'>{passwordError}</Typography>) : null }
+                    { passwordError ? (<Typography id='password-error' color='error'>{passwordError}</Typography>) : null }
 
                     <CardActions>
                         <Button
+                            id='change-password-button'
                             onClick={onChangePassword}
                             style={{
                                 backgroundColor: paletteController.mainColor,
@@ -115,26 +114,11 @@ const ResetPasswordForm = () => {
                     </CardActions>
                 </CardContent>
             </Card>
-            <Dialog open={successed} disableBackdropClick={true}>
-                <DialogTitle>Success</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Password has been changed successfully !
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                <Link to="/login">
-                    <Button 
-                        style={{
-                            backgroundColor: paletteController.mainColor,
-                            ...styles.loginButton
-                        }}
-                    >
-                        Login
-                    </Button>
-                </Link>
-                </DialogActions>
-            </Dialog>
+            <SuccessWindow
+                open={successed}
+                message='Password has been changed successfully'
+                onClick={() => setSuccessed(false)}
+            />
         </div>
     )
 };

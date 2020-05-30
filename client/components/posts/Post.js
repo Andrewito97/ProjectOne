@@ -9,6 +9,7 @@ import { Card,
 import DeleteIcon from '@material-ui/icons/Delete';
 import addWhitespaces from '../../helpers/addWhitespaces.helper';
 import paletteController from '../../PaletteController';
+import ConfirmWindow from '../ConfirmWindow';
 
 const styles = {
     card: {
@@ -35,59 +36,70 @@ const styles = {
 };
 
 const Post = (props) => {
+    const [ confirm, setConfirm ] = React.useState(false);
+
     const text = addWhitespaces(props.post.text);
-    return (  
-        <Card 
-            style={{
-                backgroundColor: paletteController.cardColor,
-                ...styles.card
-            }}
-        >
-            <CardHeader 
-                title={props.post.title}
+    
+    return (
+        <div>
+            <Card 
                 style={{
-                    color: paletteController.textColor
+                    backgroundColor: paletteController.cardColor,
+                    ...styles.card
                 }}
-            />
-            <CardContent>
-                <Typography 
-                    component='span'
+            >
+                <CardHeader 
+                    title={props.post.title}
                     style={{
                         color: paletteController.textColor
                     }}
-                >
-                    <ReactMarkdown source={text} plugins={[breaks]}/>  
-                </Typography>
-                {
-                props.post.image ? 
-                <img 
-                    style={styles.image}
-                    src={'/myapi/post/image/' + props.post._id}
                 />
-                : 
-                null 
-                }
-                <div style={styles.postFooter}>
-                    <Typography style={styles.postDate}>
-                        {new Date(props.post.created).toDateString()}
+                <CardContent>
+                    <Typography 
+                        component='span'
+                        style={{
+                            color: paletteController.textColor
+                        }}
+                    >
+                        <ReactMarkdown source={text} plugins={[breaks]}/>  
                     </Typography>
-                    { 
-                        props.isProfile ? 
-                        <IconButton
-                            onClick={ () => props.deletePost(props.post._id) }
-                            style={{
-                                backgroundColor: paletteController.mainColor,
-                                ...styles.deleteIcon
-                            }}
-                        >
-                            <DeleteIcon/>
-                        </IconButton>
-                        : 
-                        null 
+                    {
+                    props.post.image ? 
+                    <img 
+                        style={styles.image}
+                        src={'/myapi/post/image/' + props.post._id}
+                    />
+                    : 
+                    null 
                     }
-                </div>
-            </CardContent>
-        </Card>
+                    <div style={styles.postFooter}>
+                        <Typography style={styles.postDate}>
+                            {new Date(props.post.created).toDateString()}
+                        </Typography>
+                        { 
+                            props.isProfile ? 
+                            <IconButton
+                                onClick={() => setConfirm(true)}
+                                style={{
+                                    backgroundColor: paletteController.mainColor,
+                                    ...styles.deleteIcon
+                                }}
+                            >
+                                <DeleteIcon/>
+                            </IconButton>
+                            : 
+                            null 
+                        }
+                    </div>
+                </CardContent>
+            </Card>
+            <ConfirmWindow
+                open={confirm}
+                onCancel={() => setConfirm(false)}
+                onConfirm={() => props.deletePost(props.post._id)}
+                title='Delete Post confirmation'
+            />
+        </div>
     );
 };
 

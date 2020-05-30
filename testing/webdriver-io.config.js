@@ -1,3 +1,6 @@
+const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
+require('@babel/register');
+
 exports.config = {
     //
     // ====================
@@ -17,7 +20,9 @@ exports.config = {
     // directory is where your package.json resides, so `wdio` will be called from there.
     //
     specs: [
-        './testing/tests/login.test.js'
+        './testing/tests/01.signup.test.js',
+        './testing/tests/02.login.test.js',
+        './testing/tests/03.recovery.test.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -65,7 +70,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'error',
+    logLevel: 'debug',
     //
     // Set specific log levels per logger
     // loggers:
@@ -105,7 +110,7 @@ exports.config = {
     // Services take over a specific job you don't want to take care of. They enhance
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
-    services: ['chromedriver'],
+    services: ['chromedriver', [TimelineService]],
     
     // Framework you want to run your specs with.
     // The following are supported: Mocha, Jasmine, and Cucumber
@@ -119,10 +124,6 @@ exports.config = {
     //     require: ['@babel/register', './test/helpers/common.js'],
     //     // ...
     // },
-
-    before: function() {
-        require('@babel/register');
-    },
     // The number of times to retry the entire specfile when it fails as a whole
     // specFileRetries: 1,
     //
@@ -132,8 +133,7 @@ exports.config = {
     // Test reporter for stdout.
     // The only one supported by default is 'dot'
     // see also: https://webdriver.io/docs/dot-reporter.html
-    reporters: ['spec'],
- 
+    reporters: ['spec', ['timeline', { outputDir: './testing/reports' }]],
     //
     // Options to be passed to Mocha.
     // See the full list at http://mochajs.org/

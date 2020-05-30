@@ -7,6 +7,7 @@ import { Card,
          IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import paletteController from '../../PaletteController';
+import ConfirmWindow from '../ConfirmWindow';
 
 const styles = {
     card: {
@@ -29,44 +30,54 @@ const styles = {
 };
 
 const Music = (props) => {
+    const [ confirm, setConfirm ] = React.useState(false);
+    
     return (
-        <Card 
-            style={{
-                backgroundColor: paletteController.cardColor,
-                ...styles.card
-            }}
-        >
-            <CardHeader
-                title={props.music.author}
-                subheader={props.music.genre}
-                subheaderTypographyProps={{color: 'inherit'}}
+        <div>
+            <Card 
                 style={{
-                    color: paletteController.textColor,
+                    backgroundColor: paletteController.cardColor,
+                    ...styles.card
                 }}
+            >
+                <CardHeader
+                    title={props.music.author}
+                    subheader={props.music.genre}
+                    subheaderTypographyProps={{color: 'inherit'}}
+                    style={{
+                        color: paletteController.textColor,
+                    }}
+                />
+                <CardContent>
+                { props.music.audios.map((name, index) => <AudioPlayer key={index} name={name}/>) }
+                <div style={styles.musicFooter}>
+                    <Typography style={styles.songDate}>
+                        {new Date(props.music.created).toDateString()}
+                    </Typography>
+                    { 
+                        props.isProfile ? 
+                        <IconButton
+                            onClick={() => setConfirm(true)}
+                            style={{
+                                backgroundColor: paletteController.mainColor,
+                                ...styles.deleteIcon
+                            }}
+                        >
+                            <DeleteIcon/>
+                        </IconButton>
+                        : 
+                        null 
+                    }
+                </div>
+                </CardContent>
+            </Card>
+            <ConfirmWindow
+                open={confirm}
+                onCancel={() => setConfirm(false)}
+                onConfirm={() => props.deleteMusic(props.music._id)}
+                title='Delete Music confirmation'
             />
-            <CardContent>
-            { props.music.audios.map((name, index) => <AudioPlayer key={index} name={name}/>) }
-            <div style={styles.musicFooter}>
-                <Typography style={styles.songDate}>
-                    {new Date(props.music.created).toDateString()}
-                </Typography>
-                { 
-                    props.isProfile ? 
-                    <IconButton
-                        onClick={ () => props.deleteMusic(props.music._id) }
-                        style={{
-                            backgroundColor: paletteController.mainColor,
-                            ...styles.deleteIcon
-                        }}
-                    >
-                        <DeleteIcon/>
-                    </IconButton>
-                    : 
-                    null 
-                }
-            </div>
-            </CardContent>
-        </Card>
+        </div>
     );
 };
 

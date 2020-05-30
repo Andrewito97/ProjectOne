@@ -4,7 +4,7 @@ class BasePage {
     };
 
     open() {
-        browser.url(browser.config.baseUrl)
+        browser.url(browser.config.baseUrl);
     };
 }
 

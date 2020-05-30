@@ -82,7 +82,8 @@ const NewPostForm = (props) => {
             }}
         >
             <CardContent>
-                <Typography 
+                <Typography
+                    id='page-title'
                     variant='h5'
                     style={{color: paletteController.textColor}}
                 >

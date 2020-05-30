@@ -1,18 +1,13 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { Card, 
          CardContent, 
          Typography, 
          TextField,
          Button,
-         CardActions,
-         Dialog,
-         DialogTitle,
-         DialogContent,
-         DialogContentText,
-         DialogActions } from '@material-ui/core';
+         CardActions} from '@material-ui/core';
 import userApi from '../../api/user.api';
 import paletteController from '../../PaletteController';
+import SuccessWindow from '../SuccessWindow';
 
 const styles = {
     card: {
@@ -58,6 +53,7 @@ const RecoveryForm = () => {
             >
                 <CardContent style={styles.content}>
                     <Typography 
+                        id='page-title'
                         variant='h5'
                         style={{
                             color: paletteController.textColor
@@ -66,7 +62,8 @@ const RecoveryForm = () => {
                         Recovery
                     </Typography>
 
-                    <TextField 
+                    <TextField
+                        id='email-input'
                         required
                         label='Email' 
                         variant='outlined'
@@ -77,10 +74,11 @@ const RecoveryForm = () => {
                         onChange={(event) => setEmail(event.target.value)}
                     />
                     <br/>
-                    { emailError ? (<Typography color='error'>{emailError}</Typography>) : null }
+                    { emailError ? (<Typography id='email-error' color='error'>{emailError}</Typography>) : null }
 
                     <CardActions>
-                        <Button 
+                        <Button
+                            id='send-link-button'
                             onClick={onRecover}
                             style={{
                                 backgroundColor: paletteController.mainColor,
@@ -92,27 +90,11 @@ const RecoveryForm = () => {
                     </CardActions>
                 </CardContent>
             </Card>
-            <Dialog open={successed} disableBackdropClick={true}>
-                <DialogTitle>Recovery</DialogTitle>
-                <DialogContent>
-                    <DialogContentText>
-                        Recovery link has been sent 
-                        successfully on your email address !
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                <Link to="/login">
-                    <Button 
-                        style={{
-                            backgroundColor: paletteController.mainColor,
-                            ...styles.loginButton
-                        }}
-                    >
-                        Login
-                    </Button>
-                </Link>
-                </DialogActions>
-            </Dialog>
+            <SuccessWindow
+                open={successed}
+                message='Recovery link has been sent successfuly'
+                onClick={() => setSuccessed(false)}
+            />
         </div>
     )
 };
