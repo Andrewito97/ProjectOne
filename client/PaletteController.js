@@ -19,6 +19,9 @@ class PaletteController {
         this.paleSeaBlue = '#C7EFFF';
         this.blackBlue = '#05192F';
         this.highBlackBlue = '#041324';
+        this.middleGrey = '#1E1E1E';
+        this.paleGrey = '#333333';
+        this.lightGrey = '#252526';
 
         //set default colors for initial page loading until palette has been chosen
         this.mainColor = this.silver
@@ -78,7 +81,15 @@ class PaletteController {
                 this.backgroundColor = this.paleSeaBlue
                 this.cardColor = this.white
                     break;
-            case 'dark': 
+            case 'dark classic': 
+                this.mainColor = this.paleGrey
+                this.additionalColor = this.lightGrey
+                this.textColor = this.ivory
+                this.tabsTextColor = this.silver
+                this.backgroundColor = this.lightGrey
+                this.cardColor = this.middleGrey
+                    break;  
+            case 'dark blue': 
                 this.mainColor = this.black
                 this.additionalColor = this.highBlackBlue
                 this.textColor = this.ivory

@@ -36,9 +36,10 @@ const App = () => {
     paletteController.choosePalette(palette);
 
     if(palette === 'standart') paletteController.overrideInput(blue);
-    if(palette === 'dark') paletteController.overrideInput(ivory, ivory, ivory);
-    if(palette === 'metal') paletteController.overrideInput(metal);
+    if(palette === 'dark classic') paletteController.overrideInput(ivory, ivory, ivory);
+    if(palette === 'dark blue') paletteController.overrideInput(ivory, ivory, ivory);
     if(palette === 'lime') paletteController.overrideInput(lime);
+    if(palette === 'metal') paletteController.overrideInput(metal);
 
     const customTheme = createMuiTheme({
         overrides: paletteController.muiStyles,

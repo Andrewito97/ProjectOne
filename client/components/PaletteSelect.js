@@ -42,9 +42,10 @@ const PaletteSelect = (props) => {
                     value={props.palette}
                 >
                     <MenuItem value='standart'>Standart</MenuItem>
-                    <MenuItem value='dark'>Dark</MenuItem>
-                    <MenuItem value='metal'>Metal</MenuItem>  
-                    <MenuItem value='lime'>Lime</MenuItem>                 
+                    <MenuItem value='dark classic'>Dark Classic</MenuItem>
+                    <MenuItem value='dark blue'>Dark Blue</MenuItem>              
+                    <MenuItem value='lime'>Lime</MenuItem>       
+                    <MenuItem value='metal'>Metal</MenuItem>            
                 </Select>
             </FormControl>
             <Button

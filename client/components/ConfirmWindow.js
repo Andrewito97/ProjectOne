@@ -14,7 +14,8 @@ const styles = {
     cancelButton: {
         color: 'white',
         marginRight: 102,
-        marginBottom: 12
+        marginBottom: 12,
+        marginLeft: 15
     },
     confirmButton: {
         color: 'white',

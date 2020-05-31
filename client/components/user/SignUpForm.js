@@ -75,9 +75,12 @@ const SignUpForm = () => {
             if(data.error.code) {
                 setEmailError('Email is already existss !');
             } else {
-                data.error.errors.email ? setEmailError(data.error.errors.email.message) : setEmailError('');
-                data.error.errors.name ? setNameError(data.error.errors.name.message) : setNameError('');
-                data.error.errors.password ? setPasswordError(data.error.errors.password.message) : setPasswordError('');
+                data.error.errors.email ? 
+                    setEmailError(data.error.errors.email.properties.message) : setEmailError('');
+                data.error.errors.name ? 
+                    setNameError(data.error.errors.name.properties.message) : setNameError('');
+                data.error.errors.password ? 
+                    setPasswordError(data.error.errors.password.properties.message) : setPasswordError('');
             }
         };
     };
