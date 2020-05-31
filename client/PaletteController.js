@@ -47,6 +47,12 @@ class PaletteController {
                     backgroundColor: this.mainColor
                 }
                 
+            },
+            MuiTabs: {
+                indicator: {
+                    backgroundColor: 'white', 
+                    height: 3
+                }
             }
         };
     };
