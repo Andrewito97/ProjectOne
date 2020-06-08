@@ -49,6 +49,7 @@ const AudioList = (props) => {
                     {   
                         props.audioNames[i].shouldEdit ?
                         <TextField
+                            id='audio-name-edit-input'
                             size='small'
                             variant='outlined'
                             defaultValue={item.name}
@@ -56,7 +57,8 @@ const AudioList = (props) => {
                             onChange={ (event) => props.handleAudioNameChange(i, event) }
                         />
                         :
-                        <Typography 
+                        <Typography
+                            id='new-audio-name'
                             component='span'
                             style={{
                                 color: paletteController.textColor,
@@ -68,7 +70,8 @@ const AudioList = (props) => {
                     }
                     {
                         props.audioNames[i].shouldEdit ?
-                        <IconButton 
+                        <IconButton
+                            id='audio-name-save-button'
                             onClick={ () => props.saveAudioName(i) } 
                             size='small'
                             style={{
@@ -80,6 +83,7 @@ const AudioList = (props) => {
                         </IconButton>
                         :
                         <IconButton 
+                            id='audio-name-edit-button'
                             onClick={ () => props.setEditingStatus(i) } 
                             size='small'
                             style={{
@@ -91,6 +95,7 @@ const AudioList = (props) => {
                         </IconButton>
                     }
                     <IconButton 
+                        id='audio-name-delete-button'
                         onClick={ () => props.removeItem(i) } 
                         size='small'
                         style={{

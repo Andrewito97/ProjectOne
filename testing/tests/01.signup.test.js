@@ -7,6 +7,7 @@ import NewPostForm from '../PageObjects/NewPostForm';
 import GoogleLoginPage from '../PageObjects/GoogleLoginPage';
 import FacebookLoginPage from '../PageObjects/FacebookLoginPage';
 import config from '../../config';
+import clearInput from '../helpers/clearInput';
 
 describe('Check signup functionality', () => {
     beforeEach(() => {
@@ -94,16 +95,14 @@ describe('Check signup functionality', () => {
         expect(SignupPage.emailError).toHaveText('Email is required !');
         expect(SignupPage.passwordError).toHaveText('Password is required !');
 
-        SignupPage.nameInput.doubleClick();
-        browser.keys(['Backspace']);
+        clearInput(SignupPage.nameInput);
         SignupPage.nameInput.setValue('123456789012345678901');
         SignupPage.createButton.click();
         expect(SignupPage.nameError).toHaveText('Name is too long !');
         expect(SignupPage.emailError).toHaveText('Email is required !');
         expect(SignupPage.passwordError).toHaveText('Password is required !');
 
-        SignupPage.nameInput.doubleClick();
-        browser.keys(['Backspace']);
+        clearInput(SignupPage.nameInput);
         SignupPage.nameInput.setValue('test');
         SignupPage.createButton.click();
         SignupPage.nameError.waitForExist({ reverse: true });
@@ -116,8 +115,7 @@ describe('Check signup functionality', () => {
         expect(SignupPage.emailError).toHaveText('Please fill a valid email address !');
         expect(SignupPage.passwordError).toHaveText('Password is required !');
 
-        SignupPage.emailInput.doubleClick();
-        browser.keys(['Backspace'])
+        clearInput(SignupPage.emailInput);
         SignupPage.emailInput.setValue(config.testEmail);
         SignupPage.createButton.click();
         SignupPage.nameError.waitForExist({ reverse: true });

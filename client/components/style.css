@@ -15,7 +15,18 @@ input[type=range]::-webkit-slider-thumb {
    cursor: pointer;
    -webkit-appearance: none;
    margin-top: -4px;
- }
+}
+/* All the same stuff for Firefox */
+input[type=range]::-moz-range-thumb {
+   height: 34px;
+   width: 1px;
+   border-color: transparent;
+   border-radius: 3px;
+   background: transparent;
+   cursor: pointer;
+   -webkit-appearance: none;
+   margin-top: -4px;
+}
 .facebook-button {
    background-color: #415E9B;
    color: white;

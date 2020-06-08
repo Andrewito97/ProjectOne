@@ -178,7 +178,7 @@ const SignUpForm = () => {
             </Card>
             <SuccessWindow
                 open={successed}
-                message='New account has been created successfully'
+                message='Account created successfully'
                 onClick={() => setSuccessed(false)}
             />
         </div>

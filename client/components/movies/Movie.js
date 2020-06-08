@@ -52,15 +52,16 @@ const Movie = (props) => {
                 }}
             >
                 <CardHeader
+                    id='movie-title'
                     title={props.movie.title}
                     subheader={props.movie.genre}
-                    subheaderTypographyProps={{color: 'inherit'}}
                     style={{
                         color: paletteController.textColor,
                     }}
                 />
                 <CardContent>
                     <Typography 
+                        id='movie-description'
                         component='span'
                         style={{
                             color: paletteController.textColor
@@ -68,20 +69,23 @@ const Movie = (props) => {
                     >
                         <ReactMarkdown source={description} plugins={[breaks]}/>   
                     </Typography>
-                    <ReactPlayer 
-                        url={'/myapi/movies/' + props.movie._id} 
-                        width={styles.video.width}
-                        height={styles.video.height}
-                        style={styles.video}
-                        controls
-                    />
+                    <div id='movie-video'>
+                        <ReactPlayer
+                            url={'/myapi/movies/' + props.movie._id} 
+                            width={styles.video.width}
+                            height={styles.video.height}
+                            style={styles.video}
+                            controls
+                        />
+                    </div>
                     <div style={styles.movieFooter}>
-                        <Typography style={styles.movieDate}>
+                        <Typography id='movie-date' style={styles.movieDate}>
                             {new Date(props.movie.created).toDateString()}
                         </Typography>
                         { 
                             props.isProfile ? 
                             <IconButton
+                                id='delete-movie-button'
                                 onClick={() => setConfirm(true)}
                                 style={{
                                     backgroundColor: paletteController.mainColor,

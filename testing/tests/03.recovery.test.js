@@ -8,6 +8,7 @@ import GoogleLoginPage from '../PageObjects/GoogleLoginPage';
 import ResetPage from '../PageObjects/ResetPage';
 import SuccessWindow from '../PageObjects/SuccessWindow';
 import config from '../../config';
+import clearInput from '../helpers/clearInput';
 
 describe('Check password recovery functionality', () => {
     beforeEach(() => {
@@ -45,6 +46,11 @@ describe('Check password recovery functionality', () => {
         GoogleLoginPage.passwordInput.setValue(config.testPassword);
         GoogleLoginPage.passwordNextButton.waitForClickable();
         GoogleLoginPage.passwordNextButton.click();
+        browser.pause(5000)
+        const boolean = GmailPage.emailListItem.isDisplayed();
+        if(!boolean) {
+            GmailPage.spamTab.click();
+        }
         GmailPage.emailListItem.click();
         GmailPage.recoverLink.click();
 
@@ -55,23 +61,15 @@ describe('Check password recovery functionality', () => {
         ResetPage.confirmPasswordInput.setValue('1234567');
         ResetPage.changePasswordButton.click();
         expect(ResetPage.passwordError).toHaveText('Passwords do not match !');
-        ResetPage.passwordInput.click();
-        browser.keys(['Control', 'a']);
-        browser.keys(['Backspace']);
+        clearInput(ResetPage.passwordInput);
         ResetPage.passwordInput.setValue('test');
-        ResetPage.confirmPasswordInput.click();
-        browser.keys(['Control', 'a']);
-        browser.keys(['Backspace']);
+        clearInput(ResetPage.confirmPasswordInput);
         ResetPage.confirmPasswordInput.setValue('test');
         ResetPage.changePasswordButton.click();
         expect(ResetPage.passwordError).toHaveText('Password must be at least 6 characters !');
-        ResetPage.passwordInput.click();
-        browser.keys(['Control', 'a']);
-        browser.keys(['Backspace']);
+        clearInput(ResetPage.passwordInput);
         ResetPage.passwordInput.setValue(config.testPasswordChanged);
-        ResetPage.confirmPasswordInput.click();
-        browser.keys(['Control', 'a']);
-        browser.keys(['Backspace']);
+        clearInput(ResetPage.confirmPasswordInput);
         ResetPage.confirmPasswordInput.setValue(config.testPasswordChanged);
         ResetPage.changePasswordButton.click();
         expect(SuccessWindow.content).toBeDisplayed();
@@ -101,16 +99,12 @@ describe('Check password recovery functionality', () => {
         RecoveryPage.emailInput.setValue('invalid@gmail.com');
         RecoveryPage.sendLinkButton.click();
         expect(RecoveryPage.emailError).toHaveText('This email is not registered !');
-        RecoveryPage.emailInput.click();
-        browser.keys(['Control', 'a']);
-        browser.keys(['Backspace']);
+        clearInput(RecoveryPage.emailInput);
         RecoveryPage.emailInput.setValue(config.googleTestEmail);
         RecoveryPage.sendLinkButton.click();
         expect(RecoveryPage.emailError)
             .toHaveText('This email is registered with google so it does not require password to login !');
-        RecoveryPage.emailInput.click();
-        browser.keys(['Control', 'a']);
-        browser.keys(['Backspace']);
+        clearInput(RecoveryPage.emailInput);
         RecoveryPage.emailInput.setValue(config.facebookTestEmail);
         RecoveryPage.sendLinkButton.click();
         expect(RecoveryPage.emailError)

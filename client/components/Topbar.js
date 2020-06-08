@@ -42,7 +42,8 @@ const Topbar = withRouter(({ history }) => {
                 }}
             >
                 <Button style={styles.newsFeedTab}>
-                    <Link 
+                    <Link
+                        id='newsfeed-tab'
                         to='/' 
                         style={
                             history.location.pathname === '/' ? 
@@ -55,7 +56,8 @@ const Topbar = withRouter(({ history }) => {
                     </Link>
                 </Button>
                 <Button style={styles.musicTab}>
-                    <Link 
+                    <Link
+                        id='music-tab'
                         to='/music' 
                         style={
                             history.location.pathname === '/music' ? 
@@ -68,7 +70,8 @@ const Topbar = withRouter(({ history }) => {
                     </Link>
                 </Button>
                 <Button style={styles.moviesTab}> 
-                    <Link 
+                    <Link
+                        id='movies-tab'
                         to='/movies' 
                         style={
                             history.location.pathname === '/movies' ? 

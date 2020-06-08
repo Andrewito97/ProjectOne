@@ -39,7 +39,7 @@ const Post = (props) => {
     const [ confirm, setConfirm ] = React.useState(false);
 
     const text = addWhitespaces(props.post.text);
-    
+
     return (
         <div>
             <Card 
@@ -48,7 +48,8 @@ const Post = (props) => {
                     ...styles.card
                 }}
             >
-                <CardHeader 
+                <CardHeader
+                    id='post-title'
                     title={props.post.title}
                     style={{
                         color: paletteController.textColor
@@ -56,6 +57,7 @@ const Post = (props) => {
                 />
                 <CardContent>
                     <Typography 
+                        id='post-text'
                         component='span'
                         style={{
                             color: paletteController.textColor
@@ -65,7 +67,8 @@ const Post = (props) => {
                     </Typography>
                     {
                     props.post.image ? 
-                    <img 
+                    <img
+                        id='post-image'
                         style={styles.image}
                         src={'/myapi/post/image/' + props.post._id}
                     />
@@ -73,12 +76,13 @@ const Post = (props) => {
                     null 
                     }
                     <div style={styles.postFooter}>
-                        <Typography style={styles.postDate}>
+                        <Typography id='post-date' style={styles.postDate}>
                             {new Date(props.post.created).toDateString()}
                         </Typography>
                         { 
                             props.isProfile ? 
                             <IconButton
+                                id='delete-post-button'
                                 onClick={() => setConfirm(true)}
                                 style={{
                                     backgroundColor: paletteController.mainColor,

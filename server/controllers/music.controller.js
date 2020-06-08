@@ -35,36 +35,55 @@ const musicController = {
 
             let names = JSON.parse(fields.audionames)
             let music = new Music(fields);
-
-            if(Array.isArray(files.audios)) { //if receive multiple audios     
-                for(let i = 0; i < files.audios.length; i++) {
-                    let writestream = gridFSBucket
-                        .openUploadStream(
-                            names[i].audioname, {
-                            aliases: 'music'
-                        });
-                    fs.createReadStream(files.audios[i].path).pipe(writestream);
-                    music.audios.push(names[i].audioname);
-                };
-            } else { // if receive single audio
-                let writestream = gridFSBucket
-                    .openUploadStream(
-                        names[0].audioname, {
-                        aliases: 'music'
-                    });
-                fs.createReadStream(files.audios.path).pipe(writestream);
-                music.audios.push(names[0].audioname);
+            for(let name of names) {
+                music.audios.push(name.audioname);
             };
-            
+
             music.save((error, result) => {
                 if(error) {
                     return response.status(400).json({
                         error
                     });
                 } else {
-                    return response.status(201).json({
-                        success: result
-                    });
+                    if(Array.isArray(files.audios)) { // if receive multiple audios     
+                        for(let i = 0; i < files.audios.length; i++) {
+                            let writeStream = gridFSBucket
+                                .openUploadStream(
+                                    names[i].audioname, {
+                                    aliases: 'music'
+                                });
+                            fs.createReadStream(files.audios[i].path).pipe(writeStream);
+                            writeStream.on('error', error => {
+                                return response.status(400).json({
+                                    error
+                                });
+                            });
+                            if((i + 1) === files.audios.length) { // send success response when last audio is written
+                                writeStream.on('finish', () => {
+                                    return response.status(201).json({
+                                        success: result
+                                    });
+                                });
+                            }
+                        };
+                    } else { // if receive single audio
+                        let writeStream = gridFSBucket
+                            .openUploadStream(
+                                names[0].audioname, {
+                                aliases: 'music'
+                            });
+                        fs.createReadStream(files.audios.path).pipe(writeStream);
+                        writeStream.on('error', error => {
+                            return response.status(400).json({
+                                error
+                            });
+                        });
+                        writeStream.on('finish', () => {
+                            return response.status(201).json({
+                                success: result
+                            });
+                        });
+                    };
                 };
             });
         });
@@ -196,42 +215,28 @@ const musicController = {
                         errorMessage: 'Audio not found !'
                     })
                 };
+            
+                let startPosition = request.headers.range.replace(/\D/g, '');
+                let endPosition = file.length - 1;
+                let chunksize = (endPosition - startPosition) + 1;
+    
+                response.writeHead(206, {
+                    'Accept-Ranges': 'bytes',
+                    'Content-Length': chunksize,
+                    'Content-Range': 'bytes ' + startPosition + '-' + endPosition + '/' + file.length,
+                    'Content-Type': 'binary/octet-stream'
+                });
                 
-                if (request.headers['range']) { 
-                    //load audio from the specific range
-                    let parts = request.headers['range'].replace(/bytes=/, '').split('-')
-                    let partialstart = parts[0]
-                    let partialend = parts[1]
-        
-                    let startPosition = parseInt(partialstart, 10)
-                    let endPosition = partialend ? parseInt(partialend, 10) : file.length - 1
-                    let chunksize = (endPosition - startPosition) + 1
-        
-                    response.writeHead(206, {
-                        'Accept-Ranges': 'bytes',
-                        'Content-Length': chunksize,
-                        'Content-Range': 'bytes ' + startPosition + '-' + endPosition + '/' + file.length,
-                        'Content-Type': 'binary/octet-stream'
-                    });
-                    
-                    gridFSBucket
-                        .openDownloadStream(
-                            file._id, {
-                                start: startPosition,
-                                end: endPosition
-                            }
-                        )
-                        .pipe(response);
+                let downloadStream = gridFSBucket.openDownloadStream(file._id);
+                downloadStream.on('data', chunk => {
+                    response.write(chunk);
+                });
+                downloadStream.on('error', error => {
+                    console.log(error);
+                });
+                downloadStream.start(startPosition);
+                downloadStream.end(file.length);
 
-                } else { 
-                    //load full audio by default
-                    response.header('Content-Length', file.length)
-                    response.header('Content-Type', 'binary/octet-stream')
-        
-                    gridFSBucket
-                        .openDownloadStream( file._id )
-                        .pipe(response);
-                };
         });
     }
 }

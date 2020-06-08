@@ -22,7 +22,10 @@ exports.config = {
     specs: [
         './testing/tests/01.signup.test.js',
         './testing/tests/02.login.test.js',
-        './testing/tests/03.recovery.test.js'
+        './testing/tests/03.recovery.test.js',
+        './testing/tests/04.post.test.js',
+        './testing/tests/05.music.test.js',
+        //'./testing/tests/06.movie.test.js'
     ],
     // Patterns to exclude.
     exclude: [
@@ -70,7 +73,7 @@ exports.config = {
     // Define all options that are relevant for the WebdriverIO instance here
     //
     // Level of logging verbosity: trace | debug | info | warn | error | silent
-    logLevel: 'debug',
+    logLevel: 'error',
     //
     // Set specific log levels per logger
     // loggers:

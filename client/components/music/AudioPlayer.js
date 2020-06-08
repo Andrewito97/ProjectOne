@@ -84,6 +84,9 @@ const AudioPlayer = (props) => {
         if(playing) {
             setPlayed(progress.played);
         }
+        if(progress.played === 1) {
+            setPlaying(false);
+        }
     };
 
     const onSeekChange = (event) => {
@@ -123,7 +126,14 @@ const AudioPlayer = (props) => {
 
     return (
         <div style={{marginBottom: 20}}>
-            <Typography style={{color: paletteController.textColor}}>{props.name}</Typography>
+            <Typography
+                id='audio-name'
+                style={{
+                    color: paletteController.textColor
+                }}
+            >
+                {props.name}
+            </Typography>
             <ReactPlayer
                 ref={ (reference) => player = reference }
                 url={ '/myapi/music/audios/' + props.name }
@@ -135,7 +145,8 @@ const AudioPlayer = (props) => {
                 onDuration={(value) => setDuration(value)}
             />
             <div style={styles.audioContainer}>
-                <Button 
+                <Button
+                    id='play-pause-button'
                     onClick={onPlaying}
                     style={{
                         backgroundColor: paletteController.mainColor,
@@ -207,6 +218,7 @@ const AudioPlayer = (props) => {
                     />
                 </div>
                 <Button
+                    id='audio-volume-button'
                     onClick={handleMuted}
                     onMouseEnter={() => setDisplayVolume('block')}
                     onMouseLeave={() => setDisplayVolume('none')}

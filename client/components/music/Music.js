@@ -31,7 +31,7 @@ const styles = {
 
 const Music = (props) => {
     const [ confirm, setConfirm ] = React.useState(false);
-    
+
     return (
         <div>
             <Card 
@@ -41,9 +41,9 @@ const Music = (props) => {
                 }}
             >
                 <CardHeader
+                    id='music-title'
                     title={props.music.author}
                     subheader={props.music.genre}
-                    subheaderTypographyProps={{color: 'inherit'}}
                     style={{
                         color: paletteController.textColor,
                     }}
@@ -51,12 +51,13 @@ const Music = (props) => {
                 <CardContent>
                 { props.music.audios.map((name, index) => <AudioPlayer key={index} name={name}/>) }
                 <div style={styles.musicFooter}>
-                    <Typography style={styles.songDate}>
+                    <Typography id='music-date' style={styles.songDate}>
                         {new Date(props.music.created).toDateString()}
                     </Typography>
                     { 
                         props.isProfile ? 
                         <IconButton
+                            id='delete-music-button'
                             onClick={() => setConfirm(true)}
                             style={{
                                 backgroundColor: paletteController.mainColor,

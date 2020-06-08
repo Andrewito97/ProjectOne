@@ -11,20 +11,18 @@ const styles = {
 
 const DummyPost = () => {
     const fakeTitle = 
-    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={50} width='60%'/> 
+    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={45} width='60%'/> 
 
     const fakeTextLine = 
-    <Skeleton style={{backgroundColor: paletteController.additionalColor}} width='90%' animation='wave'/> 
+    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={27} width='90%'/> 
 
     const fakeImage = 
-    <Skeleton style={{backgroundColor: paletteController.additionalColor}} variant='rect' width='90%' animation='wave' height={500}/> 
+    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={300} width='90%' variant='rect'/> 
 
     return (
         <div>
             {fakeTitle}
             <div style={styles.dummyText}>
-                {fakeTextLine}
-                {fakeTextLine}
                 {fakeTextLine}
                 {fakeTextLine}
                 {fakeTextLine}

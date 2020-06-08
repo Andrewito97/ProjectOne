@@ -1,4 +1,16 @@
 class TopBar {
+    get newsfeedTab() {
+        return $('#newsfeed-tab');
+    };
+
+    get musicTab() {
+        return $('#music-tab');
+    };
+
+    get moviesTab() {
+        return $('#movies-tab');
+    };
+
     get profileMenu() {
         return $('#profile-menu');
     };

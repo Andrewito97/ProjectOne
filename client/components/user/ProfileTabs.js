@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {} from 'react';
 import { AppBar, 
          Tabs, 
          Tab } from '@material-ui/core';
@@ -15,10 +15,6 @@ import SuccessWindow from '../SuccessWindow';
 const styles = {
     tabs: {
         color: 'white'
-    },
-    okButton: {
-        color: 'white',
-        marginTop: 60
     }
 };
 
@@ -27,12 +23,14 @@ const ProfileTabs = () => {
     const [ posts, setPosts ] = React.useState([]);
     const [ music, setMusic ] = React.useState([]);
     const [ movies, setMovies ] = React.useState([]);
-    const [successedPost, setSuccessedPost ] = React.useState(false);
-    const [successedMusic, setSuccessedMusic ] = React.useState(false);
-    const [successedMovie, setSuccessedMovie ] = React.useState(false);
+    const [successed, setSuccessed ] = React.useState(false);
 
     React.useEffect( () => {
+        const controller = new window.AbortController();
         loadData();
+        return function cleanup() {
+            controller.abort();
+        }
     }, []);
 
     const loadData = async () => {
@@ -48,7 +46,9 @@ const ProfileTabs = () => {
     const deletePost = async (postId) => {
         const data = await postApi.deletePost(postId);
         if(data.success) {
-            setSuccessedPost(true);
+            const newPosts = updateList(posts, postId);
+            setPosts(newPosts);
+            setSuccessed(true);
         } else {
             console.log(data);
         };
@@ -65,7 +65,9 @@ const ProfileTabs = () => {
         };
         const data = await musicApi.deleteMusic(musicId);
         if(data.success) {
-            setSuccessedMusic(true);
+            const newMusic = updateList(music, musicId);
+            setMusic(newMusic);
+            setSuccessed(true);
         } else {
             console.log(data);
         };
@@ -76,7 +78,9 @@ const ProfileTabs = () => {
         if(videoData.success) {
             const movieData = await movieApi.deleteMovie(movieId);
             if(movieData.success) {
-                setSuccessedMovie(true);
+                const newMovies = updateList(movies, movieId);
+                setMovies(newMovies);
+                setSuccessed(true);
             } else {
                 console.log(movieData);
             };
@@ -85,7 +89,13 @@ const ProfileTabs = () => {
         };
     };
 
-    let dialogWindowBoolean = value === 0 ? successedPost : value === 1 ? successedMusic : successedMovie;
+    const updateList = (items, itemId) => {
+        const newItems = [...items];
+        const index = newItems.findIndex(item => item._id === itemId);
+        newItems.splice(index, 1);
+        return newItems;
+    };
+
     let dialogWindowValue = value === 0 ? 'Post' : value === 1 ? 'Music' : 'Movie';
 
     return (
@@ -101,9 +111,9 @@ const ProfileTabs = () => {
                 }}
                 
             >
-                <Tab label='Posts'/>
-                <Tab label='Music'/>
-                <Tab label='Movies'/>
+                <Tab id='profile-newsfeed-tab' label='News Feed'/>
+                <Tab id='profile-music-tab' label='Music'/>
+                <Tab id='profile-movies-tab' label='Movies'/>
             </Tabs>
             {
                 value === 0 ? posts.map( (item, index) => (
@@ -142,9 +152,9 @@ const ProfileTabs = () => {
                 null
             }
             <SuccessWindow
-                open={dialogWindowBoolean}
+                open={successed}
                 message={`${dialogWindowValue} successfully deleted`}
-                onClick={() => location.reload()}
+                onClick={() => setSuccessed(false)}
             />
         </div>
     )

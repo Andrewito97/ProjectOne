@@ -8,6 +8,7 @@ import { Card,
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
 import DeleteIcon from '@material-ui/icons/Delete';
+import { Skeleton } from '@material-ui/lab';
 import userApi from '../../api/user.api';
 import postApi from '../../api/post.api';
 import musicApi from '../../api/music.api';
@@ -20,7 +21,8 @@ import SuccessWindow from '../SuccessWindow';
 
 const styles = {
     card: {
-        padding: 37
+        padding: 37,
+        height: 280
     },
     pageHeader: {
         marginBottom: 40
@@ -52,6 +54,9 @@ const styles = {
     },
     saveButton: {
         color: 'white'
+    },
+    dummyData: {
+
     }
 };
 
@@ -88,10 +93,10 @@ const Profile = () => {
         if(data.success) {
             setUserEmailError('');
             setUserNameError('');
-            setNoChanges('')
+            setNoChanges('');
             setSuccessedUpdate(true);
         } else if(data.noChanges) {
-            setNoChanges(data.noChanges)
+            setNoChanges(data.noChanges);
         } else {
             setNoChanges('')
             if(data.error.code) {
@@ -148,7 +153,8 @@ const Profile = () => {
                 }}
             >
                 <CardContent>
-                    <Typography 
+                    <Typography
+                        id='page-title'
                         variant='h5' 
                         style={{
                             color: paletteController.textColor,
@@ -161,6 +167,7 @@ const Profile = () => {
                     { 
                         shouldEditName ? 
                         <TextField
+                            id='user-name-input'
                             size='small'
                             variant='outlined'
                             defaultValue={userName}
@@ -168,19 +175,32 @@ const Profile = () => {
                             onChange={ (event) => setUserName(event.target.value) }
                         />
                         :
-                        <Typography 
+                        <Typography
+                            id='user-name'
                             variant='h6'
                             style={{
                                 color: paletteController.textColor,
                                 ...styles.nameField
                             }}
                         >
-                            {userName}
+                            {
+                                userName ? 
+                                userName 
+                                : 
+                                <Skeleton 
+                                    height={37}
+                                    width='70%'
+                                    style={{
+                                        backgroundColor: paletteController.additionalColor
+                                    }}
+                                />
+                            }
                         </Typography>
                     }   
                     {       
                         shouldEditName ? 
                         <IconButton
+                            id='save-name-button'
                             onClick={() => setEditNameStatus(false)} 
                             size='small'
                             style={{
@@ -192,6 +212,7 @@ const Profile = () => {
                         </IconButton>
                         :
                         <IconButton
+                            id='edit-name-button'
                             onClick={() => setEditNameStatus(true)} 
                             size='small'
                             style={{
@@ -202,13 +223,14 @@ const Profile = () => {
                             <EditIcon/>
                         </IconButton>
                     }
-                    { userNameError ? (<Typography color='error'>{userNameError}</Typography>) : null }
+                    { userNameError ? (<Typography id='name-error' color='error'>{userNameError}</Typography>) : null }
                     </div>
                     <br/>
                     <div style={styles.emailContainer}>
                     {
                         shouldEditEmail ?
                         <TextField
+                            id='user-email-input'
                             size='small'
                             variant='outlined'
                             defaultValue={userEmail}
@@ -216,19 +238,32 @@ const Profile = () => {
                             onChange={ (event) => setUserEmail(event.target.value)}
                         />           
                         :
-                        <Typography 
+                        <Typography
+                            id='user-email'
                             variant='h6'
                             style={{
                                 color: paletteController.textColor,
                                 ...styles.emailField
                             }}
                         >
-                            {userEmail}
+                            {
+                                userEmail ? 
+                                userEmail 
+                                :                                                
+                                <Skeleton 
+                                    height={37}
+                                    width='100%'
+                                    style={{
+                                        backgroundColor: paletteController.additionalColor
+                                    }}
+                                />
+                            }
                         </Typography>      
                     }
                     {
                         shouldEditEmail ? 
                         <IconButton
+                            id='save-email-button'
                             onClick={() => setEditEmailStatus(false)} 
                             size='small'
                             style={{
@@ -240,6 +275,7 @@ const Profile = () => {
                         </IconButton>
                         :
                         <IconButton
+                            id='edit-email-button'
                             onClick={() => setEditEmailStatus(true)} 
                             size='small'
                             style={{
@@ -250,11 +286,12 @@ const Profile = () => {
                             <EditIcon/>
                         </IconButton>
                     }
-                    { userEmailError ? (<Typography color='error'>{userEmailError}</Typography>) : null }
+                    { userEmailError ? (<Typography id='email-error' color='error'>{userEmailError}</Typography>) : null }
                     </div>
                     <br/>
                     <div style={styles.cardFooterContainer}>
                         <Button 
+                            id='save-profile-button'
                             disabled={isDisabled} 
                             onClick={updateUser} 
                             style={{
@@ -264,9 +301,10 @@ const Profile = () => {
                         >
                             Save
                         </Button>
-                        { noChanges ? (<Typography style={{color: 'orange'}}>{noChanges}</Typography>) : null }
+                        { noChanges ? (<Typography id='warning' style={{color: 'orange'}}>{noChanges}</Typography>) : null }
 
                         <IconButton
+                            id='delete-profile-button'
                             onClick={() => setConfirm(true)}
                             style={{
                                 backgroundColor: paletteController.mainColor,

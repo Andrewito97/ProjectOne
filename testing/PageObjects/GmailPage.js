@@ -7,6 +7,10 @@ class GmailPage {
         return $('[role="row"]');
     }
 
+    get spamTab() {
+        return $('tr[role="tablist"] > td:nth-child(3)');
+    }
+
     get recoverLink() {
         return $('[data-message-id] a[rel="noreferrer"]');
     }

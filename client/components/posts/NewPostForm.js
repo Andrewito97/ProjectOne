@@ -27,16 +27,28 @@ const styles = {
     },
     textInput: {
         marginTop: 30,
-        marginBottom: 30,
         width: '100%'
     },
-    iconButton: {
+    cameraButton: {
         color: 'white',
-        marginLeft: 8
+        marginLeft: 4,
+        marginRight: 20
+    },
+    imageInput: {
+        display: 'flex',
+        marginTop: 27,
+    },
+    imageName: {
+        marginTop: 8,
+    },
+    deleteButton: {
+        color: 'white',
+        marginLeft: 20
     },
     addPostButton: {
         color: 'white',
-        marginTop: 15
+        marginTop: 10,
+        marginLeft: 5
     }
 };
 
@@ -69,8 +81,10 @@ const NewPostForm = (props) => {
             setTextError('');
             props.updateNewsFeed(data.success);
         } else {
-            data.error.errors.title ? setTitleError(data.error.errors.title.message) : setTitleError('');
-            data.error.errors.text ? setTextError(data.error.errors.text.message) : setTextError('');
+            data.error.errors.title ? 
+                setTitleError(data.error.errors.title.properties.message) : setTitleError('');
+            data.error.errors.text ? 
+                setTextError(data.error.errors.text.properties.message) : setTextError('');
         };
     };
 
@@ -93,6 +107,7 @@ const NewPostForm = (props) => {
                     onChange={ 
                         (event) => setTitle(event.target.value)
                     }
+                    id='title-input'
                     required
                     label='Title'
                     variant='outlined'
@@ -105,9 +120,10 @@ const NewPostForm = (props) => {
 
                 />
                 <br/>
-                { titleError ? (<Typography color='error'>{titleError}</Typography>) : null }
+                { titleError ? (<Typography id='title-error' color='error'>{titleError}</Typography>) : null }
 
-                <TextField 
+                <TextField
+                    id='text-input'
                     required
                     label='Text content'
                     variant='outlined'
@@ -121,58 +137,71 @@ const NewPostForm = (props) => {
                     }
                 />
                 <br/>
-                { textError ? (<Typography color='error'>{textError}</Typography>) : null }
+                { textError ? (<Typography id='text-error' color='error'>{textError}</Typography>) : null }
 
-                <input 
-                    accept='image/*' 
-                    style={{display: 'none'}}
-                    type='file'
-                    id='icon-button-file'
-                    onChange={ 
-                        (event) => setImage(event.target.files[0])
+                <div style={styles.imageInput}>
+                    <input 
+                        accept='image/*' 
+                        style={{display: 'none'}}
+                        type='file'
+                        id='hidden-image-input'
+                        onChange={ 
+                            (event) => {
+                                setImage(event.target.files[0]);
+                                event.target.value = null;
+                            }
+                        }
+                    />
+                    <label htmlFor='hidden-image-input'>
+                        <IconButton
+                            id='camera-button'
+                            style={{
+                                backgroundColor: paletteController.mainColor,
+                                ...styles.cameraButton
+                            }} 
+                            component='span'
+                        >
+                            <PhotoCamera/>
+                        </IconButton>
+                    </label>
+                    {
+                        postImage ? (
+                            <div style={styles.imageName}>
+                                <Typography
+                                    id='image-name'
+                                    component='span'
+                                    style={{color: paletteController.textColor}}
+                                >
+                                    {postImage.name}
+                                </Typography>
+                                <IconButton 
+                                    onClick={() => setImage('')}
+                                    id='delete-image-button'
+                                    size='small'
+                                    style={{
+                                        backgroundColor: paletteController.mainColor,
+                                        ...styles.deleteButton
+                                    }}
+                                >
+                                    <DeleteIcon/>
+                                </IconButton>
+                            </div>
+                        ) 
+                        : 
+                        null
                     }
-                />
-                <label htmlFor='icon-button-file'>
-                    <IconButton 
-                        style={{
-                            backgroundColor: paletteController.mainColor,
-                            ...styles.iconButton
-                        }} 
-                        component='span'>
-                        <PhotoCamera/>
-                    </IconButton>
-                </label>
-                {
-                    postImage ? (
-                        <div>
-                            <Typography 
-                                component='span'
-                                style={{color: paletteController.textColor}}
-                            >
-                                {postImage.name}
-                            </Typography>
-                            <IconButton 
-                                onClick={() => setImage('')} 
-                                size='small'
-                                style={{
-                                    backgroundColor: paletteController.mainColor,
-                                    ...styles.iconButton
-                                }}
-                            >
-                                <DeleteIcon/>
-                            </IconButton>
-                        </div>
-                    ) : null
-                }
+                </div>
                 <br/>
             </CardContent>
             <CardActions>
                 <Button 
                     onClick={createPost}
+                    id='add-post-button'
                     style={{
                         backgroundColor: paletteController.mainColor,
                         ...styles.addPostButton
-                    }}>
+                    }}
+                >
                     ADD POST
                 </Button>
             </CardActions>

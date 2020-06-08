@@ -5,7 +5,9 @@ import { Card,
          TextField,
          IconButton,
          Button,
-         CardActions } from '@material-ui/core';
+         CardActions,
+         Backdrop,
+         CircularProgress } from '@material-ui/core';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import authenticationHelper from '../../helpers/authentication.helper';
 import musicApi from '../../api/music.api';
@@ -27,16 +29,19 @@ const styles = {
     },
     genreInput: {
         marginTop: 30,
-        marginBottom: 30,
         width: '100%'
     },
-    iconButton: {
+    musicNoteButton: {
         color: 'white',
-        marginLeft: 8
+        marginTop: 30,
+        marginLeft: 4
     },
     addSongButton: {
         color: 'white',
-        marginTop: 15
+        marginLeft: 5
+    },
+    backdrop: {
+        zIndex: 20
     }
 };
 
@@ -48,6 +53,7 @@ const NewMusicForm = (props) => {
     const [ audios, setAudio ] = React.useState([]);
     const [ audioNames, setAudioNames ] = React.useState([]);
     const [ userId, setUserId ] = React.useState('');
+    const [ isLoading, setLoading ] = React.useState(false);
 
     React.useEffect( () => {
         const user = authenticationHelper.isAuthenticated().user;
@@ -55,26 +61,31 @@ const NewMusicForm = (props) => {
     }, []);
 
     const submitMusic = async () => {
-        let musicData = new FormData()
-        musicData.set('author', musicAuthor)
-        musicData.set('genre', musicGenre)
-        musicData.set('postedBy', userId)
+        setLoading(true);
+        let musicData = new FormData();
+        musicData.set('author', musicAuthor);
+        musicData.set('genre', musicGenre);
+        musicData.set('postedBy', userId);
         for(let audio of audios) {
-            musicData.append('audios', audio)
+            musicData.append('audios', audio);
         }
-        musicData.append('audionames', JSON.stringify(audioNames))
+        musicData.append('audionames', JSON.stringify(audioNames));
         const token = authenticationHelper.isAuthenticated().accessToken;
         const data = await musicApi.create(token, musicData);
+        setLoading(false);
         if(data.success) {
-            setAuthor('')
-            setGenre('')
-            setAudio('')
-            setAuthorError('')
-            setGenreError('')
-            props.updateMusicList(data.success)
+            setAuthor('');
+            setGenre('');
+            setAudio([]);
+            setAudioNames([]);
+            setAuthorError('');
+            setGenreError('');
+            props.updateMusicList(data.success);
         } else {
-            data.error.errors.author ? setAuthorError(data.error.errors.author.message) : setAuthorError('');
-            data.error.errors.genre ? setGenreError(data.error.errors.genre.message) : setGenreError('');
+            data.error.errors.author ? 
+                setAuthorError(data.error.errors.author.properties.message) : setAuthorError('');
+            data.error.errors.genre ? 
+                setGenreError(data.error.errors.genre.properties.message) : setGenreError('');
         }
     };
 
@@ -113,100 +124,114 @@ const NewMusicForm = (props) => {
     };
 
     return (
-        <Card 
-            style={{
-                backgroundColor: paletteController.cardColor,
-                ...styles.card
-            }}
-        >
-            <CardContent>
-                <Typography 
-                    variant='h5'
-                    style={{
-                        color: paletteController.textColor
-                    }}
-                >
-                    Add music
-                </Typography>
-                <TextField 
-                    required
-                    label='Author'
-                    placeholder='Type author...'
-                    variant='outlined'
-                    value={musicAuthor}
-                    style={styles.authorInput}
-                    onChange={ 
-                        (event) => setAuthor(event.target.value)
-                    }
-                />
-                <br/>
-                { authorError ? (<Typography color='error'>{authorError}</Typography>) : null } 
-
-                <TextField 
-                    required
-                    label='Genre'
-                    placeholder='Type genre...'
-                    variant='outlined'
-                    value={musicGenre}
-                    style={styles.genreInput}
-                    onChange={ 
-                        (event) => setGenre(event.target.value)
-                    }
-                />
-                <br/>
-                { genreError ? (<Typography color='error'>{genreError}</Typography>) : null } 
-
-                <input 
-                    accept='audio/*' 
-                    style={{display: 'none'}}
-                    type='file'
-                    id='icon-button-file'
-                    onChange={ 
-                        (event) => {
-                            event.persist()
-                            setAudio(prevSongs => [...prevSongs, event.target.files[0]])
-                            setAudioNames(prevNames => [...prevNames, {
-                                shouldEdit: false,
-                                audioname: event.target.files[0].name
-                            }])
-                        } 
-                    }
-                />
-                <label htmlFor='icon-button-file'>
-                    <IconButton 
-                        component='span'
+        <div>
+            <Card 
+                style={{
+                    backgroundColor: paletteController.cardColor,
+                    ...styles.card
+                }}
+            >
+                <CardContent>
+                    <Typography 
+                        id='page-title'
+                        variant='h5'
                         style={{
-                            backgroundColor: paletteController.mainColor,
-                            ...styles.iconButton
-                        }} 
+                            color: paletteController.textColor
+                        }}
                     >
-                        <MusicNoteIcon/>
-                    </IconButton>
-                </label>
-                
-                <AudioList 
-                    audios={audios}
-                    audioNames={audioNames}
-                    setEditingStatus={setEditingStatus}
-                    handleAudioNameChange={handleAudioNameChange}
-                    saveAudioName={saveAudioName}
-                    removeItem={removeItem}
-                />
+                        Add music
+                    </Typography>
+                    <TextField
+                        id='author-input'
+                        required
+                        label='Author'
+                        placeholder='Type author...'
+                        variant='outlined'
+                        value={musicAuthor}
+                        style={styles.authorInput}
+                        onChange={ 
+                            (event) => setAuthor(event.target.value)
+                        }
+                    />
+                    <br/>
+                    { authorError ? (<Typography id='author-error' color='error'>{authorError}</Typography>) : null } 
 
-                <br/>
-            </CardContent>
-            <CardActions>
-                <Button 
-                    disabled={isDisabled} 
-                    onClick={submitMusic}
-                    style={{
-                        backgroundColor: isDisabled ? paletteController.grey : paletteController.mainColor,
-                        ...styles.addSongButton
-                    }}>
-                    ADD SONG
-                </Button>
-            </CardActions>
-        </Card>
+                    <TextField 
+                        id='genre-input'
+                        required
+                        label='Genre'
+                        placeholder='Type genre...'
+                        variant='outlined'
+                        value={musicGenre}
+                        style={styles.genreInput}
+                        onChange={ 
+                            (event) => setGenre(event.target.value)
+                        }
+                    />
+                    <br/>
+                    { genreError ? (<Typography id='genre-error' color='error'>{genreError}</Typography>) : null } 
+
+                    <input 
+                        accept='audio/*' 
+                        style={{display: 'none'}}
+                        type='file'
+                        id='hidden-audio-input'
+                        onChange={ 
+                            (event) => {
+                                if(event.target.files[0]) {
+                                    event.persist();
+                                    setAudio(prevSongs => [...prevSongs, event.target.files[0]]);
+                                    setAudioNames(prevNames => [...prevNames, {
+                                        shouldEdit: false,
+                                        audioname: event.target.files[0].name
+                                    }])
+                                    setTimeout(() => event.target.value = null);
+                                }
+                            } 
+                        }
+                    />
+                    <label htmlFor='hidden-audio-input'>
+                        <IconButton
+                            id='music-note-button'
+                            component='span'
+                            style={{
+                                backgroundColor: paletteController.mainColor,
+                                ...styles.musicNoteButton
+                            }} 
+                        >
+                            <MusicNoteIcon/>
+                        </IconButton>
+                    </label>
+                    
+                    <AudioList 
+                        audios={audios}
+                        audioNames={audioNames}
+                        setEditingStatus={setEditingStatus}
+                        handleAudioNameChange={handleAudioNameChange}
+                        saveAudioName={saveAudioName}
+                        removeItem={removeItem}
+                    />
+
+                    <br/>
+                </CardContent>
+                <CardActions>
+                    <Button
+                        id='add-song-button'
+                        disabled={isDisabled} 
+                        onClick={submitMusic}
+                        style={{
+                            backgroundColor: isDisabled ? paletteController.grey : paletteController.mainColor,
+                            ...styles.addSongButton
+                        }}
+                    >
+                        ADD SONG
+                    </Button>
+                </CardActions>
+            </Card>
+            <Backdrop open={isLoading} style={styles.backdrop} >
+                <CircularProgress style={{ color: paletteController.backgroundColor }} size={150} thickness={4}/>
+            </Backdrop>
+        </div>
     );
 };
 

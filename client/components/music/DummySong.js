@@ -10,6 +10,24 @@ const styles = {
 };
 
 const DummySong = () => {
+
+    const dummySong = (
+        <div style={styles.dummySong}>
+            <Skeleton 
+                width='30%' 
+                height={20} 
+                animation='wave'
+                style={{backgroundColor: paletteController.additionalColor}} 
+            /> 
+            <Skeleton 
+                width='80%' 
+                height={70} 
+                animation='wave'
+                style={{backgroundColor: paletteController.additionalColor}} 
+            /> 
+        </div>
+    )
+
     return (
         <div>
             <Skeleton 
@@ -24,38 +42,10 @@ const DummySong = () => {
                 width='45%'
                 style={{backgroundColor: paletteController.additionalColor}} 
             /> 
-            <div style={styles.dummySong}>
-                <Skeleton 
-                    width='70%' 
-                    height={75} 
-                    animation='wave'
-                    style={{backgroundColor: paletteController.additionalColor}} 
-                /> 
-            </div>
-            <div style={styles.dummySong}>
-                <Skeleton 
-                    width='70%' 
-                    height={75} 
-                    animation='wave'
-                    style={{backgroundColor: paletteController.additionalColor}} 
-                /> 
-            </div>
-            <div style={styles.dummySong}>
-                <Skeleton 
-                    width='70%' 
-                    height={75} 
-                    animation='wave'
-                    style={{backgroundColor: paletteController.additionalColor}} 
-                /> 
-            </div>
-            <div style={styles.dummySong}>
-                <Skeleton
-                    width='70%' 
-                    height={75} 
-                    animation='wave'
-                    style={{backgroundColor: paletteController.additionalColor}}
-                /> 
-            </div>
+            {dummySong}
+            {dummySong}
+            {dummySong}
+            {dummySong}
         </div>
     )
 };
