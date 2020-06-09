@@ -27,7 +27,6 @@ const styles = {
     },
     passwordInput: {
         marginTop: 30,
-        marginBottom: 30,
         width: '100%'
     },
     linkContainer: {

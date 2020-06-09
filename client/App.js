@@ -10,6 +10,7 @@ const blue = paletteController.blue;
 const ivory = paletteController.ivory;
 const metal = paletteController.metal;
 const lime = paletteController.lime;
+const orange = paletteController.orange;
 
 const App = () => {
     const [ cookies, setCookie ] = useCookies(['OneProjectPalette']);
@@ -21,7 +22,7 @@ const App = () => {
         const jssStyles = document.querySelector('#jss-server-side');
         if(jssStyles) {
             jssStyles.parentElement.removeChild(jssStyles);
-        }
+        };
 
         //initialize palette
         const userPalette = cookies.OneProjectPalette;
@@ -29,7 +30,7 @@ const App = () => {
             setPalette(userPalette)
         } else {
             setPalette('standart')
-        }
+        };
    
     }, []);
 
@@ -38,6 +39,7 @@ const App = () => {
     if(palette === 'standart') paletteController.overrideInput(blue);
     if(palette === 'dark classic') paletteController.overrideInput(ivory, ivory, ivory);
     if(palette === 'dark blue') paletteController.overrideInput(ivory, ivory, ivory);
+    if(palette === 'orange') paletteController.overrideInput(orange);
     if(palette === 'lime') paletteController.overrideInput(lime);
     if(palette === 'metal') paletteController.overrideInput(metal);
 

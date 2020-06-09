@@ -15,7 +15,7 @@ const DummySong = () => {
         <div style={styles.dummySong}>
             <Skeleton 
                 width='30%' 
-                height={20} 
+                height={25} 
                 animation='wave'
                 style={{backgroundColor: paletteController.additionalColor}} 
             /> 
@@ -32,13 +32,13 @@ const DummySong = () => {
         <div>
             <Skeleton 
                 animation='wave' 
-                height={50} 
+                height={40} 
                 width='60%'
                 style={{backgroundColor: paletteController.additionalColor}} 
             /> 
             <Skeleton 
                 animation='wave' 
-                height={50} 
+                height={40} 
                 width='45%'
                 style={{backgroundColor: paletteController.additionalColor}} 
             /> 

@@ -30,7 +30,6 @@ const styles = {
     },
     confirmPasswordInput: {
         marginTop: 30,
-        marginBottom: 30,
         width: '100%'
     },
     linkContainer: {
@@ -58,7 +57,7 @@ const SignUpForm = () => {
 
     const onCreate = async () => {
         if(requestedPassword !== confirmedPassword) {
-            return setPasswordError('Passwords don\'t match !')
+            return setPasswordError('Passwords don\'t match !');
         };
         const userData = {
             name: requestedName,
@@ -66,9 +65,13 @@ const SignUpForm = () => {
             password: requestedPassword,
         };
         const data = await userApi.create(userData);
-        if(data.message) {
-            setEmailError('');
+        if(data.message) {       
+            setName('');
             setNameError('');
+            setEmail('');
+            setEmailError('');
+            setPassword('');
+            setConfirmedPassword('');
             setPasswordError('');
             setSuccessed(true);
         } else {

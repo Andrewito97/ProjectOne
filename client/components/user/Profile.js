@@ -55,8 +55,12 @@ const styles = {
     saveButton: {
         color: 'white'
     },
-    dummyData: {
-
+    deleteButton: {
+        color: 'white',
+        marginLeft: 8,
+        position: 'absolute',
+        right: 4,
+        bottom: 0
     }
 };
 
@@ -308,7 +312,7 @@ const Profile = () => {
                             onClick={() => setConfirm(true)}
                             style={{
                                 backgroundColor: paletteController.mainColor,
-                                ...styles.icons
+                                ...styles.deleteButton
                             }}
                         >
                             <DeleteIcon/>

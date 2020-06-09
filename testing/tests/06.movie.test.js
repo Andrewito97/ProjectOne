@@ -28,7 +28,7 @@ describe('Check movie functionality', () => {
     afterEach(() => {
         browser.reloadSession();
     });
-    it.skip('should display elements on new movie form', () => {
+    it('should display elements on new movie form', () => {
         expect(NewMovieForm.titleInput).toBeDisplayed();
         expect(NewMovieForm.genreInput).toBeDisplayed();
         expect(NewMovieForm.descriptionInput).toBeDisplayed();
@@ -36,12 +36,12 @@ describe('Check movie functionality', () => {
         expect(NewMovieForm.movieCreationButton).toBeClickable();
         expect(NewMovieForm.addVideoButton).toBeDisplayed();
         expect(NewMovieForm.addVideoButton).toBeDisabled();
-        uploadFile(NewMovieForm.hiddenVideoInput, '../assets/videos/football.mp4');
+        uploadFile(NewMovieForm.hiddenVideoInput, '../assets/videos/trailer.mp4');
         expect(NewMovieForm.deleteVideoButton).toBeDisplayed();
         expect(NewMovieForm.addVideoButton).toBeClickable();
     });
     it('should display error when adding movie with invalid data', () => {
-        uploadFile(NewMovieForm.hiddenVideoInput, '../assets/videos/football.mp4');
+        uploadFile(NewMovieForm.hiddenVideoInput, '../assets/videos/trailer.mp4');
         NewMovieForm.addVideoButton.click();
         expect(NewMovieForm.titleError).toHaveText('Title is required !');
         expect(NewMovieForm.genreError).toHaveText('Genre is required !');
@@ -68,7 +68,7 @@ describe('Check movie functionality', () => {
         NewMovieForm.titleInput.setValue('Movie title');
         NewMovieForm.genreInput.setValue('Movie genre');
         NewMovieForm.descriptionInput.setValue('Movie description');
-        uploadFile(NewMovieForm.hiddenVideoInput, '../assets/videos/football.mp4');
+        uploadFile(NewMovieForm.hiddenVideoInput, '../assets/videos/trailer.mp4');
         NewMovieForm.addVideoButton.click();
         Movie.movieTitle.waitForDisplayed();
         expect(Movie.movieTitle).toBeDisplayed();
@@ -81,7 +81,7 @@ describe('Check movie functionality', () => {
     });
     it('should successfully delete movie', () => {
         TopBar.profileMenu.click();
-        TopBar.profileListItem.doubleClick();
+        TopBar.profileListItem.click();
         expect(ProfilePage.pageTitle).toHaveText('Profile');
         ProfilePage.profileMoviesTab.click();
         expect(Movie.movieTitle).toBeDisplayed();

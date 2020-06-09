@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Person } from '@material-ui/icons';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import authenticationHelper from '../../helpers/authentication.helper';
@@ -9,6 +10,7 @@ import paletteController from '../../PaletteController';
 const styles = {
     menuList: {
         width: 150,
+        borderRadius: 8
     },
     link: {
         color: 'black'
@@ -47,46 +49,49 @@ const _Menu = () => {
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
-                MenuListProps={{style: styles.menuList}}
+                MenuListProps={{style: {
+                    backgroundColor: paletteController.cardColor,
+                    ...styles.menuList
+                }}}
             >
                 { 
                 authenticationHelper.isAuthenticated() ?
                 (<div>
-                    <MenuItem 
-                        id='profile' 
-                        onClick={() => {
-                            handleClose();
-                            location.href = '/profile/' + authenticationHelper.isAuthenticated().user._id;
-                        }}
-                    >            
-                        Profile
-                    </MenuItem>
-                    <MenuItem id='logout' onClick={() => setConfirm(true)}>
-                        Logout
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>Settings</MenuItem>
+                    <Link 
+                        to={'/profile/' + authenticationHelper.isAuthenticated().user._id}
+                    >
+                        <MenuItem id='profile' onClick={handleClose} style={{color: paletteController.textColor}}>
+                            Profile
+                        </MenuItem>
+                    </Link>
+                    <Link to=''>
+                        <MenuItem id='logout' onClick={() => setConfirm(true)} style={{color: paletteController.textColor}}>
+                            Logout
+                        </MenuItem>
+                    </Link>
+                    <Link to=''>
+                        <MenuItem onClick={handleClose} style={{color: paletteController.textColor}}>
+                            Settings
+                        </MenuItem>
+                    </Link>
                 </div>)
                 :
                 (<div>
-                    <MenuItem 
-                        id='sign-up' 
-                        onClick={() => {
-                            handleClose();
-                            location.href = '/signup';
-                        }}
-                    >            
-                        Sign Up
-                    </MenuItem>
-                    <MenuItem 
-                        id='login' 
-                        onClick={() => {
-                            handleClose();
-                            location.href = '/login';
-                        }}
-                    >
-                        Login
-                    </MenuItem>
-                    <MenuItem onClick={handleClose}>Settings</MenuItem>
+                    <Link to='/signup'>
+                        <MenuItem id='sign-up' onClick={handleClose} style={{color: paletteController.textColor}}>            
+                            Sign Up
+                        </MenuItem>
+                    </Link>
+                    <Link to='/login'>
+                        <MenuItem id='login' onClick={handleClose} style={{color: paletteController.textColor}}>
+                            Login
+                        </MenuItem>
+                    </Link>
+                    <Link to=''>
+                        <MenuItem onClick={handleClose} style={{color: paletteController.textColor}}>
+                            Settings
+                        </MenuItem>
+                    </Link>
                 </div>)
                 }
             </Menu>

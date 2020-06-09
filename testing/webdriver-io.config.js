@@ -25,7 +25,7 @@ exports.config = {
         './testing/tests/03.recovery.test.js',
         './testing/tests/04.post.test.js',
         './testing/tests/05.music.test.js',
-        //'./testing/tests/06.movie.test.js'
+        './testing/tests/06.movie.test.js'
     ],
     // Patterns to exclude.
     exclude: [

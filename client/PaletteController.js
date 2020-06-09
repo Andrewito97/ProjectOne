@@ -8,7 +8,9 @@ class PaletteController {
         this.grey = '#A0A0A0';
         this.silver = '#C7C7C7';
         this.blue = '#1976D2';
+        this.brown = '#62411F';
         this.lightBlue = '#3B8AD9';
+        this.darkBlue = '#132462';
         this.lime = '#00B87B';
         this.lightGreen = '#5BD0A1';
         this.metal = '#6F8888';
@@ -22,12 +24,15 @@ class PaletteController {
         this.middleGrey = '#1E1E1E';
         this.paleGrey = '#333333';
         this.lightGrey = '#252526';
+        this.orange = '#FF7900';
+        this.paleOrange = '#FFCE8E';
+        this.lightOrange = '#FF9D47';
 
         //set default colors for initial page loading until palette has been chosen
         this.mainColor = this.blue
         this.additionalColor = this.lightBlue
         this.textColor = this.black
-        this.tabsTextColor = this.silver
+        this.tabsTextColor = this.ivory
         this.backgroundColor = this.paleSeaBlue
         this.cardColor = this.white
 
@@ -66,14 +71,14 @@ class PaletteController {
     };
 
     overrideInput( borderColor, placeholderColor = this.grey, textColor = this.black ) {
-            this.muiStyles.MuiOutlinedInput.root['&$focused $notchedOutline'].borderColor = borderColor;
-            this.muiStyles.MuiOutlinedInput.input['&::placeholder'].color = placeholderColor;
-            this.muiStyles.MuiOutlinedInput.notchedOutline.borderColor = placeholderColor;
-            this.muiStyles.MuiOutlinedInput.input.color = textColor;
-            this.muiStyles.MuiInputLabel.root['&$focused'].color = borderColor;
-            this.muiStyles.MuiInputLabel.root.color = placeholderColor;
-            this.muiStyles.MuiLinearProgress.determinate.backgroundColor = this.backgroundColor;
-            this.muiStyles.MuiLinearProgress.bar1Determinate.backgroundColor = this.mainColor;
+        this.muiStyles.MuiOutlinedInput.root['&$focused $notchedOutline'].borderColor = borderColor;
+        this.muiStyles.MuiOutlinedInput.input['&::placeholder'].color = placeholderColor;
+        this.muiStyles.MuiOutlinedInput.notchedOutline.borderColor = placeholderColor;
+        this.muiStyles.MuiOutlinedInput.input.color = textColor;
+        this.muiStyles.MuiInputLabel.root['&$focused'].color = borderColor;
+        this.muiStyles.MuiInputLabel.root.color = placeholderColor;
+        this.muiStyles.MuiLinearProgress.determinate.backgroundColor = this.backgroundColor;
+        this.muiStyles.MuiLinearProgress.bar1Determinate.backgroundColor = this.mainColor;
     };
 
     choosePalette(value) {
@@ -82,7 +87,7 @@ class PaletteController {
                 this.mainColor = this.blue
                 this.additionalColor = this.lightBlue
                 this.textColor = this.black
-                this.tabsTextColor = this.silver
+                this.tabsTextColor = this.ivory
                 this.backgroundColor = this.paleSeaBlue
                 this.cardColor = this.white
                     break;
@@ -101,7 +106,23 @@ class PaletteController {
                 this.tabsTextColor = this.silver
                 this.backgroundColor = this.blackBlue
                 this.cardColor = this.highBlackBlue
-                    break;                 
+                    break;
+            case 'orange': 
+                this.mainColor = this.orange
+                this.additionalColor = this.lightOrange
+                this.textColor = this.black
+                this.tabsTextColor = this.ivory
+                this.backgroundColor = this.paleOrange
+                this.cardColor = this.white
+                    break; 
+            case 'lime': 
+                this.mainColor = this.lime
+                this.additionalColor = this.lightGreen
+                this.textColor = this.black
+                this.tabsTextColor = this.ivory
+                this.backgroundColor = this.paleLime
+                this.cardColor = this.white
+                    break;         
             case 'metal':
                 this.mainColor = this.metal
                 this.additionalColor = this.lightMetal
@@ -109,14 +130,6 @@ class PaletteController {
                 this.tabsTextColor = this.ivory
                 this.backgroundColor = this.silver
                 this.cardColor = this.paleMetal
-                    break;
-            case 'lime': 
-                this.mainColor = this.lime
-                this.additionalColor = this.lightGreen
-                this.textColor = this.black
-                this.tabsTextColor = this.silver
-                this.backgroundColor = this.paleLime
-                this.cardColor = this.white
                     break;
             default: 
         }
