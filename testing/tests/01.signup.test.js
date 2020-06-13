@@ -14,6 +14,9 @@ describe('Check signup functionality', () => {
         browser.setWindowSize(1920, 1080);
         BasePage.open();
     });
+    afterEach(() => {
+        browser.reloadSession();
+    });
     it('should display elements on signup page', () => {
         TopBar.profileMenu.click();
         expect(TopBar.loginListItem).toBeDisplayed();
@@ -60,7 +63,6 @@ describe('Check signup functionality', () => {
         GoogleLoginPage.passwordNextButton.click();
         browser.switchToWindow(browser.getWindowHandles()[0]);
         expect(NewPostForm.pageTitle).toHaveText('Create your post');
-        browser.reloadSession();
     });
     it('should successfully signup with facebook', () => {
         TopBar.profileMenu.click();
@@ -77,7 +79,6 @@ describe('Check signup functionality', () => {
         FacebookLoginPage.loginButton.click();
         browser.switchToWindow(browser.getWindowHandles()[0]);
         expect(NewPostForm.pageTitle).toHaveText('Create your post');
-        browser.reloadSession();
     });
     it('should display error when signup with invalid data', () => {
         TopBar.profileMenu.click();

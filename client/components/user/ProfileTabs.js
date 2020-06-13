@@ -28,9 +28,7 @@ const ProfileTabs = () => {
     React.useEffect( () => {
         const controller = new window.AbortController();
         loadData();
-        return function cleanup() {
-            controller.abort();
-        }
+        setTimeout(() => controller.abort(), 5000)
     }, []);
 
     const loadData = async () => {

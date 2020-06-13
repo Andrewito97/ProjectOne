@@ -2,17 +2,16 @@ import BasePage from '../PageObjects/BasePage';
 import TopBar from '../PageObjects/TopBar';
 import LoginPage from '../PageObjects/LoginPage';
 import NewPostForm from '../PageObjects/NewPostForm';
-import Post from '../PageObjects/Post';
+import ProfilePage from '../PageObjects/ProfilePage';
+import ConfirmWindow from '../PageObjects/ConfirmWindow';
+import SuccessWindow from '../PageObjects/SuccessWindow';
 import config from '../../config';
-import uploadFile from '../helpers/uploadFile';
 import clearInput from '../helpers/clearInput';
 
-describe('Check post functionality', () => {
+describe('Check profile functionality', () => {
     beforeEach(() => {
         browser.setWindowSize(1920, 1080);
         BasePage.open();
-
-        // ** login in previosly created account ** //
         TopBar.profileMenu.click();
         expect(TopBar.loginListItem).toBeDisplayed();
         TopBar.loginListItem.click();
@@ -20,47 +19,61 @@ describe('Check post functionality', () => {
         LoginPage.passwordInput.setValue(config.testPasswordChanged);
         LoginPage.loginButton.click();
         expect(NewPostForm.pageTitle).toHaveText('Create your post');
+        TopBar.profileMenu.click();
+        TopBar.profileListItem.click();
+        expect(ProfilePage.pageTitle).toHaveText('Profile');
     });
-    it('should display elements on new post form', () => {
-        expect(NewPostForm.titleInput).toBeDisplayed();
-        expect(NewPostForm.textInput).toBeDisplayed();
-        expect(NewPostForm.cameraButton).toBeDisplayed();
-        expect(NewPostForm.cameraButton).toBeClickable();
-        expect(NewPostForm.addPostButton).toBeDisplayed();
-        expect(NewPostForm.addPostButton).toBeClickable();
-        uploadFile(NewPostForm.hiddenImageInput, '../assets/images/art.jpg');
-        expect(NewPostForm.deleteImageButton).toBeDisplayed();
-        expect(NewPostForm.addPostButton).toBeClickable();
+    afterEach(() => {
         browser.reloadSession();
     });
-    it('shoud successfully add new post', () => {
-        NewPostForm.titleInput.setValue('Post title');
-        NewPostForm.textInput.setValue('Post text content');
-        NewPostForm.addPostButton.click();
-        expect(Post.postTitle).toHaveText('Post title');
-        expect(Post.postText).toHaveText('Post text content');
-        NewPostForm.titleInput.setValue('Another post title');
-        NewPostForm.textInput.setValue('Another post text content');
-        uploadFile(NewPostForm.hiddenImageInput, '../assets/images/art.jpg');
-        NewPostForm.addPostButton.click();
-        expect(Post.postTitle).toHaveText('Another post title');
-        expect(Post.postText).toHaveText('Another post text content');
-        expect(Post.postImage).toBeDisplayed();
-        browser.reloadSession();
+    it('should display elements in profile', () => {
+        expect(ProfilePage.userName).toBeDisplayed();
+        expect(ProfilePage.userEmail).toBeDisplayed();
+        expect(ProfilePage.editNameButton).toBeDisplayed();
+        expect(ProfilePage.editNameButton).toBeClickable();
+        expect(ProfilePage.editEmailButton).toBeDisplayed();
+        expect(ProfilePage.editEmailButton).toBeClickable();
+        expect(ProfilePage.saveProfileButton).toBeDisplayed();
+        expect(ProfilePage.saveProfileButton).toBeClickable();
+        expect(ProfilePage.deleteProfileButton).toBeDisplayed();
+        expect(ProfilePage.deleteProfileButton).toBeClickable();
     });
-    it('should display error when post with invalid data', () => {
-        NewPostForm.addPostButton.click();
-        expect(NewPostForm.titleError).toHaveText('Title is required !');
-        expect(NewPostForm.textError).toHaveText('Text is required !');
-        NewPostForm.titleInput.setValue('Post title');
-        NewPostForm.addPostButton.click();
-        NewPostForm.titleError.waitForExist({ reverse: true });
-        expect(NewPostForm.textError).toHaveText('Text is required !');
-        clearInput(NewPostForm.titleInput)
-        NewPostForm.textInput.setValue('Post text');
-        NewPostForm.addPostButton.click();
-        expect(NewPostForm.titleError).toHaveText('Title is required !');
-        NewPostForm.textError.waitForExist({ reverse: true });
-        browser.reloadSession();
+    it('shoud successfully edit profile', () => {
+        expect(ProfilePage.userName).toBeDisplayed();
+        expect(ProfilePage.saveProfileButton).toBeClickable();
+        ProfilePage.editNameButton.click();
+        expect(ProfilePage.userNameInput).toBeDisplayed();
+        expect(ProfilePage.userNameInput).toHaveAttributeContaining('value', 'test');
+        expect(ProfilePage.saveProfileButton).toBeDisabled();
+        clearInput(ProfilePage.userNameInput);
+        ProfilePage.userNameInput.setValue('tasty');
+        expect(ProfilePage.saveNameButton).toBeDisplayed();
+        expect(ProfilePage.saveNameButton).toBeClickable();
+        ProfilePage.saveNameButton.click();
+        expect(ProfilePage.userName).toBeDisplayed();
+        expect(ProfilePage.saveProfileButton).toBeClickable();
+        ProfilePage.editNameButton.click();
+        expect(ProfilePage.userNameInput).toBeDisplayed();
+        expect(ProfilePage.userNameInput).toHaveAttributeContaining('value', 'tasty');
+        ProfilePage.saveNameButton.click();
+        ProfilePage.saveProfileButton.click();
+        expect(SuccessWindow.content).toBeDisplayed();
+        SuccessWindow.okButton.click();
+        expect(ProfilePage.saveProfileButton).toBeClickable();
+        ProfilePage.saveProfileButton.click();
+        expect(ProfilePage.warning).toBeDisplayed();
+        expect(ProfilePage.warning).toHaveText('No changes found !');
+    });
+    it('should successfully delete profile', () => {
+        expect(ProfilePage.deleteProfileButton).toBeDisplayed();
+        ProfilePage.deleteProfileButton.click();
+        expect(ConfirmWindow.content).toBeDisplayed();
+        ConfirmWindow.calcelButton.click();
+        expect(ProfilePage.deleteProfileButton).toBeDisplayed();
+        ProfilePage.deleteProfileButton.click();
+        ConfirmWindow.confirmButton.click();
+        expect(SuccessWindow.content).toBeDisplayed();
+        SuccessWindow.okButton.click();
+        browser.refresh();
     });
 })

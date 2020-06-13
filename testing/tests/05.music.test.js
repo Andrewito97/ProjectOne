@@ -95,6 +95,7 @@ describe('Check music functionality', () => {
     it('should successfully delete music', () => {
         TopBar.profileMenu.click();
         TopBar.profileListItem.click();
+        browser.refresh();
         expect(ProfilePage.pageTitle).toHaveText('Profile');
         ProfilePage.profileMusicTab.click();
         expect(Music.musicAuthor).toBeDisplayed();

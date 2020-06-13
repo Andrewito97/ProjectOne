@@ -5,7 +5,10 @@ import RecoveryPage from '../PageObjects/RecoveryPage';
 import NewPostForm from '../PageObjects/NewPostForm';
 import GmailPage from '../PageObjects/GmailPage';
 import GoogleLoginPage from '../PageObjects/GoogleLoginPage';
+import FacebookLoginPage from '../PageObjects/FacebookLoginPage';
 import ResetPage from '../PageObjects/ResetPage';
+import ProfilePage from '../PageObjects/ProfilePage';
+import ConfirmWindow from '../PageObjects/ConfirmWindow';
 import SuccessWindow from '../PageObjects/SuccessWindow';
 import config from '../../config';
 import clearInput from '../helpers/clearInput';
@@ -14,6 +17,62 @@ describe('Check password recovery functionality', () => {
     beforeEach(() => {
         browser.setWindowSize(1920, 1080);
         BasePage.open();
+    });
+    afterEach(() => {
+        browser.reloadSession();
+    });
+    after('delete unnecessary accounts', () => {
+        BasePage.open();
+        TopBar.profileMenu.click();
+        expect(TopBar.loginListItem).toBeDisplayed();
+        TopBar.loginListItem.click();
+        LoginPage.googleButton.waitForClickable();
+        browser.pause(2000);
+        LoginPage.googleButton.click();
+        browser.switchToWindow(browser.getWindowHandles()[2]);
+        GoogleLoginPage.emailInput.waitForDisplayed();
+        GoogleLoginPage.emailInput.setValue(config.googleTestEmail);
+        GoogleLoginPage.emailNextButton.waitForClickable();
+        GoogleLoginPage.emailNextButton.click();
+        GoogleLoginPage.passwordInput.waitForDisplayed();
+        GoogleLoginPage.passwordInput.setValue(config.googleTestPassword);
+        GoogleLoginPage.passwordNextButton.waitForClickable();
+        GoogleLoginPage.passwordNextButton.click();
+        browser.switchToWindow(browser.getWindowHandles()[0]);
+        expect(NewPostForm.pageTitle).toHaveText('Create your post');
+        TopBar.profileMenu.click();
+        TopBar.profileListItem.click();
+        expect(ProfilePage.pageTitle).toHaveText('Profile');
+        expect(ProfilePage.deleteProfileButton).toBeClickable();
+        ProfilePage.deleteProfileButton.click();
+        expect(ConfirmWindow.content).toBeDisplayed();
+        ConfirmWindow.confirmButton.click();
+        expect(SuccessWindow.content).toBeDisplayed();
+        SuccessWindow.okButton.click();
+        TopBar.profileMenu.click();
+        expect(TopBar.loginListItem).toBeDisplayed();
+        TopBar.loginListItem.click();
+        LoginPage.facebookButton.waitForClickable();
+        browser.pause(2000);
+        LoginPage.facebookButton.click();
+        browser.switchToWindow(browser.getWindowHandles()[2]);
+        FacebookLoginPage.emailInput.waitForDisplayed();
+        FacebookLoginPage.emailInput.setValue(config.facebookTestEmail);
+        FacebookLoginPage.passwordInput.setValue(config.facebookTestPassword);
+        FacebookLoginPage.loginButton.waitForClickable();
+        FacebookLoginPage.loginButton.click();
+        browser.switchToWindow(browser.getWindowHandles()[0]);
+        expect(NewPostForm.pageTitle).toHaveText('Create your post');
+        TopBar.profileMenu.click();
+        TopBar.profileListItem.click();
+        expect(ProfilePage.pageTitle).toHaveText('Profile');
+        expect(ProfilePage.deleteProfileButton).toBeClickable();
+        ProfilePage.deleteProfileButton.click();
+        expect(ConfirmWindow.content).toBeDisplayed();
+        ConfirmWindow.confirmButton.click();
+        expect(SuccessWindow.content).toBeDisplayed();
+        SuccessWindow.okButton.click();
+        browser.refresh();
     });
     it('should display elements on recovery page', () => {
         TopBar.profileMenu.click();
@@ -88,8 +147,6 @@ describe('Check password recovery functionality', () => {
         browser.switchToWindow(browser.getWindowHandles()[2]);
         GmailPage.deleteButton.click();
         GmailPage.deleteButton.waitForExist({ reverse: true });
-
-        browser.reloadSession();
     });
     it('should display error when recovery invalid email', () => {
         TopBar.profileMenu.click();

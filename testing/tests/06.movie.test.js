@@ -82,6 +82,7 @@ describe('Check movie functionality', () => {
     it('should successfully delete movie', () => {
         TopBar.profileMenu.click();
         TopBar.profileListItem.click();
+        browser.refresh();
         expect(ProfilePage.pageTitle).toHaveText('Profile');
         ProfilePage.profileMoviesTab.click();
         expect(Movie.movieTitle).toBeDisplayed();
