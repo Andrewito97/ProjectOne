@@ -3,7 +3,7 @@ import Movie from './Movie';
 import NewMovieForm from './NewMovieForm';
 import authenticationHelper from '../../helpers/authentication.helper';
 import movieApi from '../../api/movie.api';
-import DummyVideo from './DummyMovie';
+import DummyMovie from './DummyMovie';
 
 const MoviesList = () => {
     const [ movies, setMovies ] = React.useState([]);
@@ -34,11 +34,7 @@ const MoviesList = () => {
         <div>
             {authenticationHelper.isAuthenticated() ? (<NewMovieForm updateMoviesList={updateMoviesList}/>) : null}
             <div>
-                { 
-                dummyData ? <DummyVideo/>    
-                :
-                movies.map( (item, index) => <Movie movie={item} key={index}/> )
-                }
+                { dummyData ? <DummyMovie/> : movies.map( (item, index) => <Movie movie={item} key={index}/> ) }
             </div>
         </div>
     );

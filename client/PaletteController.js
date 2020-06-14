@@ -93,7 +93,7 @@ class PaletteController {
                     break;
             case 'dark classic': 
                 this.mainColor = this.paleGrey
-                this.additionalColor = this.lightGrey
+                this.additionalColor = this.middleGrey
                 this.textColor = this.ivory
                 this.tabsTextColor = this.silver
                 this.backgroundColor = this.lightGrey

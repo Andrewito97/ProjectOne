@@ -34,11 +34,7 @@ const NewsFeedList = () => {
         <div>
             {authenticationHelper.isAuthenticated() ? (<NewPostForm updateNewsFeed={updateNewsFeed}/>) : null}
             <div>
-                { 
-                dummyData ? <DummyPost/>    
-                :
-                posts.map( (item, index) => <Post post={item} key={index}/> )
-                }
+                { dummyData ? <DummyPost/> : posts.map( (item, index) => <Post post={item} key={index}/> ) }
             </div>
         </div>
     )

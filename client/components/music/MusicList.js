@@ -3,7 +3,7 @@ import Music from './Music';
 import NewMusicForm from './NewMusicForm';
 import authenticationHelper from '../../helpers/authentication.helper';
 import musicApi from '../../api/music.api';
-import DummySong from './DummySong';
+import DummyMusic from './DummyMusic';
 
 const MusicList = () => {
     const [ music, setMusic ] = React.useState([]);
@@ -35,11 +35,7 @@ const MusicList = () => {
         <div>
             {authenticationHelper.isAuthenticated() ? (<NewMusicForm updateMusicList={updateMusicList}/>) : null}
             <div>
-                { 
-                dummyData ? <DummySong/>    
-                :
-                music.map( (item, index) => <Music music={item} key={index}/> )
-                }
+                { dummyData ? <DummyMusic/> : music.map( (item, index) => <Music music={item} key={index}/> ) }
             </div>
         </div>
     );
