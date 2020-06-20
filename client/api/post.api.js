@@ -15,9 +15,9 @@ const postApi = {
             console.log(error);
         }
     },
-    async listNewsFeed() {
+    async listNewsFeed(skip) {
         try {
-            const response = await fetch('/myapi/newsfeed', {
+            const response = await fetch(`/myapi/newsfeed?skip=${skip}`, {
                 method: 'GET',
             });
             return response.json();

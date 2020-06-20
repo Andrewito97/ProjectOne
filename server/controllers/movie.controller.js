@@ -76,6 +76,8 @@ const movieController = {
     listMovies(request, response) {
         Movie
             .find()
+            .skip(Number(request.query.skip))
+            .limit(5)
             .sort('-created')
             .exec( (error, movies) => {
                 if(error) {

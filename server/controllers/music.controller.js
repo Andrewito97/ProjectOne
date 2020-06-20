@@ -111,6 +111,8 @@ const musicController = {
     listMusic(request, response) {
         Music
             .find()
+            .skip(Number(request.query.skip))
+            .limit(5)
             .sort('-created')
             .exec( (error, music) => {
                 if(error) {

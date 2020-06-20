@@ -10,6 +10,7 @@ import LoginForm from './components/user/LoginForm';
 import RecoveryForm from './components/user/RecoveryForm';
 import ResetPasswordForm from './components/user/ResetPasswordForm';
 import Profile from './components/user/Profile';
+import Footer from './components/Footer';
 import paletteController from './PaletteController';
 
 const styles = {
@@ -55,6 +56,7 @@ const RootComponent = (props) => (
                 <RightSidebar palette={props.palette} setPalette={props.setPalette}/>
             </div>
         </div>
+        <Footer/>
     </div>
 );
 

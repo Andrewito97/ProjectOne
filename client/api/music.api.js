@@ -15,9 +15,9 @@ const musicApi = {
             console.log(error);
         }
     },
-    async listMusic() {
+    async listMusic(skip) {
         try {
-            const response = await fetch('/myapi/music', {
+            const response = await fetch(`/myapi/music?skip=${skip}`, {
                 method: 'GET',
             });
             return response.json();

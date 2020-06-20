@@ -15,9 +15,9 @@ const movieApi = {
             console.log(error);
         }
     },
-    async listMovies() {
+    async listMovies(skip) {
         try {
-            const response = await fetch('/myapi/movies', {
+            const response = await fetch(`/myapi/movies?skip=${skip}`, {
                 method: 'GET',
             });
             return response.json();

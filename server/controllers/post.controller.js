@@ -34,6 +34,8 @@ const postController = {
     listNewsFeed(request, response) {
         Post
             .find()
+            .skip(Number(request.query.skip))
+            .limit(5)
             .sort('-created')
             .exec( (error, posts) => {
             if(error) {

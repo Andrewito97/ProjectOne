@@ -1,4 +1,4 @@
-import React, {} from 'react';
+import React from 'react';
 import { AppBar, 
          Tabs, 
          Tab } from '@material-ui/core';
@@ -23,12 +23,14 @@ const ProfileTabs = () => {
     const [ posts, setPosts ] = React.useState([]);
     const [ music, setMusic ] = React.useState([]);
     const [ movies, setMovies ] = React.useState([]);
-    const [successed, setSuccessed ] = React.useState(false);
+    const [ successed, setSuccessed ] = React.useState(false);
 
     React.useEffect( () => {
-        const controller = new window.AbortController();
-        loadData();
-        setTimeout(() => controller.abort(), 5000)
+        let isSubscribed = true;
+        if(isSubscribed) {
+            loadData();
+        };
+        return () => isSubscribed = false;
     }, []);
 
     const loadData = async () => {

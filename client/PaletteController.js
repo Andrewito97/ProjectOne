@@ -29,12 +29,12 @@ class PaletteController {
         this.lightOrange = '#FF9D47';
 
         //set default colors for initial page loading until palette has been chosen
-        this.mainColor = this.blue
-        this.additionalColor = this.lightBlue
-        this.textColor = this.black
-        this.tabsTextColor = this.ivory
-        this.backgroundColor = this.paleSeaBlue
-        this.cardColor = this.white
+        this.mainColor = this.blue;
+        this.additionalColor = this.lightBlue;
+        this.textColor = this.black;
+        this.tabsTextColor = this.ivory;
+        this.backgroundColor = this.paleSeaBlue;
+        this.cardColor = this.white;
 
         //overriding default mui-styles
         this.muiStyles = {
@@ -64,13 +64,13 @@ class PaletteController {
             },
             MuiCardHeader: {
                 subheader: {
-                    color: this.tabsTextColor
+                    color: this.grey
                 }
             }
         };
     };
 
-    overrideInput( borderColor, placeholderColor = this.grey, textColor = this.black ) {
+    overrideStyles( borderColor, placeholderColor = this.grey, textColor = this.black ) {
         this.muiStyles.MuiOutlinedInput.root['&$focused $notchedOutline'].borderColor = borderColor;
         this.muiStyles.MuiOutlinedInput.input['&::placeholder'].color = placeholderColor;
         this.muiStyles.MuiOutlinedInput.notchedOutline.borderColor = placeholderColor;

@@ -1,4 +1,5 @@
 import React from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Movie from './Movie';
 import NewMovieForm from './NewMovieForm';
 import authenticationHelper from '../../helpers/authentication.helper';
@@ -7,20 +8,26 @@ import DummyMovie from './DummyMovie';
 
 const MoviesList = () => {
     const [ movies, setMovies ] = React.useState([]);
-    const [ dummyData, setDummyData ] = React.useState(true);
+    const [ skip, setSkip ] = React.useState(0);
+    const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
 
     React.useEffect(() => {
-        loadMovies();
-    }, []);
+        let isSubscribed = true;
+        if(isSubscribed) {
+            loadMovies();
+        };
+        return () => isSubscribed = false;
+    }, [skip]);
 
     const loadMovies = async () => {
-        setDummyData(true)
-        const data = await movieApi.listMovies();
+        const data = await movieApi.listMovies(skip);
         if(data.error) {
             console.log(data.error);
         } else {
-            setDummyData(false);
-            setMovies(data);
+            setMovies([...movies, ...data]);
+            if(data.length === 0) {
+                setShouldLoadMore(false);
+            };
         };
     };
 
@@ -31,12 +38,16 @@ const MoviesList = () => {
     };
 
     return (
-        <div>
+        <InfiniteScroll
+            dataLength={movies.length}
+            hasMore={shouldLoadMore}
+            next={() => setSkip(movies.length)}
+        >
             {authenticationHelper.isAuthenticated() ? (<NewMovieForm updateMoviesList={updateMoviesList}/>) : null}
             <div>
-                { dummyData ? <DummyMovie/> : movies.map( (item, index) => <Movie movie={item} key={index}/> ) }
+                { movies.length === 0 ? <DummyMovie/> : movies.map( (item, index) => <Movie movie={item} key={index}/> ) }
             </div>
-        </div>
+        </InfiniteScroll>
     );
 };
 

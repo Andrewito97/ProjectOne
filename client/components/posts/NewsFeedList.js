@@ -1,4 +1,5 @@
 import React from 'react';
+import InfiniteScroll from 'react-infinite-scroll-component';
 import Post from './Post';
 import NewPostForm from './NewPostForm';
 import authenticationHelper from '../../helpers/authentication.helper';
@@ -7,20 +8,26 @@ import DummyPost from './DummyPost';
 
 const NewsFeedList = () => {
     const [ posts, setPosts ] = React.useState([]);
-    const [ dummyData, setDummyData ] = React.useState(true);
+    const [ skip, setSkip ] = React.useState(0);
+    const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
 
     React.useEffect(() => {
-        loadPosts();
-    }, []);
+        let isSubscribed = true;
+        if(isSubscribed) {
+            loadPosts();
+        };
+        return () => isSubscribed = false;
+    }, [skip]);
 
     const loadPosts = async () => {
-        setDummyData(true)
-        const data = await postApi.listNewsFeed();
+        const data = await postApi.listNewsFeed(skip);
         if(data.error) {
             console.log(data.error);
         } else {
-            setDummyData(false);
-            setPosts(data);
+            setPosts([...posts, ...data]);
+            if(data.length === 0) {
+                setShouldLoadMore(false);
+            };
         };
     };
 
@@ -33,9 +40,13 @@ const NewsFeedList = () => {
     return (
         <div>
             {authenticationHelper.isAuthenticated() ? (<NewPostForm updateNewsFeed={updateNewsFeed}/>) : null}
-            <div>
-                { dummyData ? <DummyPost/> : posts.map( (item, index) => <Post post={item} key={index}/> ) }
-            </div>
+            <InfiniteScroll
+                dataLength={posts.length}
+                hasMore={shouldLoadMore}
+                next={() => setSkip(posts.length)}
+            >
+                { posts.length === 0 ? <DummyPost/> : posts.map( (item, index) => <Post post={item} key={index}/> ) }
+            </InfiniteScroll>
         </div>
     )
 };

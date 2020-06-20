@@ -15,7 +15,7 @@ const styles = {
         position: 'absolute',
         height: 60,
         width: 60,
-        left: '43%',
+        left: '42%',
         top: '43%',
         zIndex: 1
     }
