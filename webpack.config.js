@@ -1,5 +1,6 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
+const Dotenv = require('dotenv-webpack');
 
 const serverConfig = {
     mode: 'development',
@@ -44,7 +45,7 @@ const serverConfig = {
         },{
             test: /\.css$/i,
             use: ['css-loader'],
-          },]
+        }]
     }
 };
 
@@ -76,7 +77,8 @@ const clientConfig = {
             test: /\.css$/i,
             use: ['style-loader', 'css-loader'],
           },]
-    }
+    },
+    plugins: [new Dotenv()]
 };
 
 module.exports = [ clientConfig, serverConfig ];

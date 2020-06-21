@@ -1,7 +1,11 @@
+import fetch from 'node-fetch';
+import config from '../../config';
+const domain = `http://${config.host}:${config.port}`; 
+
 const userApi = {
     async create(user) {
         try {
-            const response = await fetch('/myapi/signup', {
+            const response = await fetch(`${domain}/myapi/signup`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -18,7 +22,7 @@ const userApi = {
 
     async checkIfMediaAccExists(user) {
         try {
-            const response = await fetch('/myapi/media', {
+            const response = await fetch(`${domain}/myapi/media`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -35,7 +39,7 @@ const userApi = {
 
     async login(user) {
         try {
-            const response = await fetch('/myapi/login', {
+            const response = await fetch(`${domain}/myapi/login`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -52,7 +56,7 @@ const userApi = {
     },
     async logout() {
         try {
-            const response = await fetch('/myapi/logout', {
+            const response = await fetch(`${domain}/myapi/logout`, {
                 method: 'GET',
             })
             if (typeof window !== 'undefined') {
@@ -66,7 +70,7 @@ const userApi = {
     },
     async getUserProfile(userId) {
         try {
-            const response = await fetch(`/myapi/profile/${userId}`, {
+            const response = await fetch(`${domain}/myapi/profile/${userId}`, {
                 method: 'GET',
             })
             return response.json()
@@ -77,7 +81,7 @@ const userApi = {
     },
     async updateUserProfile(userId, user) {
         try {
-            const response = await fetch(`/myapi/profile/${userId}`, {
+            const response = await fetch(`${domain}/myapi/profile/${userId}`, {
                 method: 'PUT',
                 headers: {
                     'Accept': 'application/json',
@@ -93,7 +97,7 @@ const userApi = {
     },
     async deleteUserProfile(userId) {
         try {
-            const response = await fetch(`/myapi/profile/${userId}`, {
+            const response = await fetch(`${domain}/myapi/profile/${userId}`, {
                 method: 'DELETE',
                 headers: {
                     'Accept': 'application/json',
@@ -108,7 +112,7 @@ const userApi = {
     },
     async recoverPassword(user) {
         try {
-            const response = await fetch('/myapi/recover', {
+            const response = await fetch(`${domain}/myapi/recover`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -124,7 +128,7 @@ const userApi = {
     },
     async resetPassword(user, email, resetToken) {
         try {
-            const response = await fetch(`/myapi/reset/${email}/${resetToken}`, {
+            const response = await fetch(`${domain}/myapi/reset/${email}/${resetToken}`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

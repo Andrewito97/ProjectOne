@@ -31,6 +31,10 @@ const MoviesList = () => {
         };
     };
 
+    if(movies.length === 0) {
+        loadMovies(); //initial loading
+    };
+
     const updateMoviesList = (item) => {
         let updatedMovies = [...movies];
         updatedMovies.unshift(item);

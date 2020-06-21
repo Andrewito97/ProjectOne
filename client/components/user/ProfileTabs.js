@@ -1,7 +1,9 @@
 import React from 'react';
 import { AppBar, 
          Tabs, 
-         Tab } from '@material-ui/core';
+         Tab,
+         Backdrop,
+         CircularProgress } from '@material-ui/core';
 import Post from '../posts/Post';
 import Music from '../music/Music';
 import Movie from '../movies/Movie';
@@ -15,6 +17,9 @@ import SuccessWindow from '../SuccessWindow';
 const styles = {
     tabs: {
         color: 'white'
+    },
+    backdrop: {
+        zIndex: 20
     }
 };
 
@@ -24,6 +29,7 @@ const ProfileTabs = () => {
     const [ music, setMusic ] = React.useState([]);
     const [ movies, setMovies ] = React.useState([]);
     const [ successed, setSuccessed ] = React.useState(false);
+    const [ isLoading, setLoading ] = React.useState(false);
 
     React.useEffect( () => {
         let isSubscribed = true;
@@ -55,6 +61,7 @@ const ProfileTabs = () => {
     };
 
     const deleteMusic = async (musicId) => {
+        setLoading(true);
         let musicPost;
         for(let item of music) {
             if(item._id === musicId) musicPost = item;
@@ -67,6 +74,7 @@ const ProfileTabs = () => {
         if(data.success) {
             const newMusic = updateList(music, musicId);
             setMusic(newMusic);
+            setLoading(false);
             setSuccessed(true);
         } else {
             console.log(data);
@@ -74,12 +82,14 @@ const ProfileTabs = () => {
     };
 
     const deleteMovie = async (movieId) => {
+        setLoading(true);
         const videoData = await movieApi.deleteVideo(movieId);
         if(videoData.success) {
             const movieData = await movieApi.deleteMovie(movieId);
             if(movieData.success) {
                 const newMovies = updateList(movies, movieId);
                 setMovies(newMovies);
+                setLoading(false);
                 setSuccessed(true);
             } else {
                 console.log(movieData);
@@ -156,6 +166,9 @@ const ProfileTabs = () => {
                 message={`${dialogWindowValue} successfully deleted`}
                 onClick={() => setSuccessed(false)}
             />
+            <Backdrop open={isLoading} style={styles.backdrop} >
+                <CircularProgress style={{ color: paletteController.backgroundColor }} size={150} thickness={4}/>
+            </Backdrop>
         </div>
     )
 };

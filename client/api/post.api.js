@@ -1,7 +1,11 @@
+import fetch from 'node-fetch';
+import config from '../../config';
+const domain = `http://${config.host}:${config.port}`; 
+
 const postApi = {
     async create(token, post) {
           try {
-            const response = await fetch('/myapi/newsfeed', {
+            const response = await fetch(`${domain}/myapi/newsfeed`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -17,7 +21,7 @@ const postApi = {
     },
     async listNewsFeed(skip) {
         try {
-            const response = await fetch(`/myapi/newsfeed?skip=${skip}`, {
+            const response = await fetch(`${domain}/myapi/newsfeed?skip=${skip}`, {
                 method: 'GET',
             });
             return response.json();
@@ -28,7 +32,7 @@ const postApi = {
     },
     async getUserNewsFeed(userId) {
         try {
-            const response = await fetch(`/myapi/profile/${userId}/newsfeed`, {
+            const response = await fetch(`${domain}/myapi/profile/${userId}/newsfeed`, {
                 method: 'GET',
             });
             return response.json();
@@ -39,7 +43,7 @@ const postApi = {
     },
     async deletePost(postId) {
         try {
-            const response = await fetch(`/myapi/newsfeed/${postId}`, {
+            const response = await fetch(`${domain}/myapi/newsfeed/${postId}`, {
                 method: 'DELETE',
                 headers: {
                   'Accept': 'application/json',

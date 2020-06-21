@@ -31,6 +31,10 @@ const NewsFeedList = () => {
         };
     };
 
+    if(posts.length === 0) {
+        loadPosts(); //initial loading
+    };
+
     const updateNewsFeed = (item) => {
         let updatedPosts = [...posts];
         updatedPosts.unshift(item);

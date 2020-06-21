@@ -13,7 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/AndrewLebowski/ProjectOne.git"
   },
-  "author": "Andrew Lebowski",
+  "author": "Andrewito",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/AndrewLebowski/ProjectOne/issues"
@@ -48,6 +48,7 @@
     "helmet": "^3.22.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.18",
+    "node-fetch": "^2.6.0",
     "react": "^16.13.1",
     "react-cookie": "^4.0.3",
     "react-dom": "^16.13.1",
@@ -75,6 +76,7 @@
     "babel-loader": "^8.1.0",
     "chromedriver": "^83.0.0",
     "css-loader": "^3.5.3",
+    "dotenv-webpack": "^1.8.0",
     "mochawesome": "^6.1.1",
     "nodemon": "^2.0.4",
     "wdio-chromedriver-service": "^6.0.3",

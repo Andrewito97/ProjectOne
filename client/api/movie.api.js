@@ -1,7 +1,11 @@
+import fetch from 'node-fetch';
+import config from '../../config';
+const domain = `http://${config.host}:${config.port}`;  
+
 const movieApi = {
     async create(token, movie) {
         try {
-            const response = await fetch('/myapi/movies', {
+            const response = await fetch(`${domain}/myapi/movies`, {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',
@@ -17,7 +21,7 @@ const movieApi = {
     },
     async listMovies(skip) {
         try {
-            const response = await fetch(`/myapi/movies?skip=${skip}`, {
+            const response = await fetch(`${domain}/myapi/movies?skip=${skip}`, {
                 method: 'GET',
             });
             return response.json();
@@ -28,7 +32,7 @@ const movieApi = {
     },
     async getUserMovies(userId) {
         try {
-            const response = await fetch(`/myapi/profile/${userId}/movies`, {
+            const response = await fetch(`${domain}/myapi/profile/${userId}/movies`, {
                 method: 'GET',
             });
             return response.json();
@@ -39,7 +43,7 @@ const movieApi = {
     },
     async deleteMovie(movieId) {
         try {
-            const response = await fetch(`/myapi/movies/${movieId}`, {
+            const response = await fetch(`${domain}/myapi/movies/${movieId}`, {
                 method: 'DELETE',
                 headers: {
                   'Accept': 'application/json',
@@ -54,7 +58,7 @@ const movieApi = {
     },
     async deleteVideo(videoId) {
         try {
-            const response = await fetch(`/myapi/movies/video/${videoId}`, {
+            const response = await fetch(`${domain}/myapi/movies/video/${videoId}`, {
                 method: 'DELETE',
                 headers: {
                   'Accept': 'application/json',

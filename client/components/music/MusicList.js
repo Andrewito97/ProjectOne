@@ -32,6 +32,10 @@ const MusicList = () => {
         };
     };
 
+    if(music.length === 0) {
+        loadMusic(); //initial loading
+    };
+
     const updateMusicList = (item) => {
         let updatedMusic = [...music];
         updatedMusic.unshift(item);
