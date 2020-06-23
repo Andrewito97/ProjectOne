@@ -19,9 +19,11 @@ const movieApi = {
             console.log(error);
         }
     },
-    async listMovies(skip) {
+    async listMovies(skip, signal) {
         try {
             const response = await fetch(`${domain}/myapi/movies?skip=${skip}`, {
+                signal: signal,
+                timeout: 3000,
                 method: 'GET',
             });
             return response.json();
@@ -36,6 +38,28 @@ const movieApi = {
                 method: 'GET',
             });
             return response.json();
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    async searchMovies(text) {
+        try {
+            const response = await fetch(`${domain}/myapi/movies/search?text=${text}`, {
+                method: 'GET',
+            });
+            return response.json();
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    async findMovie(movieId) {
+        try {
+            const response = await fetch(`${domain}/myapi/movies/${movieId}`, {
+                method: 'GET',
+            });
+            return response.json(); 
         }
         catch (error) {
             console.log(error);

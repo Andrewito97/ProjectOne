@@ -7,7 +7,7 @@ import config from '../../config';
 //create connection to specific database
 const connection = mongoose.createConnection(config.musicMongoUri, {
     useNewUrlParser: true, 
-    useUnifiedTopology: true, 
+    useUnifiedTopology: true,
     useCreateIndex: true
 });
 
@@ -138,18 +138,18 @@ const musicController = {
         });
     },
 
-    listAudios(request, response) {
-        gridFSBucket
-            .find({ aliases: 'music' })
-            .toArray( (error, files) => {
-                if(error) {
-                    return response.status(400).json({
-                        error
-                    });
-                };
-                response.status(200).json(files);
-        });
-    },
+    // listAudios(request, response) {
+    //     gridFSBucket
+    //         .find({ aliases: 'music' })
+    //         .toArray( (error, files) => {
+    //             if(error) {
+    //                 return response.status(400).json({
+    //                     error
+    //                 });
+    //             };
+    //             response.status(200).json(files);
+    //     });
+    // },
 
     getMusicByID(request, response, nextHendlear, musicId) {
         Music
@@ -162,6 +162,33 @@ const musicController = {
                 }
                 request.music = music;
                 nextHendlear();
+        });
+    },
+
+    searchMusic(request, response) {
+        Music
+            .find({$text: {$search: request.query.text}})
+            .limit(7)
+            .exec( (error, music) => { 
+                if(error || !music) {
+                    return response.status(400).json({
+                        errorMessage: 'Music not found !'
+                    });
+                }
+                response.json(music)
+            });
+    },
+
+    findMusic(request, response) {
+        Music
+            .findById(request.music._id)
+            .exec( (error, music) => {
+                if(error || !music) {
+                    return response.status(400).json({
+                        errorMessage: 'Music not found !'
+                    });
+                };
+                response.json(music)
         });
     },
 

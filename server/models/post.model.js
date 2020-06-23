@@ -27,4 +27,6 @@ const PostSchema = new mongoose.Schema({
     }
 });
 
+PostSchema.index({title: 'text'});
+
 export default mongoose.model('Post', PostSchema);

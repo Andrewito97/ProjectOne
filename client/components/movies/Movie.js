@@ -71,7 +71,7 @@ const Movie = (props) => {
                     </Typography>
                     <div id='movie-video'>
                         <ReactPlayer
-                            url={'/myapi/movies/' + props.movie._id} 
+                            url={'/myapi/movies/video/' + props.movie._id} 
                             width={styles.video.width}
                             height={styles.video.height}
                             style={styles.video}

@@ -1,9 +1,12 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Topbar from './components/Topbar';
-import MusicList from './components/music/MusicList';
-import MoviesList from './components/movies/MoviesList';
 import NewsFeedList from './components/posts/NewsFeedList';
+import SearchPost from './components/posts/SearchPost';
+import MusicList from './components/music/MusicList';
+import SearchMusic from './components/music/SearchMusic';
+import MoviesList from './components/movies/MoviesList';
+import SearchMovie from './components/movies/SearchMovie';
 import RightSidebar from './components/RightSidebar';
 import SignUpForm from './components/user/SignUpForm';
 import LoginForm from './components/user/LoginForm';
@@ -43,8 +46,11 @@ const RootComponent = (props) => (
             <div style={styles.list}>
                 <Switch >    
                     <Route exact path='/' component={NewsFeedList} />
-                    <Route path='/music' component={MusicList} />  
-                    <Route path='/movies' component={MoviesList} />  
+                    <Route exact path='/music' component={MusicList} />  
+                    <Route exact path='/movies' component={MoviesList} />  
+                    <Route path='/newsfeed/:postId' component={SearchPost} />
+                    <Route path='/music/:musicId' component={SearchMusic} />  
+                    <Route path='/movies/:movieId' component={SearchMovie} />  
                     <Route path='/signup' component={SignUpForm} />
                     <Route path='/login' component={LoginForm} />
                     <Route path='/recovery' component={RecoveryForm} />

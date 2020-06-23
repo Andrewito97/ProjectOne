@@ -69,9 +69,36 @@ const postController = {
                     return response.status(400).json({
                         errorMessage: 'Post not found !'
                     });
-                }
+                };
                 request.post = post;
                 nextHendlear();
+        });
+    },
+
+    searchPosts(request, response) {
+        Post
+            .find({$text: {$search: request.query.text}})
+            .limit(7)
+            .exec( (error, posts) => { 
+                if(error || !posts) {
+                    return response.status(400).json({
+                        errorMessage: 'Posts not found !'
+                    });
+                }
+                response.json(posts)
+            });
+    },
+
+    findPost(request, response) {
+        Post
+            .findById(request.post._id)
+            .exec( (error, post) => {
+                if(error || !post) {
+                    return response.status(400).json({
+                        errorMessage: 'Post not found !'
+                    });
+                };
+                response.json(post)
         });
     },
 

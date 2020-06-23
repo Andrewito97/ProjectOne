@@ -19,9 +19,11 @@ const postApi = {
             console.log(error);
         }
     },
-    async listNewsFeed(skip) {
+    async listNewsFeed(skip, signal) {
         try {
             const response = await fetch(`${domain}/myapi/newsfeed?skip=${skip}`, {
+                signal: signal,
+                timeout: 3000,
                 method: 'GET',
             });
             return response.json();
@@ -36,6 +38,28 @@ const postApi = {
                 method: 'GET',
             });
             return response.json();
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    async searchPosts(text) {
+        try {
+            const response = await fetch(`${domain}/myapi/newsfeed/search?text=${text}`, {
+                method: 'GET',
+            });
+            return response.json();
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    async findPost(postId) {
+        try {
+            const response = await fetch(`${domain}/myapi/newsfeed/${postId}`, {
+                method: 'GET',
+            });
+            return response.json(); 
         }
         catch (error) {
             console.log(error);

@@ -7,7 +7,7 @@ import config from '../../config';
 //create connection to specific database
 const connection = mongoose.createConnection(config.movieMongoUri, {
     useNewUrlParser: true, 
-    useUnifiedTopology: true, 
+    useUnifiedTopology: true,
     useCreateIndex: true
 });
 
@@ -103,6 +103,33 @@ const movieController = {
         });
     },
 
+    searchMovies(request, response) {
+        Movie
+            .find({$text: {$search: request.query.text}})
+            .limit(7)
+            .exec( (error, movies) => { 
+                if(error || !movies) {
+                    return response.status(400).json({
+                        errorMessage: 'Movies not found !'
+                    });
+                }
+                response.json(movies)
+            });
+    },
+
+    findMovie(request, response) {
+        Movie
+            .findById(request.movie._id)
+            .exec( (error, movie) => {
+                if(error || !movie) {
+                    return response.status(400).json({
+                        errorMessage: 'Movie not found !'
+                    });
+                };
+                response.json(movie)
+        });
+    },
+
     deleteMovie(request, response) {
         Movie
             .findByIdAndDelete(request.movie._id, (error) => {
@@ -133,7 +160,7 @@ const movieController = {
             });
     },
 
-    loadMovie(request, response) {
+    loadVideo(request, response) {
         gridFSBucket
             .find({ _id: request.movie._id })
             .toArray( (error, files) => {

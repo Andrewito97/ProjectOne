@@ -27,4 +27,6 @@ const MovieSchema = new mongoose.Schema({
     }
 });
 
+MovieSchema.index({title: 'text'});
+
 export default MovieSchema;

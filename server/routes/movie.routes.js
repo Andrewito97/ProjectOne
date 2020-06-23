@@ -8,11 +8,15 @@ movieApi.route('/myapi/movies')
     .get(movieController.listMovies)
     .post(movieController.create);
 
+movieApi.route('/myapi/movies/search')
+    .get(movieController.searchMovies);
+
 movieApi.route('/myapi/movies/:movieId')
-    .get(movieController.loadMovie)
+    .get(movieController.findMovie)
     .delete(movieController.deleteMovie);
 
 movieApi.route('/myapi/movies/video/:movieId')
+    .get(movieController.loadVideo)
     .delete(movieController.deleteVideo);
 
 movieApi.route('/myapi/profile/:userId/movies')

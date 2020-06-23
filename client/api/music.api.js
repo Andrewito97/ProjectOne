@@ -19,9 +19,11 @@ const musicApi = {
             console.log(error);
         }
     },
-    async listMusic(skip) {
+    async listMusic(skip, signal) {
         try {
             const response = await fetch(`${domain}/myapi/music?skip=${skip}`, {
+                signal: signal,
+                timeout: 3000,
                 method: 'GET',
             });
             return response.json();
@@ -41,12 +43,34 @@ const musicApi = {
             console.log(error);
         }
     },
-    async listAudios() {
+    // async listAudios() {
+    //     try {
+    //         const response = await fetch(`${domain}/myapi/music/audios`, {
+    //             method: 'GET',
+    //         });
+    //         return response.json();
+    //     }
+    //     catch (error) {
+    //         console.log(error);
+    //     }
+    // },
+    async searchMusic(text) {
         try {
-            const response = await fetch(`${domain}/myapi/music/audios`, {
+            const response = await fetch(`${domain}/myapi/music/search?text=${text}`, {
                 method: 'GET',
             });
             return response.json();
+        }
+        catch (error) {
+            console.log(error);
+        }
+    },
+    async findMusic(musicId) {
+        try {
+            const response = await fetch(`${domain}/myapi/music/${musicId}`, {
+                method: 'GET',
+            });
+            return response.json(); 
         }
         catch (error) {
             console.log(error);

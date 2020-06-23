@@ -12,15 +12,16 @@ const MoviesList = () => {
     const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
 
     React.useEffect(() => {
-        let isSubscribed = true;
-        if(isSubscribed) {
-            loadMovies();
+        const controller = new window.AbortController();
+        const signal = controller.signal;
+        loadMovies(signal);
+        return function cleanup() {
+            controller.abort();
         };
-        return () => isSubscribed = false;
     }, [skip]);
 
-    const loadMovies = async () => {
-        const data = await movieApi.listMovies(skip);
+    const loadMovies = async (signal) => {
+        const data = await movieApi.listMovies(skip, signal);
         if(data.error) {
             console.log(data.error);
         } else {
@@ -29,10 +30,6 @@ const MoviesList = () => {
                 setShouldLoadMore(false);
             };
         };
-    };
-
-    if(movies.length === 0) {
-        loadMovies(); //initial loading
     };
 
     const updateMoviesList = (item) => {

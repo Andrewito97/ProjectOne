@@ -8,11 +8,15 @@ musicApi.route('/myapi/music')
     .get(musicController.listMusic)
     .post(musicController.create);
 
-musicApi.route('/myapi/music/:musicId')
-    .delete(musicController.deleteMusic)
+musicApi.route('/myapi/music/search')
+    .get(musicController.searchMusic);
 
-musicApi.route('/myapi/music/audios')
-    .get(musicController.listAudios);
+musicApi.route('/myapi/music/:musicId')
+    .get(musicController.findMusic)
+    .delete(musicController.deleteMusic);
+
+// musicApi.route('/myapi/music/audios')
+//     .get(musicController.listAudios);
 
 musicApi.route('/myapi/music/audios/:audioName')
     .get(musicController.loadAudio)

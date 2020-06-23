@@ -12,15 +12,16 @@ const NewsFeedList = () => {
     const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
 
     React.useEffect(() => {
-        let isSubscribed = true;
-        if(isSubscribed) {
-            loadPosts();
+        const controller = new window.AbortController();
+        const signal = controller.signal;
+        loadPosts(signal);
+        return function cleanup() {
+            controller.abort();
         };
-        return () => isSubscribed = false;
     }, [skip]);
 
-    const loadPosts = async () => {
-        const data = await postApi.listNewsFeed(skip);
+    const loadPosts = async (signal) => {
+        let data = await postApi.listNewsFeed(skip, signal);
         if(data.error) {
             console.log(data.error);
         } else {
@@ -29,10 +30,6 @@ const NewsFeedList = () => {
                 setShouldLoadMore(false);
             };
         };
-    };
-
-    if(posts.length === 0) {
-        loadPosts(); //initial loading
     };
 
     const updateNewsFeed = (item) => {

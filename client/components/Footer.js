@@ -18,7 +18,7 @@ const styles = {
 const Footer = () => {
     return (
         <div style={{backgroundColor: paletteController.mainColor, ...styles.container}}>
-            <CopyrightIcon style={styles.copyrightIcon}/>
+            <CopyrightIcon style={{color: paletteController.textColor, ...styles.copyrightIcon}}/>
             <Typography component='span' style={{color: paletteController.textColor}}>
                 Copyright. All rights reserved
             </Typography>

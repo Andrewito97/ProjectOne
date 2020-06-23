@@ -28,4 +28,6 @@ const MusicSchema = new mongoose.Schema({
     }
 });
 
+MusicSchema.index({author: 'text', audios: 'text'});
+
 export default MusicSchema;

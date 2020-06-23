@@ -12,15 +12,16 @@ const MusicList = () => {
     const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
 
     React.useEffect(() => {
-        let isSubscribed = true;
-        if(isSubscribed) {
-            loadMusic();
+        const controller = new window.AbortController();
+        const signal = controller.signal;
+        loadMusic(signal);
+        return function cleanup() {
+            controller.abort();
         };
-        return () => isSubscribed = false;
     }, [skip]);
 
-    const loadMusic = async () => {
-        const data = await musicApi.listMusic(skip);
+    const loadMusic = async (signal) => {
+        const data = await musicApi.listMusic(skip, signal);
         if(data.error) {
             console.log(data.error);
         } 
@@ -30,10 +31,6 @@ const MusicList = () => {
                 setShouldLoadMore(false);
             };
         };
-    };
-
-    if(music.length === 0) {
-        loadMusic(); //initial loading
     };
 
     const updateMusicList = (item) => {
