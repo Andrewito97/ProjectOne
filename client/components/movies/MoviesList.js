@@ -21,7 +21,8 @@ const MoviesList = () => {
     }, [skip]);
 
     const loadMovies = async (signal) => {
-        const data = await movieApi.listMovies(skip, signal);
+        let data = await movieApi.listMovies(skip, signal);
+        if(data === undefined) return
         if(data.error) {
             console.log(data.error);
         } else {

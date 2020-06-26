@@ -15,9 +15,6 @@ musicApi.route('/myapi/music/:musicId')
     .get(musicController.findMusic)
     .delete(musicController.deleteMusic);
 
-// musicApi.route('/myapi/music/audios')
-//     .get(musicController.listAudios);
-
 musicApi.route('/myapi/music/audios/:audioName')
     .get(musicController.loadAudio)
     .delete(musicController.deleteAudio);

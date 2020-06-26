@@ -85,7 +85,7 @@ const movieController = {
                         error
                     });
                 };
-                response.json(movies)
+                response.json(movies);
         });
     },
     

@@ -23,7 +23,6 @@ const movieApi = {
         try {
             const response = await fetch(`${domain}/myapi/movies?skip=${skip}`, {
                 signal: signal,
-                timeout: 3000,
                 method: 'GET',
             });
             return response.json();

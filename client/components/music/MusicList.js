@@ -21,7 +21,8 @@ const MusicList = () => {
     }, [skip]);
 
     const loadMusic = async (signal) => {
-        const data = await musicApi.listMusic(skip, signal);
+        let data = await musicApi.listMusic(skip, signal);
+        if(data === undefined) return
         if(data.error) {
             console.log(data.error);
         } 

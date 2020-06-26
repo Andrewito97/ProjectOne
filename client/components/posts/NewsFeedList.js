@@ -22,6 +22,7 @@ const NewsFeedList = () => {
 
     const loadPosts = async (signal) => {
         let data = await postApi.listNewsFeed(skip, signal);
+        if(data === undefined) return
         if(data.error) {
             console.log(data.error);
         } else {

@@ -70,7 +70,7 @@ const _Menu = () => {
                         </MenuItem>
                     </Link>
                     <Link to=''>
-                        <MenuItem onClick={handleClose} style={{color: paletteController.textColor}}>
+                        <MenuItem disabled onClick={handleClose} style={{color: paletteController.textColor}}>
                             Settings
                         </MenuItem>
                     </Link>
@@ -88,7 +88,7 @@ const _Menu = () => {
                         </MenuItem>
                     </Link>
                     <Link to=''>
-                        <MenuItem onClick={handleClose} style={{color: paletteController.textColor}}>
+                        <MenuItem disabled onClick={handleClose} style={{color: paletteController.textColor}}>
                             Settings
                         </MenuItem>
                     </Link>

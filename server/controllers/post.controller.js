@@ -56,8 +56,8 @@ const postController = {
                     return response.status(400).json({
                         errorMessage: 'Posts not found !'
                     });
-                }
-                response.json(posts)
+                };
+                response.json(posts);
         });
     },
 

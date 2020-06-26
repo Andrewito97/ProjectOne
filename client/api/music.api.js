@@ -23,7 +23,6 @@ const musicApi = {
         try {
             const response = await fetch(`${domain}/myapi/music?skip=${skip}`, {
                 signal: signal,
-                timeout: 3000,
                 method: 'GET',
             });
             return response.json();

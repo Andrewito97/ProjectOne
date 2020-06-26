@@ -1,6 +1,8 @@
 import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { AppBar, Toolbar, Typography } from '@material-ui/core';
+import { withRouter } from 'react-router-dom';
+import { AppBar, 
+         Toolbar, 
+         Button } from '@material-ui/core';
 import Menu from './user/Menu';
 import Searchbar from './Searchbar';
 import paletteController from '../PaletteController';
@@ -45,45 +47,39 @@ const Topbar = withRouter(({ history }) => {
                     ...styles.topbar
                 }}
             >
-                <Link
+                <Button
                     id='newsfeed-tab'
-                    to='/'
+                    onClick={() => location.replace('/')}
                     style={{
                         color: activeTab === 'newsfeed' ? 'white': paletteController.tabsTextColor, 
                         textShadow: activeTab === 'newsfeed' ? '1px 1px 2px white' : false,
                         ...styles.newsFeedTab
                     }}
                 >
-                    <Typography>
-                        News Feed
-                    </Typography>
-                </Link>
-                <Link
+                    News Feed
+                </Button>
+                <Button
                     id='music-tab'
-                    to='/music'
+                    onClick={() => location.replace('/music')}
                     style={{
                         color: activeTab === 'music' ? 'white': paletteController.tabsTextColor,
                         textShadow: activeTab === 'music' ? '1px 1px 2px white' : false,
                         ...styles.musicTab
                     }}
                 >
-                    <Typography>
-                        Music
-                    </Typography>
-                </Link>
-                <Link
+                    Music
+                </Button>
+                <Button
                     id='movies-tab'
-                    to='/movies'
+                    onClick={() => location.replace('/movies')}
                     style={{
                         color: activeTab === 'movies' ? 'white': paletteController.tabsTextColor,
                         textShadow: activeTab === 'movies' ? '1px 1px 2px white' : false,
                          ...styles.moviesTab
                     }}
                 >
-                    <Typography>
-                        Movies
-                    </Typography>
-                </Link>
+                    Movies
+                </Button>
                 <Searchbar activeTab={activeTab}/>
                 <div style={styles.menu}>
                     <Menu/>

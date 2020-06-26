@@ -138,19 +138,6 @@ const musicController = {
         });
     },
 
-    // listAudios(request, response) {
-    //     gridFSBucket
-    //         .find({ aliases: 'music' })
-    //         .toArray( (error, files) => {
-    //             if(error) {
-    //                 return response.status(400).json({
-    //                     error
-    //                 });
-    //             };
-    //             response.status(200).json(files);
-    //     });
-    // },
-
     getMusicByID(request, response, nextHendlear, musicId) {
         Music
             .findById(musicId)
