@@ -235,7 +235,7 @@ const NewMovieForm = (props) => {
                             ...styles.addVideoButton
                         }}
                     >
-                        ADD VIDEO
+                        ADD TRAILER
                     </Button>
                 </CardActions>
             </Card>

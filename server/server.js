@@ -19,7 +19,7 @@ import musicApi from './routes/music.routes';
 //server side rendering
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
-import ReactRouter from 'react-router-dom/';
+import { StaticRouter } from 'react-router-dom';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import RootComponent from '../client/RootComponent';
 
@@ -53,9 +53,9 @@ app.get('*', (request, response) => {
     const sheets = new ServerStyleSheets();
     const markup = ReactDOMServer.renderToString(
         sheets.collect(
-            <ReactRouter.StaticRouter location={request.url}>
+            <StaticRouter location={request.url}>
                 <RootComponent/>
-            </ReactRouter.StaticRouter>
+            </StaticRouter>
         )
     )
     const css = sheets.toString();

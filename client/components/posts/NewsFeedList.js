@@ -21,6 +21,7 @@ const NewsFeedList = () => {
     }, [skip]);
 
     const loadPosts = async (signal) => {
+        console.log(window.navigator.languages);
         let data = await postApi.listNewsFeed(skip, signal);
         if(data === undefined) return
         if(data.error) {

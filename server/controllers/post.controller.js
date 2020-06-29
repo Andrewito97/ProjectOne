@@ -43,7 +43,7 @@ const postController = {
                     error
                 });
             };
-            response.json(posts)
+            response.json(posts);
         });
     },
 

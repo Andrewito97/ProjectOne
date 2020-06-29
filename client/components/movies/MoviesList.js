@@ -40,16 +40,16 @@ const MoviesList = () => {
     };
 
     return (
-        <InfiniteScroll
-            dataLength={movies.length}
-            hasMore={shouldLoadMore}
-            next={() => setSkip(movies.length)}
-        >
-            {authenticationHelper.isAuthenticated() ? (<NewMovieForm updateMoviesList={updateMoviesList}/>) : null}
-            <div>
+        <div>
+             {authenticationHelper.isAuthenticated() ? (<NewMovieForm updateMoviesList={updateMoviesList}/>) : null}
+            <InfiniteScroll
+                dataLength={movies.length}
+                hasMore={shouldLoadMore}
+                next={() => setSkip(movies.length)}
+            >
                 { movies.length === 0 ? <DummyMovie/> : movies.map( (item, index) => <Movie movie={item} key={index}/> ) }
-            </div>
-        </InfiniteScroll>
+            </InfiniteScroll>
+        </div>
     );
 };
 

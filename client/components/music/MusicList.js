@@ -41,16 +41,16 @@ const MusicList = () => {
     };
 
     return (
-        <InfiniteScroll
-            dataLength={music.length}
-            hasMore={shouldLoadMore}
-            next={() => setSkip(music.length)}
-        >
+        <div>
             {authenticationHelper.isAuthenticated() ? (<NewMusicForm updateMusicList={updateMusicList}/>) : null}
-            <div>
+            <InfiniteScroll
+                dataLength={music.length}
+                hasMore={shouldLoadMore}
+                next={() => setSkip(music.length)}
+            >
                 { music.length === 0 ? <DummyMusic/> : music.map( (item, index) => <Music music={item} key={index}/> ) }
-            </div>
-        </InfiniteScroll>
+            </InfiniteScroll>
+        </div>
     );
 };
 
