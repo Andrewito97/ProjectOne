@@ -1,19 +1,20 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
-import FacebookLogin from 'react-facebook-login';
+import { FcGoogle } from 'react-icons/fc';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { Card, 
          CardContent, 
          Typography, 
          TextField,
          Button,
+         IconButton,
          CardActions } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import userApi from '../../api/user.api';
 import config from '../../../config';
 import authenticationHelper from '../../helpers/authentication.helper';
 import paletteController from '../../PaletteController';
-import '../style.css';
 
 const styles = {
     card: {
@@ -32,18 +33,24 @@ const styles = {
     linkContainer: {
         marginTop: 30
     },
-    loginButton: {
-        color: 'white',
+    buttonsContainer: {
+        position: 'relative',
+        width: '100%',
         marginTop: 60
     },
+    loginButton: {
+        color: 'white'
+    },
     googleButton: {
-        marginTop: 60,
-        marginLeft: '18%',
-        width: 35
+        position: 'absolute',
+        bottom: -8,
+        right: 45
     },
     facebookButton: {
-        marginTop: 60,
-        marginLeft: '25%',
+        position: 'absolute',
+        bottom: -8,
+        right: -15,
+        color: '#415E9B'
     }
 };
 
@@ -173,36 +180,48 @@ const LoginForm = () => {
                     <Link to='/recovery'>Forgot your password? Recover !</Link>
                 </div>
                 <CardActions>
-                    <Button
-                        id='login-button'
-                        onClick={onLogin}
-                        style={{
-                            backgroundColor: paletteController.mainColor,
-                            ...styles.loginButton
-                        }}
-                    >
-                        Login
-                    </Button>
-                    <div id='google-button' style={styles.googleButton}>
+                    <div style={styles.buttonsContainer}>
+                        <Button
+                            id='login-button'
+                            onClick={onLogin}
+                            style={{
+                                backgroundColor: paletteController.mainColor,
+                                ...styles.loginButton
+                            }}
+                        >
+                            Login
+                        </Button>
                         <GoogleLogin
                             clientId={config.googleClientId}
-                            buttonText='Google'
                             isSignedIn={false} 
                             onSuccess={responseMedia}
                             onFailure={() => console.log('Google auth was canceled')} 
-                            cookiePolicy={'single_host_origin'}                
+                            cookiePolicy={'single_host_origin'}
+                            render={renderProps => (
+                                <IconButton
+                                    id='google-button'
+                                    onClick={renderProps.onClick}
+                                    style={styles.googleButton}
+                                >
+                                    <FcGoogle size={33}/>
+                                </IconButton>
+                            )}           
                         />
-                    </div>
-                    <div id='facebook-button' style={styles.facebookButton}>
                         <FacebookLogin
                             appId={config.facebookAppId}
                             autoLoad={false}
                             fields='name,email'
-                            textButton='Facebook'
-                            cssClass='facebook-button'
-                            icon={<FacebookIcon/>}
                             callback={responseMedia}
                             onFailure={() => console.log('Facebook auth was canceled')} 
+                            render={renderProps => (
+                                <IconButton
+                                    id='facebook-button'
+                                    onClick={renderProps.onClick}
+                                    style={styles.facebookButton}
+                                >
+                                    <FacebookIcon fontSize='large'/>
+                                </IconButton>
+                            )}
                         />
                     </div>
                 </CardActions>

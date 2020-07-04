@@ -27,9 +27,3 @@ input[type=range]::-moz-range-thumb {
    -webkit-appearance: none;
    margin-top: -4px;
 }
-.facebook-button {
-   background-color: #415E9B;
-   color: white;
-   padding: 6px;
-   font-weight: bold;
-}
