@@ -12,10 +12,11 @@ const styles = {
         padding: 15
     },
     formControl: {
-        width: '100%'
+        width: '45%',
+        marginTop: 10
     },
     applyButton: {
-        marginTop: 15,
+        marginTop: 30,
         color: 'white'
     },
     menuList: {
@@ -29,7 +30,7 @@ const styles = {
         height: 20,
         width: 20,
         right: 8,
-        top: 9,
+        top: 9
     }
 };
 
@@ -43,7 +44,7 @@ const PaletteSelect = (props) => {
     return (
         <div style={styles.container}>
             <Typography 
-                variant='caption'
+                variant='h6'
                 style={{color: paletteController.textColor}} 
             >
                 Color palette
@@ -88,6 +89,7 @@ const PaletteSelect = (props) => {
                     </MenuItem>            
                 </Select>
             </FormControl>
+            <br/>
             <Button
                 onClick={() => setCookie('OneProjectPalette', props.palette)}
                 style={{

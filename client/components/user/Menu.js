@@ -69,8 +69,8 @@ const _Menu = () => {
                             Logout
                         </MenuItem>
                     </Link>
-                    <Link to=''>
-                        <MenuItem disabled onClick={handleClose} style={{color: paletteController.textColor}}>
+                    <Link to='/settings'>
+                        <MenuItem onClick={handleClose} style={{color: paletteController.textColor}}>
                             Settings
                         </MenuItem>
                     </Link>
@@ -87,8 +87,8 @@ const _Menu = () => {
                             Login
                         </MenuItem>
                     </Link>
-                    <Link to=''>
-                        <MenuItem disabled onClick={handleClose} style={{color: paletteController.textColor}}>
+                    <Link to='/settings'>
+                        <MenuItem onClick={handleClose} style={{color: paletteController.textColor}}>
                             Settings
                         </MenuItem>
                     </Link>

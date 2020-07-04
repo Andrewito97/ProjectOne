@@ -45,6 +45,9 @@ const serverConfig = {
         },{
             test: /\.css$/i,
             use: ['css-loader'],
+        },{
+            test: /\.(ttf|eot|svg|gif|jpg|png)(\?[\s\S]+)?$/,
+            use: ['file-loader']
         }]
     }
 };
@@ -76,7 +79,10 @@ const clientConfig = {
         },{
             test: /\.css$/i,
             use: ['style-loader', 'css-loader'],
-          },]
+        },{
+            test: /\.(ttf|eot|svg|gif|jpg|png)(\?[\s\S]+)?$/,
+            use: ['file-loader']
+        }]
     },
     plugins: [new Dotenv()]
 };

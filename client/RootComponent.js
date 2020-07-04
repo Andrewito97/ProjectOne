@@ -7,12 +7,13 @@ import MusicList from './components/music/MusicList';
 import SearchMusic from './components/music/SearchMusic';
 import MoviesList from './components/movies/MoviesList';
 import SearchMovie from './components/movies/SearchMovie';
-import RightSidebar from './components/RightSidebar';
+import AboutUs from './components/AboutUs';
 import SignUpForm from './components/user/SignUpForm';
 import LoginForm from './components/user/LoginForm';
 import RecoveryForm from './components/user/RecoveryForm';
 import ResetPasswordForm from './components/user/ResetPasswordForm';
 import Profile from './components/user/Profile';
+import Settings from './components/Settings';
 import Footer from './components/Footer';
 import paletteController from './PaletteController';
 
@@ -56,10 +57,13 @@ const RootComponent = (props) => (
                     <Route path='/recovery' component={RecoveryForm} />
                     <Route path='/reset/:email/:resetToken' component={ResetPasswordForm} />
                     <Route path='/profile/:userId' component={Profile} />
+                    <Route path='/settings' component={() => (
+                        <Settings palette={props.palette} setPalette={props.setPalette}/>
+                    )}/>
                 </Switch>
             </div>
             <div style={styles.aside}>
-                <RightSidebar palette={props.palette} setPalette={props.setPalette}/>
+                <AboutUs/>
             </div>
         </div>
         <Footer/>

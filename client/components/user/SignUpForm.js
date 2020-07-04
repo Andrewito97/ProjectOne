@@ -18,22 +18,27 @@ const styles = {
     },
     nameInput: {
         marginTop: 40,
+        marginLeft: 5,
         width: '100%'
     },
     emailInput: {
         marginTop: 30,
+        marginLeft: 5,
         width: '100%'
     },
     passwordInput: {
         marginTop: 30,
+        marginLeft: 5,
         width: '100%'
     },
     confirmPasswordInput: {
         marginTop: 30,
+        marginLeft: 5,
         width: '100%'
     },
     linkContainer: {
-        marginTop: 30
+        marginTop: 30,
+        marginLeft: 8
     },
     createButton: {
         color: 'white',
