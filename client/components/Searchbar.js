@@ -15,7 +15,7 @@ const styles = {
         display: 'flex',
         position: 'relative',
         borderRadius: 5,
-        marginLeft: '15%',
+        marginLeft: '10%',
     },
     icon: {
         margin: 4,
