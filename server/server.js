@@ -1,5 +1,8 @@
 //general modules
 import express from 'express';
+import fs from 'fs';
+//import http from 'http';
+import https from 'https';
 import path from 'path';
 import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
@@ -76,7 +79,19 @@ mongoose.connection.once('open', () => {
     console.log('Successfully connected to database !');
 });
 
-//initialize port for server
-app.listen(config.port, () => {
-    console.log(`Server is running on port ${config.port} in ${config.nodeEnv} mode...`);
+//read credentials for enabling secure connection
+const privateKey  = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.key'), 'utf8');
+const certificate = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.cert'), 'utf8');
+const credentials = { key: privateKey, cert: certificate };
+
+//initialize servers on both ports
+
+//const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+// httpServer.listen(config.port, () => {
+//     console.log(`Server is running on port ${config.port} in ${config.nodeEnv} mode...`);
+// });
+httpsServer.listen(config.securePort, () => {
+    console.log(`Server is running on secure port ${config.securePort} in ${config.nodeEnv} mode...`);
 });

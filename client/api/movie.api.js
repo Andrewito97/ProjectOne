@@ -1,6 +1,6 @@
 import fetch from 'node-fetch';
 import config from '../../config';
-const domain = `http://${config.host}:${config.port}`;  
+const domain = `https://${config.host}:${config.securePort}`;  
 
 const movieApi = {
     async create(token, movie) {

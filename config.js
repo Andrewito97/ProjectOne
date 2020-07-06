@@ -4,6 +4,7 @@ dotenv.config();
 const config = {
     nodeEnv: process.env.NODE_ENV,
     port: process.env.PORT,
+    securePort: process.env.SECURE_PORT,
     host: process.env.HOST,
     mainMongoUri: process.env.MONGO_URI_MAIN,
     musicMongoUri: process.env.MONGO_URI_MUSIC,
