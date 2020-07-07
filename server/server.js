@@ -1,7 +1,7 @@
 //general modules
 import express from 'express';
 import fs from 'fs';
-//import http from 'http';
+import http from 'http';
 import https from 'https';
 import path from 'path';
 import mongoose from 'mongoose';
@@ -76,22 +76,22 @@ mongoose.connection.on('error', () => {
     throw new Error('Unable to connect to database !');
 });
 mongoose.connection.once('open', () => {
-    console.log('Successfully connected to database !');
+    console.log('Successfully connected to db with posts and users documents !');
 });
 
-//read credentials for enabling secure connection
-const privateKey  = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.key'), 'utf8');
-const certificate = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.cert'), 'utf8');
-const credentials = { key: privateKey, cert: certificate };
-
-//initialize servers on both ports
-
-//const httpServer = http.createServer(app);
-const httpsServer = https.createServer(credentials, app);
-
-// httpServer.listen(config.port, () => {
-//     console.log(`Server is running on port ${config.port} in ${config.nodeEnv} mode...`);
-// });
-httpsServer.listen(config.securePort, () => {
-    console.log(`Server is running on secure port ${config.securePort} in ${config.nodeEnv} mode...`);
-});
+//select a server depending on the environment  
+if(process.env.NODE_ENV === 'development') {
+    const httpServer = http.createServer(app);
+    httpServer.listen(config.port, () => {
+        console.log(`Server is running on port ${config.port} in ${config.nodeEnv} mode...`);
+    });
+} else {
+    //read credentials for enabling secure connection
+    const privateKey  = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.key'), 'utf8');
+    const certificate = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.cert'), 'utf8');
+    const credentials = { key: privateKey, cert: certificate };
+    const httpsServer = https.createServer(credentials, app);
+    httpsServer.listen(config.securePort, () => {
+        console.log(`Server is running on secure port ${config.securePort} in ${config.nodeEnv} mode...`);
+    });
+};
