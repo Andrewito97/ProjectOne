@@ -14,8 +14,7 @@ const styles = {
     container: {
         display: 'flex',
         position: 'relative',
-        borderRadius: 5,
-        marginLeft: '10%',
+        borderRadius: 5
     },
     icon: {
         margin: 4,

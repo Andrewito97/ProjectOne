@@ -3,15 +3,13 @@ import { Card,
         CardContent, 
         CardHeader,
         Typography } from '@material-ui/core';
-import PaletteSelect from './PaletteSelect';
 import paletteController from '../PaletteController';
 import ukraineImage from '../assets/ukraine.png';
 
 const styles = {
     card: {
-        width: '100%',
-        padding: 17,
-        marginBottom: 30
+        marginBottom: 30,
+        padding: 20
     },
     text: {
         marginBottom: 40
@@ -21,7 +19,7 @@ const styles = {
     }
 }
 
-const AboutUs = () => {
+const Welcome = () => {
     return (
         <Card 
             style={{
@@ -30,7 +28,7 @@ const AboutUs = () => {
             }}
         >
             <CardHeader
-                title='About us'
+                title='Welcome!'
                 style={{
                     color: paletteController.textColor
                 }}
@@ -43,10 +41,11 @@ const AboutUs = () => {
                     }}
                 >
                     <i>
-                    I want to popularize ukrainian culture - 
-                    movies, music and intellectual efforts in general. 
-                    You can sendyour feedback on my gmail - 
-                    gandriy123wf@gmail.com
+                    Glag to see you here! This is the place of ukrainian
+                    media and intelectual products. The main goal -
+                    populization of the content for people who wants to understand
+                    better this culture or who doesn't know at all. Hope you will
+                    have a great time here!
                     </i>
                 </Typography>
                 <img src={ukraineImage} style={styles.image}/>
@@ -55,4 +54,4 @@ const AboutUs = () => {
     )
 }
 
-export default AboutUs;
+export default Welcome;
