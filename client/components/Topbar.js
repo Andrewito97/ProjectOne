@@ -10,7 +10,7 @@ import paletteController from '../PaletteController';
 
 const styles = {
     topbar: {
-        position: 'relative',
+        position: 'relative'
     },
     newsFeedTab: {
         marginLeft: '16%'

@@ -24,7 +24,8 @@ const styles = {
         paddingTop: '6%'
     },
     list: {
-        margin: '3%'
+        margin: '3%',
+        minHeight: 1500
     },
     aside: {
         width: '30%', 
@@ -46,7 +47,7 @@ const RootComponent = (props) => {
                     ...styles.container
                 }}
             >
-                <div style={{ width: isDesktop ? '64%' : '96%', ...styles.list }}>
+                <div style={{ width: isDesktop ? '64%' : '98%', ...styles.list }}>
                     <Switch >    
                         <Route exact path='/' component={NewsFeedList} />
                         <Route exact path='/music' component={MusicList} />  
