@@ -18,80 +18,22 @@ import Settings from './components/Settings';
 import Footer from './components/Footer';
 import paletteController from './PaletteController';
 
-const desktopStyles = {
+const styles = {
     container: {
         display: 'flex', 
-        paddingTop: '6%',
-        paddingLeft: '12%', 
-        paddingRight: '8%',
+        paddingTop: '6%'
     },
     list: {
-        width: '64%', 
         margin: '3%'
     },
     aside: {
-        width: '30%',
+        width: '30%', 
         marginTop: '3%'
     }
 };
 
-const tabletStyles = {
-    container: {
-        display: 'flex',
-        flexDirection: 'column-reverse',
-        paddingTop: '6%',
-        paddingLeft: '8%', 
-        paddingRight: '8%',
-    },
-    list: {
-        width: '80%', 
-        margin: '3%'
-    },
-    aside: {
-        width: '80%', 
-        margin: '3%'
-    }
-};
-
-const smartphoneStyles = {
-    container: {
-        display: 'flex',
-        flexDirection: 'column-reverse',
-        paddingTop: '6%',
-        paddingLeft: 0, 
-        paddingRight: 0,
-    },
-    list: {
-        width: '100%'
-    },
-    aside: {
-        width: '100%'
-    }
-};
-
 const RootComponent = (props) => {
-    const isDesktop = useMediaQuery({
-        minWidth: 1225,
-        maxWidth: 1824
-    });
-    const isTablet = useMediaQuery({
-        minWidth: 401,
-        maxWidth: 1224
-    });
-    const isSmartphone = useMediaQuery({
-        maxWidth: 400
-    });
-    
-    const styles = {};
-    if(isDesktop) {
-        Object.assign(styles, desktopStyles);
-    };
-    if(isTablet) {
-        Object.assign(styles, tabletStyles);
-    };
-    if(isSmartphone) {
-        Object.assign(styles, smartphoneStyles);
-    };
+    const isDesktop = useMediaQuery({ minWidth: 1164 });
 
     return (
         <div>
@@ -99,10 +41,12 @@ const RootComponent = (props) => {
             <div 
                 style={{
                     backgroundColor: paletteController.backgroundColor,
+                    paddingLeft: isDesktop ? '15%' : 0,
+                    paddingRight: isDesktop ? '8%' : '2%',
                     ...styles.container
                 }}
             >
-                <div style={styles.list}>
+                <div style={{ width: isDesktop ? '64%' : '96%', ...styles.list }}>
                     <Switch >    
                         <Route exact path='/' component={NewsFeedList} />
                         <Route exact path='/music' component={MusicList} />  
@@ -120,9 +64,14 @@ const RootComponent = (props) => {
                         )}/>
                     </Switch>
                 </div>
-                <div style={styles.aside}>
-                    <Welcome/>
-                </div>
+                {
+                    isDesktop ?
+                    <div style={styles.aside}>
+                        <Welcome/>
+                    </div>
+                    :
+                    null
+                }
             </div>
             <Footer/>
         </div>

@@ -1,6 +1,8 @@
 import React from 'react';
+import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { InputBase,
+         IconButton,
          List,
          ListItem,
          ListItemText } from '@material-ui/core';
@@ -12,14 +14,12 @@ import movieApi from '../api/movie.api';
 
 const styles = {
     container: {
-        display: 'flex',
-        position: 'relative',
         borderRadius: 5
     },
     icon: {
         margin: 4,
         marginRight: 7,
-        pointerEvents: 'none'
+        color: 'white'
     },
     inputBase: {
         borderRadius: 5,
@@ -41,6 +41,8 @@ const Searchbar = (props) => {
     const [ text, setText ] = React.useState('');
     const [ items, setItems ] = React.useState([]);
 
+    const isDesktop = useMediaQuery({ minWidth: 1164 });
+
     React.useEffect(() => {
         search();
         text.length === 0 ? setDisplayList('none') : setDisplayList('block');
@@ -61,8 +63,12 @@ const Searchbar = (props) => {
         };
     };
 
-    const focusHandler = () => {
-        catchFocus(!isFocused);
+    const showInput = () => {
+        catchFocus(true);
+    };
+
+    const hideInput = () => {
+        catchFocus(false);
     };
 
     const handleChange = (event) => {
@@ -76,23 +82,27 @@ const Searchbar = (props) => {
                 ...styles.container
             }}
         >
-            <Search 
+            <IconButton
+                onClick={showInput}
+                size='small'
                 style={{ 
                     backgroundColor: paletteController.additionalColor,
                     ...styles.icon
                 }}
-            />
+            >
+                <Search/>
+            </IconButton>
             <InputBase
                 onChange={handleChange}
                 value={text}
-                onFocus={focusHandler} 
-                onBlur={focusHandler}
+                onFocus={showInput} 
+                onBlur={hideInput}
                 placeholder={`Search in ${props.activeTab}...`}
                 style={{
-                    width: isFocused ? 300 : 165, transitionDuration: '0.4s',
+                    width: isFocused ? 380 : (isDesktop ? 165 : 0), 
+                    transitionDuration: '0.4s',
                     backgroundColor: paletteController.additionalColor,
                     ...styles.inputBase
-
                 }} 
             />
             <List

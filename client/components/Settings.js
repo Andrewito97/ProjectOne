@@ -7,7 +7,7 @@ import paletteController from '../PaletteController';
 
 const styles = {
     card: {
-        width: '100%',
+        width: '95%',
         padding: 17,
         marginBottom: 20
     },

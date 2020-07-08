@@ -8,97 +8,38 @@ import Menu from './user/Menu';
 import Searchbar from './Searchbar';
 import paletteController from '../PaletteController';
 
-const desktopStyles = {
+const styles = {
     topbar: {
         position: 'relative',
     },
-    tabs: {
-        width: '60%'
-    },
-    tabsAndSearch: {
-        display: 'flex',
-        flexDirection: 'row',
-        width: '85%'
-    },
     newsFeedTab: {
-        marginLeft: '32%'
+        marginLeft: '16%'
     },
     musicTab: {
-        marginLeft: '10%'
+        marginLeft: '5%'
     },
     moviesTab: {
+        marginLeft: '5%'
+    },
+    searchbarDesktop: {
         marginLeft: '10%'
     },
-    searchbar: {},
-    menu: {
+    searchbarMobile: {
         position: 'absolute',
-        right: '10%'
-    }
-};
-
-const tabletStyles = {
-    topbar: {
-        position: 'relative',
-    },
-    tabs: {
-        width: '100%'
-    },
-    tabsAndSearch: {
-        display: 'flex',
-        flexDirection: 'column',
-        width: '85%'
-    },
-    newsFeedTab: {
-        marginLeft: '17%'
-    },
-    musicTab: {
-        marginLeft: '10%'
-    },
-    moviesTab: {
-        marginLeft: '10%'
-    },
-    searchbar: {
-        marginLeft: '10%',
-        width: '90%'
+        marginLeft: '3%',
+        zIndex: 5
     },
     menu: {
         position: 'absolute',
-        right: '10%'
-    }
-};
-
-const smartphoneStyles = {
-    topbar: {
-        position: 'relative',
-    },
-    tabs: {
-        width: '100%'
-    },
-    tabsAndSearch: {
-        display: 'flex',
-        flexDirection: 'column',
-        width: '85%'
-    },
-    newsFeedTab: {
-        marginLeft: '1%'
-    },
-    musicTab: {
-        marginLeft: '10%'
-    },
-    moviesTab: {
-        marginLeft: '10%'
-    },
-    searchbar: {
-        width: '100%'
-    },
-    menu: {
-        position: 'absolute',
-        right: '10%'
+        zIndex: 5,
+        right: '5%'
     }
 };
 
 const Topbar = withRouter(({ history }) => {
     const [ activeTab, setActiveTab ] = React.useState('');
+
+    const isDesktop = useMediaQuery({ minWidth: 1164 });
 
     React.useEffect(() => {
         getTab();
@@ -110,29 +51,6 @@ const Topbar = withRouter(({ history }) => {
         if(history.location.pathname === '/movies') setActiveTab('movies');
     };
 
-    const isDesktop = useMediaQuery({
-        minWidth: 1225,
-        maxWidth: 1824
-    });
-    const isTablet = useMediaQuery({
-        minWidth: 401,
-        maxWidth: 1224
-    });
-    const isSmartphone = useMediaQuery({
-        maxWidth: 400
-    });
-    
-    const styles = {};
-    if(isDesktop) {
-        Object.assign(styles, desktopStyles);
-    };
-    if(isTablet) {
-        Object.assign(styles, tabletStyles);
-    };
-    if(isSmartphone) {
-        Object.assign(styles, smartphoneStyles);
-    };
-
     return (
         <AppBar position='sticky'>
             <Toolbar 
@@ -141,46 +59,55 @@ const Topbar = withRouter(({ history }) => {
                     ...styles.topbar
                 }}
             >
-                <div style={styles.tabsAndSearch}>
-                    <div style={styles.tabs}>
-                        <Button
-                            id='newsfeed-tab'
-                            onClick={() => location.replace('/')}
-                            style={{
-                                color: activeTab === 'newsfeed' ? 'white': paletteController.tabsTextColor, 
-                                textShadow: activeTab === 'newsfeed' ? '1px 1px 2px white' : false,
-                                ...styles.newsFeedTab
-                            }}
-                        >
-                            News Feed
-                        </Button>
-                        <Button
-                            id='music-tab'
-                            onClick={() => location.replace('/music')}
-                            style={{
-                                color: activeTab === 'music' ? 'white': paletteController.tabsTextColor,
-                                textShadow: activeTab === 'music' ? '1px 1px 2px white' : false,
-                                ...styles.musicTab
-                            }}
-                        >
-                            Music
-                        </Button>
-                        <Button
-                            id='movies-tab'
-                            onClick={() => location.replace('/movies')}
-                            style={{
-                                color: activeTab === 'movies' ? 'white': paletteController.tabsTextColor,
-                                textShadow: activeTab === 'movies' ? '1px 1px 2px white' : false,
-                                ...styles.moviesTab
-                            }}
-                        >
-                            Movies
-                        </Button>
-                    </div>
-                    <div style={styles.searchbar}>
+                { 
+                    isDesktop ? 
+                    null
+                    :
+                    <div style={styles.searchbarMobile}>
                         <Searchbar activeTab={activeTab}/>
-                    </div> 
-                </div>
+                    </div>
+                }
+                <Button
+                    id='newsfeed-tab'
+                    onClick={() => location.replace('/')}
+                    style={{
+                        color: activeTab === 'newsfeed' ? 'white': paletteController.tabsTextColor, 
+                        textShadow: activeTab === 'newsfeed' ? '1px 1px 2px white' : false,
+                        ...styles.newsFeedTab
+                    }}
+                >
+                    News Feed
+                </Button>
+                <Button
+                    id='music-tab'
+                    onClick={() => location.replace('/music')}
+                    style={{
+                        color: activeTab === 'music' ? 'white': paletteController.tabsTextColor,
+                        textShadow: activeTab === 'music' ? '1px 1px 2px white' : false,
+                        ...styles.musicTab
+                    }}
+                >
+                    Music
+                </Button>
+                <Button
+                    id='movies-tab'
+                    onClick={() => location.replace('/movies')}
+                    style={{
+                        color: activeTab === 'movies' ? 'white': paletteController.tabsTextColor,
+                        textShadow: activeTab === 'movies' ? '1px 1px 2px white' : false,
+                         ...styles.moviesTab
+                    }}
+                >
+                    Movies
+                </Button>
+                {
+                    isDesktop ?
+                    <div style={styles.searchbarDesktop}>
+                        <Searchbar activeTab={activeTab}/>
+                    </div>
+                    :
+                    null
+                }
                 <div style={styles.menu}>
                     <Menu/>
                 </div>
