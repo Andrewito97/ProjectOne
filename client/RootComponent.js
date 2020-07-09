@@ -1,5 +1,4 @@
 import React from 'react';
-import { useMediaQuery } from 'react-responsive';
 import { Switch, Route } from 'react-router-dom';
 import Topbar from './components/Topbar';
 import NewsFeedList from './components/posts/NewsFeedList';
@@ -21,10 +20,13 @@ import paletteController from './PaletteController';
 const styles = {
     container: {
         display: 'flex', 
-        paddingTop: '6%'
+        paddingTop: '6%',
+        paddingLeft: '15%',
+        paddingRight: '8%'
     },
     list: {
         margin: '3%',
+        width: '64%',
         minHeight: 1500
     },
     aside: {
@@ -34,20 +36,16 @@ const styles = {
 };
 
 const RootComponent = (props) => {
-    const isDesktop = useMediaQuery({ minWidth: 1164 });
-
     return (
         <div>
             <Topbar/>
             <div 
                 style={{
                     backgroundColor: paletteController.backgroundColor,
-                    paddingLeft: isDesktop ? '15%' : 0,
-                    paddingRight: isDesktop ? '8%' : '2%',
                     ...styles.container
                 }}
             >
-                <div style={{ width: isDesktop ? '64%' : '98%', ...styles.list }}>
+                <div style={styles.list}>
                     <Switch >    
                         <Route exact path='/' component={NewsFeedList} />
                         <Route exact path='/music' component={MusicList} />  
@@ -65,14 +63,9 @@ const RootComponent = (props) => {
                         )}/>
                     </Switch>
                 </div>
-                {
-                    isDesktop ?
-                    <div style={styles.aside}>
-                        <Welcome/>
-                    </div>
-                    :
-                    null
-                }
+                <div style={styles.aside}>
+                    <Welcome/>
+                </div>
             </div>
             <Footer/>
         </div>

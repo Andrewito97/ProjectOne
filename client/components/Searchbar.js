@@ -1,5 +1,4 @@
 import React from 'react';
-import { useMediaQuery } from 'react-responsive';
 import { Link } from 'react-router-dom';
 import { InputBase,
          IconButton,
@@ -29,8 +28,8 @@ const styles = {
         position: 'absolute',
         boxShadow: '0px 1px 2px 0px grey',
         borderRadius: 5,
-        top: 33,
-        width: 333,
+        top: 40,
+        width: 420,
         zIndex: 1
     }
 };
@@ -40,8 +39,6 @@ const Searchbar = (props) => {
     const [ displayList, setDisplayList ] = React.useState('none');
     const [ text, setText ] = React.useState('');
     const [ items, setItems ] = React.useState([]);
-
-    const isDesktop = useMediaQuery({ minWidth: 1164 });
 
     React.useEffect(() => {
         search();
@@ -99,8 +96,8 @@ const Searchbar = (props) => {
                 onBlur={hideInput}
                 placeholder={`Search in ${props.activeTab}...`}
                 style={{
-                    width: isFocused ? 380 : (isDesktop ? 165 : 0), 
-                    transitionDuration: '0.4s',
+                    width: isFocused ? 380 : 165, 
+                    transitionDuration: '0.5s',
                     backgroundColor: paletteController.additionalColor,
                     ...styles.inputBase
                 }} 

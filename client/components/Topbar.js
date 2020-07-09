@@ -1,5 +1,4 @@
 import React from 'react';
-import { useMediaQuery } from 'react-responsive';
 import { withRouter } from 'react-router-dom';
 import { AppBar, 
          Toolbar, 
@@ -21,25 +20,18 @@ const styles = {
     moviesTab: {
         marginLeft: '5%'
     },
-    searchbarDesktop: {
+    searchbar: {
         marginLeft: '10%'
-    },
-    searchbarMobile: {
-        position: 'absolute',
-        marginLeft: '3%',
-        zIndex: 5
     },
     menu: {
         position: 'absolute',
         zIndex: 5,
-        right: '5%'
+        right: '8%'
     }
 };
 
 const Topbar = withRouter(({ history }) => {
     const [ activeTab, setActiveTab ] = React.useState('');
-
-    const isDesktop = useMediaQuery({ minWidth: 1164 });
 
     React.useEffect(() => {
         getTab();
@@ -59,14 +51,6 @@ const Topbar = withRouter(({ history }) => {
                     ...styles.topbar
                 }}
             >
-                { 
-                    isDesktop ? 
-                    null
-                    :
-                    <div style={styles.searchbarMobile}>
-                        <Searchbar activeTab={activeTab}/>
-                    </div>
-                }
                 <Button
                     id='newsfeed-tab'
                     onClick={() => location.replace('/')}
@@ -100,14 +84,9 @@ const Topbar = withRouter(({ history }) => {
                 >
                     Movies
                 </Button>
-                {
-                    isDesktop ?
-                    <div style={styles.searchbarDesktop}>
-                        <Searchbar activeTab={activeTab}/>
-                    </div>
-                    :
-                    null
-                }
+                <div style={styles.searchbar}>
+                    <Searchbar activeTab={activeTab}/>
+                </div>
                 <div style={styles.menu}>
                     <Menu/>
                 </div>
