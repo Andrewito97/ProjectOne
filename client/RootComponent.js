@@ -26,11 +26,11 @@ const styles = {
     },
     list: {
         margin: '3%',
-        width: '64%',
+        width: 800,
         minHeight: 1500
     },
     aside: {
-        width: '30%', 
+        width: 350, 
         marginTop: '3%'
     }
 };
