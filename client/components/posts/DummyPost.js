@@ -16,7 +16,7 @@ const styles = {
         height: 60,
         width: 60,
         left: '42%',
-        top: '43%',
+        top: '45%',
         zIndex: 1
     }
 };
@@ -30,7 +30,7 @@ const DummyPost = () => {
     <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={27} width='90%'/> 
 
     const fakeImage = 
-    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={400} width='90%' variant='rect'/> 
+    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={470} width='90%' variant='rect'/> 
 
     return (
         <div>

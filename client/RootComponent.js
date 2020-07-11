@@ -13,6 +13,7 @@ import LoginForm from './components/user/LoginForm';
 import RecoveryForm from './components/user/RecoveryForm';
 import ResetPasswordForm from './components/user/ResetPasswordForm';
 import Profile from './components/user/Profile';
+import Support from './components/Support';
 import Settings from './components/Settings';
 import Footer from './components/Footer';
 import paletteController from './PaletteController';
@@ -27,7 +28,7 @@ const styles = {
     list: {
         margin: '3%',
         width: 800,
-        minHeight: 1500
+        minHeight: 1000
     },
     aside: {
         width: 350, 
@@ -58,8 +59,9 @@ const RootComponent = (props) => {
                         <Route path='/recovery' component={RecoveryForm} />
                         <Route path='/reset/:email/:resetToken' component={ResetPasswordForm} />
                         <Route path='/profile/:userId' component={Profile} />
+                        <Route path='/support' component={Support} />
                         <Route path='/settings' component={() => (
-                            <Settings palette={props.palette} setPalette={props.setPalette}/>
+                            <Settings palette={props.palette} setPalette={props.setPalette} />
                         )}/>
                     </Switch>
                 </div>

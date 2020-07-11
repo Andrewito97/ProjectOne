@@ -3,7 +3,7 @@ import { withRouter } from 'react-router-dom';
 import { AppBar, 
          Toolbar, 
          Button } from '@material-ui/core';
-import Menu from './user/Menu';
+import Menu from './Menu';
 import Searchbar from './Searchbar';
 import paletteController from '../PaletteController';
 

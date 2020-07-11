@@ -18,6 +18,7 @@ import userApi from './routes/user.routes';
 import postApi from './routes/post.routes';
 import movieApi from './routes/movie.routes';
 import musicApi from './routes/music.routes';
+import otherApi from './routes/other.routes';
 
 //server side rendering
 import React from 'react';
@@ -50,6 +51,7 @@ app.use('/', userApi);
 app.use('/', postApi);
 app.use('/', musicApi);
 app.use('/', movieApi);
+app.use('/', otherApi);
 
 //sending template with ssr markup, css and bundeled client code at every endpoint
 app.get('*', (request, response) => {

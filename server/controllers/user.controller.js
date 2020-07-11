@@ -120,7 +120,7 @@ const userController = {
                 const mailOptions = {
                     to: user.email,
                     from: 'oneproject.support@test.com',
-                    subject: "Password change request",
+                    subject: 'Password change request',
                     text: `Hi ${user.name}, please click on the following link to reset your password: ${link}`,
                 };
                 sgMail.send(mailOptions);

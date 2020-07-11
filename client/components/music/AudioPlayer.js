@@ -171,7 +171,9 @@ const AudioPlayer = (props) => {
                             ...styles.timePlayed
                         }}
                     >
-                        {formateTime(duration * played)}
+                        <Typography>
+                            {formateTime(duration * played)}
+                        </Typography>
                     </time>
 
                     <time 
@@ -181,7 +183,9 @@ const AudioPlayer = (props) => {
                             ...styles.timeDuration
                         }}
                     >
-                        {formateTime(duration)}
+                        <Typography>
+                            {formateTime(duration)}
+                        </Typography>    
                     </time>
 
                     <input

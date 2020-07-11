@@ -36,6 +36,9 @@ const styles = {
         marginLeft: 5,
         width: '100%'
     },
+    error: {
+        marginLeft: 5,
+    },
     linkContainer: {
         marginTop: 30,
         marginLeft: 8
@@ -123,7 +126,18 @@ const SignUpForm = () => {
                         onChange={(event) => setName(event.target.value)}
                     />
                     <br/>
-                    { nameError ? (<Typography id='name-error' color='error'>{nameError}</Typography>) : null }
+                    { 
+                        nameError ? 
+                        (<Typography 
+                            id='name-error' 
+                            color='error'
+                            style={styles.error}
+                        >
+                            {nameError}
+                        </Typography>) 
+                        : 
+                        null 
+                    }
 
                     <TextField
                         id='email'
@@ -137,7 +151,18 @@ const SignUpForm = () => {
                         onChange={(event) => setEmail(event.target.value)}
                     />
                     <br/>
-                    { emailError ? (<Typography id='email-error' color='error'>{emailError}</Typography>) : null }
+                    { 
+                        emailError ? 
+                        (<Typography 
+                            id='email-error' 
+                            color='error'
+                            style={styles.error}
+                        >
+                            {emailError}
+                        </Typography>) 
+                        : 
+                        null 
+                    }
 
                     <TextField
                         id='password'
@@ -164,11 +189,22 @@ const SignUpForm = () => {
                         onChange={(event) => setConfirmedPassword(event.target.value)}
                     />
                     <br/>
-                    { passwordError ? (<Typography id='password-error' color='error'>{passwordError}</Typography>) : null }
+                    { 
+                        passwordError ? 
+                        (<Typography 
+                            id='password-error' 
+                            color='error'
+                            style={styles.error}
+                        >
+                            {passwordError}
+                        </Typography>) 
+                        :
+                        null 
+                    }
 
-                    <div style={styles.linkContainer}>
+                    <Typography style={styles.linkContainer}>
                         <Link to='/login'>Allready have an account? Login</Link>
-                    </div>
+                    </Typography>
 
                     <CardActions>
                         <Button 

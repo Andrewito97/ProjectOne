@@ -16,7 +16,7 @@ const styles = {
         height: 80,
         width: 80,
         left: '42%',
-        top: '42%',
+        top: '45%',
         zIndex: 1
     }
 };
@@ -33,7 +33,7 @@ const DummyMovie = () => {
     <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={27} width='90%'/> 
 
     const fakeVideo = 
-    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={400} width='90%' variant='rect'/> 
+    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={470} width='90%' variant='rect'/> 
 
     return (
         <div>

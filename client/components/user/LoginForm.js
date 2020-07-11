@@ -36,6 +36,9 @@ const styles = {
         marginTop: 30,
         marginLeft: 8
     },
+    error: {
+        marginLeft: 5,
+    },
     buttonsContainer: {
         position: 'relative',
         width: '100%',
@@ -160,7 +163,18 @@ const LoginForm = () => {
                     onChange={(event) => setEmail(event.target.value)}
                 />
                 <br/>
-                { emailError ? (<Typography id='email-error' color='error'>{emailError}</Typography>) : null }
+                { 
+                    emailError ? 
+                    (<Typography 
+                        id='email-error' 
+                        color='error'
+                        style={styles.error}
+                    >
+                        {emailError}
+                    </Typography>) 
+                    : 
+                    null 
+                }
 
                 <TextField   
                     id='password'
@@ -174,14 +188,25 @@ const LoginForm = () => {
                     onChange={(event) => setPassword(event.target.value)}
                 />
                 <br/>
-                { passwordError ? (<Typography id='password-error' color='error'>{passwordError}</Typography>) : null }
+                { 
+                    passwordError ? 
+                    (<Typography 
+                        id='password-error' 
+                        color='error'
+                        style={styles.error}
+                    >
+                        {passwordError}
+                    </Typography>) 
+                    : 
+                    null 
+                }
 
-                <div style={styles.linkContainer}>
+                <Typography style={styles.linkContainer}>
                     <Link to='/signup'>Create new account</Link>
-                </div>
-                <div style={styles.linkContainer}>
+                </Typography>
+                <Typography style={styles.linkContainer}>
                     <Link to='/recovery'>Forgot your password? Recover !</Link>
-                </div>
+                </Typography>
                 <CardActions>
                     <div style={styles.buttonsContainer}>
                         <Button

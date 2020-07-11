@@ -13,6 +13,7 @@ import movieApi from '../api/movie.api';
 
 const styles = {
     container: {
+        position: 'relative',
         borderRadius: 5
     },
     icon: {

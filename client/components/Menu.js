@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Person } from '@material-ui/icons';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
-import authenticationHelper from '../../helpers/authentication.helper';
-import userApi from '../../api/user.api';
-import ConfirmWindow from '../ConfirmWindow';
-import paletteController from '../../PaletteController';
+import authenticationHelper from '../helpers/authentication.helper';
+import userApi from '../api/user.api';
+import ConfirmWindow from './ConfirmWindow';
+import paletteController from '../PaletteController';
 
 const styles = {
     menuList: {
@@ -69,6 +69,11 @@ const _Menu = () => {
                             Logout
                         </MenuItem>
                     </Link>
+                    <Link to='/support'>
+                        <MenuItem onClick={handleClose} style={{color: paletteController.textColor}}>
+                            Support
+                        </MenuItem>
+                    </Link>
                     <Link to='/settings'>
                         <MenuItem onClick={handleClose} style={{color: paletteController.textColor}}>
                             Settings
@@ -85,6 +90,11 @@ const _Menu = () => {
                     <Link to='/login'>
                         <MenuItem id='login' onClick={handleClose} style={{color: paletteController.textColor}}>
                             Login
+                        </MenuItem>
+                    </Link>
+                    <Link to='/support'>
+                        <MenuItem onClick={handleClose} style={{color: paletteController.textColor}}>
+                            Support
                         </MenuItem>
                     </Link>
                     <Link to='/settings'>

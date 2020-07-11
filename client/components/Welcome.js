@@ -41,11 +41,12 @@ const Welcome = () => {
                     }}
                 >
                     <i>
-                    Glag to see you here! This is the place of ukrainian
-                    media and intelectual products. The main goal -
-                    populization of the content for people who wants to understand
-                    better this culture or who doesn't know at all. Hope you will
-                    have a great time here!
+                    Hi! This is the platform for populization 
+                    ukrainian media and intelectual products. 
+                    I hope you can find here something 
+                    interesting for you. Also you can share
+                    this content by yourself - write to the
+                    support to agree details
                     </i>
                 </Typography>
                 <img src={ukraineImage} style={styles.image}/>
