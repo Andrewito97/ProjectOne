@@ -109,19 +109,50 @@ const musicController = {
     },
 
     listMusic(request, response) {
-        Music
-            .find()
-            .skip(Number(request.query.skip))
-            .limit(5)
-            .sort('-created')
-            .exec( (error, music) => {
-                if(error) {
-                    return response.status(400).json({
-                        error
-                    });
-                };
-                response.status(200).json(music);
-        });
+        if(request.query.genre === 'All') {
+            Music
+                .find()
+                .skip(Number(request.query.skip))
+                .limit(10)
+                .sort('-created')
+                .exec( (error, music) => {
+                    if(error) {
+                        return response.status(400).json({
+                            error
+                        });
+                    };
+                    response.status(200).json(music);
+            });
+        } else if(request.query.genre === 'Other') {
+            Music
+                .find({ genre: {$nin: ['Pop', 'Rock and Metal', 'Hip Hop', 'Indie', 'Folk']} })
+                .skip(Number(request.query.skip))
+                .limit(10)
+                .sort('-created')
+                .exec( (error, music) => {
+                    if(error) {
+                        return response.status(400).json({
+                            error
+                        });
+                    };
+                    response.status(200).json(music);
+            });
+        } else {
+            Music
+                .find({ genre: request.query.genre })
+                .skip(Number(request.query.skip))
+                .limit(10)
+                .sort('-created')
+                .exec( (error, music) => {
+                    if(error) {
+                        return response.status(400).json({
+                            error
+                        });
+                    };
+                    response.status(200).json(music);
+            });
+        };
+        
     },
 
     listUserMusic(request, response) {

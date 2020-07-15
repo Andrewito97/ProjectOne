@@ -10,8 +10,9 @@ import { Card,
          CircularProgress } from '@material-ui/core';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import authenticationHelper from '../../helpers/authentication.helper';
-import musicApi from '../../api/music.api';
+import MusicGenreSelect from './MusicGenreSelect';
 import AudioList from './NewMusicAudioList';
+import musicApi from '../../api/music.api';
 import paletteController from '../../PaletteController';
 
 const styles = {
@@ -26,6 +27,12 @@ const styles = {
     authorInput: {
         marginTop: 30,
         width: '100%'
+    },
+    selectContainer: {
+        marginTop: 30,
+    },
+    genreLabel: {
+        marginBottom: 5
     },
     genreInput: {
         marginTop: 30,
@@ -48,7 +55,8 @@ const styles = {
 const NewMusicForm = (props) => {
     const [ musicAuthor, setAuthor ] = React.useState('');
     const [ authorError, setAuthorError ] = React.useState('');
-    const [ musicGenre, setGenre ] = React.useState('');
+    const [ musicGenre, setGenre ] = React.useState('Pop');
+    const [ customGenre, setCustomGenre ] = React.useState('');
     const [ genreError, setGenreError ] = React.useState('');
     const [ audios, setAudio ] = React.useState([]);
     const [ audioNames, setAudioNames ] = React.useState([]);
@@ -64,7 +72,11 @@ const NewMusicForm = (props) => {
         setLoading(true);
         let musicData = new FormData();
         musicData.set('author', musicAuthor);
-        musicData.set('genre', musicGenre);
+        if(musicGenre === 'Other') {
+            musicData.set('genre', customGenre);
+        } else {
+            musicData.set('genre', musicGenre);
+        }   
         musicData.set('postedBy', userId);
         for(let audio of audios) {
             musicData.append('audios', audio);
@@ -156,18 +168,33 @@ const NewMusicForm = (props) => {
                     <br/>
                     { authorError ? (<Typography id='author-error' color='error'>{authorError}</Typography>) : null } 
 
-                    <TextField 
-                        id='genre-input'
-                        required
-                        label='Genre'
-                        placeholder='Type genre...'
-                        variant='outlined'
-                        value={musicGenre}
-                        style={styles.genreInput}
-                        onChange={ 
-                            (event) => setGenre(event.target.value)
-                        }
-                    />
+                    <div style={styles.selectContainer}>
+                        <Typography style={{color: paletteController.textColor, ...styles.genreLabel}}>
+                            Genre:
+                        </Typography>
+                        <MusicGenreSelect 
+                            value={musicGenre} 
+                            handleChange={(event) => setGenre(event.target.value)} 
+                            isCreation
+                        />
+                    </div>
+                    {
+                        musicGenre === 'Other' ?
+                        <TextField 
+                            id='genre-input'
+                            required
+                            label='Genre'
+                            placeholder='Type genre...'
+                            variant='outlined'
+                            value={customGenre}
+                            style={styles.genreInput}
+                            onChange={ 
+                                (event) => setCustomGenre(event.target.value)
+                            }
+                        />
+                        :
+                        null
+                    }
                     <br/>
                     { genreError ? (<Typography id='genre-error' color='error'>{genreError}</Typography>) : null } 
 

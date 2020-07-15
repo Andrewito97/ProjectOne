@@ -20,9 +20,9 @@ const musicApi = {
             console.log(error);
         }
     },
-    async listMusic(skip, signal) {
+    async listMusic(genre, skip, signal) {
         try {
-            const response = await fetch(`${domain}/myapi/music?skip=${skip}`, {
+            const response = await fetch(`${domain}/myapi/music?genre=${genre}&skip=${skip}`, {
                 signal: signal,
                 method: 'GET',
             });
@@ -43,17 +43,6 @@ const musicApi = {
             console.log(error);
         }
     },
-    // async listAudios() {
-    //     try {
-    //         const response = await fetch(`${domain}/myapi/music/audios`, {
-    //             method: 'GET',
-    //         });
-    //         return response.json();
-    //     }
-    //     catch (error) {
-    //         console.log(error);
-    //     }
-    // },
     async searchMusic(text) {
         try {
             const response = await fetch(`${domain}/myapi/music/search?text=${text}`, {

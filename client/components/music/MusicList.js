@@ -1,27 +1,37 @@
 import React from 'react';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useCookies } from 'react-cookie';
 import Music from './Music';
 import NewMusicForm from './NewMusicForm';
+import MusicGenreSelect from './MusicGenreSelect';
+import DummyMusic from './DummyMusic';
 import authenticationHelper from '../../helpers/authentication.helper';
 import musicApi from '../../api/music.api';
-import DummyMusic from './DummyMusic';
 
 const MusicList = () => {
     const [ music, setMusic ] = React.useState([]);
+    const [ genre, setGenre ] = React.useState('All');
     const [ skip, setSkip ] = React.useState(0);
     const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
+    const [ cookies, setCookie ] = useCookies(['OneProjectMusic']);
 
     React.useEffect(() => {
         const controller = new window.AbortController();
         const signal = controller.signal;
-        loadMusic(signal);
+        if(cookies.OneProjectMusic) {
+            setGenre(cookies.OneProjectMusic);
+            loadMusic(cookies.OneProjectMusic, signal);
+        } else {
+            setGenre('All');
+            loadMusic('All', signal);
+        };
         return function cleanup() {
             controller.abort();
         };
     }, [skip]);
 
-    const loadMusic = async (signal) => {
-        let data = await musicApi.listMusic(skip, signal);
+    const loadMusic = async (genre, signal) => {
+        let data = await musicApi.listMusic(genre, skip, signal);
         if(data === undefined) return
         if(data.error) {
             console.log(data.error);
@@ -40,9 +50,17 @@ const MusicList = () => {
         setMusic(updatedMusic);
     };
 
+    const handleChange = (event) => {
+        setMusic('');
+        setGenre(event.target.value);
+        setCookie('OneProjectMusic', event.target.value);
+        location.reload();
+    };
+
     return (
         <div>
             {authenticationHelper.isAuthenticated() ? (<NewMusicForm updateMusicList={updateMusicList}/>) : null}
+            <MusicGenreSelect value={genre} handleChange={handleChange}/>
             <InfiniteScroll
                 dataLength={music.length}
                 hasMore={shouldLoadMore}
