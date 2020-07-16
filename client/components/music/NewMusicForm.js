@@ -87,7 +87,7 @@ const NewMusicForm = (props) => {
         setLoading(false);
         if(data.success) {
             setAuthor('');
-            setGenre('');
+            setGenre('Pop');
             setAudio([]);
             setAudioNames([]);
             setAuthorError('');
@@ -129,7 +129,7 @@ const NewMusicForm = (props) => {
         setAudioNames(updatedStatus);
     };
 
-    let isDisabled = audios.length === 0 || audios.length > 7;
+    let isDisabled = audios.length === 0 || audios.length > 6;
 
     for(let item of audioNames) {
         if(item.shouldEdit) isDisabled = true;
