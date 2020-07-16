@@ -129,7 +129,7 @@ const NewMusicForm = (props) => {
         setAudioNames(updatedStatus);
     };
 
-    let isDisabled = audios.length === 0 || audios.length > 10;
+    let isDisabled = audios.length === 0 || audios.length > 7;
 
     for(let item of audioNames) {
         if(item.shouldEdit) isDisabled = true;

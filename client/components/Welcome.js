@@ -41,12 +41,13 @@ const Welcome = () => {
                     }}
                 >
                     <i>
-                    Hi! This is the platform for populization 
-                    ukrainian media and intelectual products. 
+                    Hi! This is the platform for popularization social,
+                    science and media content of ukrainian authors and
+                    global conjuncture without political point.
                     I hope you can find here something 
-                    interesting for you. Also you can share
-                    this content by yourself - write to the
-                    support to agree details
+                    interesting for you. Also I will be glad for help 
+                    in popularization - write to the
+                    support for details
                     </i>
                 </Typography>
                 <img src={ukraineImage} style={styles.image}/>
