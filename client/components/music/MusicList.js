@@ -8,6 +8,17 @@ import DummyMusic from './DummyMusic';
 import authenticationHelper from '../../helpers/authentication.helper';
 import musicApi from '../../api/music.api';
 
+const styles = {
+    container: {
+        position: 'relative'
+    },
+    selectContainer: {
+        position: 'absolute', 
+        top: -60, 
+        width: '100%'
+    }
+};
+
 const MusicList = () => {
     const [ music, setMusic ] = React.useState([]);
     const [ genre, setGenre ] = React.useState('All');
@@ -58,9 +69,11 @@ const MusicList = () => {
     };
 
     return (
-        <div>
+        <div style={styles.container}>
             {authenticationHelper.isAuthenticated() ? (<NewMusicForm updateMusicList={updateMusicList}/>) : null}
-            <MusicGenreSelect value={genre} handleChange={handleChange}/>
+            <div style={styles.selectContainer}>
+                <MusicGenreSelect value={genre} handleChange={handleChange}/>
+            </div>
             <InfiniteScroll
                 dataLength={music.length}
                 hasMore={shouldLoadMore}

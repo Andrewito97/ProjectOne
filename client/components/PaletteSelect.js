@@ -43,11 +43,8 @@ const PaletteSelect = (props) => {
 
     return (
         <div style={styles.container}>
-            <Typography 
-                variant='h6'
-                style={{color: paletteController.textColor}} 
-            >
-                Color palette
+            <Typography style={{color: paletteController.textColor}}>
+                Color palette:
             </Typography>
             <FormControl size='small' style={styles.formControl}>
                 <Select
