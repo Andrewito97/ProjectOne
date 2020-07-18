@@ -1,19 +1,20 @@
+/* eslint-disable no-undef */
 class GoogleLoginPage {
-    get emailInput() {
-        return $('#identifierId');
-    }
+	get emailInput() {
+		return $('#identifierId');
+	}
 
-    get emailNextButton() {
-        return $('#identifierNext');
-    }
+	get emailNextButton() {
+		return $('#identifierNext');
+	}
 
-    get passwordInput() {
-        return $('[type="password"]');
-    }
+	get passwordInput() {
+		return $('[type="password"]');
+	}
 
-    get passwordNextButton() {
-        return  $('#passwordNext');
-    }
+	get passwordNextButton() {
+		return  $('#passwordNext');
+	}
 }
 
 export default new GoogleLoginPage();

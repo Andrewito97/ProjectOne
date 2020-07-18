@@ -7,50 +7,50 @@ import movieApi from '../../api/movie.api';
 import DummyMovie from './DummyMovie';
 
 const MoviesList = () => {
-    const [ movies, setMovies ] = React.useState([]);
-    const [ skip, setSkip ] = React.useState(0);
-    const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
+	const [ movies, setMovies ] = React.useState([]);
+	const [ skip, setSkip ] = React.useState(0);
+	const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
 
-    React.useEffect(() => {
-        const controller = new window.AbortController();
-        const signal = controller.signal;
-        loadMovies(signal);
-        return function cleanup() {
-            controller.abort();
-        };
-    }, [skip]);
+	React.useEffect(() => {
+		const controller = new window.AbortController();
+		const signal = controller.signal;
+		loadMovies(signal);
+		return function cleanup() {
+			controller.abort();
+		};
+	}, [skip]);
 
-    const loadMovies = async (signal) => {
-        let data = await movieApi.listMovies(skip, signal);
-        if(data === undefined) return
-        if(data.error) {
-            console.log(data.error);
-        } else {
-            setMovies([...movies, ...data]);
-            if(data.length === 0) {
-                setShouldLoadMore(false);
-            };
-        };
-    };
+	const loadMovies = async (signal) => {
+		let data = await movieApi.listMovies(skip, signal);
+		if(data === undefined) return;
+		if(data.error) {
+			console.log(data.error);
+		} else {
+			setMovies([...movies, ...data]);
+			if(data.length === 0) {
+				setShouldLoadMore(false);
+			}
+		}
+	};
 
-    const updateMoviesList = (item) => {
-        let updatedMovies = [...movies];
-        updatedMovies.unshift(item);
-        setMovies(updatedMovies);
-    };
+	const updateMoviesList = (item) => {
+		let updatedMovies = [...movies];
+		updatedMovies.unshift(item);
+		setMovies(updatedMovies);
+	};
 
-    return (
-        <div>
-             {authenticationHelper.isAuthenticated() ? (<NewMovieForm updateMoviesList={updateMoviesList}/>) : null}
-            <InfiniteScroll
-                dataLength={movies.length}
-                hasMore={shouldLoadMore}
-                next={() => setSkip(movies.length)}
-            >
-                { movies.length === 0 ? <DummyMovie/> : movies.map( (item, index) => <Movie movie={item} key={index}/> ) }
-            </InfiniteScroll>
-        </div>
-    );
+	return (
+		<div>
+			{authenticationHelper.isAuthenticated() ? (<NewMovieForm updateMoviesList={updateMoviesList}/>) : null}
+			<InfiniteScroll
+				dataLength={movies.length}
+				hasMore={shouldLoadMore}
+				next={() => setSkip(movies.length)}
+			>
+				{ movies.length === 0 ? <DummyMovie/> : movies.map( (item, index) => <Movie movie={item} key={index}/> ) }
+			</InfiniteScroll>
+		</div>
+	);
 };
 
 export default MoviesList;

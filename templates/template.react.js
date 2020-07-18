@@ -1,6 +1,6 @@
 function template(markup, css) {
-    return (
-     `<!doctype html>
+	return (
+		`<!doctype html>
       <html lang="en">
         <head>
            <meta charset="utf-8">
@@ -20,7 +20,7 @@ function template(markup, css) {
            <script type="text/javascript" src="/build/generated.client.js"></script>      
         </body>
       </html>`
-    )
+	);
 }
 
-export default template
+export default template;

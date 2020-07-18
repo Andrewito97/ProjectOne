@@ -4,28 +4,28 @@ import userController from '../controllers/user.controller';
 const userApi = express.Router();
 
 userApi.route('/myapi/signup')
-    .post(userController.create);
+	.post(userController.create);
 
 userApi.route('/myapi/login')
-    .post(userController.login);
+	.post(userController.login);
 
 userApi.route('/myapi/profile/:userId')
-    .get(userController.getUserProfile)
-    .put(userController.updateUser)
-    .delete(userController.deleteUser);
+	.get(userController.getUserProfile)
+	.put(userController.updateUser)
+	.delete(userController.deleteUser);
 
 userApi.route('/myapi/media')
-    .post(userController.checkIfMediaAccExists);
+	.post(userController.checkIfMediaAccExists);
 
 userApi.route('/myapi/logout')
-    .get(userController.logout);
+	.get(userController.logout);
 
 userApi.route('/myapi/recover')
-    .post(userController.recoverPassword);
+	.post(userController.recoverPassword);
 
 userApi.route('/myapi/reset/:email/:resetToken')
-    .get(userController.getResetPasswordForm)
-    .post(userController.resetPassword);
+	.get(userController.getResetPasswordForm)
+	.post(userController.resetPassword);
 
 userApi.param('userId', userController.getUserByID);
 

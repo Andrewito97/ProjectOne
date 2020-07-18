@@ -1,15 +1,16 @@
+/* eslint-disable no-undef */
 class ConfirmWindow {
-    get content() {
-        return $('#confirm-window');
-    }
+	get content() {
+		return $('#confirm-window');
+	}
 
-    get calcelButton() {
-        return $('#cancel-button');
-    }
+	get calcelButton() {
+		return $('#cancel-button');
+	}
 
-    get confirmButton() {
-        return $('#confirm-button');
-    }
+	get confirmButton() {
+		return $('#confirm-button');
+	}
 }
 
 export default new ConfirmWindow();

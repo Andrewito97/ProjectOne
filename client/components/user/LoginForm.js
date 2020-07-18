@@ -4,12 +4,12 @@ import GoogleLogin from 'react-google-login';
 import { FcGoogle } from 'react-icons/fc';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import { Card, 
-         CardContent, 
-         Typography, 
-         TextField,
-         Button,
-         IconButton,
-         CardActions } from '@material-ui/core';
+	CardContent, 
+	Typography, 
+	TextField,
+	Button,
+	IconButton,
+	CardActions } from '@material-ui/core';
 import FacebookIcon from '@material-ui/icons/Facebook';
 import userApi from '../../api/user.api';
 import config from '../../../config';
@@ -17,245 +17,245 @@ import authenticationHelper from '../../helpers/authentication.helper';
 import paletteController from '../../PaletteController';
 
 const styles = {
-    card: {
-        width: '55%',
-        minHeight: 200,
-        padding: 50
-    },
-    emailInput: {
-        marginTop: 40,
-        marginLeft: 5,
-        width: '100%'
-    },
-    passwordInput: {
-        marginTop: 30,
-        marginLeft: 5,
-        width: '100%'
-    },
-    linkContainer: {
-        marginTop: 30,
-        marginLeft: 8
-    },
-    error: {
-        marginLeft: 5,
-    },
-    buttonsContainer: {
-        position: 'relative',
-        width: '100%',
-        marginTop: 60
-    },
-    loginButton: {
-        color: 'white'
-    },
-    googleButton: {
-        position: 'absolute',
-        bottom: -8,
-        right: 45
-    },
-    facebookButton: {
-        position: 'absolute',
-        bottom: -8,
-        right: -15,
-        color: '#415E9B'
-    }
+	card: {
+		width: '55%',
+		minHeight: 200,
+		padding: 50
+	},
+	emailInput: {
+		marginTop: 40,
+		marginLeft: 5,
+		width: '100%'
+	},
+	passwordInput: {
+		marginTop: 30,
+		marginLeft: 5,
+		width: '100%'
+	},
+	linkContainer: {
+		marginTop: 30,
+		marginLeft: 8
+	},
+	error: {
+		marginLeft: 5,
+	},
+	buttonsContainer: {
+		position: 'relative',
+		width: '100%',
+		marginTop: 60
+	},
+	loginButton: {
+		color: 'white'
+	},
+	googleButton: {
+		position: 'absolute',
+		bottom: -8,
+		right: 45
+	},
+	facebookButton: {
+		position: 'absolute',
+		bottom: -8,
+		right: -15,
+		color: '#415E9B'
+	}
 };
 
 const LoginForm = () => {
-    const [ requestedEmail, setEmail ] = React.useState('')
-    const [ requestedPassword, setPassword ] = React.useState('')
-    const [ emailError, setEmailError ] = React.useState('')
-    const [ passwordError, setPasswordError ] = React.useState('')
-    const [ redirectToHomePage, setRedirectToHomePage ] = React.useState(false)
+	const [ requestedEmail, setEmail ] = React.useState('');
+	const [ requestedPassword, setPassword ] = React.useState('');
+	const [ emailError, setEmailError ] = React.useState('');
+	const [ passwordError, setPasswordError ] = React.useState('');
+	const [ redirectToHomePage, setRedirectToHomePage ] = React.useState(false);
 
-    const responseMedia = async (response) => {
-        let isGoogle = response.getBasicProfile ? true : false;
-        let userData;
-        if(isGoogle) {
-            const googleProfile = response.getBasicProfile();
-            userData = {
-                name: googleProfile.getName(),
-                email: googleProfile.getEmail(),
-                password: googleProfile.getId(),
-                createdWithMedia: 'google'
-            };
-        } else { 
-            userData = {
-                name: response.name,
-                email: response.email,
-                password: response.id,
-                createdWithMedia: 'facebook'
-            };
-        };
-        const data = await userApi.checkIfMediaAccExists(userData);
-        if(data.notExist) {
-            const signInData = await userApi.create(userData);
-            if(signInData.message) {
-                const loginData = await userApi.login(userData);
-                loginData.accessToken ? authenticationHelper
-                    .authenticate(loginData, () => setRedirectToHomePage(true)) : null
-            };
-        };
-        if(data.isGoogleAccount) {
-            if(isGoogle) {
-                const loginData = await userApi.login(userData);
-                loginData.accessToken ? authenticationHelper
-                    .authenticate(loginData, () => setRedirectToHomePage(true)) : null
-            } else {
-                setEmailError('Email is already registered with google !');
-            };
-        };
-        if(data.isFacebookAccount) {
-            if(!isGoogle) {
-                const loginData = await userApi.login(userData);
-                loginData.accessToken ? authenticationHelper
-                    .authenticate(loginData, () => setRedirectToHomePage(true)) : null
-            } else {
-                setEmailError('Email is already registered with facebook !');
-            };
-        };
-        if(data.isNotMediaAccount) {
-            setEmailError('Email is already registered without social media !')
-        };
-    };
+	const responseMedia = async (response) => {
+		let isGoogle = response.getBasicProfile ? true : false;
+		let userData;
+		if(isGoogle) {
+			const googleProfile = response.getBasicProfile();
+			userData = {
+				name: googleProfile.getName(),
+				email: googleProfile.getEmail(),
+				password: googleProfile.getId(),
+				createdWithMedia: 'google'
+			};
+		} else { 
+			userData = {
+				name: response.name,
+				email: response.email,
+				password: response.id,
+				createdWithMedia: 'facebook'
+			};
+		}
+		const data = await userApi.checkIfMediaAccExists(userData);
+		if(data.notExist) {
+			const signInData = await userApi.create(userData);
+			if(signInData.message) {
+				const loginData = await userApi.login(userData);
+				loginData.accessToken ? authenticationHelper
+					.authenticate(loginData, () => setRedirectToHomePage(true)) : null;
+			}
+		}
+		if(data.isGoogleAccount) {
+			if(isGoogle) {
+				const loginData = await userApi.login(userData);
+				loginData.accessToken ? authenticationHelper
+					.authenticate(loginData, () => setRedirectToHomePage(true)) : null;
+			} else {
+				setEmailError('Email is already registered with google !');
+			}
+		}
+		if(data.isFacebookAccount) {
+			if(!isGoogle) {
+				const loginData = await userApi.login(userData);
+				loginData.accessToken ? authenticationHelper
+					.authenticate(loginData, () => setRedirectToHomePage(true)) : null;
+			} else {
+				setEmailError('Email is already registered with facebook !');
+			}
+		}
+		if(data.isNotMediaAccount) {
+			setEmailError('Email is already registered without social media !');
+		}
+	};
 
-    const onLogin = async () => {
-        const userData = {
-            email: requestedEmail,
-            password: requestedPassword
-        }
-        const data = await userApi.login(userData)
-        data.emailError ? setEmailError(data.emailError) : setEmailError('')
-        data.passwordError ? setPasswordError(data.passwordError) : setPasswordError('')
-        data.accessToken ? authenticationHelper.authenticate(data, () => setRedirectToHomePage(true)) : null
-    };
+	const onLogin = async () => {
+		const userData = {
+			email: requestedEmail,
+			password: requestedPassword
+		};
+		const data = await userApi.login(userData);
+		data.emailError ? setEmailError(data.emailError) : setEmailError('');
+		data.passwordError ? setPasswordError(data.passwordError) : setPasswordError('');
+		data.accessToken ? authenticationHelper.authenticate(data, () => setRedirectToHomePage(true)) : null;
+	};
 
-    if(redirectToHomePage) {
-        return <Redirect to='/'/>
-    };
+	if(redirectToHomePage) {
+		return <Redirect to='/'/>;
+	}
     
-    return (
-        <Card 
-            style={{
-                backgroundColor: paletteController.cardColor,
-                ...styles.card
-            }}
-        >
-            <CardContent style={styles.content}>
-                <Typography
-                    id='page-title'
-                    variant='h5'
-                    style={{
-                        color: paletteController.textColor
-                    }}
-                >
+	return (
+		<Card 
+			style={{
+				backgroundColor: paletteController.cardColor,
+				...styles.card
+			}}
+		>
+			<CardContent style={styles.content}>
+				<Typography
+					id='page-title'
+					variant='h5'
+					style={{
+						color: paletteController.textColor
+					}}
+				>
                     Sign In
-                </Typography>
+				</Typography>
 
-                <TextField 
-                    id='email'
-                    required
-                    label='Email' 
-                    variant='outlined'
-                    placeholder='Type email...'
-                    type='email'
-                    value={requestedEmail}
-                    style={styles.emailInput}
-                    onChange={(event) => setEmail(event.target.value)}
-                />
-                <br/>
-                { 
-                    emailError ? 
-                    (<Typography 
-                        id='email-error' 
-                        color='error'
-                        style={styles.error}
-                    >
-                        {emailError}
-                    </Typography>) 
-                    : 
-                    null 
-                }
+				<TextField 
+					id='email'
+					required
+					label='Email' 
+					variant='outlined'
+					placeholder='Type email...'
+					type='email'
+					value={requestedEmail}
+					style={styles.emailInput}
+					onChange={(event) => setEmail(event.target.value)}
+				/>
+				<br/>
+				{ 
+					emailError ? 
+						(<Typography 
+							id='email-error' 
+							color='error'
+							style={styles.error}
+						>
+							{emailError}
+						</Typography>) 
+						: 
+						null 
+				}
 
-                <TextField   
-                    id='password'
-                    required
-                    label='Password' 
-                    variant='outlined'
-                    placeholder='Type password...'
-                    type='password'
-                    value={requestedPassword} 
-                    style={styles.passwordInput} 
-                    onChange={(event) => setPassword(event.target.value)}
-                />
-                <br/>
-                { 
-                    passwordError ? 
-                    (<Typography 
-                        id='password-error' 
-                        color='error'
-                        style={styles.error}
-                    >
-                        {passwordError}
-                    </Typography>) 
-                    : 
-                    null 
-                }
+				<TextField   
+					id='password'
+					required
+					label='Password' 
+					variant='outlined'
+					placeholder='Type password...'
+					type='password'
+					value={requestedPassword} 
+					style={styles.passwordInput} 
+					onChange={(event) => setPassword(event.target.value)}
+				/>
+				<br/>
+				{ 
+					passwordError ? 
+						(<Typography 
+							id='password-error' 
+							color='error'
+							style={styles.error}
+						>
+							{passwordError}
+						</Typography>) 
+						: 
+						null 
+				}
 
-                <Typography style={styles.linkContainer}>
-                    <Link to='/signup'>Create new account</Link>
-                </Typography>
-                <Typography style={styles.linkContainer}>
-                    <Link to='/recovery'>Forgot your password? Recover !</Link>
-                </Typography>
-                <CardActions>
-                    <div style={styles.buttonsContainer}>
-                        <Button
-                            id='login-button'
-                            onClick={onLogin}
-                            style={{
-                                backgroundColor: paletteController.mainColor,
-                                ...styles.loginButton
-                            }}
-                        >
+				<Typography style={styles.linkContainer}>
+					<Link to='/signup'>Create new account</Link>
+				</Typography>
+				<Typography style={styles.linkContainer}>
+					<Link to='/recovery'>Forgot your password? Recover !</Link>
+				</Typography>
+				<CardActions>
+					<div style={styles.buttonsContainer}>
+						<Button
+							id='login-button'
+							onClick={onLogin}
+							style={{
+								backgroundColor: paletteController.mainColor,
+								...styles.loginButton
+							}}
+						>
                             Login
-                        </Button>
-                        <GoogleLogin
-                            clientId={config.googleClientId}
-                            isSignedIn={false} 
-                            onSuccess={responseMedia}
-                            onFailure={() => console.log('Google auth was canceled')} 
-                            cookiePolicy={'single_host_origin'}
-                            render={renderProps => (
-                                <IconButton
-                                    id='google-button'
-                                    onClick={renderProps.onClick}
-                                    style={styles.googleButton}
-                                >
-                                    <FcGoogle size={33}/>
-                                </IconButton>
-                            )}           
-                        />
-                        <FacebookLogin
-                            appId={config.facebookAppId}
-                            autoLoad={false}
-                            fields='name,email'
-                            callback={responseMedia}
-                            onFailure={() => console.log('Facebook auth was canceled')} 
-                            render={renderProps => (
-                                <IconButton
-                                    id='facebook-button'
-                                    onClick={renderProps.onClick}
-                                    style={styles.facebookButton}
-                                >
-                                    <FacebookIcon fontSize='large'/>
-                                </IconButton>
-                            )}
-                        />
-                    </div>
-                </CardActions>
-            </CardContent>
-        </Card>
-    )
+						</Button>
+						<GoogleLogin
+							clientId={config.googleClientId}
+							isSignedIn={false} 
+							onSuccess={responseMedia}
+							onFailure={() => console.log('Google auth was canceled')} 
+							cookiePolicy={'single_host_origin'}
+							render={renderProps => (
+								<IconButton
+									id='google-button'
+									onClick={renderProps.onClick}
+									style={styles.googleButton}
+								>
+									<FcGoogle size={33}/>
+								</IconButton>
+							)}           
+						/>
+						<FacebookLogin
+							appId={config.facebookAppId}
+							autoLoad={false}
+							fields='name,email'
+							callback={responseMedia}
+							onFailure={() => console.log('Facebook auth was canceled')} 
+							render={renderProps => (
+								<IconButton
+									id='facebook-button'
+									onClick={renderProps.onClick}
+									style={styles.facebookButton}
+								>
+									<FacebookIcon fontSize='large'/>
+								</IconButton>
+							)}
+						/>
+					</div>
+				</CardActions>
+			</CardContent>
+		</Card>
+	);
 };
 
 export default LoginForm;

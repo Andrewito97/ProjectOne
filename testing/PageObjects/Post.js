@@ -1,23 +1,24 @@
+/* eslint-disable no-undef */
 class Post {
-    get postTitle() {
-        return $('#post-title');
-    }
+	get postTitle() {
+		return $('#post-title');
+	}
 
-    get postText() {
-        return $('#post-text');
-    }
+	get postText() {
+		return $('#post-text');
+	}
 
-    get postImage() {
-        return $('#post-image');
-    }
+	get postImage() {
+		return $('#post-image');
+	}
 
-    get postDate() {
-        return $('#post-date')
-    }
+	get postDate() {
+		return $('#post-date');
+	}
 
-    get deletePostButton() {
-        return $('#delete-post-button');
-    }
+	get deletePostButton() {
+		return $('#delete-post-button');
+	}
 }
 
 export default new Post();

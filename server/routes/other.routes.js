@@ -4,6 +4,6 @@ import otherController from '../controllers/other.controller';
 const otherApi = express.Router();
 
 otherApi.route('/myapi/support')
-    .post(otherController.sendToSupport);
+	.post(otherController.sendToSupport);
 
 export default otherApi;

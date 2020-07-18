@@ -43,6 +43,7 @@ app.use(helmet());
 app.use(cors());
 
 //serving static files
+// eslint-disable-next-line no-undef
 const CURRENT_WORKING_DIR = process.cwd();
 app.use('/build', express.static(path.join(CURRENT_WORKING_DIR, 'build')));
 
@@ -55,45 +56,46 @@ app.use('/', otherApi);
 
 //sending template with ssr markup, css and bundeled client code at every endpoint
 app.get('*', (request, response) => {
-    const sheets = new ServerStyleSheets();
-    const markup = ReactDOMServer.renderToString(
-        sheets.collect(
-            <StaticRouter location={request.url}>
-                <RootComponent/>
-            </StaticRouter>
-        )
-    )
-    const css = sheets.toString();
-    response.send( template(markup, css) );
+	const sheets = new ServerStyleSheets();
+	const markup = ReactDOMServer.renderToString(
+		sheets.collect(
+			<StaticRouter location={request.url}>
+				<RootComponent/>
+			</StaticRouter>
+		)
+	);
+	const css = sheets.toString();
+	response.send( template(markup, css) );
 });
 
 //connect to db
 mongoose.connect(config.mainMongoUri, {
-    useNewUrlParser: true, 
-    useUnifiedTopology: true, 
-    useCreateIndex: true,
-    useFindAndModify: false
+	useNewUrlParser: true, 
+	useUnifiedTopology: true, 
+	useCreateIndex: true,
+	useFindAndModify: false
 });
 mongoose.connection.on('error', () => {
-    throw new Error('Unable to connect to database !');
+	throw new Error('Unable to connect to database !');
 });
 mongoose.connection.once('open', () => {
-    console.log('Successfully connected to db with posts and users documents !');
+	console.log('Successfully connected to db with posts and users documents !');
 });
 
 //select a server depending on the environment  
+// eslint-disable-next-line no-undef
 if(process.env.NODE_ENV === 'development') {
-    const httpServer = http.createServer(app);
-    httpServer.listen(config.port, () => {
-        console.log(`Server is running on port ${config.port} in ${config.nodeEnv} mode...`);
-    });
+	const httpServer = http.createServer(app);
+	httpServer.listen(config.port, () => {
+		console.log(`Server is running on port ${config.port} in ${config.nodeEnv} mode...`);
+	});
 } else {
-    //read credentials for enabling secure connection
-    const privateKey  = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.key'), 'utf8');
-    const certificate = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.cert'), 'utf8');
-    const credentials = { key: privateKey, cert: certificate };
-    const httpsServer = https.createServer(credentials, app);
-    httpsServer.listen(config.securePort, () => {
-        console.log(`Server is running on secure port ${config.securePort} in ${config.nodeEnv} mode...`);
-    });
-};
+	//read credentials for enabling secure connection
+	const privateKey  = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.key'), 'utf8');
+	const certificate = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.cert'), 'utf8');
+	const credentials = { key: privateKey, cert: certificate };
+	const httpsServer = https.createServer(credentials, app);
+	httpsServer.listen(config.securePort, () => {
+		console.log(`Server is running on secure port ${config.securePort} in ${config.nodeEnv} mode...`);
+	});
+}

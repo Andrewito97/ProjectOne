@@ -1,15 +1,16 @@
+/* eslint-disable no-undef */
 class FacebookLoginPage {
-    get emailInput() {
-        return $('#email');
-    }
+	get emailInput() {
+		return $('#email');
+	}
 
-    get passwordInput() {
-        return $('#pass');
-    }
+	get passwordInput() {
+		return $('#pass');
+	}
 
-    get loginButton() {
-        return $('#loginbutton');
-    }
+	get loginButton() {
+		return $('#loginbutton');
+	}
 }
 
 export default new FacebookLoginPage();
