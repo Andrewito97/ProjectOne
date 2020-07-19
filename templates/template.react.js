@@ -6,7 +6,7 @@ function template(markup, css) {
            <meta charset="utf-8">
            <meta name="description" content="Hi! This is the platform for popularization science, social and media content of ukrainian authors and global conjuncture without political point">
            <title>Karambol - Platform with media, social and scientific content</title>
-           <link rel="shortcut icon" href="../client/assets/carambola.png" type="image/png">
+           <link rel="shortcut icon" href="../build/b08b435dc802d5bd58bea0f848c58242.png" type="image/png">
            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
            <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>  
