@@ -27,3 +27,7 @@ input[type=range]::-moz-range-thumb {
    -webkit-appearance: none;
    margin-top: -4px;
 }
+@font-face {
+   font-family: 'ComicAndy';
+   src: url('../fonts/comic_andy.ttf') format('truetype'); /* Chrome 4+, Firefox 3.5, Opera 10+, Safari 3—5 */
+}

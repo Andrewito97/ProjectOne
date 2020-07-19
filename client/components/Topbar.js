@@ -1,8 +1,10 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { GiCarambola } from 'react-icons/gi';
 import { AppBar, 
 	Toolbar, 
-	Button } from '@material-ui/core';
+	Button,
+	Typography } from '@material-ui/core';
 import Menu from './Menu';
 import Searchbar from './Searchbar';
 import paletteController from '../PaletteController';
@@ -10,6 +12,20 @@ import paletteController from '../PaletteController';
 const styles = {
 	topbar: {
 		position: 'relative'
+	},
+	logoContainer: {
+		position: 'absolute',
+		display: 'flex',
+		marginLeft: 26,
+		zIndex: 1
+	},
+	logoText: {
+		marginLeft: 5,
+		fontSize: 40,
+		fontFamily: 'ComicAndy'  
+	},
+	logoIcon: {
+		marginTop: 15
 	},
 	newsFeedTab: {
 		marginLeft: '16%'
@@ -51,6 +67,10 @@ const Topbar = withRouter(({ history }) => {
 					...styles.topbar
 				}}
 			>
+				<div style={styles.logoContainer}>
+					<GiCarambola style={styles.logoIcon} size={33}/>
+					<Typography style={styles.logoText}>Karambol</Typography>
+				</div>
 				<Button
 					id='newsfeed-tab'
 					onClick={() => location.replace('/')}
