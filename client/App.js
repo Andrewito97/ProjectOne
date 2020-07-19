@@ -5,8 +5,6 @@ import { BrowserRouter } from 'react-router-dom';
 import RootComponent from './RootComponent';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import paletteController from './PaletteController';
-// eslint-disable-next-line no-unused-vars
-import carambolIcon from './assets/carambola.png';
 
 const blue = paletteController.blue;
 const ivory = paletteController.ivory;
