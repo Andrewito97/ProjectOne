@@ -1,5 +1,5 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { GiCarambola } from 'react-icons/gi';
 import { AppBar, 
 	Toolbar, 
@@ -17,12 +17,13 @@ const styles = {
 		position: 'absolute',
 		display: 'flex',
 		marginLeft: 26,
+		color: 'white',
 		zIndex: 1
 	},
 	logoText: {
 		marginLeft: 5,
 		fontSize: 40,
-		fontFamily: 'ComicAndy'  
+		fontFamily: 'ComicAndy'
 	},
 	logoIcon: {
 		marginTop: 15
@@ -67,10 +68,10 @@ const Topbar = withRouter(({ history }) => {
 					...styles.topbar
 				}}
 			>
-				<div style={styles.logoContainer}>
+				<Link to='/' style={styles.logoContainer}>
 					<GiCarambola style={styles.logoIcon} size={33}/>
 					<Typography style={styles.logoText}>Karambol</Typography>
-				</div>
+				</Link>
 				<Button
 					id='newsfeed-tab'
 					onClick={() => location.replace('/')}

@@ -18,7 +18,6 @@ const styles = {
 		borderRadius: 5
 	},
 	icon: {
-		margin: 4,
 		marginRight: 7,
 		color: 'white'
 	},
@@ -129,7 +128,10 @@ const Searchbar = (props) => {
 									<ListItem button>
 										<ListItemText style={{color: paletteController.textColor}}>
 											{
-												props.activeTab === 'music' ? item.author : item.title
+												props.activeTab === 'music' ? 
+													`${item.author} - ${item.audios.join('; ')}` 
+													: 
+													item.title
 											}
 										</ListItemText>
 									</ListItem>
