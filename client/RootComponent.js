@@ -3,6 +3,7 @@ import React from 'react';
 import { Switch, Route } from 'react-router-dom';
 import Topbar from './components/Topbar';
 import NewsFeedList from './components/posts/NewsFeedList';
+import PostListByTag from './components/posts/PostListByTag';
 import SearchPost from './components/posts/SearchPost';
 import MusicList from './components/music/MusicList';
 import SearchMusic from './components/music/SearchMusic';
@@ -53,6 +54,7 @@ const RootComponent = (props) => {
 						<Route exact path='/music' component={MusicList} />  
 						<Route exact path='/movies' component={MoviesList} />  
 						<Route path='/newsfeed/:postId' component={SearchPost} />
+						<Route path='/tags/:postTag' component={PostListByTag} />
 						<Route path='/music/:musicId' component={SearchMusic} />  
 						<Route path='/movies/:movieId' component={SearchMovie} />  
 						<Route path='/signup' component={SignUpForm} />

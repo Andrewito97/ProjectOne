@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { Link } from 'react-router-dom';
 import ReactMarkdown from 'react-markdown';
 import breaks from 'remark-breaks';
 import { Card, 
@@ -24,6 +25,9 @@ const styles = {
 	postFooter: {
 		position: 'relative',
 		marginTop: 50
+	},
+	tag: {
+		marginRight: 25
 	},
 	postDate: {
 		color: 'grey',
@@ -75,6 +79,15 @@ const Post = (props) => {
 							/>
 							: 
 							null 
+					}
+					{
+						props.post.tags ? props.post.tags.map((tag, index) => (
+							<Typography key={index} style={styles.tag} component='span'>
+								<Link to={'/tags/' + tag}>{tag}</Link>
+							</Typography>
+						))
+							:
+							null
 					}
 					<div style={styles.postFooter}>
 						<Typography id='post-date' style={styles.postDate}>

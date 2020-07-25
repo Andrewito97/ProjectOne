@@ -8,6 +8,9 @@ postApi.route('/myapi/newsfeed')
 	.get(postController.listNewsFeed)
 	.post(postController.create);
 
+postApi.route('/myapi/newsfeed/:postTag')
+	.get(postController.listNewsFeedByTag);
+
 postApi.route('/myapi/newsfeed/search')
 	.get(postController.searchPosts);
 
@@ -23,5 +26,6 @@ postApi.route('/myapi/newsfeed/:postId')
 
 postApi.param('userId', userController.getUserByID);
 postApi.param('postId', postController.getPostByID);
+postApi.param('postTag', postController.getTag);
 
 export default postApi;

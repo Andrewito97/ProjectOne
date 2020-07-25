@@ -32,6 +32,17 @@ const postApi = {
 			console.log(error);
 		}
 	},
+	async listNewsFeedByTag(tag) {
+		try {
+			const response = await fetch(`${domain}/myapi/newsfeed/${tag}`, {
+				method: 'GET',
+			});
+			return response.json();
+		}
+		catch (error) {
+			console.log(error);
+		}
+	},
 	async getUserNewsFeed(userId) {
 		try {
 			const response = await fetch(`${domain}/myapi/profile/${userId}/newsfeed`, {

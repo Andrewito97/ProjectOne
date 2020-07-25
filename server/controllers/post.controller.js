@@ -12,7 +12,10 @@ const postController = {
 					errorMessage: 'Image could not be uploaded !'
 				});
 			}
+			let tags = JSON.parse(fields.tags);
+			fields.tags = tags;
 			let post = new Post(fields);
+			
 			if(files.image) {
 				post.image.data = fs.readFileSync(files.image.path);
 				post.image.contentType = files.image.type;
@@ -59,6 +62,25 @@ const postController = {
 				}
 				response.json(posts);
 			});
+	},
+
+	listNewsFeedByTag(request, response) {
+		Post
+			.find({tags: request.tag})
+			.sort('-created')
+			.exec( (error, posts) => {
+				if(error) {
+					return response.status(400).json({
+						error
+					});
+				}
+				response.json(posts);
+			});
+	},
+
+	getTag(request, response, nextHendlear, postTag) {
+		request.tag = postTag;
+		nextHendlear();
 	},
 
 	getPostByID(request, response, nextHendlear, postId) {

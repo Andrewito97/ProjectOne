@@ -6,6 +6,11 @@ const PostSchema = new mongoose.Schema({
 		required: [true, 'Title is required !']
 	},
 
+	tags: {
+		type: Array,
+		of: String
+	},
+
 	image: {
 		// eslint-disable-next-line no-undef
 		data: Buffer,
@@ -28,6 +33,6 @@ const PostSchema = new mongoose.Schema({
 	}
 });
 
-PostSchema.index({title: 'text'});
+PostSchema.index({title: 'text', tags: 'text'});
 
 export default mongoose.model('Post', PostSchema);

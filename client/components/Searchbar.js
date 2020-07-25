@@ -81,6 +81,7 @@ const Searchbar = (props) => {
 			}}
 		>
 			<IconButton
+				disabled
 				onClick={showInput}
 				size='small'
 				style={{ 

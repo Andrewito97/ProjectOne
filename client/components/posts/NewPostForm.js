@@ -9,8 +9,9 @@ import { Card,
 	CardActions,
 	Backdrop,
 	CircularProgress } from '@material-ui/core';
-import { PhotoCamera } from '@material-ui/icons';
+import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import DeleteIcon from '@material-ui/icons/Delete';
+import TagList from './TagList';
 import authenticationHelper from '../../helpers/authentication.helper';
 import postApi from '../../api/post.api';
 import paletteController from '../../PaletteController';
@@ -27,6 +28,17 @@ const styles = {
 	titleInput: {
 		marginTop: 30,
 		width: '100%',
+	},
+	tagInput: {
+		marginTop: 30,
+		width: '100%',
+	},
+	tagListContainer: {
+		marginTop: 25
+	},
+	addTagButton: {
+		marginRight: 30,
+		color: 'white'
 	},
 	textInput: {
 		marginTop: 30,
@@ -58,6 +70,8 @@ const styles = {
 const NewPostForm = (props) => {
 	const [ postTitle, setTitle ] = React.useState('');
 	const [ titleError, setTitleError ] = React.useState('');
+	const [ postTag, setTag ] = React.useState('');
+	const [ addedTags, setAddedTags ] = React.useState([]);
 	const [ postText, setText ] = React.useState('');
 	const [ textError, setTextError ] = React.useState('');
 	const [ postImage, setImage ] = React.useState('');
@@ -73,6 +87,7 @@ const NewPostForm = (props) => {
 		setLoading(true);
 		let postData = new FormData();
 		postData.set('title', postTitle);
+		postData.append('tags', JSON.stringify(addedTags));
 		postData.set('text', postText);
 		postData.set('image', postImage);
 		postData.set('postedBy', userId);
@@ -81,6 +96,8 @@ const NewPostForm = (props) => {
 		setLoading(false);
 		if(data.success) {
 			setTitle('');
+			setTag('');
+			setAddedTags('');
 			setText('');
 			setImage('');
 			setTitleError('');
@@ -93,6 +110,14 @@ const NewPostForm = (props) => {
 				setTextError(data.error.errors.text.properties.message) : setTextError('');
 		}
 	};
+
+	const deleteTag = (index) => {
+		let updatedTags = [...addedTags];
+		updatedTags.splice(index, 1);
+		setAddedTags(updatedTags);
+	};
+
+	const isDisabled = !postTag || addedTags.length === 5;
 
 	return (
 		<div>
@@ -124,10 +149,35 @@ const NewPostForm = (props) => {
 							color: paletteController.textColor,
 							...styles.titleInput
 						}}
-
-					/>
+					/>		
 					<br/>
 					{ titleError ? (<Typography id='title-error' color='error'>{titleError}</Typography>) : null }
+
+					<TextField 
+						onChange={ 
+							(event) => setTag(event.target.value)
+						}
+						id='tag-input'
+						label='Tag'
+						variant='outlined'
+						placeholder='Add tag...'
+						value={postTag}
+						style={{
+							color: paletteController.textColor,
+							...styles.tagInput
+						}}
+					/>
+
+					<div style={styles.tagListContainer}>
+						<TagList
+							postTag={postTag}
+							setTag={setTag}
+							addedTags={addedTags}
+							setAddedTags={setAddedTags}
+							deleteTag={deleteTag}
+							isDisabled={isDisabled}
+						/>
+					</div>
 
 					<TextField
 						id='text-input'

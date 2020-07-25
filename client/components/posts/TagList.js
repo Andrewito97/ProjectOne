@@ -1,0 +1,67 @@
+/* eslint-disable react/prop-types */
+import React from 'react';
+import { Typography,
+	Button,
+	IconButton } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import paletteController from '../../PaletteController';
+
+const styles = {
+	tag: {
+		marginRight: 20,
+		height: 30
+	},
+	deleteButton: {
+		color: 'white',
+		marginLeft: 5
+	},
+	addTagButton: {
+		marginBottom: 15, 
+		color: 'white'
+	}
+};
+
+const TagList = (props) => {
+	return (
+		<div>
+			<Button 
+				id='add-tag-button'
+				onClick={() => {
+					props.setAddedTags(prevTags => [...prevTags, props.postTag]);
+					props.setTag('');
+				}}
+				disabled={props.isDisabled}
+				style={{
+					backgroundColor: props.isDisabled ? paletteController.grey : paletteController.mainColor,
+					...styles.addTagButton
+				}}
+			>
+					Add tag
+			</Button>
+			<div>
+				{
+					props.addedTags ? props.addedTags.map((tag, index) => (
+						<Typography key={index} style={styles.tag} component='span'>
+							{tag}
+							<IconButton 
+								onClick={() => props.deleteTag(index)}
+								id='delete-tag-button'
+								size='small'
+								style={{
+									backgroundColor: paletteController.mainColor,
+									...styles.deleteButton
+								}}
+							>
+								<DeleteIcon/>
+							</IconButton>
+						</Typography>
+					))	
+						:
+						null
+				}
+			</div>
+		</div>
+	);
+};
+
+export default TagList;
