@@ -6,6 +6,13 @@ import authenticationHelper from '../../helpers/authentication.helper';
 import postApi from '../../api/post.api';
 import DummyPost from './DummyPost';
 
+const styles = {
+	infiniteScroll: {
+		paddingRight: 10,
+		paddingLeft: 10
+	}
+};
+
 const NewsFeedList = () => {
 	const [ posts, setPosts ] = React.useState([]);
 	const [ skip, setSkip ] = React.useState(0);
@@ -46,6 +53,7 @@ const NewsFeedList = () => {
 				dataLength={posts.length}
 				hasMore={shouldLoadMore}
 				next={() => setSkip(posts.length)}
+				style={styles.infiniteScroll}
 			>
 				{ posts.length === 0 ? <DummyPost/> : posts.map( (item, index) => <Post post={item} key={index}/> ) }
 			</InfiniteScroll>

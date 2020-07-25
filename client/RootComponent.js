@@ -24,12 +24,12 @@ const styles = {
 	container: {
 		display: 'flex', 
 		paddingTop: '6%',
-		paddingLeft: '15%',
+		paddingLeft: '14%',
 		paddingRight: '8%'
 	},
 	list: {
 		margin: '3%',
-		width: 800,
+		width: 850,
 		minHeight: 1000
 	},
 	aside: {

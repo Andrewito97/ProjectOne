@@ -12,6 +12,10 @@ const styles = {
 	container: {
 		position: 'relative'
 	},
+	infiniteScroll: {
+		paddingRight: 10,
+		paddingLeft: 10
+	},
 	selectContainer: {
 		position: 'absolute', 
 		top: -60, 
@@ -78,6 +82,7 @@ const MusicList = () => {
 				dataLength={music.length}
 				hasMore={shouldLoadMore}
 				next={() => setSkip(music.length)}
+				style={styles.infiniteScroll}
 			>
 				{ music.length === 0 ? <DummyMusic/> : music.map( (item, index) => <Music music={item} key={index}/> ) }
 			</InfiniteScroll>

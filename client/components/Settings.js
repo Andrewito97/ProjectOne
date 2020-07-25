@@ -23,7 +23,8 @@ const styles = {
 
 const Settings = (props) => {
 	return (
-		<Card 
+		<Card
+			raised
 			style={{
 				backgroundColor: paletteController.cardColor,
 				...styles.card

@@ -21,7 +21,8 @@ const styles = {
 
 const Welcome = () => {
 	return (
-		<Card 
+		<Card
+			raised
 			style={{
 				backgroundColor: paletteController.cardColor,
 				...styles.card

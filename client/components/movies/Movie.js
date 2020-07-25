@@ -7,7 +7,9 @@ import { Card,
 	CardContent, 
 	CardHeader,
 	Typography,
-	IconButton } from '@material-ui/core';
+	IconButton,
+	Button,
+	Collapse } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import addWhitespaces from '../../helpers/addWhitespaces.helper';
 import paletteController from '../../PaletteController';
@@ -41,12 +43,14 @@ const styles = {
 
 const Movie = (props) => {
 	const [ confirm, setConfirm ] = React.useState(false);
+	const [ opened, setOpened ] = React.useState(false);
 
 	const description = addWhitespaces(props.movie.description);
 
 	return (
 		<div>
-			<Card 
+			<Card
+				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
 					...styles.card
@@ -61,15 +65,38 @@ const Movie = (props) => {
 					}}
 				/>
 				<CardContent>
-					<Typography 
-						id='movie-description'
-						component='span'
-						style={{
-							color: paletteController.textColor
-						}}
-					>
-						<ReactMarkdown source={description} plugins={[breaks]}/>   
-					</Typography>
+					{
+						description.length < 1000 ?
+							<Typography 
+								id='movie-description'
+								component='span'
+								style={{
+									color: paletteController.textColor
+								}}
+							>
+								<ReactMarkdown source={description} plugins={[breaks]}/>  
+							</Typography>
+							:
+							<div>
+								<Collapse in={opened} collapsedHeight={230}>
+									<Typography 
+										id='movie-description'
+										component='span'
+										style={{
+											color: paletteController.textColor
+										}}
+									>
+										<ReactMarkdown source={description} plugins={[breaks]}/>  
+									</Typography>
+								</Collapse>
+								<Button 
+									onClick={() => setOpened(!opened)}
+									style={{color: paletteController.textColor}}	
+								>
+									{opened ? 'Collapse...' : 'View more...'}
+								</Button>
+							</div>
+					}
 					<div id='movie-video'>
 						<ReactPlayer
 							url={'/myapi/movies/video/' + props.movie._id} 

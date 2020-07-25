@@ -35,6 +35,7 @@ class PaletteController {
 		this.tabsTextColor = this.ivory;
 		this.backgroundColor = this.paleSeaBlue;
 		this.cardColor = this.white;
+		this.tagsColor = this.blue;
 
 		//overriding default mui-styles
 		this.muiStyles = {
@@ -90,6 +91,7 @@ class PaletteController {
 			this.tabsTextColor = this.ivory;
 			this.backgroundColor = this.paleSeaBlue;
 			this.cardColor = this.white;
+			this.tagsColor = this.blue;
 			break;
 		case 'dark classic': 
 			this.mainColor = this.paleGrey;
@@ -98,6 +100,7 @@ class PaletteController {
 			this.tabsTextColor = this.silver;
 			this.backgroundColor = this.lightGrey;
 			this.cardColor = this.middleGrey;
+			this.tagsColor = this.grey;
 			break;  
 		case 'dark blue': 
 			this.mainColor = this.black;
@@ -106,6 +109,7 @@ class PaletteController {
 			this.tabsTextColor = this.silver;
 			this.backgroundColor = this.blackBlue;
 			this.cardColor = this.highBlackBlue;
+			this.tagsColor = this.grey;
 			break;
 		case 'orange': 
 			this.mainColor = this.orange;
@@ -114,6 +118,7 @@ class PaletteController {
 			this.tabsTextColor = this.ivory;
 			this.backgroundColor = this.paleOrange;
 			this.cardColor = this.white;
+			this.tagsColor = this.orange;
 			break; 
 		case 'lime': 
 			this.mainColor = this.lime;
@@ -122,6 +127,7 @@ class PaletteController {
 			this.tabsTextColor = this.ivory;
 			this.backgroundColor = this.paleLime;
 			this.cardColor = this.white;
+			this.tagsColor = this.lime;
 			break;         
 		case 'metal':
 			this.mainColor = this.metal;
@@ -130,6 +136,7 @@ class PaletteController {
 			this.tabsTextColor = this.ivory;
 			this.backgroundColor = this.silver;
 			this.cardColor = this.paleMetal;
+			this.tagsColor = this.metal;
 			break;
 		default: 
 		}

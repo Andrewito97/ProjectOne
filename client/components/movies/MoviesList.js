@@ -6,6 +6,13 @@ import authenticationHelper from '../../helpers/authentication.helper';
 import movieApi from '../../api/movie.api';
 import DummyMovie from './DummyMovie';
 
+const styles = {
+	infiniteScroll: {
+		paddingRight: 10,
+		paddingLeft: 10
+	}
+};
+
 const MoviesList = () => {
 	const [ movies, setMovies ] = React.useState([]);
 	const [ skip, setSkip ] = React.useState(0);
@@ -46,6 +53,7 @@ const MoviesList = () => {
 				dataLength={movies.length}
 				hasMore={shouldLoadMore}
 				next={() => setSkip(movies.length)}
+				style={styles.infiniteScroll}
 			>
 				{ movies.length === 0 ? <DummyMovie/> : movies.map( (item, index) => <Movie movie={item} key={index}/> ) }
 			</InfiniteScroll>

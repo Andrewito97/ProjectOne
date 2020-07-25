@@ -112,7 +112,8 @@ const NewMovieForm = (props) => {
 
 	return (
 		<div>
-			<Card 
+			<Card
+				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
 					...styles.card

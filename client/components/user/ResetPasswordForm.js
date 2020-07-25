@@ -57,7 +57,8 @@ const ResetPasswordForm = () => {
     
 	return (
 		<div>
-			<Card 
+			<Card
+				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
 					...styles.card

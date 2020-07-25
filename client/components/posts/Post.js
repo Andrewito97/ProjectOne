@@ -7,7 +7,9 @@ import { Card,
 	CardContent, 
 	CardHeader,
 	Typography,
-	IconButton } from '@material-ui/core';
+	IconButton,
+	Button,
+	Collapse } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
 import addWhitespaces from '../../helpers/addWhitespaces.helper';
 import paletteController from '../../PaletteController';
@@ -24,7 +26,10 @@ const styles = {
 	},
 	postFooter: {
 		position: 'relative',
-		marginTop: 50
+		marginTop: 30
+	},
+	tagsContainer: {
+		marginTop: 25
 	},
 	tag: {
 		marginRight: 25
@@ -42,12 +47,14 @@ const styles = {
 
 const Post = (props) => {
 	const [ confirm, setConfirm ] = React.useState(false);
+	const [ opened, setOpened ] = React.useState(false);
 
 	const text = addWhitespaces(props.post.text);
 
 	return (
 		<div>
 			<Card 
+				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
 					...styles.card
@@ -61,15 +68,38 @@ const Post = (props) => {
 					}}
 				/>
 				<CardContent>
-					<Typography 
-						id='post-text'
-						component='span'
-						style={{
-							color: paletteController.textColor
-						}}
-					>
-						<ReactMarkdown source={text} plugins={[breaks]}/>  
-					</Typography>
+					{
+						text.length < 1000 ?
+							<Typography 
+								id='post-text'
+								component='span'
+								style={{
+									color: paletteController.textColor
+								}}
+							>
+								<ReactMarkdown source={text} plugins={[breaks]}/>  
+							</Typography>
+							:
+							<div>
+								<Collapse in={opened} collapsedHeight={230}>
+									<Typography 
+										id='post-text'
+										component='span'
+										style={{
+											color: paletteController.textColor
+										}}
+									>
+										<ReactMarkdown source={text} plugins={[breaks]}/>  
+									</Typography>
+								</Collapse>
+								<Button 
+									onClick={() => setOpened(!opened)}
+									style={{color: paletteController.textColor}}
+								>
+									{opened ? 'Collapse...' : 'View more...'}
+								</Button>
+							</div>
+					}
 					{
 						props.post.image ? 
 							<img
@@ -80,15 +110,19 @@ const Post = (props) => {
 							: 
 							null 
 					}
-					{
-						props.post.tags ? props.post.tags.map((tag, index) => (
-							<Typography key={index} style={styles.tag} component='span'>
-								<Link to={'/tags/' + tag}>{tag}</Link>
-							</Typography>
-						))
-							:
-							null
-					}
+					<div style={styles.tagsContainer}>
+						{
+							props.post.tags ? props.post.tags.map((tag, index) => (
+								<Typography key={index} style={styles.tag} component='span'>
+									<Link to={'/tags/' + tag} style={{color: paletteController.tagsColor}}>
+										{tag}
+									</Link>
+								</Typography>
+							))
+								:
+								null
+						}
+					</div>
 					<div style={styles.postFooter}>
 						<Typography id='post-date' style={styles.postDate}>
 							{new Date(props.post.created).toDateString()}
