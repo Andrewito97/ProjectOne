@@ -1,6 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { Box } from '@material-ui/core';
+import AdminPanel from './components/user/AdminPanel';
 import Topbar from './components/Topbar';
 import NewsFeedList from './components/posts/NewsFeedList';
 import PostListByTag from './components/posts/PostListByTag';
@@ -40,15 +42,15 @@ const styles = {
 
 const RootComponent = (props) => {
 	return (
-		<div>
+		<Box>
 			<Topbar/>
-			<div 
+			<Box 
 				style={{
 					backgroundColor: paletteController.backgroundColor,
 					...styles.container
 				}}
 			>
-				<div style={styles.list}>
+				<Box style={styles.list}>
 					<Switch >    
 						<Route exact path='/' component={NewsFeedList} />
 						<Route exact path='/music' component={MusicList} />  
@@ -57,6 +59,7 @@ const RootComponent = (props) => {
 						<Route path='/tags/:postTag' component={PostListByTag} />
 						<Route path='/music/:musicId' component={SearchMusic} />  
 						<Route path='/movies/:movieId' component={SearchMovie} />  
+						<Route path='/admin' component={AdminPanel} />
 						<Route path='/signup' component={SignUpForm} />
 						<Route path='/login' component={LoginForm} />
 						<Route path='/recovery' component={RecoveryForm} />
@@ -67,13 +70,13 @@ const RootComponent = (props) => {
 							<Settings palette={props.palette} setPalette={props.setPalette} />
 						)}/>
 					</Switch>
-				</div>
-				<div style={styles.aside}>
+				</Box>
+				<Box style={styles.aside}>
 					<Welcome/>
-				</div>
-			</div>
+				</Box>
+			</Box>
 			<Footer/>
-		</div>
+		</Box>
 	);
 };
 

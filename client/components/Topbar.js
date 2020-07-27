@@ -1,12 +1,16 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
 import { GiCarambola } from 'react-icons/gi';
-import { AppBar, 
-	Toolbar, 
+import { AppBar,
+	Box,
+	Toolbar,
 	Button,
+	IconButton,
 	Typography } from '@material-ui/core';
+import BuildIcon from '@material-ui/icons/Build';
 import Menu from './Menu';
 import Searchbar from './Searchbar';
+import getUserStatus from '../helpers/getUserStatus.helper';
 import paletteController from '../PaletteController';
 
 const styles = {
@@ -39,6 +43,11 @@ const styles = {
 	},
 	searchbar: {
 		marginLeft: '10%'
+	},
+	wrenchButton: {
+		position: 'absolute',
+		zIndex: 5,
+		right: '11%'
 	},
 	menu: {
 		position: 'absolute',
@@ -105,12 +114,22 @@ const Topbar = withRouter(({ history }) => {
 				>
                     Movies
 				</Button>
-				<div style={styles.searchbar}>
+				<Box style={styles.searchbar}>
 					<Searchbar activeTab={activeTab}/>
-				</div>
-				<div style={styles.menu}>
+				</Box>
+				{
+					getUserStatus() === 'admin' ?
+						<Link to='/admin' style={styles.wrenchButton}>
+							<IconButton>
+								<BuildIcon style={{backgroundColor: paletteController.additionalColor, color: 'white'}}/>
+							</IconButton>
+						</Link>
+						:
+						null
+				}
+				<Box style={styles.menu}>
 					<Menu/>
-				</div>
+				</Box>
 			</Toolbar>
 		</AppBar>
 	);

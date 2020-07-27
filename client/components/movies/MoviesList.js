@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Movie from './Movie';
 import NewMovieForm from './NewMovieForm';
@@ -47,7 +48,7 @@ const MoviesList = () => {
 	};
 
 	return (
-		<div>
+		<Box>
 			{authenticationHelper.isAuthenticated() ? (<NewMovieForm updateMoviesList={updateMoviesList}/>) : null}
 			<InfiniteScroll
 				dataLength={movies.length}
@@ -57,7 +58,7 @@ const MoviesList = () => {
 			>
 				{ movies.length === 0 ? <DummyMovie/> : movies.map( (item, index) => <Movie movie={item} key={index}/> ) }
 			</InfiniteScroll>
-		</div>
+		</Box>
 	);
 };
 

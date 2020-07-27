@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import paletteController from '../../PaletteController';
@@ -36,22 +37,22 @@ const DummyMovie = () => {
     <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={470} width='90%' variant='rect'/>; 
 
 	return (
-		<div>
+		<Box>
 			{fakeTitle}
 			{fakeGenre}
-			<div style={styles.dummyDescription}>
+			<Box style={styles.dummyDescription}>
 				{fakeTextLine}
 				{fakeTextLine}
 				{fakeTextLine}
 				{fakeTextLine}
 				{fakeTextLine}
 				{fakeTextLine}
-			</div>
-			<div style={styles.dummyVideo}>
+			</Box>
+			<Box style={styles.dummyVideo}>
 				<PlayCircleOutlineIcon style={{color: paletteController.backgroundColor, ...styles.dummyPlayIcon}}/>
 				{fakeVideo}
-			</div>
-		</div>
+			</Box>
+		</Box>
 	);
 };
 

@@ -4,6 +4,7 @@ import AudioPlayer from './AudioPlayer';
 import { Card, 
 	CardContent, 
 	CardHeader,
+	Box,
 	Typography,
 	IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -34,7 +35,7 @@ const Music = (props) => {
 	const [ confirm, setConfirm ] = React.useState(false);
 
 	return (
-		<div>
+		<Box>
 			<Card
 				raised
 				style={{
@@ -52,7 +53,7 @@ const Music = (props) => {
 				/>
 				<CardContent>
 					{ props.music.audios.map((name, index) => <AudioPlayer key={index} name={name}/>) }
-					<div style={styles.musicFooter}>
+					<Box style={styles.musicFooter}>
 						<Typography id='music-date' style={styles.songDate}>
 							{new Date(props.music.created).toDateString()}
 						</Typography>
@@ -71,7 +72,7 @@ const Music = (props) => {
 								: 
 								null 
 						}
-					</div>
+					</Box>
 				</CardContent>
 			</Card>
 			<ConfirmWindow
@@ -80,7 +81,7 @@ const Music = (props) => {
 				onConfirm={() => props.deleteMusic(props.music._id)}
 				title='Delete Music confirmation'
 			/>
-		</div>
+		</Box>
 	);
 };
 

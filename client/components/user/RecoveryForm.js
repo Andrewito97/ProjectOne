@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, 
-	CardContent, 
+import { Card,
+	CardContent,
+	Box,
 	Typography, 
 	TextField,
 	Button,
@@ -44,7 +45,7 @@ const RecoveryForm = () => {
 	};
     
 	return (
-		<div>
+		<Box>
 			<Card
 				raised
 				style={{
@@ -96,7 +97,7 @@ const RecoveryForm = () => {
 				message='Recovery link has been sent successfuly'
 				onClick={() => setSuccessed(false)}
 			/>
-		</div>
+		</Box>
 	);
 };
 

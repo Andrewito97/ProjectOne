@@ -1,6 +1,7 @@
 import React from 'react';
-import { AppBar, 
-	Tabs, 
+import { AppBar,
+	Box,
+	Tabs,
 	Tab,
 	Backdrop,
 	CircularProgress } from '@material-ui/core';
@@ -109,7 +110,7 @@ const ProfileTabs = () => {
 	let dialogWindowValue = value === 0 ? 'Post' : value === 1 ? 'Music' : 'Movie';
 
 	return (
-		<div>
+		<Box>
 			<AppBar/>
 			<Tabs
 				onChange={ (event, newValue) => setValue(newValue) }
@@ -169,7 +170,7 @@ const ProfileTabs = () => {
 			<Backdrop open={isLoading} style={styles.backdrop} >
 				<CircularProgress style={{ color: paletteController.backgroundColor }} size={150} thickness={4}/>
 			</Backdrop>
-		</div>
+		</Box>
 	);
 };
 

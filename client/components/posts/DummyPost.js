@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from '@material-ui/core';
 import { Skeleton } from '@material-ui/lab';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
 import paletteController from '../../PaletteController';
@@ -33,21 +34,21 @@ const DummyPost = () => {
     <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={470} width='90%' variant='rect'/>; 
 
 	return (
-		<div>
+		<Box>
 			{fakeTitle}
-			<div style={styles.dummyText}>
+			<Box style={styles.dummyText}>
 				{fakeTextLine}
 				{fakeTextLine}
 				{fakeTextLine}
 				{fakeTextLine}
 				{fakeTextLine}
 				{fakeTextLine}
-			</div>
-			<div style={styles.dummyImage}>
+			</Box>
+			<Box style={styles.dummyImage}>
 				<PhotoCamera style={{color: paletteController.backgroundColor, ...styles.dummyCameraIcon}}/>
 				{fakeImage}
-			</div>
-		</div>
+			</Box>
+		</Box>
 	);
 };
 

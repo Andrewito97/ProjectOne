@@ -142,6 +142,18 @@ const userApi = {
 		catch (err) {
 			return console.log(err);
 		}
+	},
+
+	async listUsers() {
+		try {
+			const response = await fetch(`${domain}/myapi/admin/users`, {
+				method: 'GET',
+			});
+			return response.json();
+		}
+		catch (err) {
+			return console.log(err);
+		}
 	}
 };
 

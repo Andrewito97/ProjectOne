@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Card, 
-	CardContent, 
-	Typography, 
+import { Card,
+	CardContent,
+	Box,
+	Typography,
 	TextField,
 	IconButton,
 	Button,
@@ -111,7 +112,7 @@ const NewMovieForm = (props) => {
 	const isDisabled = video === '';
 
 	return (
-		<div>
+		<Box>
 			<Card
 				raised
 				style={{
@@ -172,10 +173,10 @@ const NewMovieForm = (props) => {
 						}
 					/>
 					<br/>
-					<div>
+					<Box>
 						{ descriptionError ? (<Typography id='description-error' color='error'>{descriptionError}</Typography>) : null }
-					</div>
-					<div style={styles.movieInput}>
+					</Box>
+					<Box style={styles.movieInput}>
 						<input
 							accept='video/*' 
 							style={{display: 'none'}}
@@ -202,7 +203,7 @@ const NewMovieForm = (props) => {
 						</label>
 						{
 							video ? (
-								<div style={styles.movieName}>
+								<Box style={styles.movieName}>
 									<Typography
 										id='video-name'
 										component='span'
@@ -221,10 +222,10 @@ const NewMovieForm = (props) => {
 									>
 										<DeleteIcon/>
 									</IconButton>
-								</div>
+								</Box>
 							) : null
 						}
-					</div>
+					</Box>
 					<br/>
 				</CardContent>
 				<CardActions>
@@ -244,7 +245,7 @@ const NewMovieForm = (props) => {
 			<Backdrop open={isLoading} style={styles.backdrop} >
 				<CircularProgress style={{ color: paletteController.backgroundColor }} size={150} thickness={4}/>
 			</Backdrop>
-		</div>
+		</Box>
 	);
 };
 

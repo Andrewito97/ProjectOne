@@ -3,6 +3,7 @@ import React from 'react';
 import { useCookies } from 'react-cookie';
 import { 
 	MenuItem,
+	Box,
 	FormControl,
 	Typography,
 	Select,
@@ -45,7 +46,7 @@ const PaletteSelect = (props) => {
 	};
 
 	return (
-		<div style={styles.container}>
+		<Box style={styles.container}>
 			<Typography style={{color: paletteController.textColor}}>
                 Color palette:
 			</Typography>
@@ -65,27 +66,27 @@ const PaletteSelect = (props) => {
 				>
 					<MenuItem value='standart' style={{color: paletteController.textColor, ...styles.menuItem}}>
                         Standart
-						<div style={{backgroundColor: paletteController.blue, ...styles.square}}></div>
+						<Box style={{backgroundColor: paletteController.blue, ...styles.square}}></Box>
 					</MenuItem>
 					<MenuItem value='dark classic' style={{color: paletteController.textColor, ...styles.menuItem}}>
                         Dark Classic
-						<div style={{backgroundColor: paletteController.paleGrey, ...styles.square}}></div>
+						<Box style={{backgroundColor: paletteController.paleGrey, ...styles.square}}></Box>
 					</MenuItem>
 					<MenuItem value='dark blue' style={{color: paletteController.textColor, ...styles.menuItem}}>
                         Dark Blue
-						<div style={{backgroundColor: paletteController.darkBlue, ...styles.square}}></div>
+						<Box style={{backgroundColor: paletteController.darkBlue, ...styles.square}}></Box>
 					</MenuItem>        
 					<MenuItem value='orange' style={{color: paletteController.textColor, ...styles.menuItem}}>
                         Orange
-						<div style={{backgroundColor: paletteController.orange, ...styles.square}}></div>
+						<Box style={{backgroundColor: paletteController.orange, ...styles.square}}></Box>
 					</MenuItem>        
 					<MenuItem value='lime' style={{color: paletteController.textColor, ...styles.menuItem}}>
                         Lime
-						<div style={{backgroundColor: paletteController.lime, ...styles.square}}></div>
+						<Box style={{backgroundColor: paletteController.lime, ...styles.square}}></Box>
 					</MenuItem>       
 					<MenuItem value='metal' style={{color: paletteController.textColor, ...styles.menuItem}}>
                         Metal
-						<div style={{backgroundColor: paletteController.metal, ...styles.square}}></div>
+						<Box style={{backgroundColor: paletteController.metal, ...styles.square}}></Box>
 					</MenuItem>            
 				</Select>
 			</FormControl>
@@ -99,7 +100,7 @@ const PaletteSelect = (props) => {
 			>
                 Apply
 			</Button>
-		</div>
+		</Box>
 	);
 };
 

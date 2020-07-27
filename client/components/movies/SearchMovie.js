@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import Movie from './Movie';
 import movieApi from '../../api/movie.api';
@@ -23,9 +24,9 @@ const SearchMovie = () => {
 	};
 
 	return (
-		<div>
+		<Box>
 			{ movie.length === 0 ? <DummyMovie/> : <Movie movie={movie}/> }
-		</div>
+		</Box>
 	);
 };
 

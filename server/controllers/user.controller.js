@@ -8,6 +8,7 @@ import crypto from 'crypto';
 const userController = {
 	create(request, response) {
 		const user = new User(request.body);
+		user.status = 'user';
 		// eslint-disable-next-line no-unused-vars
 		user.save( (error, result) => {
 			if(error) {
@@ -43,7 +44,8 @@ const userController = {
 					user: { 
 						_id: user._id, 
 						name: user.name, 
-						email: user.email, 
+						email: user.email,
+						status: user.status
 					}
 				});
 			});
@@ -280,9 +282,24 @@ const userController = {
 		const user = {
 			_id: request.profile._id,
 			name: request.profile.name,
-			email: request.profile.email
+			email: request.profile.email,
+			status: request.profile.status
 		};
 		return response.json(user);
+	},
+
+	listUsers(request, response) {
+		User
+			.find()
+			.sort('-created')
+			.exec( (error, users) => {
+				if(error) {
+					return response.status(400).json({
+						error
+					});
+				}
+				response.json(users);
+			});
 	}
 };
 

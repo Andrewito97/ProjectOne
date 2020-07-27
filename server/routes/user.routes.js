@@ -27,6 +27,9 @@ userApi.route('/myapi/reset/:email/:resetToken')
 	.get(userController.getResetPasswordForm)
 	.post(userController.resetPassword);
 
+userApi.route('/myapi/admin/users')
+	.get(userController.listUsers);
+
 userApi.param('userId', userController.getUserByID);
 
 export default userApi;

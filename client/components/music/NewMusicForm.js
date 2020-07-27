@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Card, 
-	CardContent, 
-	Typography, 
+import { Card,
+	CardContent,
+	Typography,
+	Box,
 	TextField,
 	IconButton,
 	Button,
@@ -137,7 +138,7 @@ const NewMusicForm = (props) => {
 	}
 
 	return (
-		<div>
+		<Box>
 			<Card
 				raised
 				style={{
@@ -170,7 +171,7 @@ const NewMusicForm = (props) => {
 					<br/>
 					{ authorError ? (<Typography id='author-error' color='error'>{authorError}</Typography>) : null } 
 
-					<div style={styles.selectContainer}>
+					<Box style={styles.selectContainer}>
 						<Typography style={{color: paletteController.textColor, ...styles.genreLabel}}>
                             Genre:
 						</Typography>
@@ -179,7 +180,7 @@ const NewMusicForm = (props) => {
 							handleChange={(event) => setGenre(event.target.value)} 
 							isCreation
 						/>
-					</div>
+					</Box>
 					{
 						musicGenre === 'Other' ?
 							<TextField 
@@ -197,7 +198,7 @@ const NewMusicForm = (props) => {
 							:
 							null
 					}
-					<br/>
+					<Box/>
 					{ genreError ? (<Typography id='genre-error' color='error'>{genreError}</Typography>) : null } 
 
 					<input 
@@ -260,7 +261,7 @@ const NewMusicForm = (props) => {
 			<Backdrop open={isLoading} style={styles.backdrop} >
 				<CircularProgress style={{ color: paletteController.backgroundColor }} size={150} thickness={4}/>
 			</Backdrop>
-		</div>
+		</Box>
 	);
 };
 

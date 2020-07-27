@@ -3,6 +3,7 @@ import React from 'react';
 import '../style.css';
 import { Typography,
 	Button,
+	Box,
 	LinearProgress,
 	Slider } from '@material-ui/core';
 import ReactPlayer from 'react-player';
@@ -126,7 +127,7 @@ const AudioPlayer = (props) => {
 	};
 
 	return (
-		<div style={{marginBottom: 20}}>
+		<Box style={{marginBottom: 20}}>
 			<Typography
 				id='audio-name'
 				style={{
@@ -145,7 +146,7 @@ const AudioPlayer = (props) => {
 				onProgress={onProgress}
 				onDuration={(value) => setDuration(value)}
 			/>
-			<div style={styles.audioContainer}>
+			<Box style={styles.audioContainer}>
 				<Button
 					id='play-pause-button'
 					onClick={onPlaying}
@@ -158,7 +159,7 @@ const AudioPlayer = (props) => {
 						playing ? <PauseIcon/> : <PlayArrowIcon/>
 					}
 				</Button>
-				<div style={styles.playRail}>
+				<Box style={styles.playRail}>
 					<LinearProgress 
 						variant='determinate' 
 						value={played * 100} 
@@ -200,8 +201,8 @@ const AudioPlayer = (props) => {
 						onChange={onSeekChange}
 						onMouseUp={onSeekMouseUp}
 					/>
-				</div>
-				<div
+				</Box>
+				<Box
 					onMouseEnter={() => setDisplayVolume('block')}
 					onMouseLeave={() => setDisplayVolume('none')}
 					style={{
@@ -221,7 +222,7 @@ const AudioPlayer = (props) => {
 							...styles.slider
 						}}
 					/>
-				</div>
+				</Box>
 				<Button
 					id='audio-volume-button'
 					onClick={handleMuted}
@@ -236,8 +237,8 @@ const AudioPlayer = (props) => {
 						muted ? <VolumeOffIcon/> : <VolumeUpIcon/>
 					}
 				</Button>
-			</div>
-		</div>
+			</Box>
+		</Box>
 	);
 };
 

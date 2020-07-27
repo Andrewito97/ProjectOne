@@ -1,7 +1,8 @@
 import React from 'react';
-import { Card, 
-	CardContent, 
-	Typography, 
+import { Card,
+	CardContent,
+	Box,
+	Typography,
 	TextField,
 	Button,
 	CardActions } from '@material-ui/core';
@@ -73,7 +74,7 @@ const LoginForm = () => {
 	};
     
 	return (
-		<div>
+		<Box>
 			<Card
 				raised
 				style={{
@@ -186,7 +187,7 @@ const LoginForm = () => {
 				message='Thanks you! Wait for support to answer !'
 				onClick={() => setSuccessed(false)}
 			/>
-		</div>
+		</Box>
 	);
 };
 

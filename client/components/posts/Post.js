@@ -6,6 +6,7 @@ import breaks from 'remark-breaks';
 import { Card, 
 	CardContent, 
 	CardHeader,
+	Box,
 	Typography,
 	IconButton,
 	Button,
@@ -52,7 +53,7 @@ const Post = (props) => {
 	const text = addWhitespaces(props.post.text);
 
 	return (
-		<div>
+		<Box>
 			<Card 
 				raised
 				style={{
@@ -80,7 +81,7 @@ const Post = (props) => {
 								<ReactMarkdown source={text} plugins={[breaks]}/>  
 							</Typography>
 							:
-							<div>
+							<Box>
 								<Collapse in={opened} collapsedHeight={230}>
 									<Typography 
 										id='post-text'
@@ -98,7 +99,7 @@ const Post = (props) => {
 								>
 									{opened ? 'Collapse...' : 'View more...'}
 								</Button>
-							</div>
+							</Box>
 					}
 					{
 						props.post.image ? 
@@ -110,7 +111,7 @@ const Post = (props) => {
 							: 
 							null 
 					}
-					<div style={styles.tagsContainer}>
+					<Box style={styles.tagsContainer}>
 						{
 							props.post.tags ? props.post.tags.map((tag, index) => (
 								<Typography key={index} style={styles.tag} component='span'>
@@ -122,8 +123,8 @@ const Post = (props) => {
 								:
 								null
 						}
-					</div>
-					<div style={styles.postFooter}>
+					</Box>
+					<Box style={styles.postFooter}>
 						<Typography id='post-date' style={styles.postDate}>
 							{new Date(props.post.created).toDateString()}
 						</Typography>
@@ -142,7 +143,7 @@ const Post = (props) => {
 								: 
 								null 
 						}
-					</div>
+					</Box>
 				</CardContent>
 			</Card>
 			<ConfirmWindow
@@ -151,7 +152,7 @@ const Post = (props) => {
 				onConfirm={() => props.deletePost(props.post._id)}
 				title='Delete Post confirmation'
 			/>
-		</div>
+		</Box>
 	);
 };
 

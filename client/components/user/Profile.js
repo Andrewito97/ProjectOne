@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, 
-	CardContent, 
+import { Card,
+	CardContent,
+	Box,
 	Typography,
 	TextField,
 	IconButton,
@@ -149,7 +150,7 @@ const Profile = () => {
 	let isDisabled = shouldEditName || shouldEditEmail;
   
 	return (
-		<div>
+		<Box>
 			<Card
 				raised
 				style={{
@@ -168,7 +169,7 @@ const Profile = () => {
 					>
                         Profile
 					</Typography>
-					<div style={styles.nameContainer}>
+					<Box style={styles.nameContainer}>
 						{ 
 							shouldEditName ? 
 								<TextField
@@ -229,9 +230,9 @@ const Profile = () => {
 								</IconButton>
 						}
 						{ userNameError ? (<Typography id='name-error' color='error'>{userNameError}</Typography>) : null }
-					</div>
+					</Box>
 					<br/>
-					<div style={styles.emailContainer}>
+					<Box style={styles.emailContainer}>
 						{
 							shouldEditEmail ?
 								<TextField
@@ -292,9 +293,9 @@ const Profile = () => {
 								</IconButton>
 						}
 						{ userEmailError ? (<Typography id='email-error' color='error'>{userEmailError}</Typography>) : null }
-					</div>
+					</Box>
 					<br/>
-					<div style={styles.cardFooterContainer}>
+					<Box style={styles.cardFooterContainer}>
 						<Button 
 							id='save-profile-button'
 							disabled={isDisabled} 
@@ -318,7 +319,7 @@ const Profile = () => {
 						>
 							<DeleteIcon/>
 						</IconButton>
-					</div>
+					</Box>
 				</CardContent>
 			</Card>
 			<ProfileTabs />
@@ -341,7 +342,7 @@ const Profile = () => {
 					toMainPage();
 				}}
 			/>
-		</div>
+		</Box>
 	);
 };
 

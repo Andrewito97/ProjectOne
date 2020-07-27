@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import Music from './Music';
 import musicApi from '../../api/music.api';
@@ -23,9 +24,9 @@ const SearchMusic = () => {
 	};
 
 	return (
-		<div>
+		<Box>
 			{ music.length === 0 ? <DummyMusic/> : <Music music={music}/> }
-		</div>
+		</Box>
 	);
 };
 

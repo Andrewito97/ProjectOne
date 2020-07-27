@@ -3,9 +3,10 @@ import { Link, Redirect } from 'react-router-dom';
 import GoogleLogin from 'react-google-login';
 import { FcGoogle } from 'react-icons/fc';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
-import { Card, 
-	CardContent, 
-	Typography, 
+import { Card,
+	CardContent,
+	Box,
+	Typography,
 	TextField,
 	Button,
 	IconButton,
@@ -209,7 +210,7 @@ const LoginForm = () => {
 					<Link to='/recovery'>Forgot your password? Recover !</Link>
 				</Typography>
 				<CardActions>
-					<div style={styles.buttonsContainer}>
+					<Box style={styles.buttonsContainer}>
 						<Button
 							id='login-button'
 							onClick={onLogin}
@@ -252,7 +253,7 @@ const LoginForm = () => {
 								</IconButton>
 							)}
 						/>
-					</div>
+					</Box>
 				</CardActions>
 			</CardContent>
 		</Card>

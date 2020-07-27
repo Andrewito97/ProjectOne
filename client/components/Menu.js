@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Person } from '@material-ui/icons';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
@@ -36,7 +37,7 @@ const _Menu = () => {
 	};
 
 	return (
-		<div>
+		<Box>
 			<IconButton id='profile-menu' onClick={handleClick}>
 				<Person 
 					style={{ 
@@ -56,7 +57,7 @@ const _Menu = () => {
 			>
 				{ 
 					authenticationHelper.isAuthenticated() ?
-						(<div>
+						(<Box>
 							<Link 
 								to={'/profile/' + authenticationHelper.isAuthenticated().user._id}
 							>
@@ -79,9 +80,9 @@ const _Menu = () => {
                             Settings
 								</MenuItem>
 							</Link>
-						</div>)
+						</Box>)
 						:
-						(<div>
+						(<Box>
 							<Link to='/signup'>
 								<MenuItem id='sign-up' onClick={handleClose} style={{color: paletteController.textColor}}>            
                             Sign Up
@@ -102,7 +103,7 @@ const _Menu = () => {
                             Settings
 								</MenuItem>
 							</Link>
-						</div>)
+						</Box>)
 				}
 			</Menu>
 			<ConfirmWindow
@@ -111,7 +112,7 @@ const _Menu = () => {
 				onConfirm={handleLogout}
 				title='Logout confirmation window'
 			/>
-		</div>
+		</Box>
 	);
 };
 

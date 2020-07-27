@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Card, 
-	CardContent, 
-	Typography, 
+import { Card,
+	CardContent,
+	Box,
+	Typography,
 	TextField,
 	IconButton,
 	Button,
@@ -120,7 +121,7 @@ const NewPostForm = (props) => {
 	const isDisabled = !postTag || addedTags.length === 5;
 
 	return (
-		<div>
+		<Box>
 			<Card
 				raised
 				style={{
@@ -169,7 +170,7 @@ const NewPostForm = (props) => {
 						}}
 					/>
 
-					<div style={styles.tagListContainer}>
+					<Box style={styles.tagListContainer}>
 						<TagList
 							postTag={postTag}
 							setTag={setTag}
@@ -178,7 +179,7 @@ const NewPostForm = (props) => {
 							deleteTag={deleteTag}
 							isDisabled={isDisabled}
 						/>
-					</div>
+					</Box>
 
 					<TextField
 						id='text-input'
@@ -197,7 +198,7 @@ const NewPostForm = (props) => {
 					<br/>
 					{ textError ? (<Typography id='text-error' color='error'>{textError}</Typography>) : null }
 
-					<div style={styles.imageInput}>
+					<Box style={styles.imageInput}>
 						<input 
 							accept='image/*' 
 							style={{display: 'none'}}
@@ -248,7 +249,7 @@ const NewPostForm = (props) => {
 								: 
 								null
 						}
-					</div>
+					</Box>
 					<br/>
 				</CardContent>
 				<CardActions>
@@ -267,7 +268,7 @@ const NewPostForm = (props) => {
 			<Backdrop open={isLoading} style={styles.backdrop} >
 				<CircularProgress style={{ color: paletteController.backgroundColor }} size={150} thickness={4}/>
 			</Backdrop>
-		</div>
+		</Box>
 	);
 };
 

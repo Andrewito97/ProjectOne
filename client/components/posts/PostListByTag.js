@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import Post from './Post';
 import postApi from '../../api/post.api';
@@ -23,9 +24,9 @@ const PostListByTag = () => {
 	};
 
 	return (
-		<div>
+		<Box>
 			{ posts.length === 0 ? <DummyPost/> : posts.map( (item, index) => <Post post={item} key={index}/> ) }
-		</div>
+		</Box>
 	);
 };
 

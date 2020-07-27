@@ -1,8 +1,9 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Card, 
-	CardContent, 
-	Typography, 
+import { Card,
+	CardContent,
+	Box,
+	Typography,
 	TextField,
 	Button,
 	CardActions } from '@material-ui/core';
@@ -56,7 +57,7 @@ const ResetPasswordForm = () => {
 	};
     
 	return (
-		<div>
+		<Box>
 			<Card
 				raised
 				style={{
@@ -120,7 +121,7 @@ const ResetPasswordForm = () => {
 				message='Password has been changed successfully'
 				onClick={() => setSuccessed(false)}
 			/>
-		</div>
+		</Box>
 	);
 };
 

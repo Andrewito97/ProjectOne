@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import Post from './Post';
 import postApi from '../../api/post.api';
@@ -23,9 +24,9 @@ const SearchPost = () => {
 	};
 
 	return (
-		<div>
+		<Box>
 			{ post.length === 0 ? <DummyPost/> : <Post post={post}/> }
-		</div>
+		</Box>
 	);
 };
 

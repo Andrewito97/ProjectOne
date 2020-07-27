@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useCookies } from 'react-cookie';
 import Music from './Music';
@@ -73,11 +74,11 @@ const MusicList = () => {
 	};
 
 	return (
-		<div style={styles.container}>
+		<Box style={styles.container}>
 			{authenticationHelper.isAuthenticated() ? (<NewMusicForm updateMusicList={updateMusicList}/>) : null}
-			<div style={styles.selectContainer}>
+			<Box style={styles.selectContainer}>
 				<MusicGenreSelect value={genre} handleChange={handleChange}/>
-			</div>
+			</Box>
 			<InfiniteScroll
 				dataLength={music.length}
 				hasMore={shouldLoadMore}
@@ -86,7 +87,7 @@ const MusicList = () => {
 			>
 				{ music.length === 0 ? <DummyMusic/> : music.map( (item, index) => <Music music={item} key={index}/> ) }
 			</InfiniteScroll>
-		</div>
+		</Box>
 	);
 };
 

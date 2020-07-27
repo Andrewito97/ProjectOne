@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Typography,
+	Box,
 	Button,
 	IconButton } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -23,7 +24,7 @@ const styles = {
 
 const TagList = (props) => {
 	return (
-		<div>
+		<Box>
 			<Button 
 				id='add-tag-button'
 				onClick={() => {
@@ -38,7 +39,7 @@ const TagList = (props) => {
 			>
 					Add tag
 			</Button>
-			<div>
+			<Box>
 				{
 					props.addedTags ? props.addedTags.map((tag, index) => (
 						<Typography key={index} style={styles.tag} component='span'>
@@ -59,8 +60,8 @@ const TagList = (props) => {
 						:
 						null
 				}
-			</div>
-		</div>
+			</Box>
+		</Box>
 	);
 };
 

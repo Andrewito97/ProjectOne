@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { InputBase,
 	IconButton,
+	Box,
 	List,
 	ListItem,
 	ListItemText } from '@material-ui/core';
@@ -74,7 +75,7 @@ const Searchbar = (props) => {
 	};
 
 	return (
-		<div 
+		<Box 
 			style={{
 				backgroundColor: paletteController.additionalColor,
 				...styles.container
@@ -141,7 +142,7 @@ const Searchbar = (props) => {
 						})           
 				}
 			</List> 
-		</div>
+		</Box>
 	);
 };
 

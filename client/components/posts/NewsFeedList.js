@@ -1,4 +1,5 @@
 import React from 'react';
+import { Box } from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Post from './Post';
 import NewPostForm from './NewPostForm';
@@ -47,7 +48,7 @@ const NewsFeedList = () => {
 	};
 
 	return (
-		<div>
+		<Box>
 			{authenticationHelper.isAuthenticated() ? (<NewPostForm updateNewsFeed={updateNewsFeed}/>) : null}
 			<InfiniteScroll
 				dataLength={posts.length}
@@ -57,7 +58,7 @@ const NewsFeedList = () => {
 			>
 				{ posts.length === 0 ? <DummyPost/> : posts.map( (item, index) => <Post post={item} key={index}/> ) }
 			</InfiniteScroll>
-		</div>
+		</Box>
 	);
 };
 

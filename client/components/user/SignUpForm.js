@@ -1,9 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card,
-	CardContent, 
-	Typography, 
-	TextField, 
+	CardContent,
+	Box,
+	Typography,
+	TextField,
 	CardActions, 
 	Button } from '@material-ui/core';
 import userApi from '../../api/user.api';
@@ -97,7 +98,7 @@ const SignUpForm = () => {
 	};
     
 	return (
-		<div>
+		<Box>
 			<Card
 				raised
 				style={{
@@ -226,7 +227,7 @@ const SignUpForm = () => {
 				message='Account created successfully'
 				onClick={() => setSuccessed(false)}
 			/>
-		</div>
+		</Box>
 	);
 };
 

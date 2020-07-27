@@ -6,6 +6,7 @@ import ReactPlayer from 'react-player';
 import { Card, 
 	CardContent, 
 	CardHeader,
+	Box,
 	Typography,
 	IconButton,
 	Button,
@@ -48,7 +49,7 @@ const Movie = (props) => {
 	const description = addWhitespaces(props.movie.description);
 
 	return (
-		<div>
+		<Box>
 			<Card
 				raised
 				style={{
@@ -77,7 +78,7 @@ const Movie = (props) => {
 								<ReactMarkdown source={description} plugins={[breaks]}/>  
 							</Typography>
 							:
-							<div>
+							<Box>
 								<Collapse in={opened} collapsedHeight={230}>
 									<Typography 
 										id='movie-description'
@@ -95,9 +96,9 @@ const Movie = (props) => {
 								>
 									{opened ? 'Collapse...' : 'View more...'}
 								</Button>
-							</div>
+							</Box>
 					}
-					<div id='movie-video'>
+					<Box id='movie-video'>
 						<ReactPlayer
 							url={'/myapi/movies/video/' + props.movie._id} 
 							width={styles.video.width}
@@ -105,8 +106,8 @@ const Movie = (props) => {
 							style={styles.video}
 							controls
 						/>
-					</div>
-					<div style={styles.movieFooter}>
+					</Box>
+					<Box style={styles.movieFooter}>
 						<Typography id='movie-date' style={styles.movieDate}>
 							{new Date(props.movie.created).toDateString()}
 						</Typography>
@@ -125,7 +126,7 @@ const Movie = (props) => {
 								: 
 								null 
 						}
-					</div>
+					</Box>
 				</CardContent>
 			</Card>
 			<ConfirmWindow
@@ -134,7 +135,7 @@ const Movie = (props) => {
 				onConfirm={() => props.deleteMovie(props.movie._id)}
 				title='Delete Movie confirmation'
 			/>
-		</div>
+		</Box>
 	);
 };
 
