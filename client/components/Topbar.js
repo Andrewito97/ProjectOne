@@ -38,10 +38,11 @@ const styles = {
 		marginLeft: '16%'
 	},
 	musicTab: {
-		marginLeft: '5%'
+		marginLeft: '1%'
 	},
 	moviesTab: {
-		marginLeft: '5%'
+		marginLeft: '1%',
+		marginRight: '16%'
 	},
 	searchbar: {
 		position: 'absolute',
