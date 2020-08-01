@@ -1,4 +1,5 @@
 import React from 'react';
+import { isMobile } from 'react-device-detect';
 import { Card,
 	CardContent,
 	Box,
@@ -12,8 +13,10 @@ import SuccessWindow from '../SuccessWindow';
 
 const styles = {
 	card: {
-		width: '55%',
 		minHeight: 200,
+		marginRight: 10,
+		marginLeft: 10,
+		marginBottom: 10,
 		padding: 50
 	},
 	emailInput: {
@@ -50,6 +53,7 @@ const RecoveryForm = () => {
 				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
+					width: isMobile ? null : '55%',
 					...styles.card
 				}}
 			>

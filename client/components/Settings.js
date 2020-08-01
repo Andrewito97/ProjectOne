@@ -8,34 +8,17 @@ import paletteController from '../PaletteController';
 
 const styles = {
 	card: {
-		width: '95%',
-		padding: 17,
-		marginBottom: 20
-	},
-	text: {
-		marginTop: 35,
-		marginBottom: 40
-	},
-	image: {
-		width: '100%'
+		marginRight: 10,
+		marginLeft: 10,
+		marginBottom: 10,
+		padding: 17
 	}
 };
 
 const Settings = (props) => {
 	return (
-		<Card
-			raised
-			style={{
-				backgroundColor: paletteController.cardColor,
-				...styles.card
-			}}
-		>
-			<CardHeader
-				title='Settings'
-				style={{
-					color: paletteController.textColor
-				}}
-			/>
+		<Card raised style={{backgroundColor: paletteController.cardColor, ...styles.card}}>
+			<CardHeader title='Settings' style={{color: paletteController.textColor}}/>
 			<CardContent>
 				<PaletteSelect palette={props.palette} setPalette={props.setPalette}/>
 			</CardContent>

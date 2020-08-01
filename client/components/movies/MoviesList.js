@@ -1,18 +1,12 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
+import { isMobile } from 'react-device-detect';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Movie from './Movie';
 import NewMovieForm from './NewMovieForm';
 import authenticationHelper from '../../helpers/authentication.helper';
 import movieApi from '../../api/movie.api';
 import DummyMovie from './DummyMovie';
-
-const styles = {
-	infiniteScroll: {
-		paddingRight: 10,
-		paddingLeft: 10
-	}
-};
 
 const MoviesList = () => {
 	const [ movies, setMovies ] = React.useState([]);
@@ -54,7 +48,10 @@ const MoviesList = () => {
 				dataLength={movies.length}
 				hasMore={shouldLoadMore}
 				next={() => setSkip(movies.length)}
-				style={styles.infiniteScroll}
+				style={{
+					paddingRight: isMobile ? 0 : 10,
+					paddingLeft: isMobile ? 0 : 10,
+				}}
 			>
 				{ movies.length === 0 ? <DummyMovie/> : movies.map( (item, index) => <Movie movie={item} key={index}/> ) }
 			</InfiniteScroll>

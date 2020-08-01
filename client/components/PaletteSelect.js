@@ -15,7 +15,7 @@ const styles = {
 		padding: 15
 	},
 	formControl: {
-		width: '45%',
+		width: '65%',
 		marginTop: 10
 	},
 	applyButton: {

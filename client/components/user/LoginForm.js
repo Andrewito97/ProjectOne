@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import GoogleLogin from 'react-google-login';
 import { FcGoogle } from 'react-icons/fc';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
@@ -19,8 +20,9 @@ import paletteController from '../../PaletteController';
 
 const styles = {
 	card: {
-		width: '55%',
-		minHeight: 200,
+		marginRight: 10,
+		marginLeft: 10,
+		marginBottom: 10,
 		padding: 50
 	},
 	emailInput: {
@@ -38,7 +40,7 @@ const styles = {
 		marginLeft: 8
 	},
 	error: {
-		marginLeft: 5,
+		marginLeft: 5
 	},
 	buttonsContainer: {
 		position: 'relative',
@@ -139,6 +141,7 @@ const LoginForm = () => {
 			raised
 			style={{
 				backgroundColor: paletteController.cardColor,
+				width: isMobile ? null : '55%',
 				...styles.card
 			}}
 		>

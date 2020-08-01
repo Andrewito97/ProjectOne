@@ -92,7 +92,7 @@ const RootComponent = (props) => {
 						...styles.list
 					}}
 				>
-					<Switch >    
+					<Switch>    
 						<Route exact path='/' component={NewsFeedList} />
 						<Route exact path='/music' component={MusicList} />  
 						<Route exact path='/movies' component={MoviesList} />  

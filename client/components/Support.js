@@ -12,10 +12,10 @@ import paletteController from '../PaletteController';
 
 const styles = {
 	card: {
-		paddingTop: 50,
-		paddingBottom: 50,
-		paddingRight: 60,
-		paddingLeft: 60,
+		marginRight: 10,
+		marginLeft: 10,
+		marginBottom: 10,
+		padding: 50
 	},
 	emailInput: {
 		marginTop: 40,

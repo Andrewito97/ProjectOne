@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
+import { isMobile } from 'react-device-detect';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useCookies } from 'react-cookie';
 import Music from './Music';
@@ -12,10 +13,6 @@ import musicApi from '../../api/music.api';
 const styles = {
 	container: {
 		position: 'relative'
-	},
-	infiniteScroll: {
-		paddingRight: 10,
-		paddingLeft: 10
 	},
 	selectContainer: {
 		position: 'absolute', 
@@ -83,7 +80,10 @@ const MusicList = () => {
 				dataLength={music.length}
 				hasMore={shouldLoadMore}
 				next={() => setSkip(music.length)}
-				style={styles.infiniteScroll}
+				style={{
+					paddingRight: isMobile ? 0 : 10,
+					paddingLeft: isMobile ? 0 : 10,
+				}}
 			>
 				{ music.length === 0 ? <DummyMusic/> : music.map( (item, index) => <Music music={item} key={index}/> ) }
 			</InfiniteScroll>
