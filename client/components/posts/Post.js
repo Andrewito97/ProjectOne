@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import ReactMarkdown from 'react-markdown';
 import breaks from 'remark-breaks';
 import { Card, 
@@ -19,7 +20,8 @@ import ConfirmWindow from '../ConfirmWindow';
 const styles = {
 	card: {
 		marginBottom: 60,
-		padding: 37
+		paddingTop: 37,
+		paddingBottom: 37
 	},
 	image: {
 		maxWidth: '100%',
@@ -30,15 +32,16 @@ const styles = {
 		marginTop: 30
 	},
 	tagsContainer: {
-		marginTop: 25
+		marginTop: 30
 	},
 	tag: {
 		marginRight: 25
 	},
 	postDate: {
-		color: 'grey',
+		color: 'grey'
 	},
 	deleteIcon: {
+		marginTop: 15,
 		position: 'absolute',
 		right: 10,
 		bottom: 0,
@@ -58,15 +61,15 @@ const Post = (props) => {
 				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
+					paddingLeft: isMobile ? '2vw' : 37,
+					paddingRight: isMobile ? '2vw' : 37,
 					...styles.card
 				}}
 			>
 				<CardHeader
 					id='post-title'
 					title={props.post.title}
-					style={{
-						color: paletteController.textColor
-					}}
+					style={{color: paletteController.textColor}}
 				/>
 				<CardContent>
 					{
@@ -75,7 +78,7 @@ const Post = (props) => {
 								id='post-text'
 								component='span'
 								style={{
-									color: paletteController.textColor
+									color: paletteController.textColor,
 								}}
 							>
 								<ReactMarkdown source={text} plugins={[breaks]}/>  
@@ -114,7 +117,11 @@ const Post = (props) => {
 					<Box style={styles.tagsContainer}>
 						{
 							props.post.tags ? props.post.tags.map((tag, index) => (
-								<Typography key={index} style={styles.tag} component='span'>
+								<Typography 
+									key={index}
+									component='span'
+									style={styles.tag}
+								>
 									<Link to={'/tags/' + tag} style={{color: paletteController.tagsColor}}>
 										{tag}
 									</Link>

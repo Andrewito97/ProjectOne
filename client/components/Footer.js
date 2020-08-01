@@ -7,19 +7,17 @@ import paletteController from '../PaletteController';
 const styles = {
 	container: {
 		display: 'flex',
-		height: 80,
+		height: 70,
 		alignItems: 'center',
 		justifyContent: 'center'
-	},
-	copyrightIcon: {
-		marginRight: 5
 	}
 };
 
 const Footer = () => {
 	return (
 		<Box style={{backgroundColor: paletteController.mainColor, ...styles.container}}>
-			<CopyrightIcon style={{color: paletteController.textColor, ...styles.copyrightIcon}}/>
+			<CopyrightIcon 
+				style={{color: paletteController.textColor}}/>
 			<Typography component='span' style={{color: paletteController.textColor}}>
                 Copyright. All rights reserved
 			</Typography>

@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import { InputBase,
 	IconButton,
 	Box,
@@ -9,16 +10,16 @@ import { InputBase,
 	ListItemText } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import paletteController from '../PaletteController';
-import postApi from '../api/post.api';
-import musicApi from '../api/music.api';
-import movieApi from '../api/movie.api';
+// import postApi from '../api/post.api';
+// import musicApi from '../api/music.api';
+// import movieApi from '../api/movie.api';
 
 const styles = {
 	container: {
 		position: 'relative',
 		borderRadius: 5
 	},
-	icon: {
+	iconButton: {
 		marginRight: 7,
 		color: 'white'
 	},
@@ -30,8 +31,6 @@ const styles = {
 		position: 'absolute',
 		boxShadow: '0px 1px 2px 0px grey',
 		borderRadius: 5,
-		top: 40,
-		width: 420,
 		zIndex: 1
 	}
 };
@@ -42,6 +41,8 @@ const Searchbar = (props) => {
 	const [ text, setText ] = React.useState('');
 	const [ items, setItems ] = React.useState([]);
 
+	let searchField;
+
 	React.useEffect(() => {
 		search();
 		text.length === 0 ? setDisplayList('none') : setDisplayList('block');
@@ -49,21 +50,23 @@ const Searchbar = (props) => {
 
 	const search = async () => {
 		if(props.activeTab === 'newsfeed') {
-			const data = await postApi.searchPosts(text);
-			setItems(data);
+			// const data = await postApi.searchPosts(text);
+			// setItems(data);
+			setItems([{title: 'Lorem ipsum', created: '2020-07-28T21:37:49.029+00:00', tags: ['lorem', 'ipsum', 'dolor', 'sin', 'amet'], text: '        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}]);
 		}
 		if(props.activeTab === 'music') {
-			const data = await musicApi.searchMusic(text);
-			setItems(data);
+			// const data = await musicApi.searchMusic(text);
+			// setItems(data);
 		}
 		if(props.activeTab === 'movies') {
-			const data = await movieApi.searchMovies(text);
-			setItems(data);
+			// const data = await movieApi.searchMovies(text);
+			// setItems(data);
 		}
 	};
 
 	const showInput = () => {
 		catchFocus(true);
+		searchField.focus();
 	};
 
 	const hideInput = () => {
@@ -82,24 +85,24 @@ const Searchbar = (props) => {
 			}}
 		>
 			<IconButton
-				disabled
 				onClick={showInput}
 				size='small'
 				style={{ 
 					backgroundColor: paletteController.additionalColor,
-					...styles.icon
+					...styles.iconButton
 				}}
 			>
-				<Search/>
+				<Search fontSize={isMobile ? 'large' : 'default'}/>
 			</IconButton>
 			<InputBase
+				inputRef={(element) => searchField = element}
 				onChange={handleChange}
 				value={text}
 				onFocus={showInput} 
 				onBlur={hideInput}
 				placeholder={`Search in ${props.activeTab}...`}
 				style={{
-					width: isFocused ? 380 : 165, 
+					width: isFocused ? (isMobile ? '65vw': 380) : (isMobile ? 0 : 165), 
 					transitionDuration: '0.5s',
 					backgroundColor: paletteController.additionalColor,
 					...styles.inputBase
@@ -113,6 +116,8 @@ const Searchbar = (props) => {
 					display: displayList,
 					backgroundColor: paletteController.cardColor,
 					color: paletteController.textColor,
+					width: isMobile ? '70vw' : 420,
+					top: isMobile ? 40 : 31,
 					...styles.resultsList
 				}}
 			>

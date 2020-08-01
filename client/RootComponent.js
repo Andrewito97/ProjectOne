@@ -1,7 +1,9 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { Switch, Route } from 'react-router-dom';
-import { Box } from '@material-ui/core';
+import { Link, Route, Switch } from 'react-router-dom';
+import { Box, Typography } from '@material-ui/core';
+import { GiCarambola } from 'react-icons/gi';
+import { isMobile } from 'react-device-detect';
 import AdminPanel from './components/user/AdminPanel';
 import Topbar from './components/Topbar';
 import NewsFeedList from './components/posts/NewsFeedList';
@@ -24,33 +26,72 @@ import paletteController from './PaletteController';
 
 const styles = {
 	container: {
-		display: 'flex', 
-		paddingTop: '6%',
-		paddingLeft: '14%',
-		paddingRight: '8%'
+		display: 'flex',
+		justifyContent: 'center',
+		paddingTop: '7%',
 	},
 	list: {
-		margin: '3%',
 		width: 850,
-		minHeight: 1000
+		minHeight: '110vh',
+		marginTop: '3%'
 	},
 	aside: {
 		width: 350, 
 		marginTop: '3%'
+	},
+	mobileHeader: {
+		display:'flex',
+		justifyContent: 'center',
+		height: 70
+	},
+	logoContainer: {
+		display: 'flex',
+		alignItems: 'center'
+	},
+	logoText: {
+		marginLeft: 10,
+		fontSize: 40,
+		fontFamily: 'ComicAndy'
 	}
 };
 
 const RootComponent = (props) => {
+	const [ showWelcome, setWelcome ] = React.useState(false);
+	const [ showMobileHeader, setMobileHeader ] = React.useState(false);
+
+	React.useEffect(() => {
+		setMobileHeader(true);
+		setWelcome(true);
+	});
+
 	return (
 		<Box>
+			{
+				showMobileHeader && isMobile ?
+					<Box style={{backgroundColor: paletteController.backgroundColor, ...styles.mobileHeader}}>
+						<Link to='/' style={{color: paletteController.tagsColor, ...styles.logoContainer}}>
+							<GiCarambola size={33}/>
+							<Typography style={styles.logoText}>Karambol</Typography>
+						</Link>
+					</Box>
+					:
+					null
+			}
 			<Topbar/>
 			<Box 
 				style={{
 					backgroundColor: paletteController.backgroundColor,
+					paddingLeft: isMobile ? 0 : '14%',
+					paddingRight: isMobile ? 0 : '8%',
 					...styles.container
 				}}
 			>
-				<Box style={styles.list}>
+				<Box 
+					style={{
+						margin: isMobile ? 0 : '3%',
+						...styles.list
+					}}
+				>
 					<Switch >    
 						<Route exact path='/' component={NewsFeedList} />
 						<Route exact path='/music' component={MusicList} />  
@@ -71,9 +112,14 @@ const RootComponent = (props) => {
 						)}/>
 					</Switch>
 				</Box>
-				<Box style={styles.aside}>
-					<Welcome/>
-				</Box>
+				{
+					showWelcome && !isMobile ?
+						<Box style={styles.aside}>
+							<Welcome/>
+						</Box>
+						:
+						null
+				}
 			</Box>
 			<Footer/>
 		</Box>

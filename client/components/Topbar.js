@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter, Link } from 'react-router-dom';
+import { isMobile } from 'react-device-detect';
 import { GiCarambola } from 'react-icons/gi';
 import { AppBar,
 	Box,
@@ -15,12 +16,13 @@ import paletteController from '../PaletteController';
 
 const styles = {
 	topbar: {
-		position: 'relative'
+		position: 'relative',
+		height: 60
 	},
 	logoContainer: {
 		position: 'absolute',
 		display: 'flex',
-		marginLeft: 26,
+		marginLeft: '2vw',
 		color: 'white',
 		zIndex: 1
 	},
@@ -42,7 +44,8 @@ const styles = {
 		marginLeft: '5%'
 	},
 	searchbar: {
-		marginLeft: '10%'
+		position: 'absolute',
+		zIndex: 10
 	},
 	wrenchButton: {
 		position: 'absolute',
@@ -51,16 +54,19 @@ const styles = {
 	},
 	menu: {
 		position: 'absolute',
-		zIndex: 5,
-		right: '8%'
+		zIndex: 5
 	}
 };
 
 const Topbar = withRouter(({ history }) => {
 	const [ activeTab, setActiveTab ] = React.useState('');
+	const [ showLogoWeb, setLogoWeb ] = React.useState(false);
+	const [ showSearch, setSearch ] = React.useState(false);
 
 	React.useEffect(() => {
 		getTab();
+		setLogoWeb(true);
+		setSearch(true);
 	});
 
 	const getTab = () => {
@@ -73,14 +79,27 @@ const Topbar = withRouter(({ history }) => {
 		<AppBar position='sticky'>
 			<Toolbar 
 				style={{
-					backgroundColor: paletteController.mainColor, 
+					backgroundColor: paletteController.mainColor,
 					...styles.topbar
 				}}
 			>
-				<Link to='/' style={styles.logoContainer}>
-					<GiCarambola style={styles.logoIcon} size={33}/>
-					<Typography style={styles.logoText}>Karambol</Typography>
-				</Link>
+				{
+					showLogoWeb && !isMobile ?
+						<Link to='/' style={styles.logoContainer}>
+							<GiCarambola style={styles.logoIcon} size={33}/>
+							<Typography style={styles.logoText}>Karambol</Typography>
+						</Link>
+						:
+						null
+				}
+				{
+					isMobile ?
+						<Box style={{left: '5%', ...styles.searchbar}}>
+							<Searchbar activeTab={activeTab}/>
+						</Box>
+						:
+						null
+				}
 				<Button
 					id='newsfeed-tab'
 					onClick={() => location.replace('/')}
@@ -114,9 +133,14 @@ const Topbar = withRouter(({ history }) => {
 				>
                     Movies
 				</Button>
-				<Box style={styles.searchbar}>
-					<Searchbar activeTab={activeTab}/>
-				</Box>
+				{
+					showSearch && !isMobile ?
+						<Box style={{left: '54%', ...styles.searchbar}}>
+							<Searchbar activeTab={activeTab}/>
+						</Box>
+						:
+						null
+				}
 				{
 					getUserStatus() === 'admin' ?
 						<Link to='/admin' style={styles.wrenchButton}>
@@ -127,7 +151,7 @@ const Topbar = withRouter(({ history }) => {
 						:
 						null
 				}
-				<Box style={styles.menu}>
+				<Box style={{right: isMobile ? '4%' : '8%', ...styles.menu}}>
 					<Menu/>
 				</Box>
 			</Toolbar>

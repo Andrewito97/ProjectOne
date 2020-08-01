@@ -16,7 +16,7 @@ const styles = {
 		position: 'absolute',
 		height: 80,
 		width: 80,
-		left: '42%',
+		left: '47%',
 		top: '45%',
 		zIndex: 1
 	}
@@ -31,10 +31,10 @@ const DummyMovie = () => {
     <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={40} width='35%'/>; 
 
 	const fakeTextLine = 
-    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={27} width='90%'/>; 
+    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={27} width='100%'/>; 
 
 	const fakeVideo = 
-    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={470} width='90%' variant='rect'/>; 
+    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={470} width='100%' variant='rect'/>; 
 
 	return (
 		<Box>

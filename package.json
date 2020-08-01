@@ -52,6 +52,7 @@
     "node-fetch": "^2.6.0",
     "react": "^16.13.1",
     "react-cookie": "^4.0.3",
+    "react-device-detect": "^1.13.1",
     "react-dom": "^16.13.1",
     "react-facebook-login": "^4.1.1",
     "react-google-login": "^5.1.20",

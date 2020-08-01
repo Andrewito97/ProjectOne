@@ -14,9 +14,9 @@ const styles = {
 	},
 	dummyCameraIcon: {
 		position: 'absolute',
-		height: 60,
-		width: 60,
-		left: '42%',
+		height: 80,
+		width: 80,
+		left: '47%',
 		top: '45%',
 		zIndex: 1
 	}
@@ -28,10 +28,10 @@ const DummyPost = () => {
     <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={45} width='60%'/>; 
 
 	const fakeTextLine = 
-    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={27} width='90%'/>; 
+    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={27} width='100%'/>; 
 
 	const fakeImage = 
-    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={470} width='90%' variant='rect'/>; 
+    <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={470} width='100%' variant='rect'/>; 
 
 	return (
 		<Box>
