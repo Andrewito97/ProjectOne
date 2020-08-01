@@ -52,7 +52,6 @@ const Searchbar = (props) => {
 		if(props.activeTab === 'newsfeed') {
 			const data = await postApi.searchPosts(text);
 			setItems(data);
-			setItems([]);
 		}
 		if(props.activeTab === 'music') {
 			const data = await musicApi.searchMusic(text);
