@@ -7,8 +7,9 @@ import paletteController from '../../PaletteController';
 
 const styles = {
 	formControl: {
-		width: '45%',
-		marginBottom: 5
+		width: '55%',
+		marginBottom: 7,
+		marginLeft: 7
 	},
 	menuList: {
 		borderRadius: 8

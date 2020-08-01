@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import ReactMarkdown from 'react-markdown';
+import { isMobile } from 'react-device-detect';
 import breaks from 'remark-breaks';
 import ReactPlayer from 'react-player';
 import { Card, 
@@ -19,11 +20,11 @@ import ConfirmWindow from '../ConfirmWindow';
 const styles = {
 	card: {
 		marginBottom: 60,
-		padding: 37
+		paddingTop: 37,
+		paddingBottom: 37
 	},
 	video: {
 		width: '100%',
-		height: 420,
 		marginTop: 30,
 		backgroundColor: 'black'
 	},
@@ -54,6 +55,8 @@ const Movie = (props) => {
 				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
+					paddingLeft: isMobile ? '2vw' : 37,
+					paddingRight: isMobile ? '2vw' : 37,
 					...styles.card
 				}}
 			>

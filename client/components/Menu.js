@@ -12,7 +12,7 @@ import paletteController from '../PaletteController';
 
 const styles = {
 	menuList: {
-		width: 150,
+		width: 180,
 		borderRadius: 8
 	},
 	link: {

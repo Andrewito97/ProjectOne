@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { isMobile } from 'react-device-detect';
 import AudioPlayer from './AudioPlayer';
 import { Card, 
 	CardContent, 
@@ -14,7 +15,11 @@ import ConfirmWindow from '../ConfirmWindow';
 const styles = {
 	card: {
 		marginBottom: 60,
-		padding: 37
+		paddingTop: 37,
+		paddingBottom: 37
+	},
+	tracksContainer: {
+		width: '85vmin'
 	},
 	musicFooter: {
 		position: 'relative',
@@ -40,6 +45,8 @@ const Music = (props) => {
 				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
+					paddingLeft: isMobile ? '2vw' : 37,
+					paddingRight: isMobile ? '2vw' : 37,
 					...styles.card
 				}}
 			>
@@ -47,12 +54,12 @@ const Music = (props) => {
 					id='music-title'
 					title={props.music.author}
 					subheader={props.music.genre}
-					style={{
-						color: paletteController.textColor,
-					}}
+					style={{color: paletteController.textColor}}
 				/>
 				<CardContent>
-					{ props.music.audios.map((name, index) => <AudioPlayer key={index} name={name}/>) }
+					<Box style={styles.tracksContainer}>
+						{ props.music.audios.map((name, index) => <AudioPlayer key={index} name={name}/>) }
+					</Box>
 					<Box style={styles.musicFooter}>
 						<Typography id='music-date' style={styles.songDate}>
 							{new Date(props.music.created).toDateString()}
