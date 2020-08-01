@@ -10,9 +10,9 @@ import { InputBase,
 	ListItemText } from '@material-ui/core';
 import { Search } from '@material-ui/icons';
 import paletteController from '../PaletteController';
-// import postApi from '../api/post.api';
-// import musicApi from '../api/music.api';
-// import movieApi from '../api/movie.api';
+import postApi from '../api/post.api';
+import musicApi from '../api/music.api';
+import movieApi from '../api/movie.api';
 
 const styles = {
 	container: {
@@ -50,17 +50,17 @@ const Searchbar = (props) => {
 
 	const search = async () => {
 		if(props.activeTab === 'newsfeed') {
-			// const data = await postApi.searchPosts(text);
-			// setItems(data);
-			setItems([{title: 'Lorem ipsum', created: '2020-07-28T21:37:49.029+00:00', tags: ['lorem', 'ipsum', 'dolor', 'sin', 'amet'], text: '        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.'}]);
+			const data = await postApi.searchPosts(text);
+			setItems(data);
+			setItems([]);
 		}
 		if(props.activeTab === 'music') {
-			// const data = await musicApi.searchMusic(text);
-			// setItems(data);
+			const data = await musicApi.searchMusic(text);
+			setItems(data);
 		}
 		if(props.activeTab === 'movies') {
-			// const data = await movieApi.searchMovies(text);
-			// setItems(data);
+			const data = await movieApi.searchMovies(text);
+			setItems(data);
 		}
 	};
 
