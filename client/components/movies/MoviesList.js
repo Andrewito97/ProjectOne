@@ -9,7 +9,7 @@ import movieApi from '../../api/movie.api';
 import DummyMovie from './DummyMovie';
 
 const MoviesList = () => {
-	const [ movies, setMovies ] = React.useState([{title: 'test', description: 'test descritsdsfdf', genre: 'Drama'}]);
+	const [ movies, setMovies ] = React.useState([]);
 	const [ skip, setSkip ] = React.useState(0);
 	const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
 
