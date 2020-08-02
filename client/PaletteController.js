@@ -100,7 +100,7 @@ class PaletteController {
 			this.tabsTextColor = this.silver;
 			this.backgroundColor = this.lightGrey;
 			this.cardColor = this.middleGrey;
-			this.tagsColor = this.grey;
+			this.tagsColor = this.white;
 			break;  
 		case 'dark blue': 
 			this.mainColor = this.black;
@@ -109,7 +109,7 @@ class PaletteController {
 			this.tabsTextColor = this.silver;
 			this.backgroundColor = this.blackBlue;
 			this.cardColor = this.highBlackBlue;
-			this.tagsColor = this.grey;
+			this.tagsColor = this.white;
 			break;
 		case 'orange': 
 			this.mainColor = this.orange;

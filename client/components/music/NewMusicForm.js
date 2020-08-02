@@ -50,7 +50,7 @@ const styles = {
 		marginLeft: 5
 	},
 	backdrop: {
-		zIndex: 20
+		zIndex: 999
 	}
 };
 
