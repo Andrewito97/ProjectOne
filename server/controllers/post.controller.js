@@ -1,6 +1,27 @@
+import mongoose from 'mongoose';
 import formidable from 'formidable';
 import fs from 'fs';
-import Post from '../models/post.model'; 
+import PostSchema from '../models/post.model';
+import config from '../../config';
+
+//create connection to specific database
+const connection = mongoose.createConnection(config.postsMongoUri, {
+	useNewUrlParser: true, 
+	useUnifiedTopology: true,
+	useCreateIndex: true
+});
+
+//append specifid schema to the connection and initialize constructor
+const Post = connection.model('Post', PostSchema);
+
+connection.once('open', function () {
+	console.log('Connected to db with newsfeed documents !');
+});
+
+connection.on('error', () => {
+	throw new Error('Unable to connect to database with newsfeed documents!');
+});
+
 
 const postController = {
 	create(request, response) {
@@ -98,10 +119,11 @@ const postController = {
 	},
 
 	searchPosts(request, response) {
+		console.log(request);
 		Post
 			.find({$text: {$search: request.query.text}})
 			.limit(7)
-			.exec( (error, posts) => { 
+			.exec( (error, posts) => {
 				if(error || !posts) {
 					return response.status(400).json({
 						errorMessage: 'Posts not found !'

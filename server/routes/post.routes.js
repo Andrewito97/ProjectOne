@@ -11,7 +11,7 @@ postApi.route('/myapi/newsfeed')
 postApi.route('/myapi/newsfeed/:postTag')
 	.get(postController.listNewsFeedByTag);
 
-postApi.route('/myapi/newsfeed/search')
+postApi.route('/myapi/posts/search')
 	.get(postController.searchPosts);
 
 postApi.route('/myapi/post/image/:postId')
@@ -20,7 +20,7 @@ postApi.route('/myapi/post/image/:postId')
 postApi.route('/myapi/profile/:userId/newsfeed')
 	.get(postController.listUserNewsFeed);
 
-postApi.route('/myapi/newsfeed/:postId')
+postApi.route('/myapi/posts/:postId')
 	.get(postController.findPost)
 	.delete(postController.deletePost);
 

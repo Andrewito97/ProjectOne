@@ -21,6 +21,11 @@ connection.once('open', function () {
 	console.log('Connected to db with music documents !');
 });
 
+connection.on('error', () => {
+	throw new Error('Unable to connect to database with music documents!');
+});
+
+
 const musicController = {
 	create(request, response) {
 		let form = new formidable.IncomingForm();

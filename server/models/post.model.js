@@ -35,4 +35,4 @@ const PostSchema = new mongoose.Schema({
 
 PostSchema.index({title: 'text', tags: 'text'});
 
-export default mongoose.model('Post', PostSchema);
+export default PostSchema;

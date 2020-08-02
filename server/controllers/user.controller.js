@@ -1,9 +1,29 @@
-import User from '../models/user.model';
+import mongoose from 'mongoose';
+import UserSchema from '../models/user.model';
 import jsonWebToken from 'jsonwebtoken';
 import expressJsonWebToken from 'express-jwt';
 import config from '../../config';
 import sgMail from '@sendgrid/mail';
 import crypto from 'crypto';
+
+//create connection to specific database
+const connection = mongoose.createConnection(config.usersMongoUri, {
+	useNewUrlParser: true, 
+	useUnifiedTopology: true,
+	useCreateIndex: true,
+	useFindAndModify: false
+});
+
+//append specifid schema to the connection and initialize constructor
+const User = connection.model('User', UserSchema);
+
+connection.once('open', function () {
+	console.log('Connected to db with users documents !');
+});
+
+connection.on('error', () => {
+	throw new Error('Unable to connect to database with users documents!');
+});
 
 const userController = {
 	create(request, response) {

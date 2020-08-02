@@ -4,7 +4,6 @@ import fs from 'fs';
 import http from 'http';
 import https from 'https';
 import path from 'path';
-import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import compress from 'compression';
@@ -66,20 +65,6 @@ app.get('*', (request, response) => {
 	);
 	const css = sheets.toString();
 	response.send( template(markup, css) );
-});
-
-//connect to db
-mongoose.connect(config.mainMongoUri, {
-	useNewUrlParser: true, 
-	useUnifiedTopology: true, 
-	useCreateIndex: true,
-	useFindAndModify: false
-});
-mongoose.connection.on('error', () => {
-	throw new Error('Unable to connect to database !');
-});
-mongoose.connection.once('open', () => {
-	console.log('Successfully connected to db with posts and users documents !');
 });
 
 //select a server depending on the environment  

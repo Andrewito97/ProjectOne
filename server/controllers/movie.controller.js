@@ -5,7 +5,7 @@ import MovieSchema from '../models/movie.model';
 import config from '../../config';
 
 //create connection to specific database
-const connection = mongoose.createConnection(config.movieMongoUri, {
+const connection = mongoose.createConnection(config.moviesMongoUri, {
 	useNewUrlParser: true, 
 	useUnifiedTopology: true,
 	useCreateIndex: true
@@ -19,6 +19,10 @@ let gridFSBucket = null;
 connection.once('open', function () {
 	gridFSBucket = new mongoose.mongo.GridFSBucket(connection.db);
 	console.log('Connected to db with movies documents !');
+});
+
+connection.on('error', () => {
+	throw new Error('Unable to connect to database with movies documents!');
 });
 
 const movieController = {
@@ -104,6 +108,7 @@ const movieController = {
 	},
 
 	searchMovies(request, response) {
+		console.log(request.query);
 		Movie
 			.find({$text: {$search: request.query.text}})
 			.limit(7)

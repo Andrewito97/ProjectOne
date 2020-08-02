@@ -56,7 +56,7 @@ const postApi = {
 	},
 	async searchPosts(text) {
 		try {
-			const response = await fetch(`${domain}/myapi/newsfeed/search?text=${text}`, {
+			const response = await fetch(`${domain}/myapi/posts/search?text=${text}`, {
 				method: 'GET',
 			});
 			return response.json();
@@ -67,7 +67,7 @@ const postApi = {
 	},
 	async findPost(postId) {
 		try {
-			const response = await fetch(`${domain}/myapi/newsfeed/${postId}`, {
+			const response = await fetch(`${domain}/myapi/posts/${postId}`, {
 				method: 'GET',
 			});
 			return response.json(); 
@@ -78,7 +78,7 @@ const postApi = {
 	},
 	async deletePost(postId) {
 		try {
-			const response = await fetch(`${domain}/myapi/newsfeed/${postId}`, {
+			const response = await fetch(`${domain}/myapi/posts/${postId}`, {
 				method: 'DELETE',
 				headers: {
 					'Accept': 'application/json',
