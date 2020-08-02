@@ -119,7 +119,6 @@ const postController = {
 	},
 
 	searchPosts(request, response) {
-		console.log(request);
 		Post
 			.find({$text: {$search: request.query.text}})
 			.limit(7)

@@ -108,7 +108,6 @@ const movieController = {
 	},
 
 	searchMovies(request, response) {
-		console.log(request.query);
 		Movie
 			.find({$text: {$search: request.query.text}})
 			.limit(7)
