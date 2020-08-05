@@ -6,6 +6,11 @@ import VolumeUpIcon from '@material-ui/icons/VolumeUp';
 import paletteController from '../../PaletteController';
 
 const styles = {
+	container: {
+		marginRight: 10,
+		marginLeft: 10,
+		marginBottom: 10
+	},
 	dummyTitle: {
 		marginBottom: 35
 	},
@@ -50,7 +55,7 @@ const DummyMusic = () => {
     <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={40} width='100%' variant='rect'/>; 
 
 	return (
-		<Box>
+		<Box style={styles.container}>
 			<Box style={styles.dummyTitle}>
 				{fakeAuthor}
 				{fakeGenre}

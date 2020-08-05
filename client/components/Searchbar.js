@@ -20,7 +20,6 @@ const styles = {
 		borderRadius: 5
 	},
 	iconButton: {
-		marginRight: 7,
 		color: 'white'
 	},
 	inputBase: {

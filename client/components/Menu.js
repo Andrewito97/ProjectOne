@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
@@ -26,16 +27,9 @@ const styles = {
 	}
 };
 
-const _Menu = () => {
+const _Menu = (props) => {
 	const [ anchorEl, setAnchorEl ] = React.useState(null);
 	const [ confirm, setConfirm ] = React.useState(false);
-	const [ showPersonIcon, setPersonIcon ] = React.useState(false);
-	const [ showMenuIcon, setMenuIcon ] = React.useState(false);
-	
-	React.useEffect(() => {
-		setPersonIcon(true);
-		setMenuIcon(true);
-	});
 
 	const handleClick = event => {
 		setAnchorEl(event.currentTarget);
@@ -55,7 +49,7 @@ const _Menu = () => {
 		<Box >
 			<IconButton id='profile-menu' onClick={handleClick}>
 				{
-					showPersonIcon && !isMobile ?
+					!props.isMobile && !isMobile ?
 						<Person
 							style={{ 
 								backgroundColor: paletteController.additionalColor,
@@ -66,7 +60,7 @@ const _Menu = () => {
 						null
 				}
 				{
-					showMenuIcon && isMobile ?
+					props.isMobile || isMobile ?
 						<MenuIcon
 							fontSize='large'
 							style={{ 

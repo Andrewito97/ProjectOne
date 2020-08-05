@@ -50,8 +50,10 @@ const styles = {
 	},
 	wrenchButton: {
 		position: 'absolute',
-		zIndex: 5,
-		right: '11%'
+		zIndex: 5
+	},
+	buildIcon: {
+		color: 'white'
 	},
 	menu: {
 		position: 'absolute',
@@ -59,15 +61,13 @@ const styles = {
 	}
 };
 
-const Topbar = withRouter(({ history }) => {
+const Topbar = withRouter(({ history, ...props}) => {
 	const [ activeTab, setActiveTab ] = React.useState('');
 	const [ showLogoWeb, setLogoWeb ] = React.useState(false);
-	const [ showSearch, setSearch ] = React.useState(false);
 
 	React.useEffect(() => {
 		getTab();
 		setLogoWeb(true);
-		setSearch(true);
 	});
 
 	const getTab = () => {
@@ -135,7 +135,7 @@ const Topbar = withRouter(({ history }) => {
                     Movies
 				</Button>
 				{
-					showSearch && !isMobile ?
+					!props.isMobile && !isMobile ?
 						<Box style={{left: '54%', ...styles.searchbar}}>
 							<Searchbar activeTab={activeTab}/>
 						</Box>
@@ -144,16 +144,25 @@ const Topbar = withRouter(({ history }) => {
 				}
 				{
 					getUserStatus() === 'admin' ?
-						<Link to='/admin' style={styles.wrenchButton}>
+						<Link 
+							to='/admin'
+							style={{
+								right: isMobile ? '14%' : '11%',
+								...styles.wrenchButton
+							}}
+						>
 							<IconButton>
-								<BuildIcon style={{backgroundColor: paletteController.additionalColor, color: 'white'}}/>
+								<BuildIcon 
+									fontSize={isMobile ? 'large' : 'default'}
+									style={{backgroundColor: paletteController.additionalColor, ...styles.buildIcon}}
+								/>
 							</IconButton>
 						</Link>
 						:
 						null
 				}
 				<Box style={{right: isMobile ? '4%' : '8%', ...styles.menu}}>
-					<Menu/>
+					<Menu isMobile={props.isMobile}/>
 				</Box>
 			</Toolbar>
 		</AppBar>

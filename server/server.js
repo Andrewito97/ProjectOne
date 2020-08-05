@@ -1,4 +1,5 @@
 //general modules
+import process from 'process';
 import express from 'express';
 import fs from 'fs';
 import http from 'http';
@@ -25,6 +26,10 @@ import ReactDOMServer from 'react-dom/server';
 import { StaticRouter } from 'react-router-dom';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import RootComponent from '../client/RootComponent';
+import paletteController from '../client/PaletteController';
+
+//mobile detection before sending template
+import isMobile from 'ismobilejs';
 
 //initialize express server
 const app = express();
@@ -42,7 +47,6 @@ app.use(helmet());
 app.use(cors());
 
 //serving static files
-// eslint-disable-next-line no-undef
 const CURRENT_WORKING_DIR = process.cwd();
 app.use('/build', express.static(path.join(CURRENT_WORKING_DIR, 'build')));
 
@@ -55,21 +59,27 @@ app.use('/', otherApi);
 
 //sending template with ssr markup, css and bundeled client code at every endpoint
 app.get('*', (request, response) => {
+	const deviceCheck = isMobile(request.headers['user-agent']).any;
+	const palette = request.cookies.OneProjectPalette;
+	if(palette) {
+		paletteController.choosePalette(palette);
+	} else {
+		paletteController.choosePalette('standart');
+	}
 	const sheets = new ServerStyleSheets();
 	const markup = ReactDOMServer.renderToString(
 		sheets.collect(
 			<StaticRouter location={request.url}>
-				<RootComponent/>
+				<RootComponent isMobile={deviceCheck} palette={palette}/>
 			</StaticRouter>
 		)
 	);
 	const css = sheets.toString();
-	response.send( template(markup, css) );
+	response.send( template(markup, css, deviceCheck) );
 });
 
 //select a server depending on the environment  
-// eslint-disable-next-line no-undef
-if(process.env.NODE_ENV === 'development') {
+if(config.nodeEnv === 'development') {
 	const httpServer = http.createServer(app);
 	httpServer.listen(config.port, () => {
 		console.log(`Server is running on port ${config.port} in ${config.nodeEnv} mode...`);

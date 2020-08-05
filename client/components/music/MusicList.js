@@ -2,12 +2,12 @@ import React from 'react';
 import { Box } from '@material-ui/core';
 import { isMobile } from 'react-device-detect';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import { useCookies } from 'react-cookie';
 import Music from './Music';
 import NewMusicForm from './NewMusicForm';
 import MusicGenreSelect from './MusicGenreSelect';
 import DummyMusic from './DummyMusic';
 import authenticationHelper from '../../helpers/authentication.helper';
+import cookieHelper from '../../helpers/cookie.helper';
 import musicApi from '../../api/music.api';
 
 const MusicList = () => {
@@ -15,14 +15,13 @@ const MusicList = () => {
 	const [ genre, setGenre ] = React.useState('All');
 	const [ skip, setSkip ] = React.useState(0);
 	const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
-	const [ cookies, setCookie ] = useCookies(['OneProjectMusic']);
 
 	React.useEffect(() => {
 		const controller = new window.AbortController();
 		const signal = controller.signal;
-		if(cookies.OneProjectMusic) {
-			setGenre(cookies.OneProjectMusic);
-			loadMusic(cookies.OneProjectMusic, signal);
+		if(cookieHelper.getCookie('OneProjectMusic')) {
+			setGenre(cookieHelper.getCookie('OneProjectMusic'));
+			loadMusic(cookieHelper.getCookie('OneProjectMusic'), signal);
 		} else {
 			setGenre('All');
 			loadMusic('All', signal);
@@ -55,7 +54,7 @@ const MusicList = () => {
 	const handleChange = (event) => {
 		setMusic('');
 		setGenre(event.target.value);
-		setCookie('OneProjectMusic', event.target.value);
+		cookieHelper.setCookie('OneProjectMusic', event.target.value);
 		location.reload();
 	};
 

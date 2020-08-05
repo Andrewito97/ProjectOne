@@ -1,4 +1,4 @@
-function template(markup, css) {
+function template(markup, css, deviceCheck) {
 	return (
 		`<!doctype html>
       <html lang="en">
@@ -20,7 +20,7 @@ function template(markup, css) {
            <style id="jss-server-side">${css}</style>
         </head>
         <body style="margin: 0; background: #F3F8EE">
-           <div id="root">${markup}</div>
+           <div id="root" mobile="${deviceCheck}">${markup}</div>
            <script type="text/javascript" src="/build/generated.client.js"></script>      
         </body>
       </html>`

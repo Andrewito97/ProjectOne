@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
-import { useCookies } from 'react-cookie';
 import { 
 	MenuItem,
 	Box,
@@ -9,6 +8,7 @@ import {
 	Select,
 	Button } from '@material-ui/core';
 import paletteController from '../PaletteController';
+import cookieHelper from '../helpers/cookie.helper';
 
 const styles = {
 	container: {
@@ -38,8 +38,6 @@ const styles = {
 };
 
 const PaletteSelect = (props) => {
-	// eslint-disable-next-line no-unused-vars
-	const [ cookies, setCookie ] = useCookies(['OneProjectPalette']);
 
 	const handleChange = (event) => {
 		props.setPalette(event.target.value);
@@ -92,7 +90,7 @@ const PaletteSelect = (props) => {
 			</FormControl>
 			<br/>
 			<Button
-				onClick={() => setCookie('OneProjectPalette', props.palette)}
+				onClick={() => cookieHelper.setCookie('OneProjectPalette', props.palette)}
 				style={{
 					backgroundColor: paletteController.mainColor,
 					...styles.applyButton

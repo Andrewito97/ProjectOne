@@ -56,12 +56,10 @@ const styles = {
 };
 
 const RootComponent = (props) => {
-	const [ showWelcome, setWelcome ] = React.useState(false);
 	const [ showMobileHeader, setMobileHeader ] = React.useState(false);
 
 	React.useEffect(() => {
 		setMobileHeader(true);
-		setWelcome(true);
 	});
 
 	return (
@@ -77,18 +75,18 @@ const RootComponent = (props) => {
 					:
 					null
 			}
-			<Topbar/>
+			<Topbar isMobile={props.isMobile}/>
 			<Box 
 				style={{
 					backgroundColor: paletteController.backgroundColor,
-					paddingLeft: isMobile ? 0 : '14%',
-					paddingRight: isMobile ? 0 : '8%',
+					paddingLeft: (props.isMobile || isMobile) ? 0 : '14%',
+					paddingRight: (props.isMobile || isMobile) ? 0 : '8%',
 					...styles.container
 				}}
 			>
 				<Box 
 					style={{
-						margin: isMobile ? 0 : '3%',
+						margin: (props.isMobile || isMobile) ? 0 : '3%',
 						...styles.list
 					}}
 				>
@@ -113,7 +111,7 @@ const RootComponent = (props) => {
 					</Switch>
 				</Box>
 				{
-					showWelcome && !isMobile ?
+					!props.isMobile && !isMobile?
 						<Box style={styles.aside}>
 							<Welcome/>
 						</Box>

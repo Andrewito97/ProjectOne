@@ -134,7 +134,7 @@ const AdminPanel = () => {
 					>
                         Admin panel
 					</Typography>
-					<Box style={styles.userListContainer}>
+					<Box style={{color: paletteController.textColor, ...styles.userListContainer}}>
 						<Typography>All users:</Typography>
 						<Box style={styles.labelsContainer}>
 							<Typography component='span' style={styles.labelName}>Name</Typography>
@@ -143,7 +143,7 @@ const AdminPanel = () => {
 							<Typography component='span' style={styles.labelDate}>Created date</Typography>
 							<Typography component='span' style={styles.labelStatus}>Status</Typography>
 						</Box>
-						<Divider/>
+						<Divider style={{backgroundColor: paletteController.textColor}}/>
 						<List>
 							{
 								users ? users.map((user, index) => (

@@ -1,12 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { CookiesProvider, useCookies } from 'react-cookie';
 import { BrowserRouter } from 'react-router-dom';
 import RootComponent from './RootComponent';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import paletteController from './PaletteController';
-// eslint-disable-next-line no-unused-vars
-import carambolIcon from './assets/carambola.png';
+import cookieHelper from './helpers/cookie.helper';
 
 const blue = paletteController.blue;
 const ivory = paletteController.ivory;
@@ -15,11 +13,13 @@ const lime = paletteController.lime;
 const orange = paletteController.orange;
 
 const App = () => {
-	// eslint-disable-next-line no-unused-vars
-	const [ cookies, setCookie ] = useCookies(['OneProjectPalette']);
-	const [ palette, setPalette ] = React.useState('standart');
+	const [ palette, setPalette ] = React.useState(cookieHelper.getCookie('OneProjectPalette'));
+
+	let isMobile;
 
 	React.useEffect(() => {
+
+		isMobile = document.querySelector('#root').getAttribute('mobile');
 
 		//remove server side injected css
 		const jssStyles = document.querySelector('#jss-server-side');
@@ -28,7 +28,7 @@ const App = () => {
 		}
 
 		//initialize palette
-		const userPalette = cookies.OneProjectPalette;
+		const userPalette = cookieHelper.getCookie('OneProjectPalette');
 		if(userPalette) {
 			setPalette(userPalette);
 		} else {
@@ -51,13 +51,11 @@ const App = () => {
 	});
 
 	return (
-		<CookiesProvider>
-			<BrowserRouter>
-				<ThemeProvider theme={customTheme}>
-					<RootComponent palette={palette} setPalette={setPalette}/>
-				</ThemeProvider> 
-			</BrowserRouter>
-		</CookiesProvider>
+		<BrowserRouter>
+			<ThemeProvider theme={customTheme}>
+				<RootComponent palette={palette} setPalette={setPalette} isMobile={isMobile}/>
+			</ThemeProvider> 
+		</BrowserRouter>
 	);
 };
 
