@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { isMobile } from 'react-device-detect';
 import { Card,
 	CardContent,
 	Typography,
@@ -19,11 +20,8 @@ import paletteController from '../../PaletteController';
 
 const styles = {
 	card: {
-		paddingTop: 50,
-		paddingBottom: 50,
-		paddingRight: 60,
-		paddingLeft: 60,
-		minHeight: 200,
+		marginRight: 10,
+		marginLeft: 10,
 		marginBottom: 80
 	},
 	authorInput: {
@@ -143,6 +141,7 @@ const NewMusicForm = (props) => {
 				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
+					padding: isMobile ? 20 : 50,
 					...styles.card
 				}}
 			>

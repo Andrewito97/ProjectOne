@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { isMobile } from 'react-device-detect';
 import { Card,
 	CardContent,
 	Box,
@@ -19,11 +20,8 @@ import paletteController from '../../PaletteController';
 
 const styles = {
 	card: {
-		paddingTop: 50,
-		paddingBottom: 50,
-		paddingRight: 60,
-		paddingLeft: 60,
-		minHeight: 250,
+		marginRight: 10,
+		marginLeft: 10,
 		marginBottom: 80
 	},
 	titleInput: {
@@ -55,11 +53,15 @@ const styles = {
 		marginTop: 27,
 	},
 	imageName: {
-		marginTop: 8,
+		marginTop: 8
+	},
+	imageNameText: {
+		display: 'inline-block'
 	},
 	deleteButton: {
 		color: 'white',
-		marginLeft: 20
+		marginLeft: 20,
+		marginBottom: 15
 	},
 	addPostButton: {
 		color: 'white',
@@ -126,6 +128,7 @@ const NewPostForm = (props) => {
 				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
+					padding: isMobile ? 20 : 50,
 					...styles.card
 				}}
 			>
@@ -188,7 +191,7 @@ const NewPostForm = (props) => {
 						variant='outlined'
 						placeholder='Type content...'
 						multiline
-						rows='20'
+						rows='12'
 						value={postText}
 						style={styles.textInput}
 						onChange={ 
@@ -229,7 +232,12 @@ const NewPostForm = (props) => {
 									<Typography
 										id='image-name'
 										component='span'
-										style={{color: paletteController.textColor}}
+										noWrap
+										style={{
+											color: paletteController.textColor,
+											width: isMobile ? 160 : 420,
+											...styles.imageNameText
+										}}
 									>
 										{postImage.name}
 									</Typography>

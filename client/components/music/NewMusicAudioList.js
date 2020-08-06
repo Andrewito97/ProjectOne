@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { isMobile } from 'react-device-detect';
 import { Typography, 
 	TextField,
 	IconButton,
@@ -15,26 +16,26 @@ const styles = {
 		width: '100%', 
 		position: 'relative'
 	},
-	audioName: {
-		width: '80%',
+	audioNameInput: {
+		width: '70%'
 	},
 	editIcon: {
 		position: 'absolute',
-		right: 65,
+		right: 50,
 		bottom: 7,
 		color: 'white',
 		marginLeft: 8
 	},
 	saveIcon: {
 		position: 'absolute',
-		right: 65,
+		right: 50,
 		bottom: 7,
 		color: 'white',
 		marginLeft: 8
 	},
 	deleteIcon: {
 		position: 'absolute',
-		right: 12,
+		right: 7,
 		bottom: 7,
 		color: 'white',
 		marginLeft: 8
@@ -54,16 +55,17 @@ const AudioList = (props) => {
 									size='small'
 									variant='outlined'
 									defaultValue={item.name}
-									style={styles.audioName}
+									style={styles.audioNameInput}
 									onChange={ (event) => props.handleAudioNameChange(i, event) }
 								/>
 								:
 								<Typography
 									id='new-audio-name'
 									component='span'
+									noWrap
 									style={{
 										color: paletteController.textColor,
-										...styles.audioName
+										width: isMobile ? 200 : 450
 									}}
 								>
 									{props.audioNames[i].audioname}
@@ -107,8 +109,9 @@ const AudioList = (props) => {
 							<DeleteIcon/>
 						</IconButton>
 					</ListItem>
-				)
-				) : null
+				)) 
+					: 
+					null
 			}
 		</List>
 	);

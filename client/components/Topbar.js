@@ -34,13 +34,13 @@ const styles = {
 	logoIcon: {
 		marginTop: 15
 	},
-	newsFeedTab: {
-		marginLeft: '16%'
-	},
 	musicTab: {
 		marginLeft: '1%'
 	},
 	moviesTab: {
+		marginLeft: '1%'
+	},
+	booksTab: {
 		marginLeft: '1%',
 		marginRight: '16%'
 	},
@@ -50,6 +50,7 @@ const styles = {
 	},
 	wrenchButton: {
 		position: 'absolute',
+		right: '11%',
 		zIndex: 5
 	},
 	buildIcon: {
@@ -64,16 +65,19 @@ const styles = {
 const Topbar = withRouter(({ history, ...props}) => {
 	const [ activeTab, setActiveTab ] = React.useState('');
 	const [ showLogoWeb, setLogoWeb ] = React.useState(false);
+	const [ showMenu, setMenu ] = React.useState(false);
 
 	React.useEffect(() => {
 		getTab();
 		setLogoWeb(true);
+		setMenu(true);
 	});
 
 	const getTab = () => {
 		if(history.location.pathname === '/') setActiveTab('newsfeed');
 		if(history.location.pathname === '/music') setActiveTab('music');
 		if(history.location.pathname === '/movies') setActiveTab('movies');
+		if(history.location.pathname === '/books') setActiveTab('books');
 	};
 
 	return (
@@ -95,7 +99,7 @@ const Topbar = withRouter(({ history, ...props}) => {
 				}
 				{
 					isMobile ?
-						<Box style={{left: '5%', ...styles.searchbar}}>
+						<Box style={{left: '3%', ...styles.searchbar}}>
 							<Searchbar activeTab={activeTab}/>
 						</Box>
 						:
@@ -107,10 +111,10 @@ const Topbar = withRouter(({ history, ...props}) => {
 					style={{
 						color: activeTab === 'newsfeed' ? 'white': paletteController.tabsTextColor, 
 						textShadow: activeTab === 'newsfeed' ? '1px 1px 2px white' : false,
-						...styles.newsFeedTab
+						marginLeft: isMobile ? '12%' : '16%'
 					}}
 				>
-                    News Feed
+                    Main
 				</Button>
 				<Button
 					id='music-tab'
@@ -134,6 +138,17 @@ const Topbar = withRouter(({ history, ...props}) => {
 				>
                     Movies
 				</Button>
+				<Button
+					id='books-tab'
+					onClick={() => location.replace('/books')}
+					style={{
+						color: activeTab === 'books' ? 'white': paletteController.tabsTextColor,
+						textShadow: activeTab === 'books' ? '1px 1px 2px white' : false,
+						...styles.booksTab
+					}}
+				>
+                    Books
+				</Button>
 				{
 					!props.isMobile && !isMobile ?
 						<Box style={{left: '54%', ...styles.searchbar}}>
@@ -143,27 +158,22 @@ const Topbar = withRouter(({ history, ...props}) => {
 						null
 				}
 				{
-					getUserStatus() === 'admin' ?
-						<Link 
-							to='/admin'
-							style={{
-								right: isMobile ? '14%' : '11%',
-								...styles.wrenchButton
-							}}
-						>
+					!isMobile && getUserStatus() === 'admin' ?
+						<Link to='/admin' style={styles.wrenchButton}>
 							<IconButton>
-								<BuildIcon 
-									fontSize={isMobile ? 'large' : 'default'}
-									style={{backgroundColor: paletteController.additionalColor, ...styles.buildIcon}}
-								/>
+								<BuildIcon style={{backgroundColor: paletteController.additionalColor, ...styles.buildIcon}}/>
 							</IconButton>
 						</Link>
 						:
 						null
 				}
-				<Box style={{right: isMobile ? '4%' : '8%', ...styles.menu}}>
-					<Menu isMobile={props.isMobile}/>
-				</Box>
+				{
+					showMenu ?
+						<Box style={{right: isMobile ? '1%' : '8%', ...styles.menu}}>
+							<Menu isMobile={props.isMobile}/>
+						</Box>
+						: null
+				}
 			</Toolbar>
 		</AppBar>
 	);

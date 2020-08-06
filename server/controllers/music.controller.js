@@ -21,10 +21,10 @@ connection.once('open', function () {
 	console.log('Connected to db with music documents !');
 });
 
-connection.on('error', () => {
-	throw new Error('Unable to connect to database with music documents!');
+connection.on('error', (error) => {
+	console.error('Unable to connect to database with music documents!');
+	console.error(`Reason: ${error}`);
 });
-
 
 const musicController = {
 	create(request, response) {

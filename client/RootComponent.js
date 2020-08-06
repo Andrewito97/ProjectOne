@@ -1,7 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Link, Route, Switch } from 'react-router-dom';
-import { Box, Typography } from '@material-ui/core';
+import { Box, Typography, IconButton } from '@material-ui/core';
+import BuildIcon from '@material-ui/icons/Build';
 import { GiCarambola } from 'react-icons/gi';
 import { isMobile } from 'react-device-detect';
 import AdminPanel from './components/user/AdminPanel';
@@ -23,6 +24,7 @@ import Support from './components/Support';
 import Settings from './components/Settings';
 import Footer from './components/Footer';
 import paletteController from './PaletteController';
+import getUserStatus from './helpers/getUserStatus.helper';
 
 const styles = {
 	container: {
@@ -40,6 +42,7 @@ const styles = {
 		marginTop: '3%'
 	},
 	mobileHeader: {
+		position: 'relative',
 		display:'flex',
 		justifyContent: 'center',
 		height: 70
@@ -52,7 +55,16 @@ const styles = {
 		marginLeft: 10,
 		fontSize: 40,
 		fontFamily: 'ComicAndy'
-	}
+	},
+	wrenchButton: {
+		position: 'absolute',
+		right: '1%',
+		bottom: 5,
+		zIndex: 5
+	},
+	buildIcon: {
+		color: 'white'
+	},
 };
 
 const RootComponent = (props) => {
@@ -71,6 +83,19 @@ const RootComponent = (props) => {
 							<GiCarambola size={33}/>
 							<Typography style={styles.logoText}>Karambol</Typography>
 						</Link>
+						{
+							getUserStatus() === 'admin' ?
+								<Link to='/admin' style={styles.wrenchButton}>
+									<IconButton>
+										<BuildIcon 
+											fontSize='large'
+											style={{backgroundColor: paletteController.additionalColor, ...styles.buildIcon}}
+										/>
+									</IconButton>
+								</Link>
+								:
+								null
+						}
 					</Box>
 					:
 					null

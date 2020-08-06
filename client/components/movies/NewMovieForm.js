@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { isMobile } from 'react-device-detect';
 import { Card,
 	CardContent,
 	Box,
@@ -18,11 +19,8 @@ import paletteController from '../../PaletteController';
 
 const styles = {
 	card: {
-		paddingTop: 50,
-		paddingBottom: 50,
-		paddingLeft: 60,
-		paddingRight: 60,
-		minHeight: 200,
+		marginRight: 10,
+		marginLeft: 10,
 		marginBottom: 80
 	},
 	titleInput: {
@@ -44,6 +42,9 @@ const styles = {
 	movieName: {
 		marginTop: 8,
 	},
+	movieNameText: {
+		display: 'inline-block'
+	},
 	movieCreationButton: {
 		color: 'white',
 		marginLeft: 4,
@@ -51,7 +52,8 @@ const styles = {
 	},
 	deleteButton: {
 		color: 'white',
-		marginLeft: 20
+		marginLeft: 20,
+		marginBottom: 15
 	},
 	addVideoButton: {
 		color: 'white',
@@ -117,6 +119,7 @@ const NewMovieForm = (props) => {
 				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
+					padding: isMobile ? 20 : 50,
 					...styles.card
 				}}
 			>
@@ -165,7 +168,7 @@ const NewMovieForm = (props) => {
 						variant='outlined'
 						placeholder='Type description...'
 						multiline
-						rows='10'
+						rows='12'
 						value={movieDescription}
 						style={styles.descriptionInput}
 						onChange={ 
@@ -206,8 +209,13 @@ const NewMovieForm = (props) => {
 								<Box style={styles.movieName}>
 									<Typography
 										id='video-name'
+										noWrap
 										component='span'
-										style={{color: paletteController.textColor}}
+										style={{
+											color: paletteController.textColor,
+											width: isMobile ? 160 : 400,
+											...styles.movieNameText
+										}}
 									>
 										{video.name}
 									</Typography>

@@ -22,8 +22,10 @@ import SuccessWindow from '../SuccessWindow';
 
 const styles = {
 	card: {
-		padding: 37,
-		height: 280
+		marginRight: 10,
+		marginLeft: 10,
+		marginBottom: 10,
+		padding: 37
 	},
 	pageHeader: {
 		marginBottom: 40
@@ -38,10 +40,10 @@ const styles = {
 		marginBottom: 50
 	},
 	nameField: {
-		width: '60%'
+		width: '75%'
 	},
 	emailField: {
-		width: '60%'
+		width: '75%'
 	},
 	icons: {
 		color: 'white',
@@ -184,6 +186,7 @@ const Profile = () => {
 								<Typography
 									id='user-name'
 									variant='h6'
+									noWrap
 									style={{
 										color: paletteController.textColor,
 										...styles.nameField
@@ -247,6 +250,7 @@ const Profile = () => {
 								<Typography
 									id='user-email'
 									variant='h6'
+									noWrap
 									style={{
 										color: paletteController.textColor,
 										...styles.emailField
