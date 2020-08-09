@@ -1,6 +1,5 @@
-import process from 'process';
+/* eslint-disable no-undef */
 import dotenv from 'dotenv';
-
 dotenv.config();
 
 const config = {

@@ -1,5 +1,4 @@
 //general modules
-import process from 'process';
 import express from 'express';
 import fs from 'fs';
 import http from 'http';
@@ -48,6 +47,7 @@ app.use(helmet());
 app.use(cors());
 
 //serving static files
+// eslint-disable-next-line no-undef
 const CURRENT_WORKING_DIR = process.cwd();
 app.use('/build', express.static(path.join(CURRENT_WORKING_DIR, 'build')));
 

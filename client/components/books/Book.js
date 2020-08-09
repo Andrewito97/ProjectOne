@@ -22,9 +22,13 @@ const styles = {
 		paddingTop: 37,
 		paddingBottom: 37
 	},
-	image: {
-		maxWidth: '100%',
+	imageContainer: {
+		display: 'flex',
+		justifyContent: 'center',
 		marginTop: 30
+	},
+	image: {
+		//maxWidth: '100%',
 	},
 	bookFooter: {
 		position: 'relative',
@@ -99,12 +103,15 @@ const Book = (props) => {
 							</Box>
 					}
 					{
-						props.book.image ? 
-							<img
-								id='book-image'
-								style={styles.image}
-								src={'/myapi/book/image/' + props.book._id}
-							/>
+						props.book.image ?
+							<Box style={styles.imageContainer}>
+								<img
+									id='book-image'
+									style={styles.image}
+									src={'/myapi/book/image/' + props.book._id}
+								/>
+							</Box>
+
 							: 
 							null 
 					}
