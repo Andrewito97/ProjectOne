@@ -18,6 +18,7 @@ import userApi from './routes/user.routes';
 import postApi from './routes/post.routes';
 import movieApi from './routes/movie.routes';
 import musicApi from './routes/music.routes';
+import bookApi from './routes/book.routes';
 import otherApi from './routes/other.routes';
 
 //server side rendering
@@ -55,6 +56,7 @@ app.use('/', userApi);
 app.use('/', postApi);
 app.use('/', musicApi);
 app.use('/', movieApi);
+app.use('/', bookApi);
 app.use('/', otherApi);
 
 //sending template with ssr markup, css and bundeled client code at every endpoint

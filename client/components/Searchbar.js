@@ -13,6 +13,7 @@ import paletteController from '../PaletteController';
 import postApi from '../api/post.api';
 import musicApi from '../api/music.api';
 import movieApi from '../api/movie.api';
+import bookApi from '../api/book.api';
 
 const styles = {
 	container: {
@@ -58,6 +59,10 @@ const Searchbar = (props) => {
 		}
 		if(props.activeTab === 'movies') {
 			const data = await movieApi.searchMovies(text);
+			setItems(data);
+		}
+		if(props.activeTab === 'books') {
+			const data = await bookApi.searchBooks(text);
 			setItems(data);
 		}
 	};

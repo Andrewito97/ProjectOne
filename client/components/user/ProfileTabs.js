@@ -8,9 +8,11 @@ import { AppBar,
 import Post from '../posts/Post';
 import Music from '../music/Music';
 import Movie from '../movies/Movie';
+import Book from '../books/Book';
 import postApi from '../../api/post.api';
 import musicApi from '../../api/music.api';
 import movieApi from '../../api/movie.api';
+import bookApi from '../../api/book.api';
 import authenticationHelper from '../../helpers/authentication.helper';
 import paletteController from '../../PaletteController';
 import SuccessWindow from '../SuccessWindow';
@@ -29,6 +31,7 @@ const ProfileTabs = () => {
 	const [ posts, setPosts ] = React.useState([]);
 	const [ music, setMusic ] = React.useState([]);
 	const [ movies, setMovies ] = React.useState([]);
+	const [ books, setBooks ] = React.useState([]);
 	const [ successed, setSuccessed ] = React.useState(false);
 	const [ isLoading, setLoading ] = React.useState(false);
 
@@ -45,9 +48,11 @@ const ProfileTabs = () => {
 		const userPosts = await postApi.getUserNewsFeed(userId);
 		const userMusic = await musicApi.getUserMusic(userId);
 		const userMovies = await movieApi.getUserMovies(userId);
+		const userBooks = await bookApi.getUserBooks(userId);
 		setPosts(userPosts);
 		setMusic(userMusic);
 		setMovies(userMovies);
+		setBooks(userBooks);
 	};
 
 	const deletePost = async (postId) => {
@@ -100,6 +105,17 @@ const ProfileTabs = () => {
 		}
 	};
 
+	const deleteBook = async (bookId) => {
+		const data = await bookApi.deleteBook(bookId);
+		if(data.success) {
+			const newBooks = updateList(books, bookId);
+			setBooks(newBooks);
+			setSuccessed(true);
+		} else {
+			console.log(data);
+		}
+	};
+
 	const updateList = (items, itemId) => {
 		const newItems = [...items];
 		const index = newItems.findIndex(item => item._id === itemId);
@@ -107,7 +123,7 @@ const ProfileTabs = () => {
 		return newItems;
 	};
 
-	let dialogWindowValue = value === 0 ? 'Post' : value === 1 ? 'Music' : 'Movie';
+	let dialogWindowValue = value === 0 ? 'Post' : value === 1 ? 'Music' : value === 2 ? 'Movie' : 'Book';
 
 	return (
 		<Box>
@@ -122,9 +138,10 @@ const ProfileTabs = () => {
 				}}
                 
 			>
-				<Tab id='profile-newsfeed-tab' label='News Feed'/>
+				<Tab id='profile-newsfeed-tab' label='Main'/>
 				<Tab id='profile-music-tab' label='Music'/>
 				<Tab id='profile-movies-tab' label='Movies'/>
+				<Tab id='profile-books-tab' label='Books'/>
 			</Tabs>
 			{
 				value === 0 ? posts.map( (item, index) => (
@@ -157,6 +174,18 @@ const ProfileTabs = () => {
 						key={index} 
 						isProfile
 						deleteMovie={deleteMovie}
+					/>
+				))
+					:
+					null
+			}
+			{
+				value === 3 ? books.map( (item, index) => (
+					<Book
+						book={item}
+						key={index}
+						isProfile
+						deleteBook={deleteBook}
 					/>
 				))
 					:

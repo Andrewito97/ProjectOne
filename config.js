@@ -1,5 +1,6 @@
-/* eslint-disable no-undef */
+import process from 'process';
 import dotenv from 'dotenv';
+
 dotenv.config();
 
 const config = {
@@ -11,6 +12,7 @@ const config = {
 	postsMongoUri: process.env.MONGO_URI_POSTS,
 	musicMongoUri: process.env.MONGO_URI_MUSIC,
 	moviesMongoUri: process.env.MONGO_URI_MOVIES,
+	booksMongoUri: process.env.MONGO_URI_BOOKS,
 	jwtSecret: process.env.JSON_WEB_TOKEN_SECRET,
 	sendgridKey: process.env.SENDGRID_API_KEY,
 	supportEmail: process.env.SUPPORT_EMAIL,

@@ -11,11 +11,10 @@ import { Card,
 	CardActions,
 	Backdrop,
 	CircularProgress } from '@material-ui/core';
-import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 import DeleteIcon from '@material-ui/icons/Delete';
-import TagList from './TagList';
 import authenticationHelper from '../../helpers/authentication.helper';
-import postApi from '../../api/post.api';
+import bookApi from '../../api/book.api';
 import paletteController from '../../PaletteController';
 
 const styles = {
@@ -28,18 +27,11 @@ const styles = {
 		marginTop: 30,
 		width: '100%',
 	},
-	tagInput: {
+	genreInput: {
 		marginTop: 30,
 		width: '100%',
 	},
-	tagListContainer: {
-		marginTop: 25
-	},
-	addTagButton: {
-		marginRight: 30,
-		color: 'white'
-	},
-	textInput: {
+	descriptionInput: {
 		marginTop: 30,
 		width: '100%'
 	},
@@ -63,7 +55,7 @@ const styles = {
 		marginLeft: 20,
 		marginBottom: 15
 	},
-	addPostButton: {
+	addBookButton: {
 		color: 'white',
 		marginTop: 10,
 		marginLeft: 5
@@ -71,13 +63,13 @@ const styles = {
 };
 
 const NewPostForm = (props) => {
-	const [ postTitle, setTitle ] = React.useState('');
+	const [ bookTitle, setTitle ] = React.useState('');
 	const [ titleError, setTitleError ] = React.useState('');
-	const [ postTag, setTag ] = React.useState('');
-	const [ addedTags, setAddedTags ] = React.useState([]);
-	const [ postText, setText ] = React.useState('');
-	const [ textError, setTextError ] = React.useState('');
-	const [ postImage, setImage ] = React.useState('');
+	const [ bookGenre, setGenre ] = React.useState('');
+	const [ genreError, setGenreError ] = React.useState('');
+	const [ bookDescription, setDescription ] = React.useState('');
+	const [ descriptionError, setDescriptionError ] = React.useState('');
+	const [ bookImage, setImage ] = React.useState('');
 	const [ userId, setUserId ] = React.useState('');
 	const [ isLoading, setLoading ] = React.useState(false);
 
@@ -86,41 +78,35 @@ const NewPostForm = (props) => {
 		setUserId(user._id);
 	}, []);
 
-	const createPost = async () => {
+	const submitBook = async () => {
 		setLoading(true);
-		let postData = new FormData();
-		postData.set('title', postTitle);
-		postData.append('tags', JSON.stringify(addedTags));
-		postData.set('text', postText);
-		postData.set('image', postImage);
-		postData.set('postedBy', userId);
+		let bookData = new FormData();
+		bookData.set('title', bookTitle);
+		bookData.set('genre', bookGenre);
+		bookData.set('description', bookDescription);
+		bookData.set('image', bookImage);
+		bookData.set('postedBy', userId);
 		const token = authenticationHelper.isAuthenticated().accessToken;
-		const data = await postApi.create(token, postData);
+		const data = await bookApi.create(token, bookData);
 		setLoading(false);
 		if(data.success) {
 			setTitle('');
-			setTag('');
-			setAddedTags('');
-			setText('');
+			setGenre('');
+			setDescription('');
 			setImage('');
 			setTitleError('');
-			setTextError('');
-			props.updateNewsFeed(data.success);
+			setGenreError('');
+			setDescriptionError('');
+			props.updateBooks(data.success);
 		} else {
 			data.error.errors.title ? 
 				setTitleError(data.error.errors.title.properties.message) : setTitleError('');
-			data.error.errors.text ? 
-				setTextError(data.error.errors.text.properties.message) : setTextError('');
+			data.error.errors.genre ? 
+				setGenreError(data.error.errors.genre.properties.message) : setGenreError('');
+			data.error.errors.description ? 
+				setDescriptionError(data.error.errors.description.properties.message) : setDescriptionError('');
 		}
 	};
-
-	const deleteTag = (index) => {
-		let updatedTags = [...addedTags];
-		updatedTags.splice(index, 1);
-		setAddedTags(updatedTags);
-	};
-
-	const isDisabled = !postTag || addedTags.length === 5;
 
 	return (
 		<Box>
@@ -138,7 +124,7 @@ const NewPostForm = (props) => {
 						variant='h5'
 						style={{color: paletteController.textColor}}
 					>
-                        Create your post
+                        Add book
 					</Typography>
 					<TextField 
 						id='title-input'
@@ -146,7 +132,7 @@ const NewPostForm = (props) => {
 						label='Title'
 						variant='outlined'
 						placeholder='Type title...'
-						value={postTitle}
+						value={bookTitle}
 						style={styles.titleInput}
 						onChange={ 
 							(event) => setTitle(event.target.value)
@@ -155,45 +141,37 @@ const NewPostForm = (props) => {
 					<br/>
 					{ titleError ? (<Typography id='title-error' color='error'>{titleError}</Typography>) : null }
 
-					<TextField 
-						id='tag-input'
-						label='Tag'
-						variant='outlined'
-						placeholder='Add tag...'
-						value={postTag}
-						style={styles.tagInput}
-						onChange={ 
-							(event) => setTag(event.target.value)
-						}
-					/>
-
-					<Box style={styles.tagListContainer}>
-						<TagList
-							postTag={postTag}
-							setTag={setTag}
-							addedTags={addedTags}
-							setAddedTags={setAddedTags}
-							deleteTag={deleteTag}
-							isDisabled={isDisabled}
-						/>
-					</Box>
-
 					<TextField
-						id='text-input'
+						id='genre-input'
 						required
-						label='Text content'
+						label='Genre'
 						variant='outlined'
-						placeholder='Type content...'
-						multiline
-						rows='12'
-						value={postText}
-						style={styles.textInput}
+						placeholder='Type genre...'
+						value={bookGenre}
+						style={styles.genreInput}
 						onChange={ 
-							(event) => setText(event.target.value)
+							(event) => setGenre(event.target.value)
 						}
 					/>
 					<br/>
-					{ textError ? (<Typography id='text-error' color='error'>{textError}</Typography>) : null }
+					{ genreError ? (<Typography id='genre-error' color='error'>{genreError}</Typography>) : null }
+
+					<TextField
+						id='description-input'
+						required
+						label='Description'
+						variant='outlined'
+						placeholder='Type description...'
+						multiline
+						rows='12'
+						value={bookDescription}
+						style={styles.descriptionInput}
+						onChange={ 
+							(event) => setDescription(event.target.value)
+						}
+					/>
+					<br/>
+					{ descriptionError ? (<Typography id='description-error' color='error'>{descriptionError}</Typography>) : null }
 
 					<Box style={styles.imageInput}>
 						<input 
@@ -217,11 +195,11 @@ const NewPostForm = (props) => {
 								}} 
 								component='span'
 							>
-								<PhotoCamera/>
+								<MenuBookIcon/>
 							</IconButton>
 						</label>
 						{
-							postImage ? (
+							bookImage ? (
 								<Box style={styles.imageName}>
 									<Typography
 										id='image-name'
@@ -233,7 +211,7 @@ const NewPostForm = (props) => {
 											...styles.imageNameText
 										}}
 									>
-										{postImage.name}
+										{bookImage.name}
 									</Typography>
 									<IconButton 
 										onClick={() => setImage('')}
@@ -256,14 +234,14 @@ const NewPostForm = (props) => {
 				</CardContent>
 				<CardActions>
 					<Button 
-						onClick={createPost}
-						id='add-post-button'
+						onClick={submitBook}
+						id='add-book-button'
 						style={{
 							backgroundColor: paletteController.mainColor,
-							...styles.addPostButton
+							...styles.addBookButton
 						}}
 					>
-                        ADD POST
+                        ADD BOOK
 					</Button>
 				</CardActions>
 			</Card>

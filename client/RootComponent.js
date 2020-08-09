@@ -14,6 +14,8 @@ import MusicList from './components/music/MusicList';
 import SearchMusic from './components/music/SearchMusic';
 import MoviesList from './components/movies/MoviesList';
 import SearchMovie from './components/movies/SearchMovie';
+import BooksList from './components/books/BooksList';
+import SearchBook from './components/books/SearchBook';
 import Welcome from './components/Welcome';
 import SignUpForm from './components/user/SignUpForm';
 import LoginForm from './components/user/LoginForm';
@@ -117,12 +119,14 @@ const RootComponent = (props) => {
 				>
 					<Switch>    
 						<Route exact path='/' component={NewsFeedList} />
-						<Route exact path='/music' component={MusicList} />  
-						<Route exact path='/movies' component={MoviesList} />  
+						<Route exact path='/music' component={MusicList} />
+						<Route exact path='/movies' component={MoviesList} />
+						<Route exact path='/books' component={BooksList} />
 						<Route path='/newsfeed/:postId' component={SearchPost} />
 						<Route path='/tags/:postTag' component={PostListByTag} />
-						<Route path='/music/:musicId' component={SearchMusic} />  
-						<Route path='/movies/:movieId' component={SearchMovie} />  
+						<Route path='/music/:musicId' component={SearchMusic} />
+						<Route path='/movies/:movieId' component={SearchMovie} />
+						<Route path='/books/:bookId' component={SearchBook} />
 						<Route path='/admin' component={AdminPanel} />
 						<Route path='/signup' component={SignUpForm} />
 						<Route path='/login' component={LoginForm} />

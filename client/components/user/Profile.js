@@ -14,6 +14,7 @@ import userApi from '../../api/user.api';
 import postApi from '../../api/post.api';
 import musicApi from '../../api/music.api';
 import movieApi from '../../api/movie.api';
+import bookApi from '../../api/book.api';
 import authenticationHelper from '../../helpers/authentication.helper';
 import ProfileTabs from './ProfileTabs';
 import paletteController from '../../PaletteController';
@@ -124,6 +125,7 @@ const Profile = () => {
 		const userPosts = await postApi.getUserNewsFeed(userId);
 		const userMusic = await musicApi.getUserMusic(userId);
 		const userMovies = await movieApi.getUserMovies(userId);
+		const userBooks = await bookApi.getUserBooks(userId);
 		for(let post of userPosts) {
 			await postApi.deletePost(post._id);
 		}
@@ -139,6 +141,9 @@ const Profile = () => {
 			if(videoData.success) {
 				await movieApi.deleteMovie(movie._id);
 			}
+		}
+		for(let book of userBooks) {
+			await bookApi.deleteBook(book._id);
 		}
 		const data = await userApi.deleteUserProfile(userId);
 		if(data.success) setSuccessedDelete(true);
