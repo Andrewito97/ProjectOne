@@ -28,7 +28,7 @@ const styles = {
 		marginTop: 30
 	},
 	image: {
-		//maxWidth: '100%',
+		width: 350
 	},
 	bookFooter: {
 		position: 'relative',
