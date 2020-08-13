@@ -22,7 +22,7 @@ const styles = {
 	logoContainer: {
 		position: 'absolute',
 		display: 'flex',
-		marginLeft: '2vw',
+		left: '3vw',
 		color: 'white',
 		zIndex: 1
 	},
@@ -34,15 +34,8 @@ const styles = {
 	logoIcon: {
 		marginTop: 15
 	},
-	musicTab: {
-		marginLeft: '1%'
-	},
-	moviesTab: {
-		marginLeft: '1%'
-	},
 	booksTab: {
-		marginLeft: '1%',
-		marginRight: '16%'
+		marginRight: '13%'
 	},
 	searchbar: {
 		position: 'absolute',
@@ -99,7 +92,7 @@ const Topbar = withRouter(({ history, ...props}) => {
 				}
 				{
 					isMobile ?
-						<Box style={{left: '3%', ...styles.searchbar}}>
+						<Box style={{left: '2%', ...styles.searchbar}}>
 							<Searchbar activeTab={activeTab}/>
 						</Box>
 						:
@@ -111,7 +104,7 @@ const Topbar = withRouter(({ history, ...props}) => {
 					style={{
 						color: activeTab === 'newsfeed' ? 'white': paletteController.tabsTextColor, 
 						textShadow: activeTab === 'newsfeed' ? '1px 1px 2px white' : false,
-						marginLeft: isMobile ? '12%' : '16%'
+						marginLeft: isMobile ? '13%' : '17%'
 					}}
 				>
                     Main
@@ -121,8 +114,7 @@ const Topbar = withRouter(({ history, ...props}) => {
 					onClick={() => location.replace('/music')}
 					style={{
 						color: activeTab === 'music' ? 'white': paletteController.tabsTextColor,
-						textShadow: activeTab === 'music' ? '1px 1px 2px white' : false,
-						...styles.musicTab
+						textShadow: activeTab === 'music' ? '1px 1px 2px white' : false
 					}}
 				>
                     Music
@@ -132,8 +124,7 @@ const Topbar = withRouter(({ history, ...props}) => {
 					onClick={() => location.replace('/movies')}
 					style={{
 						color: activeTab === 'movies' ? 'white': paletteController.tabsTextColor,
-						textShadow: activeTab === 'movies' ? '1px 1px 2px white' : false,
-						...styles.moviesTab
+						textShadow: activeTab === 'movies' ? '1px 1px 2px white' : false
 					}}
 				>
                     Movies
@@ -169,7 +160,7 @@ const Topbar = withRouter(({ history, ...props}) => {
 				}
 				{
 					showMenu ?
-						<Box style={{right: isMobile ? '1%' : '8%', ...styles.menu}}>
+						<Box style={{right: isMobile ? 0 : '8%', ...styles.menu}}>
 							<Menu isMobile={props.isMobile}/>
 						</Box>
 						: null

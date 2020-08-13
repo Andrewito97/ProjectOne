@@ -106,7 +106,7 @@ const Searchbar = (props) => {
 				onBlur={hideInput}
 				placeholder={`Search in ${props.activeTab}...`}
 				style={{
-					width: isFocused ? (isMobile ? '70vw': 380) : (isMobile ? 0 : 165), 
+					width: isFocused ? (isMobile ? '72vw': 380) : (isMobile ? 0 : 165), 
 					transitionDuration: '0.5s',
 					backgroundColor: paletteController.additionalColor,
 					...styles.inputBase
@@ -120,7 +120,7 @@ const Searchbar = (props) => {
 					display: displayList,
 					backgroundColor: paletteController.cardColor,
 					color: paletteController.textColor,
-					width: isMobile ? '80vw' : 420,
+					width: isMobile ? '82vw' : 420,
 					top: isMobile ? 40 : 31,
 					...styles.resultsList
 				}}
