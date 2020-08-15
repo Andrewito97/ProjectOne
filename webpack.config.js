@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 const path = require('path');
+const LoadablePlugin = require('@loadable/webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const Dotenv = require('dotenv-webpack');
 
@@ -50,7 +51,8 @@ const serverConfig = {
 			test: /\.(ttf|eot|svg|gif|jpg|png)(\?[\s\S]+)?$/,
 			use: ['file-loader']
 		}]
-	}
+	},
+	plugins: [new LoadablePlugin()]
 };
 
 const clientConfig = {
@@ -85,7 +87,7 @@ const clientConfig = {
 			use: ['file-loader']
 		}]
 	},
-	plugins: [new Dotenv()]
+	plugins: [new Dotenv(), new LoadablePlugin()]
 };
 
 module.exports = [ clientConfig, serverConfig ];
