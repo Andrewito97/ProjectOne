@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { isMobile } from 'react-device-detect';
 import '../style.css';
 import { Typography,
 	Button,
@@ -17,6 +18,7 @@ const styles = {
 	audioContainer: {
 		display: 'flex',
 		width: '100%',
+		maxWidth: 700
 	},
 	playButton: {
 		height: 34,
@@ -54,17 +56,17 @@ const styles = {
 		top: -1,
 		left: -1
 	},
-	sliderContainer: {
-		width: 80,
+	volumeSliderContainer: {
+		width: 90,
 		position: 'relative',
 		borderRadius: 4
 	},
-	slider:{
-		width: '67%', 
+	volumeSlider:{
 		position: 'absolute',
+		backgroundColor: 'transparent',
 		color: 'white',
-		left: 10, 
-		top: 5,
+		width: '67%',
+		left: 10
 	}
 };
 
@@ -92,19 +94,23 @@ const AudioPlayer = (props) => {
 	};
 
 	const onSeekChange = (event) => {
+		if(event.button === 2) return; //don't change on right click
 		setPlayed(parseFloat(event.target.value));
 	};
 
-	const onSeekMouseDown = () => {
+	const onSeekMouseDown = (event) => {
+		if(event.button === 2) return;
 		setPlaying(false);
 	};
 
 	const onSeekMouseUp = (event) => {
+		if(event.button === 2) return;
 		setPlaying(true);
 		player.seekTo(parseFloat(event.target.value));
 	};
 
 	const handleVolume = (event, value) => {
+		if(event.buttons === 2) return;
 		if(value === 0) {
 			setMuted(true);
 			setVolume(value);
@@ -114,7 +120,8 @@ const AudioPlayer = (props) => {
 		}
 	};
 
-	const handleMuted = () => { 
+	const handleMuted = () => {
+		if(isMobile) return;
 		setMuted(!muted);
 		setVolume(0);
 	};
@@ -200,6 +207,11 @@ const AudioPlayer = (props) => {
 						onMouseDown={onSeekMouseDown}
 						onChange={onSeekChange}
 						onMouseUp={onSeekMouseUp}
+
+						//mobile events
+						onTouchStart={onSeekMouseDown}
+						onTouchMove={onSeekChange}
+						onTouchEnd={onSeekMouseUp}
 					/>
 				</Box>
 				<Box
@@ -208,7 +220,7 @@ const AudioPlayer = (props) => {
 					style={{
 						display: displayVolume, 
 						backgroundColor: paletteController.mainColor,
-						...styles.sliderContainer
+						...styles.volumeSliderContainer
 					}}
 				>
 					<Slider
@@ -218,8 +230,8 @@ const AudioPlayer = (props) => {
 						max={1}
 						step={0.01}
 						style={{
-							backgroundColor: paletteController.mainColor,
-							...styles.slider
+							top: isMobile ? -3 : 5,
+							...styles.volumeSlider
 						}}
 					/>
 				</Box>
@@ -228,6 +240,16 @@ const AudioPlayer = (props) => {
 					onClick={handleMuted}
 					onMouseEnter={() => setDisplayVolume('block')}
 					onMouseLeave={() => setDisplayVolume('none')}
+
+					//mobile events
+					onTouchStart={() => {
+						if(displayVolume === 'none') {
+							setDisplayVolume('block');
+						} else {
+							setDisplayVolume('none');
+						}	
+					}}
+					onTouchCancel={() => setDisplayVolume('none')}
 					style={{
 						backgroundColor: paletteController.mainColor,
 						...styles.volumeButton

@@ -25,6 +25,7 @@ const styles = {
 	},
 	video: {
 		width: '100%',
+		height: 380,
 		marginTop: 30,
 		backgroundColor: 'black'
 	},
