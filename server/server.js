@@ -27,7 +27,7 @@ import { StaticRouter } from 'react-router-dom';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import RootComponent from '../client/RootComponent';
 import paletteController from '../client/PaletteController';
-import { ChunkExtractor } from '@loadable/server';
+import { ChunkExtractor, ChunkExtractorManager } from '@loadable/server';
 
 //mobile detection before sending template
 import isMobile from 'ismobilejs';
@@ -66,8 +66,9 @@ const statsFile = path.resolve('./build/loadable-stats.json');
 //create an extractor from the statsFile
 const extractor = new ChunkExtractor({ statsFile, entrypoints: ['client'] });
 
-//get links for prefetching
+//get tags to insert in markup
 const linkTags = extractor.getLinkTags();
+const scriptTags = extractor.getScriptTags();
 
 //sending template with ssr markup, css and bundeled client code at every endpoint
 app.get('*', (request, response) => {
@@ -80,16 +81,16 @@ app.get('*', (request, response) => {
 	}
 	const sheets = new ServerStyleSheets();
 	const markup = ReactDOMServer.renderToString(
-		extractor.collectChunks(
-			sheets.collect(
+		sheets.collect(
+			<ChunkExtractorManager extractor={extractor}> 
 				<StaticRouter location={request.url}>
 					<RootComponent isMobile={deviceCheck} palette={palette}/>
 				</StaticRouter>
-			)
+			</ChunkExtractorManager> 
 		)
 	);
 	const css = sheets.toString();
-	response.send( template(markup, css, linkTags, deviceCheck) );
+	response.send( template(markup, css, linkTags, scriptTags, deviceCheck) );
 });
 
 //select a server depending on the environment  

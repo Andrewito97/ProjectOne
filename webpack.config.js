@@ -51,8 +51,7 @@ const serverConfig = {
 			test: /\.(ttf|eot|svg|gif|jpg|png)(\?[\s\S]+)?$/,
 			use: ['file-loader']
 		}]
-	},
-	plugins: [new LoadablePlugin()]
+	}
 };
 
 const clientConfig = {
@@ -66,8 +65,15 @@ const clientConfig = {
 	},
 	output: {
 		path: path.resolve(__dirname, 'build'),
-		filename: 'generated.client.js',
+		filename: 'generated.[name].js',
 		publicPath: 'build/'
+	},
+	optimization: {
+		splitChunks: {
+			chunks: 'all',
+			maxSize: 2097152, //2mb
+			enforceSizeThreshold: 2097152
+		}
 	},
 	module: {
 		rules: [{

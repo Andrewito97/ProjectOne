@@ -1,4 +1,4 @@
-function template(markup, css, linkTags, deviceCheck) {
+function template(markup, css, linkTags, scriptTags, deviceCheck) {
 	return (
 		`<!doctype html>
       <html lang="en">
@@ -11,7 +11,7 @@ function template(markup, css, linkTags, deviceCheck) {
            <link rel="shortcut icon" href="../client/assets/ukraine.png" type="image/png">
            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-           ${linkTags}
+            ${linkTags}
            <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>  
            <style> 
            a{ 
@@ -22,7 +22,7 @@ function template(markup, css, linkTags, deviceCheck) {
         </head>
         <body style="margin: 0; background: #F3F8EE">
            <div id="root" mobile="${deviceCheck}">${markup}</div>
-           <script type="text/javascript" src="/build/generated.client.js"></script>      
+           ${scriptTags}    
         </body>
       </html>`
 	);
