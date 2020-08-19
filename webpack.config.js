@@ -65,15 +65,8 @@ const clientConfig = {
 	},
 	output: {
 		path: path.resolve(__dirname, 'build'),
-		filename: 'generated.[name].js',
+		filename: 'generated.client.js',
 		publicPath: 'build/'
-	},
-	optimization: {
-		splitChunks: {
-			chunks: 'all',
-			maxSize: 2097152, //2mb
-			enforceSizeThreshold: 2097152
-		}
 	},
 	module: {
 		rules: [{
