@@ -7,7 +7,8 @@
     "dev": "nodemon --watch server/ --watch client/ --exec \"webpack && node build/generated.server.js\"",
     "build": "webpack --mode=production",
     "start": "node build/generated.server.js",
-    "test": "npx wdio testing/webdriver-io.config.js && %CD%/testing/reports/timeline-report.html"
+    "test": "npx wdio testing/webdriver-io.config.js && %CD%/testing/reports/timeline-report.html",
+    "prod": "npm run build && npm start"
   },
   "repository": {
     "type": "git",
