@@ -23,6 +23,7 @@ const MusicGenreSelect = (props) => {
 				variant='outlined'
 				onChange={props.handleChange}
 				value={props.value}
+				disabled={props.isModer ? false : (props.isCreation ? true : false)}
 				MenuProps={{
 					MenuListProps: {
 						style: {

@@ -12,6 +12,7 @@ import { Card,
 	Backdrop,
 	CircularProgress } from '@material-ui/core';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
+import LockIcon from '@material-ui/icons/Lock';
 import authenticationHelper from '../../helpers/authentication.helper';
 import MusicGenreSelect from './MusicGenreSelect';
 import AudioList from './NewMusicAudioList';
@@ -49,6 +50,9 @@ const styles = {
 	},
 	backdrop: {
 		zIndex: 999
+	},
+	permissionMessage: {
+		marginBottom: 30
 	}
 };
 
@@ -62,10 +66,12 @@ const NewMusicForm = (props) => {
 	const [ audioNames, setAudioNames ] = React.useState([]);
 	const [ userId, setUserId ] = React.useState('');
 	const [ isLoading, setLoading ] = React.useState(false);
+	const [ isModer, setIsModer ] = React.useState(false);
 
 	React.useEffect( () => {
 		const user = authenticationHelper.isAuthenticated().user;
 		setUserId(user._id);
+		if(user.status !== 'user') setIsModer(true);
 	}, []);
 
 	const submitMusic = async () => {
@@ -146,6 +152,22 @@ const NewMusicForm = (props) => {
 				}}
 			>
 				<CardContent>
+					{
+						isModer ?
+							null
+							:
+							<Typography
+								variant='h6'
+								style={{
+									color: paletteController.textColor,
+									...styles.permissionMessage
+
+								}}
+							>
+								<LockIcon/>
+								Moderator status is required!
+							</Typography>
+					}
 					<Typography 
 						id='page-title'
 						variant='h5'
@@ -163,6 +185,7 @@ const NewMusicForm = (props) => {
 						variant='outlined'
 						value={musicAuthor}
 						style={styles.authorInput}
+						disabled={!isModer}
 						onChange={ 
 							(event) => setAuthor(event.target.value)
 						}
@@ -178,6 +201,7 @@ const NewMusicForm = (props) => {
 							value={musicGenre} 
 							handleChange={(event) => setGenre(event.target.value)} 
 							isCreation
+							isModer={isModer}
 						/>
 					</Box>
 					{
@@ -222,6 +246,7 @@ const NewMusicForm = (props) => {
 					<label htmlFor='hidden-audio-input'>
 						<IconButton
 							id='music-note-button'
+							disabled={!isModer}
 							component='span'
 							style={{
 								backgroundColor: paletteController.mainColor,

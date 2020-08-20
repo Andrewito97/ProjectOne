@@ -12,6 +12,7 @@ import { Card,
 	Backdrop,
 	CircularProgress } from '@material-ui/core';
 import PhotoCamera from '@material-ui/icons/PhotoCamera';
+import LockIcon from '@material-ui/icons/Lock';
 import DeleteIcon from '@material-ui/icons/Delete';
 import TagList from './TagList';
 import authenticationHelper from '../../helpers/authentication.helper';
@@ -67,6 +68,9 @@ const styles = {
 		color: 'white',
 		marginTop: 10,
 		marginLeft: 5
+	},
+	permissionMessage: {
+		marginBottom: 30
 	}
 };
 
@@ -80,10 +84,12 @@ const NewPostForm = (props) => {
 	const [ postImage, setImage ] = React.useState('');
 	const [ userId, setUserId ] = React.useState('');
 	const [ isLoading, setLoading ] = React.useState(false);
+	const [ isModer, setIsModer ] = React.useState(false);
 
 	React.useEffect( () => {
 		const user = authenticationHelper.isAuthenticated().user;
 		setUserId(user._id);
+		if(user.status !== 'user') setIsModer(true);
 	}, []);
 
 	const createPost = async () => {
@@ -133,6 +139,22 @@ const NewPostForm = (props) => {
 				}}
 			>
 				<CardContent>
+					{
+						isModer ?
+							null
+							:
+							<Typography
+								variant='h6'
+								style={{
+									color: paletteController.textColor,
+									...styles.permissionMessage
+
+								}}
+							>
+								<LockIcon/>
+								Moderator status is required!
+							</Typography>
+					}
 					<Typography
 						id='page-title'
 						variant='h5'
@@ -148,6 +170,7 @@ const NewPostForm = (props) => {
 						placeholder='Type title...'
 						value={postTitle}
 						style={styles.titleInput}
+						disabled={!isModer}
 						onChange={ 
 							(event) => setTitle(event.target.value)
 						}
@@ -162,6 +185,7 @@ const NewPostForm = (props) => {
 						placeholder='Add tag...'
 						value={postTag}
 						style={styles.tagInput}
+						disabled={!isModer}
 						onChange={ 
 							(event) => setTag(event.target.value)
 						}
@@ -188,6 +212,7 @@ const NewPostForm = (props) => {
 						rows='12'
 						value={postText}
 						style={styles.textInput}
+						disabled={!isModer}
 						onChange={ 
 							(event) => setText(event.target.value)
 						}
@@ -211,11 +236,12 @@ const NewPostForm = (props) => {
 						<label htmlFor='hidden-image-input'>
 							<IconButton
 								id='camera-button'
+								component='span'
+								disabled={!isModer}
 								style={{
 									backgroundColor: paletteController.mainColor,
 									...styles.cameraButton
 								}} 
-								component='span'
 							>
 								<PhotoCamera/>
 							</IconButton>
@@ -258,6 +284,7 @@ const NewPostForm = (props) => {
 					<Button 
 						onClick={createPost}
 						id='add-post-button'
+						disabled={!isModer}
 						style={{
 							backgroundColor: paletteController.mainColor,
 							...styles.addPostButton

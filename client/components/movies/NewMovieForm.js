@@ -12,6 +12,7 @@ import { Card,
 	Backdrop,
 	CircularProgress } from '@material-ui/core';
 import MovieCreationIcon from '@material-ui/icons/MovieCreation';
+import LockIcon from '@material-ui/icons/Lock';
 import DeleteIcon from '@material-ui/icons/Delete';
 import authenticationHelper from '../../helpers/authentication.helper';
 import movieApi from '../../api/movie.api';
@@ -62,6 +63,9 @@ const styles = {
 	},
 	backdrop: {
 		zIndex: 999
+	},
+	permissionMessage: {
+		marginBottom: 30
 	}
 };
 
@@ -75,10 +79,12 @@ const NewMovieForm = (props) => {
 	const [ video, setVideo ] = React.useState('');
 	const [ userId, setUserId ] = React.useState('');
 	const [ isLoading, setLoading ] = React.useState(false);
+	const [ isModer, setIsModer ] = React.useState(false);
 
 	React.useEffect( () => {
 		const user = authenticationHelper.isAuthenticated().user;
 		setUserId(user._id);
+		if(user.status !== 'user') setIsModer(true);
 	}, []);
 
 	const submitMovie = async () => {
@@ -124,6 +130,22 @@ const NewMovieForm = (props) => {
 				}}
 			>
 				<CardContent>
+					{
+						isModer ?
+							null
+							:
+							<Typography
+								variant='h6'
+								style={{
+									color: paletteController.textColor,
+									...styles.permissionMessage
+
+								}}
+							>
+								<LockIcon/>
+								Moderator status is required!
+							</Typography>
+					}
 					<Typography
 						id='page-title'
 						variant='h5'
@@ -139,6 +161,7 @@ const NewMovieForm = (props) => {
 						placeholder='Type title...'
 						value={movieTitle}
 						style={styles.titleInput}
+						disabled={!isModer}
 						onChange={ 
 							(event) => setTitle(event.target.value)
 						}
@@ -154,6 +177,7 @@ const NewMovieForm = (props) => {
 						placeholder='Type genre...'
 						value={movieGenre}
 						style={styles.genreInput}
+						disabled={!isModer}
 						onChange={ 
 							(event) => setGenre(event.target.value)
 						}
@@ -171,6 +195,7 @@ const NewMovieForm = (props) => {
 						rows='12'
 						value={movieDescription}
 						style={styles.descriptionInput}
+						disabled={!isModer}
 						onChange={ 
 							(event) => setDescription(event.target.value)
 						}
@@ -196,6 +221,7 @@ const NewMovieForm = (props) => {
 							<IconButton
 								id='movie-creation-button'
 								component='span'
+								disabled={!isModer}
 								style={{
 									backgroundColor: paletteController.mainColor, 
 									...styles.movieCreationButton
