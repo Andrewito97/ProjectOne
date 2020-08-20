@@ -34,11 +34,18 @@ const styles = {
 	logoIcon: {
 		marginTop: 15
 	},
-	booksTab: {
-		marginRight: '13%'
+	tabsContainer: {
+		display: 'flex',
+		justifyContent: 'space-around',
+		maxWidth: 400
 	},
-	searchbar: {
+	searchbarWeb: {
 		position: 'absolute',
+		zIndex: 10
+	},
+	searchbarMobile: {
+		position: 'absolute',
+		top: -50,
 		zIndex: 10
 	},
 	wrenchButton: {
@@ -92,57 +99,63 @@ const Topbar = withRouter(({ history, ...props}) => {
 				}
 				{
 					isMobile ?
-						<Box style={{left: '2%', ...styles.searchbar}}>
+						<Box style={{left: '2%', ...styles.searchbarMobile}}>
 							<Searchbar activeTab={activeTab}/>
 						</Box>
 						:
 						null
 				}
-				<Button
-					id='newsfeed-tab'
-					onClick={() => location.replace('/')}
+				<Box 
 					style={{
-						color: activeTab === 'newsfeed' ? 'white': paletteController.tabsTextColor, 
-						textShadow: activeTab === 'newsfeed' ? '1px 1px 2px white' : false,
-						marginLeft: isMobile ? '13%' : '17%'
+						width: (props.isMobile || isMobile) ? '100%' : '25%',
+						marginLeft: (props.isMobile || isMobile) ? null : '15%',
+						...styles.tabsContainer
 					}}
 				>
-                    Main
-				</Button>
-				<Button
-					id='music-tab'
-					onClick={() => location.replace('/music')}
-					style={{
-						color: activeTab === 'music' ? 'white': paletteController.tabsTextColor,
-						textShadow: activeTab === 'music' ? '1px 1px 2px white' : false
-					}}
-				>
-                    Music
-				</Button>
-				<Button
-					id='movies-tab'
-					onClick={() => location.replace('/movies')}
-					style={{
-						color: activeTab === 'movies' ? 'white': paletteController.tabsTextColor,
-						textShadow: activeTab === 'movies' ? '1px 1px 2px white' : false
-					}}
-				>
-                    Movies
-				</Button>
-				<Button
-					id='books-tab'
-					onClick={() => location.replace('/books')}
-					style={{
-						color: activeTab === 'books' ? 'white': paletteController.tabsTextColor,
-						textShadow: activeTab === 'books' ? '1px 1px 2px white' : false,
-						...styles.booksTab
-					}}
-				>
-                    Books
-				</Button>
+					<Button
+						id='newsfeed-tab'
+						onClick={() => location.replace('/')}
+						style={{
+							color: activeTab === 'newsfeed' ? 'white': paletteController.tabsTextColor, 
+							textShadow: activeTab === 'newsfeed' ? '1px 1px 2px white' : false
+						}}
+					>
+						Main
+					</Button>
+					<Button
+						id='music-tab'
+						onClick={() => location.replace('/music')}
+						style={{
+							color: activeTab === 'music' ? 'white': paletteController.tabsTextColor,
+							textShadow: activeTab === 'music' ? '1px 1px 2px white' : false
+						}}
+					>
+						Music
+					</Button>
+					<Button
+						id='movies-tab'
+						onClick={() => location.replace('/movies')}
+						style={{
+							color: activeTab === 'movies' ? 'white': paletteController.tabsTextColor,
+							textShadow: activeTab === 'movies' ? '1px 1px 2px white' : false
+						}}
+					>
+						Movies
+					</Button>
+					<Button
+						id='books-tab'
+						onClick={() => location.replace('/books')}
+						style={{
+							color: activeTab === 'books' ? 'white': paletteController.tabsTextColor,
+							textShadow: activeTab === 'books' ? '1px 1px 2px white' : false
+						}}
+					>
+						Books
+					</Button>
+				</Box>
 				{
 					!props.isMobile && !isMobile ?
-						<Box style={{left: '54%', ...styles.searchbar}}>
+						<Box style={{left: '54%', ...styles.searchbarWeb}}>
 							<Searchbar activeTab={activeTab}/>
 						</Box>
 						:
@@ -160,7 +173,13 @@ const Topbar = withRouter(({ history, ...props}) => {
 				}
 				{
 					showMenu ?
-						<Box style={{right: isMobile ? 0 : '8%', ...styles.menu}}>
+						<Box 
+							style={{
+								right: isMobile ? 0 : '8%',
+								top: isMobile ? -58 : null,
+								...styles.menu
+							}}
+						>
 							<Menu isMobile={props.isMobile}/>
 						</Box>
 						: null
