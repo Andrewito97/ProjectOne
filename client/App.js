@@ -58,7 +58,12 @@ const App = () => {
 	return (
 		<BrowserRouter>
 			<ThemeProvider theme={customTheme}>
-				<RootComponent palette={palette} setPalette={setPalette} isMobile={isMobile}/>
+				<RootComponent 
+					palette={palette} 
+					setPalette={setPalette} 
+					isMobile={isMobile} 
+					allowCookies={cookieHelper.getCookie('AllowCookies')}
+				/>
 			</ThemeProvider> 
 		</BrowserRouter>
 	);

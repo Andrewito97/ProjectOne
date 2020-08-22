@@ -28,6 +28,7 @@ import Footer from './components/Footer';
 import paletteController from './PaletteController';
 import getUserStatus from './helpers/getUserStatus.helper';
 import CookieConsent from 'react-cookie-consent';
+import cookieHelper from './helpers/cookie.helper';
 
 const styles = {
 	container: {
@@ -104,11 +105,20 @@ const RootComponent = (props) => {
 					null
 			}
 			<Topbar isMobile={props.isMobile}/>
-			<CookieConsent buttonText={<Typography>I understand</Typography>}>
-				<Typography>
-					This website uses cookies to enhance the user experience.
-				</Typography>
-			</CookieConsent>
+			{
+				props.allowCookies ?
+					null
+					:
+					<CookieConsent 
+						buttonText={<Typography>I understand</Typography>}
+						onAccept={() => cookieHelper.setCookie('AllowCookies', true)}
+					>
+						<Typography>
+							This website uses cookies to enhance the user experience.
+						</Typography>
+					</CookieConsent>
+			}
+
 			<Box 
 				style={{
 					backgroundColor: paletteController.backgroundColor,
