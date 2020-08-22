@@ -36,7 +36,7 @@ const styles = {
 	},
 	tabsContainer: {
 		display: 'flex',
-		justifyContent: 'space-around',
+		justifyContent: 'center',
 		maxWidth: 400
 	},
 	searchbarWeb: {
@@ -45,7 +45,6 @@ const styles = {
 	},
 	searchbarMobile: {
 		position: 'absolute',
-		top: -50,
 		zIndex: 10
 	},
 	wrenchButton: {
@@ -176,7 +175,6 @@ const Topbar = withRouter(({ history, ...props}) => {
 						<Box 
 							style={{
 								right: isMobile ? 0 : '8%',
-								top: isMobile ? -58 : null,
 								...styles.menu
 							}}
 						>
