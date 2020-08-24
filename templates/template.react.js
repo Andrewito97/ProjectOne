@@ -6,8 +6,8 @@ function template(markup, css, linkTags, scriptTags, deviceCheck, trackingId) {
            <meta charset="utf-8">
            <meta name="viewport" content="height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1">
            <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-           <meta name="description" content="Hi! This is the platform for popularization science, social and media content of ukrainian authors and global conjuncture without political point">
-           <title>Karambol - Platform with media, social and scientific content</title>
+           <meta name="description" content="Karambol is a place to promote ukrainian science, music, movies and books.">
+           <title>Karambol - place to promote ukrainian content</title>
            <link rel="shortcut icon" href="../client/assets/ukraine.png" type="image/png">
            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
