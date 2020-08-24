@@ -7,6 +7,7 @@ const config = {
 	port: process.env.PORT,
 	securePort: process.env.SECURE_PORT,
 	host: process.env.HOST,
+	trackingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID,
 	usersMongoUri: process.env.MONGO_URI_USERS,
 	postsMongoUri: process.env.MONGO_URI_POSTS,
 	musicMongoUri: process.env.MONGO_URI_MUSIC,

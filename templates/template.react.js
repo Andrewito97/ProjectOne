@@ -1,4 +1,4 @@
-function template(markup, css, linkTags, scriptTags, deviceCheck) {
+function template(markup, css, linkTags, scriptTags, deviceCheck, trackingId) {
 	return (
 		`<!doctype html>
       <html lang="en">
@@ -12,7 +12,15 @@ function template(markup, css, linkTags, scriptTags, deviceCheck) {
            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
             ${linkTags}      
-           <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>  
+           <script src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
+           <!-- Global site tag (gtag.js) - Google Analytics -->
+           <script async src="https://www.googletagmanager.com/gtag/js?id=${trackingId}"></script>
+           <script>
+               window.dataLayer = window.dataLayer || [];
+               function gtag(){dataLayer.push(arguments);}
+               gtag('js', new Date());
+               gtag('config', ${trackingId});
+           </script>
            <style> 
            a{ 
                text-decoration: none 

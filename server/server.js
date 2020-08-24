@@ -90,7 +90,7 @@ app.get('*', (request, response) => {
 		)
 	);
 	const css = sheets.toString();
-	response.send( template(markup, css, linkTags, scriptTags, deviceCheck) );
+	response.send( template(markup, css, linkTags, scriptTags, deviceCheck, config.trackingId) );
 });
 
 //select a server depending on the environment  
