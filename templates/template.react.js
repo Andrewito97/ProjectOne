@@ -19,7 +19,7 @@ function template(markup, css, linkTags, scriptTags, deviceCheck, trackingId) {
                window.dataLayer = window.dataLayer || [];
                function gtag(){dataLayer.push(arguments);}
                gtag('js', new Date());
-               gtag('config', ${trackingId});
+               gtag('config', '${trackingId}');
            </script>
            <style> 
            a{ 
