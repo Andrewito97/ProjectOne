@@ -8,6 +8,10 @@ import { Box,
 	Divider
 } from '@material-ui/core';
 import DeleteIcon from '@material-ui/icons/Delete';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import Pagination from '@material-ui/lab/Pagination';
+import PaginationItem from '@material-ui/lab/PaginationItem';
 import userApi from '../../api/user.api';
 import postApi from '../../api/post.api';
 import musicApi from '../../api/music.api';
@@ -53,27 +57,49 @@ const styles = {
 		width: 100
 	},
 	userListItemStatus: {
-		marginRight: 40,
+		marginRight: 15,
 		width: 60
+	},
+	userButtons: {
+		display: 'flex'
+	},
+	arrowIcon: {
+		marginRight: 15,
+		color: 'white'
 	},
 	deleteIcon: {
 		color: 'white'
+	},
+	pagination: {
+		marginTop: 20
 	}
 };
 
 const UserList = () => {
 	const [ users, setUsers ] = React.useState([]);
-	const [ userToDelete, setUserToDelete ] = React.useState('');
+	const [ selectedUser, selectUser ] = React.useState('');
 	const [ confirm, setConfirm ] = React.useState(false);
 	const [ successedDelete, setSuccessedDelete ] = React.useState(false);
+	const [ statusChanges, setStatusChanges ] = React.useState(true);
+	const [ pageNumber, setPageNumber ] = React.useState(1);
 
 	React.useEffect( () => {
 		loadUsers();
-	}, [successedDelete]);
+	}, [successedDelete, statusChanges, pageNumber]);
 
 	const loadUsers = async () => {
 		const users = await userApi.listUsers();
-		setUsers(users);
+		const usersCopy = [...users];
+		const result = [];
+		while (usersCopy.length) {
+			result.push(usersCopy.splice(0, 8));
+		}
+		setUsers(result);
+	};
+
+	const changeStatus = async (user) => {
+		const updatedUser = { status: user.status === 'user' ? 'moder' : 'user' };
+		await userApi.updateUserProfile(user._id, updatedUser);
 	};
     
 	const deleteUser = async (id) => {
@@ -114,7 +140,7 @@ const UserList = () => {
 				<Divider style={{backgroundColor: paletteController.textColor}}/>
 				<List>
 					{
-						users ? users.map((user, index) => (
+						users[pageNumber - 1] ? users[pageNumber - 1].map((user, index) => (
 							<ListItem button key={index}>
 								<Tooltip title={user.name} placement='top'>
 									<Typography noWrap style={{color: paletteController.textColor, ...styles.userListItemName}}>                                        
@@ -145,20 +171,40 @@ const UserList = () => {
 									user.status === 'admin' ?
 										null
 										:
-										<IconButton
-											id='delete-user-button'
-											size='small'
-											onClick={() => {
-												setUserToDelete(user._id);
-												setConfirm(true);
-											}}
-											style={{
-												backgroundColor: paletteController.mainColor,
-												...styles.deleteIcon
-											}}
-										>
-											<DeleteIcon/>
-										</IconButton>
+										<Box style={styles.userButtons}>
+											<IconButton
+												size='small'
+												onClick={() => {
+													changeStatus(user);
+													setStatusChanges(!statusChanges);
+												}}
+												style={{
+													backgroundColor: paletteController.mainColor,
+													...styles.arrowIcon
+												}}
+											>
+												{
+													user.status === 'user' ?
+														<ArrowUpwardIcon/>
+														:
+														<ArrowDownwardIcon/>
+												}
+											</IconButton>
+											<IconButton
+												id='delete-user-button'
+												size='small'
+												onClick={() => {
+													selectUser(user._id);
+													setConfirm(true);
+												}}
+												style={{
+													backgroundColor: paletteController.mainColor,
+													...styles.deleteIcon
+												}}
+											>
+												<DeleteIcon/>
+											</IconButton>
+										</Box>
 								}	
 							</ListItem>
                                 
@@ -167,11 +213,25 @@ const UserList = () => {
 							null
 					}
 				</List>
+				<Pagination
+					onChange={(event, number) => setPageNumber(number)}
+					count={users.length}
+					style={styles.pagination}
+					renderItem={(item) => (
+						<PaginationItem
+							{...item}
+							style={{ 
+								color: paletteController.textColor,
+								backgroundColor: item.selected ? paletteController.mainColor : null
+							}}
+						/>
+					)}
+				/>
 			</Box>
 			<ConfirmWindow
 				open={confirm}
 				onCancel={() => setConfirm(false)}
-				onConfirm={() => deleteUser(userToDelete)}
+				onConfirm={() => deleteUser(selectedUser)}
 				title='Delete Account confirmation'
 			/>
 			<SuccessWindow

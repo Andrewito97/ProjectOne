@@ -5,8 +5,8 @@ export default () => {
 	const user = authenticationHelper.isAuthenticated().user;
 	if(user && user.status === 'admin' && user.email === config.adminEmail) {
 		return 'admin';
-	} else if(user && user.status === 'moderator'){
-		return 'moderator';
+	} else if(user && user.status === 'moder'){
+		return 'moder';
 	} else {
 		return 'user';
 	}
