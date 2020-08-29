@@ -90,7 +90,7 @@ const PaletteSelect = (props) => {
 			</FormControl>
 			<br/>
 			<Button
-				onClick={() => cookieHelper.setCookie('OneProjectPalette', props.palette)}
+				onClick={() => cookieHelper.setCookie('OneProjectPalette', props.palette, {'max-age': 9999999999})}
 				style={{
 					backgroundColor: paletteController.mainColor,
 					...styles.applyButton

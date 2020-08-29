@@ -50,7 +50,7 @@ const BooksList = () => {
 				next={() => setSkip(books.length)}
 				style={{
 					paddingRight: isMobile ? 0 : 10,
-					paddingLeft: isMobile ? 0 : 10,
+					paddingLeft: isMobile ? 0 : 10
 				}}
 			>
 				{ books.length === 0 ? <DummyBook/> : books.map( (item, index) => <Book book={item} key={index}/> ) }

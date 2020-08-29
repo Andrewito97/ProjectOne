@@ -50,7 +50,7 @@ const NewsFeedList = () => {
 				next={() => setSkip(posts.length)}
 				style={{
 					paddingRight: isMobile ? 0 : 10,
-					paddingLeft: isMobile ? 0 : 10,
+					paddingLeft: isMobile ? 0 : 10
 				}}
 			>
 				{ posts.length === 0 ? <DummyPost/> : posts.map( (item, index) => <Post post={item} key={index}/> ) }

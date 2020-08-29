@@ -132,7 +132,7 @@ const Profile = () => {
 		for(let music of userMusic) {
 			let audios = music.audios;
 			for(let audio of audios) {
-				await musicApi.deleteAudio(audio);
+				await musicApi.deleteAudio(music._id, audio);
 			}
 			await musicApi.deleteMusic(music._id);
 		}

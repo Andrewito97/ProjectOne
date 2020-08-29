@@ -80,9 +80,9 @@ const musicApi = {
 			console.log(error);
 		}
 	},
-	async deleteAudio(audioName) {
+	async deleteAudio(musicId, audioName) {
 		try {
-			const response = await fetch(`${domain}/myapi/music/audios/${audioName}`, {
+			const response = await fetch(`${domain}/myapi/music/${musicId}/audios/${audioName}`, {
 				method: 'DELETE',
 				headers: {
 					'Accept': 'application/json',

@@ -58,7 +58,17 @@ const Music = (props) => {
 				/>
 				<CardContent>
 					<Box style={styles.tracksContainer}>
-						{ props.music.audios.map((name, index) => <AudioPlayer key={index} name={name}/>) }
+						{ 
+							props.music.audios.map((name, index) => (
+								<AudioPlayer 
+									key={index}
+									musicId={props.music._id}
+									audioName={name}
+									handleAutoplay={props.handleAutoplay}
+									audioToPlay={props.audioToPlay}
+								/>
+							)) 
+						}
 					</Box>
 					<Box style={styles.musicFooter}>
 						<Typography id='music-date' style={styles.songDate}>

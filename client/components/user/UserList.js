@@ -100,6 +100,7 @@ const UserList = () => {
 	const changeStatus = async (user) => {
 		const updatedUser = { status: user.status === 'user' ? 'moder' : 'user' };
 		await userApi.updateUserProfile(user._id, updatedUser);
+		loadUsers();
 	};
     
 	const deleteUser = async (id) => {

@@ -50,7 +50,7 @@ const MoviesList = () => {
 				next={() => setSkip(movies.length)}
 				style={{
 					paddingRight: isMobile ? 0 : 10,
-					paddingLeft: isMobile ? 0 : 10,
+					paddingLeft: isMobile ? 0 : 10
 				}}
 			>
 				{ movies.length === 0 ? <DummyMovie/> : movies.map( (item, index) => <Movie movie={item} key={index}/> ) }

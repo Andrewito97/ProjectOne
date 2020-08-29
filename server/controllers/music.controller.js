@@ -118,7 +118,7 @@ const musicController = {
 			Music
 				.find()
 				.skip(Number(request.query.skip))
-				.limit(10)
+				.limit(5)
 				.sort('-created')
 				.exec( (error, music) => {
 					if(error) {
@@ -132,7 +132,7 @@ const musicController = {
 			Music
 				.find({ genre: {$nin: ['Pop', 'Rock and Metal', 'Hip Hop', 'Indie', 'Folk']} })
 				.skip(Number(request.query.skip))
-				.limit(10)
+				.limit(5)
 				.sort('-created')
 				.exec( (error, music) => {
 					if(error) {
@@ -146,7 +146,7 @@ const musicController = {
 			Music
 				.find({ genre: request.query.genre })
 				.skip(Number(request.query.skip))
-				.limit(10)
+				.limit(5)
 				.sort('-created')
 				.exec( (error, music) => {
 					if(error) {

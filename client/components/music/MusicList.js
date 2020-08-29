@@ -15,6 +15,7 @@ const MusicList = () => {
 	const [ genre, setGenre ] = React.useState('All');
 	const [ skip, setSkip ] = React.useState(0);
 	const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
+	const [ audioToPlay, setAudioToPlay ] = React.useState([{}]);
 
 	React.useEffect(() => {
 		const controller = new window.AbortController();
@@ -58,6 +59,21 @@ const MusicList = () => {
 		location.reload();
 	};
 
+	const handleAutoplay = (musicId, currentAudio) => {
+		const audiosToPlay = [];
+		for(let item of music) {
+			for(let audio of item.audios) {
+				audiosToPlay.push({musicId: item._id, audio: audio});
+			}
+		}
+		//audiosToPlay[audiosToPlay.length - 1].last = true;
+		const nextAudio = audiosToPlay[audiosToPlay.findIndex((item) => {
+			return  item.musicId === musicId && item.audio === currentAudio;
+		}) + 1];
+		setAudioToPlay(nextAudio);
+		//console.log(audiosToPlay);
+	};
+
 	return (
 		<Box>
 			{authenticationHelper.isAuthenticated() ? (<NewMusicForm updateMusicList={updateMusicList}/>) : null}
@@ -68,10 +84,17 @@ const MusicList = () => {
 				next={() => setSkip(music.length)}
 				style={{
 					paddingRight: isMobile ? 0 : 10,
-					paddingLeft: isMobile ? 0 : 10,
+					paddingLeft: isMobile ? 0 : 10
 				}}
 			>
-				{ music.length === 0 ? <DummyMusic/> : music.map( (item, index) => <Music music={item} key={index}/> ) }
+				{ 
+					music.length === 0 ? 
+						<DummyMusic/> 
+						:
+						music.map( (item, index) => (
+							<Music music={item} key={index} handleAutoplay={handleAutoplay} audioToPlay={audioToPlay}/> 
+						)) 
+				}
 			</InfiniteScroll>
 		</Box>
 	);

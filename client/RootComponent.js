@@ -111,7 +111,7 @@ const RootComponent = (props) => {
 					:
 					<CookieConsent 
 						buttonText={<Typography>I understand</Typography>}
-						onAccept={() => cookieHelper.setCookie('AllowCookies', true)}
+						onAccept={() => cookieHelper.setCookie('AllowCookies', true, {'max-age': 9999999999})}
 					>
 						<Typography>
 							This website uses cookies to enhance the user experience.

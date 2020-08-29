@@ -80,6 +80,16 @@ const AudioPlayer = (props) => {
 
 	let player;
 
+	React.useEffect(() => {
+		if(
+			props.audioToPlay &&
+			props.audioToPlay.audio === props.audioName && 
+			props.audioToPlay.musicId === props.musicId
+		) {
+			setPlaying(true);
+		}
+	}, [props.audioToPlay]);
+
 	const onPlaying = () => {
 		setPlaying(!playing);
 	};
@@ -90,7 +100,12 @@ const AudioPlayer = (props) => {
 		}
 		if(progress.played === 1) {
 			setPlaying(false);
+			setPlayed(0);
 		}
+	};
+
+	const onEnded = () => {
+		props.handleAutoplay(props.musicId, props.audioName);
 	};
 
 	const onSeekChange = (event) => {
@@ -141,17 +156,18 @@ const AudioPlayer = (props) => {
 					color: paletteController.textColor
 				}}
 			>
-				{props.name}
+				{props.audioName}
 			</Typography>
 			<ReactPlayer
 				ref={ (reference) => player = reference }
-				url={ '/myapi/music/audios/' + props.name }
+				url={ `/myapi/music/${props.musicId}/audios/${props.audioName}` }
 				playing={playing}
 				muted={muted}
 				volume={volume}
 				height={0}
 				onProgress={onProgress}
 				onDuration={(value) => setDuration(value)}
+				onEnded={onEnded}
 			/>
 			<Box style={styles.audioContainer}>
 				<Button

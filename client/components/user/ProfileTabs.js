@@ -21,6 +21,9 @@ const styles = {
 	tabs: {
 		color: 'white'
 	},
+	container: {
+		width: 850
+	},
 	backdrop: {
 		zIndex: 20
 	}
@@ -74,7 +77,7 @@ const ProfileTabs = () => {
 		}
 		let audios = musicPost.audios;
 		for(let audio of audios) {
-			await musicApi.deleteAudio(audio);
+			await musicApi.deleteAudio(musicId, audio);
 		}
 		const data = await musicApi.deleteMusic(musicId);
 		if(data.success) {
@@ -126,7 +129,7 @@ const ProfileTabs = () => {
 	let dialogWindowValue = value === 0 ? 'Post' : value === 1 ? 'Music' : value === 2 ? 'Movie' : 'Book';
 
 	return (
-		<Box>
+		<Box style={styles.container}>
 			<AppBar/>
 			<Tabs
 				onChange={ (event, newValue) => setValue(newValue) }
