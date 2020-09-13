@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { isMobile } from 'react-device-detect';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Music from './Music';
@@ -9,6 +9,7 @@ import DummyMusic from './DummyMusic';
 import authenticationHelper from '../../helpers/authentication.helper';
 import cookieHelper from '../../helpers/cookie.helper';
 import musicApi from '../../api/music.api';
+import paletteController from '../../PaletteController';
 
 const MusicList = () => {
 	const [ music, setMusic ] = React.useState([]);
@@ -66,12 +67,10 @@ const MusicList = () => {
 				audiosToPlay.push({musicId: item._id, audio: audio});
 			}
 		}
-		//audiosToPlay[audiosToPlay.length - 1].last = true;
 		const nextAudio = audiosToPlay[audiosToPlay.findIndex((item) => {
 			return  item.musicId === musicId && item.audio === currentAudio;
 		}) + 1];
 		setAudioToPlay(nextAudio);
-		//console.log(audiosToPlay);
 	};
 
 	return (
@@ -82,12 +81,17 @@ const MusicList = () => {
 				dataLength={music.length}
 				hasMore={shouldLoadMore}
 				next={() => setSkip(music.length)}
+				loader={
+					<Typography variant='h5' align='center' style={{color: paletteController.textColor}}>
+						Loading...
+					</Typography>
+				}
 				style={{
 					paddingRight: isMobile ? 0 : 10,
 					paddingLeft: isMobile ? 0 : 10
 				}}
 			>
-				{ 
+				{
 					music.length === 0 ? 
 						<DummyMusic/> 
 						:

@@ -1,12 +1,13 @@
 import React from 'react';
 import { isMobile } from 'react-device-detect';
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Post from './Post';
 import NewPostForm from './NewPostForm';
 import authenticationHelper from '../../helpers/authentication.helper';
 import postApi from '../../api/post.api';
 import DummyPost from './DummyPost';
+import paletteController from '../../PaletteController';
 
 const NewsFeedList = () => {
 	const [ posts, setPosts ] = React.useState([]);
@@ -48,6 +49,11 @@ const NewsFeedList = () => {
 				dataLength={posts.length}
 				hasMore={shouldLoadMore}
 				next={() => setSkip(posts.length)}
+				loader={
+					<Typography variant='h5' align='center' style={{color: paletteController.textColor}}>
+						Loading...
+					</Typography>
+				}
 				style={{
 					paddingRight: isMobile ? 0 : 10,
 					paddingLeft: isMobile ? 0 : 10

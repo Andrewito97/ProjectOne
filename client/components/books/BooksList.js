@@ -1,12 +1,13 @@
 import React from 'react';
 import { isMobile } from 'react-device-detect';
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Book from './Book';
 import NewBookForm from './NewBookForm';
 import authenticationHelper from '../../helpers/authentication.helper';
 import bookApi from '../../api/book.api';
 import DummyBook from './DummyBook';
+import paletteController from '../../PaletteController';
 
 const BooksList = () => {
 	const [ books, setBooks ] = React.useState([]);
@@ -48,6 +49,11 @@ const BooksList = () => {
 				dataLength={books.length}
 				hasMore={shouldLoadMore}
 				next={() => setSkip(books.length)}
+				loader={
+					<Typography variant='h5' align='center' style={{color: paletteController.textColor}}>
+						Loading...
+					</Typography>
+				}
 				style={{
 					paddingRight: isMobile ? 0 : 10,
 					paddingLeft: isMobile ? 0 : 10
