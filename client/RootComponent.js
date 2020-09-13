@@ -39,7 +39,8 @@ const styles = {
 	list: {
 		width: 850,
 		minHeight: '110vh',
-		marginTop: '3%'
+		marginTop: '3%',
+		marginBottom: '7%'
 	},
 	aside: {
 		width: 350, 
