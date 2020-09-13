@@ -5,7 +5,6 @@ import { GiCarambola } from 'react-icons/gi';
 import { AppBar,
 	Box,
 	Toolbar,
-	Button,
 	IconButton,
 	Typography } from '@material-ui/core';
 import BuildIcon from '@material-ui/icons/Build';
@@ -38,6 +37,15 @@ const styles = {
 		display: 'flex',
 		justifyContent: 'center',
 		maxWidth: 400
+	},
+	mainTab: {
+		marginRight: 18
+	},
+	musicTab: {
+		marginRight: 18
+	},
+	moviesTab: {
+		marginRight: 18
 	},
 	searchbarWeb: {
 		position: 'absolute',
@@ -111,46 +119,57 @@ const Topbar = withRouter(({ history, ...props}) => {
 						...styles.tabsContainer
 					}}
 				>
-					<Button
+					<Link
 						id='newsfeed-tab'
-						onClick={() => location.replace('/')}
+						to='/'
 						style={{
 							color: activeTab === 'newsfeed' ? 'white': paletteController.tabsTextColor, 
-							textShadow: activeTab === 'newsfeed' ? '1px 1px 2px white' : false
+							textShadow: activeTab === 'newsfeed' ? '1px 1px 2px white' : false,
+							...styles.mainTab
 						}}
 					>
-						Main
-					</Button>
-					<Button
+						<Typography>
+							Main
+						</Typography>
+					</Link>
+					<Link
 						id='music-tab'
-						onClick={() => location.replace('/music')}
+						to='/music'
 						style={{
 							color: activeTab === 'music' ? 'white': paletteController.tabsTextColor,
-							textShadow: activeTab === 'music' ? '1px 1px 2px white' : false
+							textShadow: activeTab === 'music' ? '1px 1px 2px white' : false,
+							...styles.musicTab
 						}}
 					>
-						Music
-					</Button>
-					<Button
+						<Typography>
+							Music
+						</Typography>
+					</Link>
+					<Link
 						id='movies-tab'
-						onClick={() => location.replace('/movies')}
+						to='/movies'
 						style={{
 							color: activeTab === 'movies' ? 'white': paletteController.tabsTextColor,
-							textShadow: activeTab === 'movies' ? '1px 1px 2px white' : false
+							textShadow: activeTab === 'movies' ? '1px 1px 2px white' : false,
+							...styles.moviesTab
 						}}
 					>
-						Movies
-					</Button>
-					<Button
+						<Typography>
+							Movies
+						</Typography>
+					</Link>
+					<Link
 						id='books-tab'
-						onClick={() => location.replace('/books')}
+						to='/books'
 						style={{
 							color: activeTab === 'books' ? 'white': paletteController.tabsTextColor,
 							textShadow: activeTab === 'books' ? '1px 1px 2px white' : false
 						}}
 					>
-						Books
-					</Button>
+						<Typography>
+							Books
+						</Typography>
+					</Link>
 				</Box>
 				{
 					!props.isMobile && !isMobile ?
