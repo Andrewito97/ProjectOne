@@ -32,6 +32,8 @@ const styles = {
 		marginTop: 30
 	},
 	tagsContainer: {
+		display: 'flex',
+		flexWrap: 'wrap',
 		marginTop: 30
 	},
 	tag: {
