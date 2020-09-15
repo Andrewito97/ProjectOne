@@ -42,11 +42,15 @@ const Welcome = () => {
 					}}
 				>
 					<i>
-                    Karambol is a place to promote ukrainian content
-					such as science, music, movies and books.
+					Karambol is the platform with a social-scientific 
+					inclination and elements of Ukrainian cultural heritage.
+					The main goal - to share information for 
+					self-development and raise the cultural level 
+					of people who are interested in it.
                     I hope you can find here something interesting 
-					for you. Also I will be glad for help 
-                    in promotion - write to the support for details.
+					for you and to have a good time. Also I will be 
+					glad for feedback and collaboration - write 
+					to the support for details.
 					</i>	
 				</Typography>
 				<img src={ukraineImage} style={styles.image}/>
