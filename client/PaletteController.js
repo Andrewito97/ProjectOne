@@ -29,13 +29,24 @@ class PaletteController {
 		this.lightOrange = '#FF9D47';
 
 		//set default colors for initial page loading until palette has been chosen
-		this.mainColor = this.blue;
-		this.additionalColor = this.lightBlue;
-		this.textColor = this.black;
-		this.tabsTextColor = this.ivory;
-		this.backgroundColor = this.paleSeaBlue;
-		this.cardColor = this.white;
-		this.tagsColor = this.blue;
+
+		// standart:
+		// this.mainColor = this.blue;
+		// this.additionalColor = this.lightBlue;
+		// this.textColor = this.black;
+		// this.tabsTextColor = this.ivory;
+		// this.backgroundColor = this.paleSeaBlue;
+		// this.cardColor = this.white;
+		// this.tagsColor = this.blue;
+
+		// dark blue
+		this.mainColor = this.black;
+		this.additionalColor = this.highBlackBlue;
+		this.textColor = this.ivory;
+		this.tabsTextColor = this.silver;
+		this.backgroundColor = this.blackBlue;
+		this.cardColor = this.highBlackBlue;
+		this.tagsColor = this.white;
 
 		//overriding default mui-styles
 		this.muiStyles = {
