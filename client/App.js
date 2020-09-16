@@ -27,7 +27,7 @@ const App = () => {
 		if(userPalette) {
 			setPalette(userPalette);
 		} else {
-			setPalette('standart');
+			setPalette('dark blue');
 		}
 
 		//remove server side injected css

@@ -77,7 +77,7 @@ app.get('*', (request, response) => {
 	if(palette) {
 		paletteController.choosePalette(palette);
 	} else {
-		paletteController.choosePalette('standart');
+		paletteController.choosePalette('dark blue');
 	}
 	const sheets = new ServerStyleSheets();
 	const markup = ReactDOMServer.renderToString(
