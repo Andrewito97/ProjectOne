@@ -42,11 +42,11 @@ const Welcome = () => {
 					}}
 				>
 					<i>
-					Karambol is the platform with a social-scientific 
-					inclination and elements of Ukrainian cultural heritage.
-					The main goal - to share information for 
-					self-development and raise the cultural level 
-					of people who are interested in it.
+					Karambol is a platform that combines the definitions 
+					of a social network and a collective blog, created 
+					for the publication of news, analytical articles, 
+					opinions related to information technology and science.
+					Also contains elements of Ukrainian music, movies and books.
                     I hope you can find here something interesting 
 					for you and to have a good time. Also I will be 
 					glad for feedback and collaboration - write 

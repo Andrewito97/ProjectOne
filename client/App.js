@@ -62,7 +62,6 @@ const App = () => {
 					palette={palette} 
 					setPalette={setPalette} 
 					isMobile={isMobile} 
-					allowCookies={cookieHelper.getCookie('AllowCookies')}
 				/>
 			</ThemeProvider> 
 		</BrowserRouter>
