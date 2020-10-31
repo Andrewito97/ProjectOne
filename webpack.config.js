@@ -1,6 +1,5 @@
 /* eslint-disable no-undef */
 const path = require('path');
-const LoadablePlugin = require('@loadable/webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 const Dotenv = require('dotenv-webpack');
 
@@ -86,7 +85,7 @@ const clientConfig = {
 			use: ['file-loader']
 		}]
 	},
-	plugins: [new Dotenv(), new LoadablePlugin()]
+	plugins: [new Dotenv()]
 };
 
 module.exports = [ clientConfig, serverConfig ];

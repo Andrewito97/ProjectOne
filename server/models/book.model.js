@@ -6,6 +6,11 @@ const BookSchema = new mongoose.Schema({
 		required: [true, 'Title is required !']
 	},
 
+	author: {
+		type: String,
+		required: [true, 'Author is required !']
+	},
+
 	genre: {
 		type: String,
 		required: [true, 'Genre is required !']
@@ -24,7 +29,7 @@ const BookSchema = new mongoose.Schema({
 
 	postedBy: {
 		type: String, 
-		required: [true, 'Author is required !']
+		required: [true, 'User author is required !']
 	},
     
 	created: {
@@ -33,6 +38,6 @@ const BookSchema = new mongoose.Schema({
 	}
 });
 
-BookSchema.index({title: 'text'});
+BookSchema.index({title: 'text', author: 'text', genre: 'text'});
 
 export default BookSchema;

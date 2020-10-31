@@ -28,6 +28,10 @@ const styles = {
 		marginTop: 30,
 		width: '100%',
 	},
+	authorInput: {
+		marginTop: 30,
+		width: '100%',
+	},
 	genreInput: {
 		marginTop: 30,
 		width: '100%',
@@ -69,6 +73,8 @@ const styles = {
 const NewPostForm = (props) => {
 	const [ bookTitle, setTitle ] = React.useState('');
 	const [ titleError, setTitleError ] = React.useState('');
+	const [ bookAuthor, setAuthor ] = React.useState('');
+	const [ authorError, setAuthorError ] = React.useState('');
 	const [ bookGenre, setGenre ] = React.useState('');
 	const [ genreError, setGenreError ] = React.useState('');
 	const [ bookDescription, setDescription ] = React.useState('');
@@ -88,6 +94,7 @@ const NewPostForm = (props) => {
 		setLoading(true);
 		let bookData = new FormData();
 		bookData.set('title', bookTitle);
+		bookData.set('author', bookAuthor);
 		bookData.set('genre', bookGenre);
 		bookData.set('description', bookDescription);
 		bookData.set('image', bookImage);
@@ -97,6 +104,7 @@ const NewPostForm = (props) => {
 		setLoading(false);
 		if(data.success) {
 			setTitle('');
+			setAuthor('');
 			setGenre('');
 			setDescription('');
 			setImage('');
@@ -107,6 +115,8 @@ const NewPostForm = (props) => {
 		} else {
 			data.error.errors.title ? 
 				setTitleError(data.error.errors.title.properties.message) : setTitleError('');
+			data.error.errors.title ? 
+				setAuthorError(data.error.errors.author.properties.message) : setAuthorError('');
 			data.error.errors.genre ? 
 				setGenreError(data.error.errors.genre.properties.message) : setGenreError('');
 			data.error.errors.description ? 
@@ -163,6 +173,22 @@ const NewPostForm = (props) => {
 					/>		
 					<br/>
 					{ titleError ? (<Typography id='title-error' color='error'>{titleError}</Typography>) : null }
+
+					<TextField 
+						id='author-input'
+						required
+						label='Author'
+						variant='outlined'
+						placeholder='Type author...'
+						value={bookAuthor}
+						style={styles.authorInput}
+						disabled={!isModer}
+						onChange={ 
+							(event) => setAuthor(event.target.value)
+						}
+					/>		
+					<br/>
+					{ authorError ? (<Typography id='author-error' color='error'>{authorError}</Typography>) : null }
 
 					<TextField
 						id='genre-input'

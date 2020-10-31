@@ -27,6 +27,6 @@ const MovieSchema = new mongoose.Schema({
 	}
 });
 
-MovieSchema.index({title: 'text'});
+MovieSchema.index({title: 'text', genre: 'text'});
 
 export default MovieSchema;

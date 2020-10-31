@@ -1,4 +1,4 @@
-function template(markup, css, linkTags, scriptTags, deviceCheck, trackingId) {
+function template(markup, css, deviceCheck, trackingId) {
 	return (
 		`<!doctype html>
       <html lang="en">
@@ -12,12 +12,11 @@ function template(markup, css, linkTags, scriptTags, deviceCheck, trackingId) {
            <title>Karambol - share info with people</title>
            <link rel="shortcut icon" href="../client/assets/ukraine.png" type="image/png">
            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
-           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-            ${linkTags}      
+           <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />  
            <script type="text/plain" cookie-consent="targeting" src="https://apis.google.com/js/platform.js?onload=init" async defer></script>
 
            <!-- Global site tag (gtag.js) - Google Analytics -->
-           <script type="text/plain" cookie-consent="tracking" async src="https://www.googletagmanager.com/gtag/js?id=${trackingId}"></script>
+           <script type="text/plain" cookie-consent="strictly-necessary" async src="https://www.googletagmanager.com/gtag/js?id=${trackingId}"></script>
            <script>
                window.dataLayer = window.dataLayer || [];
                function gtag(){dataLayer.push(arguments);}
@@ -43,7 +42,7 @@ function template(markup, css, linkTags, scriptTags, deviceCheck, trackingId) {
         </head>
         <body style="margin: 0; background: #F3F8EE">
            <div id="root" mobile="${deviceCheck}">${markup}</div>
-           ${scriptTags}
+           <script type="text/plain" cookie-consent="strictly-necessary" src="/build/generated.client.js"></script>   
         </body>
       </html>`
 	);

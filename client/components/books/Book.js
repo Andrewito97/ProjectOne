@@ -66,7 +66,13 @@ const Book = (props) => {
 				<CardHeader
 					id='book-title'
 					title={props.book.title}
-					subheader={props.book.genre}
+					subheader={
+						<span>
+							<span>{props.book.author}</span>
+							<br/>
+							<span>{props.book.genre}</span>
+						</span>
+					}
 					style={{color: paletteController.textColor}}
 				/>
 				<CardContent>

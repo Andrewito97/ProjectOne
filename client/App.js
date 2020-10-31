@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { loadableReady } from '@loadable/component';
 import RootComponent from './RootComponent';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import paletteController from './PaletteController';
@@ -68,6 +67,4 @@ const App = () => {
 	);
 };
 
-loadableReady(() => {
-	ReactDOM.render(<App/>, document.getElementById('root'));
-});
+ReactDOM.hydrate(<App/>, document.getElementById('root'));
