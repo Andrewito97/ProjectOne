@@ -42,7 +42,7 @@ const TagList = (props) => {
 			<Box>
 				{
 					props.addedTags ? props.addedTags.map((tag, index) => (
-						<Typography key={index} style={styles.tag} component='span'>
+						<Typography key={index} style={{color: paletteController.textColor, ...styles.tag}} component='span'>
 							{tag}
 							<IconButton 
 								onClick={() => props.deleteTag(index)}
