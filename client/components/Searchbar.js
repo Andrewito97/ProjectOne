@@ -48,6 +48,10 @@ const Searchbar = (props) => {
 		text.length === 0 ? setDisplayList('none') : setDisplayList('block');
 	}, [text]);
 
+	React.useEffect(() => {
+		setText('');
+	}, [props.activeTab]);
+
 	const search = async () => {
 		if(props.activeTab === 'newsfeed') {
 			const data = await postApi.searchPosts(text);
@@ -99,6 +103,7 @@ const Searchbar = (props) => {
 				<Search fontSize={isMobile ? 'large' : 'default'}/>
 			</IconButton>
 			<InputBase
+				id='searchbar'
 				inputRef={(element) => searchField = element}
 				onChange={handleChange}
 				value={text}
@@ -136,14 +141,12 @@ const Searchbar = (props) => {
 						items.map((item, index) => {
 							return (
 								<Link to={`/${props.activeTab}/${item._id}`} replace key={index}>
-									<ListItem button>
+									<ListItem id={'search-result-' + (index + 1)} button>
 										<ListItemText style={{color: paletteController.textColor}}>
-											{
-												props.activeTab === 'music' ? 
-													`${item.author} - ${item.audios.join('; ')}` 
-													: 
-													item.title
-											}
+											{props.activeTab === 'newsfeed' ? item.title : null}
+											{props.activeTab === 'music' ? `${item.author} - ${item.audios.join('; ')}` : null}
+											{props.activeTab === 'movies' ? `${item.title} - ${item.genre}` : null}
+											{props.activeTab === 'books' ? `${item.title} - ${item.author}` : null}
 										</ListItemText>
 									</ListItem>
 								</Link>

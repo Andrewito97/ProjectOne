@@ -20,6 +20,7 @@ const MusicGenreSelect = (props) => {
 	return (
 		<FormControl size='small' style={{ backgroundColor: paletteController.cardColor, ...styles.formControl }}>
 			<Select
+				id='genre-select'
 				variant='outlined'
 				onChange={props.handleChange}
 				value={props.value}

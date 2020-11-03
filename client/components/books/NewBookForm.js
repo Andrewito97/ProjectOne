@@ -109,13 +109,14 @@ const NewPostForm = (props) => {
 			setDescription('');
 			setImage('');
 			setTitleError('');
+			setAuthorError('');
 			setGenreError('');
 			setDescriptionError('');
 			props.updateBooks(data.success);
 		} else {
 			data.error.errors.title ? 
 				setTitleError(data.error.errors.title.properties.message) : setTitleError('');
-			data.error.errors.title ? 
+			data.error.errors.author ? 
 				setAuthorError(data.error.errors.author.properties.message) : setAuthorError('');
 			data.error.errors.genre ? 
 				setGenreError(data.error.errors.genre.properties.message) : setGenreError('');

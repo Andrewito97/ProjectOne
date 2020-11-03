@@ -12,6 +12,14 @@ class NewMusicForm {
 		return $('#author-error');
 	}
 
+	get genreSelect() {
+		return $('#genre-select');
+	}
+
+	get otherOption() {
+		return $('[data-value="Other"]');
+	}
+
 	get genreInput() {
 		return $('#genre-input');
 	}

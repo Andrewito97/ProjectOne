@@ -1,11 +1,18 @@
+/* eslint-disable no-undef */
+
 class BasePage {
 	constructor() {
 		this.title = 'Project One';
 	}
 
 	open() {
-		// eslint-disable-next-line no-undef
 		browser.url(browser.config.baseUrl);
+		browser.setCookies(
+			{ 
+				name: 'cookie_consent_user_accepted',
+				value: 'true'
+			});
+		browser.refresh();
 	}
 }
 

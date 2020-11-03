@@ -120,6 +120,7 @@ const Post = (props) => {
 						{
 							props.post.tags ? props.post.tags.map((tag, index) => (
 								<Typography 
+									id={'post-tag-' + (index + 1)}
 									key={index}
 									component='span'
 									style={styles.tag}

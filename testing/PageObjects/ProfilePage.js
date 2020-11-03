@@ -67,6 +67,10 @@ class ProfilePage {
 	get profileMoviesTab() {
 		return $('#profile-movies-tab');
 	}
+
+	get profileBooksTab() {
+		return $('#profile-books-tab');
+	}
 }
 
 export default new ProfilePage();

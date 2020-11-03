@@ -13,34 +13,26 @@ import uploadFile from '../helpers/uploadFile';
 import clearInput from '../helpers/clearInput';
 
 describe('Check movie functionality', () => {
-	beforeEach(() => {
-		browser.setWindowSize(1920, 1080);
+
+	before('login into existing account', () => {
+		browser.maximizeWindow();
 		BasePage.open();
 		TopBar.profileMenu.click();
 		expect(TopBar.loginListItem).toBeDisplayed();
-		TopBar.loginListItem.click();
-		LoginPage.emailInput.setValue(config.testEmail);
-		LoginPage.passwordInput.setValue(config.testPasswordChanged);
+		TopBar.loginListItem.click();     
+		LoginPage.emailInput.setValue(config.testExistingUserEmail);
+		LoginPage.passwordInput.setValue(config.testExistingUserPassword);
 		LoginPage.loginButton.click();
 		expect(NewPostForm.pageTitle).toHaveText('Create your post');
 		TopBar.moviesTab.click();
 		expect(NewMovieForm.pageTitle).toHaveText('Add trailer');
+		browser.refresh();
 	});
-	afterEach(() => {
+
+	after(() => {
 		browser.reloadSession();
 	});
-	it('should display elements on new movie form', () => {
-		expect(NewMovieForm.titleInput).toBeDisplayed();
-		expect(NewMovieForm.genreInput).toBeDisplayed();
-		expect(NewMovieForm.descriptionInput).toBeDisplayed();
-		expect(NewMovieForm.movieCreationButton).toBeDisplayed();
-		expect(NewMovieForm.movieCreationButton).toBeClickable();
-		expect(NewMovieForm.addVideoButton).toBeDisplayed();
-		expect(NewMovieForm.addVideoButton).toBeDisabled();
-		uploadFile(NewMovieForm.hiddenVideoInput, '../assets/videos/trailer.mp4');
-		expect(NewMovieForm.deleteVideoButton).toBeDisplayed();
-		expect(NewMovieForm.addVideoButton).toBeClickable();
-	});
+
 	it('should display error when adding movie with invalid data', () => {
 		uploadFile(NewMovieForm.hiddenVideoInput, '../assets/videos/trailer.mp4');
 		NewMovieForm.addVideoButton.click();
@@ -64,7 +56,10 @@ describe('Check movie functionality', () => {
 		expect(NewMovieForm.titleError).toHaveText('Title is required !');
 		expect(NewMovieForm.genreError).toHaveText('Genre is required !');
 		NewMovieForm.descriptionError.waitForExist({ reverse: true });
+		clearInput(NewMovieForm.descriptionInput);
+		NewMovieForm.deleteVideoButton.click();
 	});
+
 	it('shoud successfully add new movie', () => {
 		NewMovieForm.titleInput.setValue('Movie title');
 		NewMovieForm.genreInput.setValue('Movie genre');
@@ -80,6 +75,17 @@ describe('Check movie functionality', () => {
 		expect(Movie.movieDescription).toHaveText('Movie description');
 		expect(Movie.movieVideo).toBeDisplayed();
 	});
+
+	it('should successfully search and find movie', () => {
+		TopBar.searchbar.setValue('Movie title');
+		TopBar.firstSearchResult.waitForDisplayed();
+		expect(TopBar.firstSearchResult).toBeDisplayed();
+		TopBar.firstSearchResult.click();
+		expect(Movie.movieTitle).toHaveText('Movie title');
+		expect(Movie.movieGenre).toHaveText('Movie genre');
+		expect(Movie.movieDescription).toHaveText('Movie description');
+	});	
+
 	it('should successfully delete movie', () => {
 		TopBar.profileMenu.click();
 		TopBar.profileListItem.click();
@@ -95,8 +101,8 @@ describe('Check movie functionality', () => {
 		expect(Movie.deleteMovieButton).toBeDisplayed();
 		Movie.deleteMovieButton.click();
 		expect(ConfirmWindow.content).toBeDisplayed();
-		expect(ConfirmWindow.calcelButton).toBeDisplayed();
-		ConfirmWindow.calcelButton.click();
+		expect(ConfirmWindow.cancelButton).toBeDisplayed();
+		ConfirmWindow.cancelButton.click();
 		ConfirmWindow.content.waitForExist({ reverse: true });
 		Movie.deleteMovieButton.click();
 		expect(ConfirmWindow.content).toBeDisplayed();

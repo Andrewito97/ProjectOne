@@ -8,6 +8,10 @@ class Post {
 		return $('#post-text');
 	}
 
+	get firstPostTag() {
+		return $('#post-tag-1');
+	}
+
 	get postImage() {
 		return $('#post-image');
 	}

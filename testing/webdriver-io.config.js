@@ -22,13 +22,11 @@ exports.config = {
 	// directory is where your package.json resides, so `wdio` will be called from there.
 	//
 	specs: [
-		'./testing/tests/01.signup.test.js',
-		//'./testing/tests/02.login.test.js',
-		//'./testing/tests/03.recovery.test.js',
-		//'./testing/tests/04.post.test.js',
-		//'./testing/tests/05.music.test.js',
-		//'./testing/tests/06.movie.test.js',
-		//'./testing/tests/07.profile.test.js'
+		'./testing/tests/01.user.test.js',
+		'./testing/tests/02.newsfeed.test.js',
+		'./testing/tests/03.music.test.js',
+		'./testing/tests/04.movie.test.js',
+		'./testing/tests/05.book.test.js'
 	],
 	// Patterns to exclude.
 	exclude: [
@@ -100,7 +98,7 @@ exports.config = {
 	// with `/`, the base url gets prepended, not including the path portion of your baseUrl.
 	// If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
 	// gets prepended directly.
-	baseUrl: 'http://localhost:3000',
+	baseUrl: 'http://192.168.0.103:3000',
 	//
 	// Default timeout for all waitFor* commands.
 	waitforTimeout: 10000,

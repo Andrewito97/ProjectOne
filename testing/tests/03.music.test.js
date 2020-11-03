@@ -13,55 +13,46 @@ import uploadFile from '../helpers/uploadFile';
 import clearInput from '../helpers/clearInput';
 
 describe('Check music functionality', () => {
-	beforeEach(() => {
-		browser.setWindowSize(1920, 1080);
+
+	before('login into existing account', () => {
+		browser.maximizeWindow();
 		BasePage.open();
 		TopBar.profileMenu.click();
 		expect(TopBar.loginListItem).toBeDisplayed();
-		TopBar.loginListItem.click();
-		LoginPage.emailInput.setValue(config.testEmail);
-		LoginPage.passwordInput.setValue(config.testPasswordChanged);
+		TopBar.loginListItem.click();     
+		LoginPage.emailInput.setValue(config.testExistingUserEmail);
+		LoginPage.passwordInput.setValue(config.testExistingUserPassword);
 		LoginPage.loginButton.click();
 		expect(NewPostForm.pageTitle).toHaveText('Create your post');
 		TopBar.musicTab.click();
 		expect(NewMusicForm.pageTitle).toHaveText('Add music');
+		browser.refresh();
 	});
-	afterEach(() => {
+
+	after(() => {
 		browser.reloadSession();
 	});
-	it('should display elements on new music form', () => {
+
+	it('should display error when adding music with invalid data', () => {
 		expect(NewMusicForm.authorInput).toBeDisplayed();
-		expect(NewMusicForm.genreInput).toBeDisplayed();
 		expect(NewMusicForm.musicNoteButton).toBeDisplayed();
 		expect(NewMusicForm.musicNoteButton).toBeClickable();
 		expect(NewMusicForm.addSongButton).toBeDisplayed();
 		expect(NewMusicForm.addSongButton).toBeDisabled();
-		uploadFile(NewMusicForm.hiddenAudioInput, '../assets/audios/augenblick.mp3');
-		expect(NewMusicForm.newAudioName).toBeDisplayed();
-		expect(NewMusicForm.audioNameEditButton).toBeDisplayed();
-		expect(NewMusicForm.audioNameDeleteButton).toBeDisplayed();
-		expect(NewMusicForm.addSongButton).toBeClickable();
-	});
-	it('should display error when adding music with invalid data', () => {
 		uploadFile(NewMusicForm.hiddenAudioInput, '../assets/audios/luftbaloons.mp3');
 		NewMusicForm.addSongButton.click();
+		NewMusicForm.authorError.waitForExist({ timeout: 30000});
 		NewMusicForm.authorError.waitForDisplayed();
 		expect(NewMusicForm.authorError).toBeDisplayed();
 		expect(NewMusicForm.authorError).toHaveText('Author is required !');
-		expect(NewMusicForm.genreError).toBeDisplayed();
-		expect(NewMusicForm.genreError).toHaveText('Genre is required !');
-		NewMusicForm.authorInput.setValue('test author');
-		NewMusicForm.addSongButton.click();
-		NewMusicForm.authorError.waitForExist({ reverse: true });
-		expect(NewMusicForm.genreError).toHaveText('Genre is required !');
-		clearInput(NewMusicForm.authorInput);
-		NewMusicForm.genreInput.setValue('test genre');
-		NewMusicForm.addSongButton.click();
-		expect(NewMusicForm.authorError).toHaveText('Author is required !');
-		NewMusicForm.genreError.waitForExist({ reverse: true });
+		NewMusicForm.audioNameDeleteButton[0].click();
 	});
+
 	it('shoud successfully add new music', () => {
 		NewMusicForm.authorInput.setValue('test author');
+		NewMusicForm.genreSelect.click();
+		NewMusicForm.otherOption.waitForDisplayed();
+		NewMusicForm.otherOption.click();
 		NewMusicForm.genreInput.setValue('test genre');
 		uploadFile(NewMusicForm.hiddenAudioInput, '../assets/audios/luftbaloons.mp3');
 		expect(NewMusicForm.newAudioName).toBeElementsArrayOfSize(1);
@@ -93,6 +84,17 @@ describe('Check music functionality', () => {
 		expect(Music.audioVolumeButton).toBeDisplayed();
 		expect(Music.audioVolumeButton).toBeClickable();
 	});
+
+	it('should successfully search and find music', () => {
+		TopBar.searchbar.setValue('test author');
+		TopBar.firstSearchResult.waitForDisplayed();
+		expect(TopBar.firstSearchResult).toBeDisplayed();
+		TopBar.firstSearchResult.click();
+		expect(Music.musicAuthor).toHaveText('test author');
+		expect(Music.musicGenre).toHaveText('test genre');
+		expect(Music.audioName).toHaveText('test audio name');
+	});	
+
 	it('should successfully delete music', () => {
 		TopBar.profileMenu.click();
 		TopBar.profileListItem.click();
@@ -104,8 +106,8 @@ describe('Check music functionality', () => {
 		expect(Music.deleteMusicButton).toBeDisplayed();
 		Music.deleteMusicButton.click();
 		expect(ConfirmWindow.content).toBeDisplayed();
-		expect(ConfirmWindow.calcelButton).toBeDisplayed();
-		ConfirmWindow.calcelButton.click();
+		expect(ConfirmWindow.cancelButton).toBeDisplayed();
+		ConfirmWindow.cancelButton.click();
 		ConfirmWindow.content.waitForExist({ reverse: true });
 		Music.deleteMusicButton.click();
 		expect(ConfirmWindow.content).toBeDisplayed();

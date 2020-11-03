@@ -4,7 +4,7 @@ class ConfirmWindow {
 		return $('#confirm-window');
 	}
 
-	get calcelButton() {
+	get cancelButton() {
 		return $('#cancel-button');
 	}
 

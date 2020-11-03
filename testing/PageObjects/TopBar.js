@@ -12,6 +12,18 @@ class TopBar {
 		return $('#movies-tab');
 	}
 
+	get booksTab() {
+		return $('#books-tab');
+	}
+
+	get searchbar() {
+		return $('#searchbar');
+	}
+
+	get firstSearchResult() {
+		return $('#search-result-1');
+	}
+
 	get profileMenu() {
 		return $('#profile-menu');
 	}

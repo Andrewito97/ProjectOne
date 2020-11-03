@@ -12,6 +12,22 @@ class NewPostForm {
 		return $('#title-error');
 	}
 
+	get tagInput() {
+		return $('#tag-input');
+	}
+
+	get addTagButton() {
+		return $('#add-tag-button');
+	}
+
+	get firstTag() {
+		return $('#tag-1');
+	}
+
+	get deleteFirstTagButton() {
+		return $('#delete-tag-button-1');
+	}
+
 	get textInput() {
 		return $('#text-input');
 	}

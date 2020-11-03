@@ -19,13 +19,10 @@ const config = {
 	adminEmail: process.env.ADMIN_EMAIL,
 	googleClientId: process.env.GOOGLE_CLIENT_ID,
 	facebookAppId: process.env.FACEBOOK_APP_ID,
-	testEmail: process.env.TEST_EMAIL,
-	testPassword: process.env.TEST_PASSWORD,
-	testPasswordChanged: process.env.TEST_PASSWORD_CHANGED,
-	googleTestEmail: process.env.GOOGLE_TEST_EMAIL,
-	googleTestPassword: process.env.GOOGLE_TEST_PASSWORD,
-	facebookTestEmail: process.env.FACEBOOK_TEST_EMAIL,
-	facebookTestPassword: process.env.FACEBOOK_TEST_PASSWORD
+	testNewUserEmail: process.env.TEST_NEW_USER_EMAIL,
+	testNewUserPassword: process.env.TEST_NEW_USER_PASSWORD,
+	testExistingUserEmail: process.env.TEST_EXISTING_USER_EMAIL,
+	testExistingUserPassword: process.env.TEST_EXISTING_USER_PASSWORD,
 };
 
 export default config;   
