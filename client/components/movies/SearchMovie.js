@@ -5,6 +5,15 @@ import Movie from './Movie';
 import movieApi from '../../api/movie.api';
 import DummyMovie from './DummyMovie';
 
+const styles = {
+	container: {
+		width: 850,
+		minHeight: '110vh',
+		marginTop: '10%',
+		marginBottom: '7%'
+	},
+};
+
 const SearchMovie = () => {
 	const [ movie, setMovie ] = React.useState([]);
 
@@ -24,7 +33,7 @@ const SearchMovie = () => {
 	};
 
 	return (
-		<Box>
+		<Box style={styles.container}>
 			{ movie.length === 0 ? <DummyMovie/> : <Movie movie={movie}/> }
 		</Box>
 	);

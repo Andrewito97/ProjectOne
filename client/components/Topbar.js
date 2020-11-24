@@ -8,6 +8,12 @@ import { AppBar,
 	IconButton,
 	Typography } from '@material-ui/core';
 import BuildIcon from '@material-ui/icons/Build';
+import HomeIcon from '@material-ui/icons/Home';
+import SchoolIcon from '@material-ui/icons/School';
+import ReceiptIcon from '@material-ui/icons/Receipt';
+import MusicNoteIcon from '@material-ui/icons/MusicNote';
+import MovieIcon from '@material-ui/icons/Movie';
+import MenuBookIcon from '@material-ui/icons/MenuBook';
 import Menu from './Menu';
 import Searchbar from './Searchbar';
 import getUserStatus from '../helpers/getUserStatus.helper';
@@ -35,17 +41,22 @@ const styles = {
 	},
 	tabsContainer: {
 		display: 'flex',
-		justifyContent: 'center',
-		maxWidth: 400
+		justifyContent: 'center'
 	},
-	mainTab: {
-		marginRight: 18
+	homeTab: {
+		marginRight: 20
+	},
+	educationTab: {
+		marginRight: 20
+	},
+	feedTab: {
+		marginRight: 20
 	},
 	musicTab: {
-		marginRight: 18
+		marginRight: 20
 	},
 	moviesTab: {
-		marginRight: 18
+		marginRight: 20
 	},
 	searchbarWeb: {
 		position: 'absolute',
@@ -81,7 +92,9 @@ const Topbar = withRouter(({ history, ...props}) => {
 	});
 
 	const getTab = () => {
-		if(history.location.pathname === '/') setActiveTab('newsfeed');
+		if(history.location.pathname === '/') setActiveTab('home');
+		if(history.location.pathname === '/education') setActiveTab('education');
+		if(history.location.pathname === '/newsfeed') setActiveTab('newsfeed');
 		if(history.location.pathname === '/music') setActiveTab('music');
 		if(history.location.pathname === '/movies') setActiveTab('movies');
 		if(history.location.pathname === '/books') setActiveTab('books');
@@ -114,23 +127,64 @@ const Topbar = withRouter(({ history, ...props}) => {
 				}
 				<Box 
 					style={{
-						width: (props.isMobile || isMobile) ? '100%' : '25%',
-						marginLeft: (props.isMobile || isMobile) ? null : '15%',
+						width: (props.isMobile || isMobile) ? '100%' : '30%',
+						marginLeft: (props.isMobile || isMobile) ? null : '20%',
 						...styles.tabsContainer
 					}}
 				>
 					<Link
-						id='newsfeed-tab'
+						id='home-tab'
 						to='/'
+						style={{
+							color: activeTab === 'home' ? 'white': paletteController.tabsTextColor, 
+							textShadow: activeTab === 'home' ? '1px 1px 2px white' : false,
+							...styles.homeTab
+						}}
+					>
+						{
+							props.isMobile || isMobile ?
+								<HomeIcon/>
+								:
+								<Typography>
+									Home
+								</Typography>
+						}
+					</Link>
+					<Link
+						id='education-tab'
+						to='/education'
+						style={{
+							color: activeTab === 'education' ? 'white': paletteController.tabsTextColor, 
+							textShadow: activeTab === 'education' ? '1px 1px 2px white' : false,
+							...styles.educationTab
+						}}
+					>
+						{
+							props.isMobile || isMobile ?
+								<SchoolIcon/>
+								:
+								<Typography>
+									Education
+								</Typography>
+						}
+					</Link>
+					<Link
+						id='newsfeed-tab'
+						to='/newsfeed'
 						style={{
 							color: activeTab === 'newsfeed' ? 'white': paletteController.tabsTextColor, 
 							textShadow: activeTab === 'newsfeed' ? '1px 1px 2px white' : false,
-							...styles.mainTab
+							...styles.feedTab
 						}}
 					>
-						<Typography>
-							Main
-						</Typography>
+						{
+							props.isMobile || isMobile ?
+								<ReceiptIcon/>
+								:
+								<Typography>
+									Feed
+								</Typography>
+						}
 					</Link>
 					<Link
 						id='music-tab'
@@ -141,9 +195,14 @@ const Topbar = withRouter(({ history, ...props}) => {
 							...styles.musicTab
 						}}
 					>
-						<Typography>
-							Music
-						</Typography>
+						{
+							props.isMobile || isMobile ?
+								<MusicNoteIcon/>
+								:
+								<Typography>
+									Music
+								</Typography>
+						}
 					</Link>
 					<Link
 						id='movies-tab'
@@ -154,9 +213,14 @@ const Topbar = withRouter(({ history, ...props}) => {
 							...styles.moviesTab
 						}}
 					>
-						<Typography>
-							Movies
-						</Typography>
+						{
+							props.isMobile || isMobile ?
+								<MovieIcon/>
+								:
+								<Typography>
+									Movies
+								</Typography>
+						}
 					</Link>
 					<Link
 						id='books-tab'
@@ -166,9 +230,14 @@ const Topbar = withRouter(({ history, ...props}) => {
 							textShadow: activeTab === 'books' ? '1px 1px 2px white' : false
 						}}
 					>
-						<Typography>
-							Books
-						</Typography>
+						{
+							props.isMobile || isMobile ?
+								<MenuBookIcon/>
+								:
+								<Typography>
+									Books
+								</Typography>
+						}
 					</Link>
 				</Box>
 				{

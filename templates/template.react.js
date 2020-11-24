@@ -6,10 +6,11 @@ function template(markup, css, deviceCheck, trackingId) {
            <meta charset="utf-8">
            <meta name="viewport" content="height=device-height, initial-scale=1, minimum-scale=1, maximum-scale=1">
            <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
-           <meta name="description" content="Karambol is a platform that combines the definitions of a social network 
-           and a collective blog, created for the publication of news, analytical articles, 
-           opinions related to information technology and science. Also contains elements of Ukrainian music, movies and books.">
-           <title>Karambol - share info with people</title>
+           <meta name="description" content="Karambol is free educational platform.
+           Also it contains elements of social media.
+           The main goal - to share basic knowledge which everyone should know in modern world.
+           We hope our platform will help you understand all aspects that interest you and become better.">
+           <title>Karambol - fundamental knowledge</title>
            <link rel="shortcut icon" href="../client/assets/ukraine.png" type="image/png">
            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />  

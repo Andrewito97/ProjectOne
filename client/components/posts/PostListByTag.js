@@ -5,6 +5,15 @@ import Post from './Post';
 import postApi from '../../api/post.api';
 import DummyPost from './DummyPost';
 
+const styles = {
+	container: {
+		width: 850,
+		minHeight: '110vh',
+		marginTop: '10%',
+		marginBottom: '7%'
+	},
+};
+
 const PostListByTag = () => {
 	const [ posts, setPost ] = React.useState([]);
 
@@ -24,7 +33,7 @@ const PostListByTag = () => {
 	};
 
 	return (
-		<Box>
+		<Box style={styles.container}>
 			{ posts.length === 0 ? <DummyPost/> : posts.map( (item, index) => <Post post={item} key={index}/> ) }
 		</Box>
 	);

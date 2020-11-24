@@ -5,6 +5,15 @@ import Book from './Book';
 import bookApi from '../../api/book.api';
 import DummyBook from './DummyBook';
 
+const styles = {
+	container: {
+		width: 850,
+		minHeight: '110vh',
+		marginTop: '3%',
+		marginBottom: '7%'
+	},
+};
+
 const SearchBook = () => {
 	const [ book, setBook ] = React.useState([]);
 
@@ -24,7 +33,7 @@ const SearchBook = () => {
 	};
 
 	return (
-		<Box>
+		<Box style={styles.container}>
 			{ book.length === 0 ? <DummyBook/> : <Book book={book}/> }
 		</Box>
 	);

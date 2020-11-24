@@ -11,6 +11,12 @@ import UserList from './UserList';
 import paletteController from '../../PaletteController';
 
 const styles = {
+	container: {
+		width: 850,
+		minHeight: '110vh',
+		marginTop: '10%',
+		marginBottom: '7%'
+	},
 	card: {
 		marginRight: 10,
 		marginLeft: 10,
@@ -28,7 +34,7 @@ const AdminPanel = () => {
 	}
     
 	return (
-		<Box>
+		<Box style={styles.container}>
 			<Card
 				raised
 				style={{

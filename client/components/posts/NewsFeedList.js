@@ -9,6 +9,15 @@ import postApi from '../../api/post.api';
 import DummyPost from './DummyPost';
 import paletteController from '../../PaletteController';
 
+const styles = {
+	container: {
+		width: 850,
+		minHeight: '110vh',
+		marginTop: '10%',
+		marginBottom: '7%'
+	},
+};
+
 const NewsFeedList = () => {
 	const [ posts, setPosts ] = React.useState([]);
 	const [ skip, setSkip ] = React.useState(0);
@@ -43,7 +52,7 @@ const NewsFeedList = () => {
 	};
 
 	return (
-		<Box>
+		<Box style={styles.container}>
 			{authenticationHelper.isAuthenticated() ? (<NewPostForm updateNewsFeed={updateNewsFeed}/>) : null}
 			<InfiniteScroll
 				dataLength={posts.length}

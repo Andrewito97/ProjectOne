@@ -12,6 +12,12 @@ import paletteController from '../../PaletteController';
 import SuccessWindow from '../SuccessWindow';
 
 const styles = {
+	container: {
+		width: 850,
+		minHeight: '110vh',
+		marginTop: '10%',
+		marginBottom: '7%'
+	},
 	card: {
 		minHeight: 200,
 		marginRight: 10,
@@ -48,7 +54,7 @@ const RecoveryForm = () => {
 	};
     
 	return (
-		<Box>
+		<Box style={styles.container}>
 			<Card
 				raised
 				style={{

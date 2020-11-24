@@ -5,6 +5,15 @@ import Post from './Post';
 import postApi from '../../api/post.api';
 import DummyPost from './DummyPost';
 
+const styles = {
+	container: {
+		width: 850,
+		minHeight: '110vh',
+		marginTop: '10%',
+		marginBottom: '7%'
+	},
+};
+
 const SearchPost = () => {
 	const [ post, setPost ] = React.useState([]);
 
@@ -24,7 +33,7 @@ const SearchPost = () => {
 	};
 
 	return (
-		<Box>
+		<Box style={styles.container}>
 			{ post.length === 0 ? <DummyPost/> : <Post post={post}/> }
 		</Box>
 	);

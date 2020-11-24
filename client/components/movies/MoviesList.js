@@ -9,6 +9,15 @@ import movieApi from '../../api/movie.api';
 import DummyMovie from './DummyMovie';
 import paletteController from '../../PaletteController';
 
+const styles = {
+	container: {
+		width: 850,
+		minHeight: '110vh',
+		marginTop: '10%',
+		marginBottom: '7%'
+	},
+};
+
 const MoviesList = () => {
 	const [ movies, setMovies ] = React.useState([]);
 	const [ skip, setSkip ] = React.useState(0);
@@ -43,7 +52,7 @@ const MoviesList = () => {
 	};
 
 	return (
-		<Box>
+		<Box style={styles.container}>
 			{authenticationHelper.isAuthenticated() ? (<NewMovieForm updateMoviesList={updateMoviesList}/>) : null}
 			<InfiniteScroll
 				dataLength={movies.length}

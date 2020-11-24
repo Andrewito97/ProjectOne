@@ -19,6 +19,12 @@ import authenticationHelper from '../../helpers/authentication.helper';
 import paletteController from '../../PaletteController';
 
 const styles = {
+	container: {
+		width: 850,
+		minHeight: '110vh',
+		marginTop: '10%',
+		marginBottom: '7%'
+	},
 	card: {
 		marginRight: 10,
 		marginLeft: 10,
@@ -137,129 +143,131 @@ const LoginForm = () => {
 	}
     
 	return (
-		<Card
-			raised
-			style={{
-				backgroundColor: paletteController.cardColor,
-				width: isMobile ? null : '55%',
-				...styles.card
-			}}
-		>
-			<CardContent style={styles.content}>
-				<Typography
-					id='page-title'
-					variant='h5'
-					style={{
-						color: paletteController.textColor
-					}}
-				>
-                    Sign In
-				</Typography>
+		<Box style={styles.container}>
+			<Card
+				raised
+				style={{
+					backgroundColor: paletteController.cardColor,
+					width: isMobile ? null : '55%',
+					...styles.card
+				}}
+			>
+				<CardContent style={styles.content}>
+					<Typography
+						id='page-title'
+						variant='h5'
+						style={{
+							color: paletteController.textColor
+						}}
+					>
+						Sign In
+					</Typography>
 
-				<TextField 
-					id='email'
-					required
-					label='Email' 
-					variant='outlined'
-					placeholder='Type email...'
-					type='email'
-					value={requestedEmail}
-					style={styles.emailInput}
-					onChange={(event) => setEmail(event.target.value)}
-				/>
-				<br/>
-				{ 
-					emailError ? 
-						(<Typography 
-							id='email-error' 
-							color='error'
-							style={styles.error}
-						>
-							{emailError}
-						</Typography>) 
-						: 
-						null 
-				}
+					<TextField 
+						id='email'
+						required
+						label='Email' 
+						variant='outlined'
+						placeholder='Type email...'
+						type='email'
+						value={requestedEmail}
+						style={styles.emailInput}
+						onChange={(event) => setEmail(event.target.value)}
+					/>
+					<br/>
+					{ 
+						emailError ? 
+							(<Typography 
+								id='email-error' 
+								color='error'
+								style={styles.error}
+							>
+								{emailError}
+							</Typography>) 
+							: 
+							null 
+					}
 
-				<TextField   
-					id='password'
-					required
-					label='Password' 
-					variant='outlined'
-					placeholder='Type password...'
-					type='password'
-					value={requestedPassword} 
-					style={styles.passwordInput} 
-					onChange={(event) => setPassword(event.target.value)}
-				/>
-				<br/>
-				{ 
-					passwordError ? 
-						(<Typography 
-							id='password-error' 
-							color='error'
-							style={styles.error}
-						>
-							{passwordError}
-						</Typography>) 
-						: 
-						null 
-				}
+					<TextField   
+						id='password'
+						required
+						label='Password' 
+						variant='outlined'
+						placeholder='Type password...'
+						type='password'
+						value={requestedPassword} 
+						style={styles.passwordInput} 
+						onChange={(event) => setPassword(event.target.value)}
+					/>
+					<br/>
+					{ 
+						passwordError ? 
+							(<Typography 
+								id='password-error' 
+								color='error'
+								style={styles.error}
+							>
+								{passwordError}
+							</Typography>) 
+							: 
+							null 
+					}
 
-				<Typography style={styles.linkContainer}>
-					<Link to='/signup'>Create new account</Link>
-				</Typography>
-				<Typography style={styles.linkContainer}>
-					<Link to='/recovery'>Forgot your password? Recover !</Link>
-				</Typography>
-				<CardActions>
-					<Box style={styles.buttonsContainer}>
-						<Button
-							id='login-button'
-							onClick={onLogin}
-							style={{
-								backgroundColor: paletteController.mainColor,
-								...styles.loginButton
-							}}
-						>
-                            Login
-						</Button>
-						<GoogleLogin
-							clientId={config.googleClientId}
-							isSignedIn={false} 
-							onSuccess={responseMedia}
-							onFailure={() => console.log('Google auth was canceled')} 
-							cookiePolicy={'single_host_origin'}
-							render={renderProps => (
-								<IconButton
-									id='google-button'
-									onClick={renderProps.onClick}
-									style={styles.googleButton}
-								>
-									<FcGoogle size={33}/>
-								</IconButton>
-							)}           
-						/>
-						<FacebookLogin
-							appId={config.facebookAppId}
-							autoLoad={false}
-							fields='name,email'
-							callback={responseMedia}
-							onFailure={() => console.log('Facebook auth was canceled')} 
-							render={renderProps => (
-								<IconButton
-									id='facebook-button'
-									onClick={renderProps.onClick}
-									style={styles.facebookButton}
-								>
-									<FacebookIcon fontSize='large'/>
-								</IconButton>
-							)}
-						/>
-					</Box>
-				</CardActions>
-			</CardContent>
-		</Card>
+					<Typography style={styles.linkContainer}>
+						<Link to='/signup'>Create new account</Link>
+					</Typography>
+					<Typography style={styles.linkContainer}>
+						<Link to='/recovery'>Forgot your password? Recover !</Link>
+					</Typography>
+					<CardActions>
+						<Box style={styles.buttonsContainer}>
+							<Button
+								id='login-button'
+								onClick={onLogin}
+								style={{
+									backgroundColor: paletteController.mainColor,
+									...styles.loginButton
+								}}
+							>
+								Login
+							</Button>
+							<GoogleLogin
+								clientId={config.googleClientId}
+								isSignedIn={false} 
+								onSuccess={responseMedia}
+								onFailure={() => console.log('Google auth was canceled')} 
+								cookiePolicy={'single_host_origin'}
+								render={renderProps => (
+									<IconButton
+										id='google-button'
+										onClick={renderProps.onClick}
+										style={styles.googleButton}
+									>
+										<FcGoogle size={33}/>
+									</IconButton>
+								)}           
+							/>
+							<FacebookLogin
+								appId={config.facebookAppId}
+								autoLoad={false}
+								fields='name,email'
+								callback={responseMedia}
+								onFailure={() => console.log('Facebook auth was canceled')} 
+								render={renderProps => (
+									<IconButton
+										id='facebook-button'
+										onClick={renderProps.onClick}
+										style={styles.facebookButton}
+									>
+										<FacebookIcon fontSize='large'/>
+									</IconButton>
+								)}
+							/>
+						</Box>
+					</CardActions>
+				</CardContent>
+			</Card>
+		</Box>
 	);
 };
 

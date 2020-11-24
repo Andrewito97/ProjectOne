@@ -13,6 +13,12 @@ import paletteController from '../../PaletteController';
 import SuccessWindow from '../SuccessWindow';
 
 const styles = {
+	container: {
+		width: 850,
+		minHeight: '110vh',
+		marginTop: '10%',
+		marginBottom: '7%'
+	},
 	card: {
 		marginRight: 10,
 		marginLeft: 10,
@@ -100,7 +106,7 @@ const SignUpForm = () => {
 	};
     
 	return (
-		<Box>
+		<Box style={styles.container}>
 			<Card
 				raised
 				style={{

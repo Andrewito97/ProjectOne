@@ -10,15 +10,21 @@ const styles = {
 		height: 70,
 		alignItems: 'center',
 		justifyContent: 'center'
+	},
+	copyrightIcon: {
+		color: 'white',
+		marginRight: 8
+	},
+	text: {
+		color: 'white'
 	}
 };
 
 const Footer = () => {
 	return (
 		<Box style={{backgroundColor: paletteController.mainColor, ...styles.container}}>
-			<CopyrightIcon 
-				style={{color: paletteController.textColor}}/>
-			<Typography component='span' style={{color: paletteController.textColor}}>
+			<CopyrightIcon style={styles.copyrightIcon}/>
+			<Typography component='span' style={styles.text}>
                 Copyright. All rights reserved
 			</Typography>
 		</Box>

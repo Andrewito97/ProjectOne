@@ -7,6 +7,8 @@ import { GiCarambola } from 'react-icons/gi';
 import { isMobile } from 'react-device-detect';
 import AdminPanel from './components/user/AdminPanel';
 import Topbar from './components/Topbar';
+import HomePage from './components/HomePage';
+import EducationList from './components/education/EducationList';
 import NewsFeedList from './components/posts/NewsFeedList';
 import PostListByTag from './components/posts/PostListByTag';
 import SearchPost from './components/posts/SearchPost';
@@ -16,7 +18,6 @@ import MoviesList from './components/movies/MoviesList';
 import SearchMovie from './components/movies/SearchMovie';
 import BooksList from './components/books/BooksList';
 import SearchBook from './components/books/SearchBook';
-import Welcome from './components/Welcome';
 import SignUpForm from './components/user/SignUpForm';
 import LoginForm from './components/user/LoginForm';
 import RecoveryForm from './components/user/RecoveryForm';
@@ -31,18 +32,7 @@ import getUserStatus from './helpers/getUserStatus.helper';
 const styles = {
 	container: {
 		display: 'flex',
-		justifyContent: 'center',
-		paddingTop: '7%',
-	},
-	list: {
-		width: 850,
-		minHeight: '110vh',
-		marginTop: '3%',
-		marginBottom: '7%'
-	},
-	aside: {
-		width: 350, 
-		marginTop: '3%'
+		justifyContent: 'center'
 	},
 	mobileHeader: {
 		position: 'relative',
@@ -107,47 +97,32 @@ const RootComponent = (props) => {
 			<Box 
 				style={{
 					backgroundColor: paletteController.backgroundColor,
-					paddingLeft: (props.isMobile || isMobile) ? 0 : '14%',
-					paddingRight: (props.isMobile || isMobile) ? 0 : '8%',
 					...styles.container
 				}}
 			>
-				<Box 
-					style={{
-						margin: (props.isMobile || isMobile) ? 0 : '3%',
-						...styles.list
-					}}
-				>
-					<Switch>    
-						<Route exact path='/' component={NewsFeedList} />
-						<Route exact path='/music' component={MusicList} />
-						<Route exact path='/movies' component={MoviesList} />
-						<Route exact path='/books' component={BooksList} />
-						<Route path='/newsfeed/:postId' component={SearchPost} />
-						<Route path='/tags/:postTag' component={PostListByTag} />
-						<Route path='/music/:musicId' component={SearchMusic} />
-						<Route path='/movies/:movieId' component={SearchMovie} />
-						<Route path='/books/:bookId' component={SearchBook} />
-						<Route path='/admin' component={AdminPanel} />
-						<Route path='/signup' component={SignUpForm} />
-						<Route path='/login' component={LoginForm} />
-						<Route path='/recovery' component={RecoveryForm} />
-						<Route path='/reset/:email/:resetToken' component={ResetPasswordForm} />
-						<Route path='/profile/:userId' component={Profile} />
-						<Route path='/support' component={Support} />
-						<Route path='/settings' component={() => (
-							<Settings palette={props.palette} setPalette={props.setPalette} />
-						)}/>
-					</Switch>
-				</Box>
-				{
-					!props.isMobile && !isMobile?
-						<Box style={styles.aside}>
-							<Welcome/>
-						</Box>
-						:
-						null
-				}
+				<Switch>
+					<Route exact path='/' component={() => <HomePage isMobile={props.isMobile}/>} />
+					<Route exact path='/education' component={EducationList} />
+					<Route exact path='/newsfeed' component={NewsFeedList} />
+					<Route exact path='/music' component={MusicList} />
+					<Route exact path='/movies' component={MoviesList} />
+					<Route exact path='/books' component={BooksList} />
+					<Route path='/newsfeed/:postId' component={SearchPost} />
+					<Route path='/tags/:postTag' component={PostListByTag} />
+					<Route path='/music/:musicId' component={SearchMusic} />
+					<Route path='/movies/:movieId' component={SearchMovie} />
+					<Route path='/books/:bookId' component={SearchBook} />
+					<Route path='/admin' component={AdminPanel} />
+					<Route path='/signup' component={SignUpForm} />
+					<Route path='/login' component={LoginForm} />
+					<Route path='/recovery' component={RecoveryForm} />
+					<Route path='/reset/:email/:resetToken' component={ResetPasswordForm} />
+					<Route path='/profile/:userId' component={Profile} />
+					<Route path='/support' component={Support} />
+					<Route path='/settings' component={() => (
+						<Settings palette={props.palette} setPalette={props.setPalette} />
+					)}/>
+				</Switch>
 			</Box>
 			<Footer/>
 		</Box>

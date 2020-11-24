@@ -109,9 +109,9 @@ const Searchbar = (props) => {
 				value={text}
 				onFocus={showInput} 
 				onBlur={hideInput}
-				placeholder={`Search in ${props.activeTab}...`}
+				placeholder='Search in this page...'
 				style={{
-					width: isFocused ? (isMobile ? '72vw': 380) : (isMobile ? 0 : 165), 
+					width: isFocused ? (isMobile ? '73vw': 380) : (isMobile ? 0 : 165), 
 					transitionDuration: '0.5s',
 					backgroundColor: paletteController.additionalColor,
 					...styles.inputBase
@@ -143,6 +143,8 @@ const Searchbar = (props) => {
 								<Link to={`/${props.activeTab}/${item._id}`} replace key={index}>
 									<ListItem id={'search-result-' + (index + 1)} button>
 										<ListItemText style={{color: paletteController.textColor}}>
+											{props.activeTab === 'home' ? null : null}
+											{props.activeTab === 'education' ? null : null}
 											{props.activeTab === 'newsfeed' ? item.title : null}
 											{props.activeTab === 'music' ? `${item.author} - ${item.audios.join('; ')}` : null}
 											{props.activeTab === 'movies' ? `${item.title} - ${item.genre}` : null}

@@ -9,6 +9,15 @@ import bookApi from '../../api/book.api';
 import DummyBook from './DummyBook';
 import paletteController from '../../PaletteController';
 
+const styles = {
+	container: {
+		width: 850,
+		minHeight: '110vh',
+		marginTop: '3%',
+		marginBottom: '7%'
+	},
+};
+
 const BooksList = () => {
 	const [ books, setBooks ] = React.useState([]);
 	const [ skip, setSkip ] = React.useState(0);
@@ -43,7 +52,7 @@ const BooksList = () => {
 	};
 
 	return (
-		<Box>
+		<Box style={styles.container}>
 			{authenticationHelper.isAuthenticated() ? (<NewBookForm updateBooks={updateBooks}/>) : null}
 			<InfiniteScroll
 				dataLength={books.length}

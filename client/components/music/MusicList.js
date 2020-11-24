@@ -11,6 +11,15 @@ import cookieHelper from '../../helpers/cookie.helper';
 import musicApi from '../../api/music.api';
 import paletteController from '../../PaletteController';
 
+const styles = {
+	container: {
+		width: 850,
+		minHeight: '110vh',
+		marginTop: '10%',
+		marginBottom: '7%'
+	},
+};
+
 const MusicList = () => {
 	const [ music, setMusic ] = React.useState([]);
 	const [ genre, setGenre ] = React.useState('All');
@@ -74,7 +83,7 @@ const MusicList = () => {
 	};
 
 	return (
-		<Box>
+		<Box style={styles.container}>
 			{authenticationHelper.isAuthenticated() ? (<NewMusicForm updateMusicList={updateMusicList}/>) : null}
 			<MusicGenreSelect value={genre} handleChange={handleChange}/>
 			<InfiniteScroll
