@@ -14,6 +14,7 @@ import helmet from 'helmet';
 import config from '../config';
 import template from '../templates/template.react';
 import userApi from './routes/user.routes';
+import educationApi from './routes/education.routes';
 import postApi from './routes/post.routes';
 import movieApi from './routes/movie.routes';
 import musicApi from './routes/music.routes';
@@ -53,6 +54,7 @@ app.use('/build', express.static(path.join(CURRENT_WORKING_DIR, 'build')));
 
 //api endpoints
 app.use('/', userApi);
+app.use('/', educationApi);
 app.use('/', postApi);
 app.use('/', musicApi);
 app.use('/', movieApi);

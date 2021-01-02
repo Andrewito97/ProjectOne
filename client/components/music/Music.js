@@ -26,7 +26,7 @@ const styles = {
 		marginTop: 50
 	},
 	songDate: {
-		color: 'grey',
+		color: 'grey'
 	},
 	deleteIcon: {
 		position: 'absolute',

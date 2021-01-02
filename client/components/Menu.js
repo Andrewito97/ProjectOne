@@ -2,9 +2,7 @@
 import React from 'react';
 import { Box } from '@material-ui/core';
 import { Link } from 'react-router-dom';
-import { isMobile } from 'react-device-detect';
 import { IconButton, Menu, MenuItem } from '@material-ui/core';
-import Person from '@material-ui/icons/Person';
 import MenuIcon from '@material-ui/icons/Menu';
 import authenticationHelper from '../helpers/authentication.helper';
 import userApi from '../api/user.api';
@@ -19,15 +17,12 @@ const styles = {
 	link: {
 		color: 'black'
 	},
-	personIcon: {
-		color: 'white',
-	},
 	menuIcon: {
-		color: 'white',
+		color: 'white'
 	}
 };
 
-const _Menu = (props) => {
+const _Menu = () => {
 	const [ anchorEl, setAnchorEl ] = React.useState(null);
 	const [ confirm, setConfirm ] = React.useState(false);
 
@@ -48,29 +43,13 @@ const _Menu = (props) => {
 	return (
 		<Box >
 			<IconButton id='profile-menu' onClick={handleClick}>
-				{
-					!props.isMobile && !isMobile ?
-						<Person
-							style={{ 
-								backgroundColor: paletteController.additionalColor,
-								...styles.personIcon
-							}}
-						/>
-						:
-						null
-				}
-				{
-					props.isMobile || isMobile ?
-						<MenuIcon
-							fontSize='large'
-							style={{ 
-								backgroundColor: paletteController.additionalColor,
-								...styles.menuIcon
-							}}
-						/>
-						:
-						null
-				}
+				<MenuIcon
+					fontSize='large'
+					style={{ 
+						backgroundColor: paletteController.additionalColor,
+						...styles.menuIcon
+					}}
+				/>
 			</IconButton>
 			<Menu 
 				anchorEl={anchorEl}

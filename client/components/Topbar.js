@@ -72,6 +72,8 @@ const styles = {
 		zIndex: 5
 	},
 	buildIcon: {
+		width: 35,
+		height: 35,
 		color: 'white'
 	},
 	menu: {

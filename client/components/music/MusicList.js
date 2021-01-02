@@ -17,7 +17,7 @@ const styles = {
 		minHeight: '110vh',
 		marginTop: '10%',
 		marginBottom: '7%'
-	},
+	}
 };
 
 const MusicList = () => {

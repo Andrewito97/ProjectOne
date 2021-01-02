@@ -11,7 +11,7 @@ const styles = {
 		minHeight: '110vh',
 		marginTop: '3%',
 		marginBottom: '7%'
-	},
+	}
 };
 
 const SearchBook = () => {

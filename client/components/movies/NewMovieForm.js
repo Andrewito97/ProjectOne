@@ -38,10 +38,10 @@ const styles = {
 	},
 	movieInput: {
 		display: 'flex',
-		marginTop: 27,
+		marginTop: 27
 	},
 	movieName: {
-		marginTop: 8,
+		marginTop: 8
 	},
 	movieNameText: {
 		display: 'inline-block'

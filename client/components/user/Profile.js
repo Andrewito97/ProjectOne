@@ -114,7 +114,7 @@ const Profile = () => {
 		} else {
 			setNoChanges('');
 			if(data.error.code) {
-				setUserEmailError('Email is already existss !');
+				setUserEmailError('Email is already exists !');
 			} else {
 				data.error.errors.email ? 
 					setUserEmailError(data.error.errors.email.message) : 

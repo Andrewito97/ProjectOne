@@ -9,6 +9,7 @@ import AdminPanel from './components/user/AdminPanel';
 import Topbar from './components/Topbar';
 import HomePage from './components/HomePage';
 import EducationList from './components/education/EducationList';
+import EducationSection from './components/education/EducationSection';
 import NewsFeedList from './components/posts/NewsFeedList';
 import PostListByTag from './components/posts/PostListByTag';
 import SearchPost from './components/posts/SearchPost';
@@ -57,7 +58,7 @@ const styles = {
 	},
 	buildIcon: {
 		color: 'white'
-	},
+	}
 };
 
 const RootComponent = (props) => {
@@ -103,6 +104,7 @@ const RootComponent = (props) => {
 				<Switch>
 					<Route exact path='/' component={() => <HomePage isMobile={props.isMobile}/>} />
 					<Route exact path='/education' component={EducationList} />
+					<Route exact path='/education/:sectionName' component={EducationSection} />
 					<Route exact path='/newsfeed' component={NewsFeedList} />
 					<Route exact path='/music' component={MusicList} />
 					<Route exact path='/movies' component={MoviesList} />

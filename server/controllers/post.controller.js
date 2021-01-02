@@ -73,7 +73,7 @@ const postController = {
 
 	listUserNewsFeed(request, response) {
 		Post
-			.find({postedBy: request.profile._id})
+			.find({ postedBy: request.profile._id })
 			.sort('-created')
 			.exec( (error, posts) => {
 				if(error || !posts) {
@@ -87,7 +87,7 @@ const postController = {
 
 	listNewsFeedByTag(request, response) {
 		Post
-			.find({tags: request.tag})
+			.find({ tags: request.tag })
 			.sort('-created')
 			.exec( (error, posts) => {
 				if(error) {
@@ -120,7 +120,7 @@ const postController = {
 
 	searchPosts(request, response) {
 		Post
-			.find({$text: {$search: request.query.text}})
+			.find({ $text: { $search: request.query.text } })
 			.limit(7)
 			.exec( (error, posts) => {
 				if(error || !posts) {

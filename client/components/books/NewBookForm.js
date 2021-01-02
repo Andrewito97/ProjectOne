@@ -26,15 +26,15 @@ const styles = {
 	},
 	titleInput: {
 		marginTop: 30,
-		width: '100%',
+		width: '100%'
 	},
 	authorInput: {
 		marginTop: 30,
-		width: '100%',
+		width: '100%'
 	},
 	genreInput: {
 		marginTop: 30,
-		width: '100%',
+		width: '100%'
 	},
 	descriptionInput: {
 		marginTop: 30,
@@ -47,7 +47,7 @@ const styles = {
 	},
 	imageInput: {
 		display: 'flex',
-		marginTop: 27,
+		marginTop: 27
 	},
 	imageName: {
 		marginTop: 8
@@ -299,7 +299,7 @@ const NewPostForm = (props) => {
 					</Button>
 				</CardActions>
 			</Card>
-			<Backdrop open={isLoading} style={styles.backdrop} >
+			<Backdrop open={isLoading}>
 				<CircularProgress style={{ color: paletteController.backgroundColor }} size={150} thickness={4}/>
 			</Backdrop>
 		</Box>

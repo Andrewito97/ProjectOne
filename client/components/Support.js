@@ -39,7 +39,7 @@ const styles = {
 		width: '100%'
 	},
 	error: {
-		marginLeft: 5,
+		marginLeft: 5
 	},
 	submitButton: {
 		marginTop: 60,

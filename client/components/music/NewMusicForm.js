@@ -30,7 +30,7 @@ const styles = {
 		width: '100%'
 	},
 	selectContainer: {
-		marginTop: 30,
+		marginTop: 30
 	},
 	genreLabel: {
 		marginBottom: 5

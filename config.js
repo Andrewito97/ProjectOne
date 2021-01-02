@@ -9,6 +9,7 @@ const config = {
 	host: process.env.HOST,
 	trackingId: process.env.GOOGLE_ANALYTICS_TRACKING_ID,
 	usersMongoUri: process.env.MONGO_URI_USERS,
+	educationMongoUri: process.env.MONGO_URI_EDUCATION,
 	postsMongoUri: process.env.MONGO_URI_POSTS,
 	musicMongoUri: process.env.MONGO_URI_MUSIC,
 	moviesMongoUri: process.env.MONGO_URI_MOVIES,

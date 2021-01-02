@@ -27,11 +27,11 @@ const styles = {
 	},
 	titleInput: {
 		marginTop: 30,
-		width: '100%',
+		width: '100%'
 	},
 	tagInput: {
 		marginTop: 30,
-		width: '100%',
+		width: '100%'
 	},
 	tagListContainer: {
 		marginTop: 25
@@ -51,7 +51,7 @@ const styles = {
 	},
 	imageInput: {
 		display: 'flex',
-		marginTop: 27,
+		marginTop: 27
 	},
 	imageName: {
 		marginTop: 8

@@ -34,7 +34,7 @@ const styles = {
 		marginTop: 50
 	},
 	movieDate: {
-		color: 'grey',
+		color: 'grey'
 	},
 	deleteIcon: {
 		position: 'absolute',
