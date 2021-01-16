@@ -68,7 +68,7 @@ const styles = {
 	},
 	wrenchButton: {
 		position: 'absolute',
-		right: '11%',
+		right: '12%',
 		zIndex: 5
 	},
 	buildIcon: {

@@ -1,20 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { isMobile } from 'react-device-detect';
+import ReactMarkdown from 'react-markdown';
+import breaks from 'remark-breaks';
 import { Box,
 	Card,
 	CardHeader,
 	CardContent,
 	Typography,
 	TextField,
-	IconButton } from '@material-ui/core';
+	IconButton,
+	Button,
+	Collapse } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import SaveIcon from '@material-ui/icons/Save';
-import DeleteIcon from '@material-ui/icons/Delete';
+import ClearIcon from '@material-ui/icons/Clear';
 import AddIcon from '@material-ui/icons/Add';
 import educationApi from '../../api/education.api';
 import getUserStatus from '../../helpers/getUserStatus.helper';
 import authenticationHelper from '../../helpers/authentication.helper';
+import addWhitespaces from '../../helpers/addWhitespaces.helper';
 import paletteController from '../../PaletteController';
 
 const styles = {
@@ -57,6 +62,7 @@ const styles = {
 	},
 	titleInput: {
 		marginTop: 30,
+		marginLeft: 15,
 		width: '50%'
 	},
 	titleInputButtons: {
@@ -76,6 +82,7 @@ const EducationList = () => {
 	const [ titleError, setTitleError ] = React.useState('');
 	const [ textError, setTextError ] = React.useState('');
 	const [ refreshList, setRefreshList ] = React.useState(false);
+	const [ opened, setOpened ] = React.useState(false);
 
 	React.useEffect( () => {
 		if(getUserStatus() !== 'user') setIsModer(true);
@@ -151,9 +158,37 @@ const EducationList = () => {
 								onChange={ (event) => setIntroduction(event.target.value) }
 							/>
 							:
-							<Typography id='introduction-text' paragraph noWrap style={{ color: paletteController.textColor }}>
-								{introduction}
-							</Typography>
+							<Box>
+								{
+									addWhitespaces(introduction).length < 1000 ?
+										<Typography 
+											id='introduction-text' 
+											component='span' 
+											style={{ color: paletteController.textColor }}
+										>
+											<ReactMarkdown source={addWhitespaces(introduction)} plugins={[breaks]}/>
+										</Typography>
+										:
+										<Box>
+											<Collapse in={opened} collapsedHeight={230}>
+												<Typography 
+													id='introduction-text' 
+													component='span' 
+													style={{ color: paletteController.textColor }}
+												>
+													<ReactMarkdown source={addWhitespaces(introduction)} plugins={[breaks]}/>
+												</Typography>
+											</Collapse>
+											<Button 
+												onClick={() => setOpened(!opened)}
+												style={{color: paletteController.textColor}}
+											>
+												{opened ? 'Collapse...' : 'View more...'}
+											</Button>
+										</Box>
+								}
+							</Box>
+
 					}
 
 					{ textError ? (<Typography id='text-error' color='error'>{textError}</Typography>) : null }
@@ -241,7 +276,7 @@ const EducationList = () => {
 										...styles.titleInputButtons
 									}}
 								>
-									<DeleteIcon/>
+									<ClearIcon/>
 								</IconButton>
 								<br/>
 								{ titleError ? (<Typography id='title-error' color='error'>{titleError}</Typography>) : null }
