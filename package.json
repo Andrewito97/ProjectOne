@@ -5,7 +5,7 @@
   "main": "/server/server.js",
   "scripts": {
     "dev": "nodemon --watch server/ --watch client/ --exec \"webpack && node build/generated.server.js\"",
-    "build": "webpack --mode=production",
+    "build": "set \"NODE_OPTIONS=--max_old_space_size=4096\" && webpack --mode=production",
     "start": "node build/generated.server.js",
     "test": "npx wdio testing/webdriver-io.config.js && %CD%/testing/reports/timeline-report.html",
     "prod": "npm run build && npm start"
@@ -52,7 +52,7 @@
     "ismobilejs": "^1.1.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.27",
-    "node-fetch": "^2.6.0",
+    "node-fetch": "^2.6.1",
     "react": "^16.13.1",
     "react-device-detect": "^1.13.1",
     "react-dom": "^16.13.1",
