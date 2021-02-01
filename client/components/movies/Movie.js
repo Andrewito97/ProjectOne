@@ -56,8 +56,8 @@ const Movie = (props) => {
 				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
-					paddingLeft: isMobile ? '2vw' : 37,
-					paddingRight: isMobile ? '2vw' : 37,
+					paddingLeft: isMobile ? 0 : 50,
+					paddingRight: isMobile ? 0 : 50,
 					...styles.card
 				}}
 			>
@@ -66,42 +66,56 @@ const Movie = (props) => {
 					title={props.movie.title}
 					subheader={props.movie.genre}
 					style={{
+						marginLeft: isMobile ? 20 : null,
+						marginRight: isMobile ? 20 : null,
 						color: paletteController.textColor,
 					}}
 				/>
-				<CardContent>
-					{
-						description.length < 1000 ?
-							<Typography 
-								id='movie-description'
-								component='span'
-								style={{
-									color: paletteController.textColor
-								}}
-							>
-								<ReactMarkdown source={description} plugins={[breaks]}/>  
-							</Typography>
-							:
-							<Box>
-								<Collapse in={opened} collapsedHeight={230}>
-									<Typography 
-										id='movie-description'
-										component='span'
-										style={{
-											color: paletteController.textColor
-										}}
-									>
-										<ReactMarkdown source={description} plugins={[breaks]}/>  
-									</Typography>
-								</Collapse>
-								<Button 
-									onClick={() => setOpened(!opened)}
-									style={{color: paletteController.textColor}}	
+				<CardContent 
+					style={{
+						paddingLeft: isMobile ? 0 : null,
+						paddingRight: isMobile ? 0 : null
+					}}
+				>
+					<Box
+						style={{
+							marginLeft: isMobile ? 20 : null,
+							marginRight: isMobile ? 20 : null
+						}}
+					>
+						{
+							description.length < 1000 ?
+								<Typography 
+									id='movie-description'
+									component='span'
+									style={{
+										color: paletteController.textColor
+									}}
 								>
-									{opened ? 'Collapse...' : 'View more...'}
-								</Button>
-							</Box>
-					}
+									<ReactMarkdown source={description} plugins={[breaks]}/>  
+								</Typography>
+								:
+								<Box>
+									<Collapse in={opened} collapsedHeight={230}>
+										<Typography 
+											id='movie-description'
+											component='span'
+											style={{
+												color: paletteController.textColor
+											}}
+										>
+											<ReactMarkdown source={description} plugins={[breaks]}/>  
+										</Typography>
+									</Collapse>
+									<Button 
+										onClick={() => setOpened(!opened)}
+										style={{color: paletteController.textColor}}	
+									>
+										{opened ? 'Collapse...' : 'View more...'}
+									</Button>
+								</Box>
+						}
+					</Box>
 					<Box id='movie-video'>
 						<ReactPlayer
 							url={'/myapi/movies/video/' + props.movie._id} 
@@ -111,7 +125,13 @@ const Movie = (props) => {
 							controls
 						/>
 					</Box>
-					<Box style={styles.movieFooter}>
+					<Box 
+						style={{
+							marginLeft: isMobile ? 20 : null,
+							marginRight: isMobile ? 20 : null,
+							...styles.movieFooter
+						}}
+					>
 						<Typography id='movie-date' style={styles.movieDate}>
 							{new Date(props.movie.created).toDateString()}
 						</Typography>

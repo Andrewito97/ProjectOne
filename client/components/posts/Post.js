@@ -63,49 +63,63 @@ const Post = (props) => {
 				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
-					paddingLeft: isMobile ? '2vw' : 37,
-					paddingRight: isMobile ? '2vw' : 37,
+					paddingLeft: isMobile ? 0 : 50,
+					paddingRight: isMobile ? 0 : 50,
 					...styles.card
 				}}
 			>
 				<CardHeader
 					id='post-title'
 					title={props.post.title}
-					style={{color: paletteController.textColor}}
+					style={{
+						marginLeft: isMobile ? 20 : null,
+						marginRight: isMobile ? 20 : null,
+						color: paletteController.textColor
+					}}
 				/>
-				<CardContent>
-					{
-						text.length < 1000 ?
-							<Typography 
-								id='post-text'
-								component='span'
-								style={{
-									color: paletteController.textColor,
-								}}
-							>
-								<ReactMarkdown source={text} plugins={[breaks]}/>  
-							</Typography>
-							:
-							<Box>
-								<Collapse in={opened} collapsedHeight={230}>
-									<Typography 
-										id='post-text'
-										component='span'
-										style={{
-											color: paletteController.textColor
-										}}
-									>
-										<ReactMarkdown source={text} plugins={[breaks]}/>  
-									</Typography>
-								</Collapse>
-								<Button 
-									onClick={() => setOpened(!opened)}
-									style={{color: paletteController.textColor}}
+				<CardContent 
+					style={{
+						paddingLeft: isMobile ? 0 : null,
+						paddingRight: isMobile ? 0 : null
+					}}
+				>
+					<Box
+						style={{
+							marginLeft: isMobile ? 20 : null,
+							marginRight: isMobile ? 20 : null
+						}}
+					>
+						{
+							text.length < 1000 ?
+								<Typography 
+									id='post-text'
+									component='span'
+									style={{ color: paletteController.textColor }}
 								>
-									{opened ? 'Collapse...' : 'View more...'}
-								</Button>
-							</Box>
-					}
+									<ReactMarkdown source={text} plugins={[breaks]}/>  
+								</Typography>
+								:
+								<Box>
+									<Collapse in={opened} collapsedHeight={230}>
+										<Typography 
+											id='post-text'
+											component='span'
+											style={{
+												color: paletteController.textColor
+											}}
+										>
+											<ReactMarkdown source={text} plugins={[breaks]}/>  
+										</Typography>
+									</Collapse>
+									<Button 
+										onClick={() => setOpened(!opened)}
+										style={{color: paletteController.textColor}}
+									>
+										{opened ? 'Collapse...' : 'View more...'}
+									</Button>
+								</Box>
+						}
+					</Box>
 					{
 						props.post.image ? 
 							<img
@@ -116,7 +130,13 @@ const Post = (props) => {
 							: 
 							null 
 					}
-					<Box style={styles.tagsContainer}>
+					<Box 
+						style={{
+							marginLeft: isMobile ? 20 : null,
+							marginRight: isMobile ? 20 : null,
+							...styles.tagsContainer
+						}}
+					>
 						{
 							props.post.tags ? props.post.tags.map((tag, index) => (
 								<Typography 
@@ -134,7 +154,13 @@ const Post = (props) => {
 								null
 						}
 					</Box>
-					<Box style={styles.postFooter}>
+					<Box 
+						style={{
+							marginLeft: isMobile ? 20 : null,
+							marginRight: isMobile ? 20 : null,
+							...styles.postFooter
+						}}
+					>
 						<Typography id='post-date' style={styles.postDate}>
 							{new Date(props.post.created).toDateString()}
 						</Typography>

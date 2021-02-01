@@ -32,12 +32,6 @@ const App = () => {
 		//remove server side injected css
 		const jssStyles = document.querySelector('#jss-server-side');
 		if(jssStyles) jssStyles.parentElement.removeChild(jssStyles);
-
-		//remove server side injected chunk scripts
-		const chunkScripts = document.querySelector('#__LOADABLE_REQUIRED_CHUNKS__');
-		const chunkScriptsExt = document.querySelector('#__LOADABLE_REQUIRED_CHUNKS___ext');
-		if(chunkScripts) document.body.removeChild(chunkScripts);
-		if(chunkScriptsExt) document.body.removeChild(chunkScriptsExt);
    
 	}, []);
 

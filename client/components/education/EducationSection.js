@@ -30,7 +30,8 @@ const styles = {
 	card: {
 		marginBottom: 60,
 		paddingTop: 37,
-		paddingBottom: 37
+		paddingBottom: 37,
+		minHeight: 500
 	},
 	titleField: {
 		width: '96%',
@@ -103,29 +104,36 @@ const EducationSection = () => {
 				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
-					paddingLeft: isMobile ? '2vw' : 37,
-					paddingRight: isMobile ? '2vw' : 37,
+					paddingLeft: isMobile ? 5 : 50,
+					paddingRight: isMobile ? 5 : 50,
 					...styles.card
 				}}
 			>
-				{
-					shouldEdit ?
-						<TextField
-							id='section-title-field'
-							variant='outlined'
-							defaultValue={title}
-							style={styles.titleField}
-							onChange={ (event) => setTitle(event.target.value) }
-						/>
-						:
-						<CardHeader
-							id='section-title'
-							title={title}
-							style={{color: paletteController.textColor}}
-						/>
-				}
+				<Box
+					style={{
+						marginLeft: isMobile ? 20 : null,
+						marginRight: isMobile ? 20 : null
+					}}
+				>
+					{
+						shouldEdit ?
+							<TextField
+								id='section-title-field'
+								variant='outlined'
+								defaultValue={title}
+								style={styles.titleField}
+								onChange={ (event) => setTitle(event.target.value) }
+							/>
+							:
+							<CardHeader
+								id='section-title'
+								title={title}
+								style={{color: paletteController.textColor}}
+							/>
+					}
 
-				{ titleError ? (<Typography id='title-error' color='error'>{titleError}</Typography>) : null }
+					{ titleError ? (<Typography id='title-error' color='error'>{titleError}</Typography>) : null }
+				</Box>
 
 				<CardContent>
 					{
@@ -140,7 +148,7 @@ const EducationSection = () => {
 								onChange={ (event) => setText(event.target.value) }
 							/>
 							:
-							<Typography id='section-text' component='span' noWrap style={{ color: paletteController.textColor }}>
+							<Typography id='section-text' component='span' style={{ color: paletteController.textColor }}>
 								<ReactMarkdown source={addWhitespaces(text)} plugins={[breaks]}/>
 							</Typography>
 					}

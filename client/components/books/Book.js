@@ -58,8 +58,8 @@ const Book = (props) => {
 				raised
 				style={{
 					backgroundColor: paletteController.cardColor,
-					paddingLeft: isMobile ? '2vw' : 37,
-					paddingRight: isMobile ? '2vw' : 37,
+					paddingLeft: isMobile ? '2vw' : 50,
+					paddingRight: isMobile ? '2vw' : 50,
 					...styles.card
 				}}
 			>
@@ -67,11 +67,10 @@ const Book = (props) => {
 					id='book-title'
 					title={props.book.title}
 					subheader={
-						<span>
-							<span>{props.book.author}</span>
-							<br/>
-							<span>{props.book.genre}</span>
-						</span>
+						<Box style={{marginTop: 10}}>
+							<Box>{props.book.author}</Box>
+							<Box>{props.book.genre}</Box>
+						</Box>
 					}
 					style={{color: paletteController.textColor}}
 				/>

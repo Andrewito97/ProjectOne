@@ -30,10 +30,10 @@ const styles = {
 		marginBottom: '7%'
 	},
 	card: {
-		marginRight: 10,
-		marginLeft: 10,
-		marginBottom: 10,
-		padding: 50
+		marginBottom: 60,
+		paddingTop: 37,
+		paddingBottom: 37,
+		minHeight: 500
 	},
 	introductionField: {
 		width: '100%'
@@ -133,159 +133,179 @@ const EducationList = () => {
 			<Card 
 				style={{
 					backgroundColor: paletteController.cardColor,
-					paddingLeft: isMobile ? '2vw' : 37,
-					paddingRight: isMobile ? '2vw' : 37,
+					paddingLeft: isMobile ? 0 : 50,
+					paddingRight: isMobile ? 0 : 50,
 					...styles.card
 				}}>
 				<CardHeader		
 					id='introduction-title'
 					title='Introduction'
 					style={{
+						marginLeft: 20,
+						marginRight: 20,
 						color: paletteController.textColor
 					}}
 							
 				/>
-				<CardContent>
-					{
-						shouldEdit ? 
-							<TextField
-								id='introduction-textfield'
-								variant='outlined'
-								defaultValue={introduction}
-								multiline
-								rows='12'
-								style={styles.introductionField}
-								onChange={ (event) => setIntroduction(event.target.value) }
-							/>
-							:
-							<Box>
-								{
-									addWhitespaces(introduction).length < 1000 ?
-										<Typography 
-											id='introduction-text' 
-											component='span' 
-											style={{ color: paletteController.textColor }}
-										>
-											<ReactMarkdown source={addWhitespaces(introduction)} plugins={[breaks]}/>
-										</Typography>
-										:
-										<Box>
-											<Collapse in={opened} collapsedHeight={230}>
-												<Typography 
-													id='introduction-text' 
-													component='span' 
-													style={{ color: paletteController.textColor }}
-												>
-													<ReactMarkdown source={addWhitespaces(introduction)} plugins={[breaks]}/>
-												</Typography>
-											</Collapse>
-											<Button 
-												onClick={() => setOpened(!opened)}
-												style={{color: paletteController.textColor}}
-											>
-												{opened ? 'Collapse...' : 'View more...'}
-											</Button>
-										</Box>
-								}
-							</Box>
-
-					}
-
-					{ textError ? (<Typography id='text-error' color='error'>{textError}</Typography>) : null }
-
-					{
-						isModer ?
-							<Box>	
-								{       
-									shouldEdit ? 
-										<IconButton
-											id='save-changes-button'
-											onClick={updateIntroduction} 
-											size='small'
-											style={{
-												backgroundColor: paletteController.mainColor,
-												...styles.icons
-											}}
-										>
-											<SaveIcon/>
-										</IconButton>
-										:
-										<IconButton
-											id='edit-button'
-											onClick={() => setShouldEdit(true)} 
-											size='small'
-											style={{
-												backgroundColor: paletteController.mainColor,
-												...styles.icons
-											}}
-										>
-											<EditIcon/>
-										</IconButton>
-								}
-								<IconButton
-									id='add-section-button'
-									onClick={() => setShouldAddNewSection(true)} 
-									size='small'
-									style={{
-										backgroundColor: paletteController.mainColor,
-										...styles.icons
-									}}
-								>
-									<AddIcon/>
-								</IconButton>
-							</Box>
-							:
-							null
-					}
-
-					{
-						shouldAddNewSection ?
-							<Box>
+				<CardContent 
+					style={{
+						paddingLeft: isMobile ? 0 : null,
+						paddingRight: isMobile ? 0 : null
+					}}
+				>
+					<Box
+						style={{
+							marginLeft: isMobile ? 20 : null,
+							marginRight: isMobile ? 20 : null
+						}}
+					>
+						{
+							shouldEdit ? 
 								<TextField
-									id='section-title-input'
-									required
-									label='New section title'
+									id='introduction-textfield'
 									variant='outlined'
-									placeholder='Type title...'
-									value={newSectionTitle}
-									style={styles.titleInput}
-									onChange={ 
-										(event) => setNewSectionTitle(event.target.value)
-									}
+									defaultValue={introduction}
+									multiline
+									rows='12'
+									style={styles.introductionField}
+									onChange={ (event) => setIntroduction(event.target.value) }
 								/>
-								<IconButton
-									id='save-section-button'
-									onClick={saveSection} 
-									size='small'
-									style={{
-										backgroundColor: paletteController.mainColor,
-										...styles.titleInputButtons
-									}}
-								>
-									<SaveIcon/>
-								</IconButton>
-								<IconButton
-									id='remove-section-button'
-									size='small'
-									onClick={() => {
-										setNewSectionTitle('');
-										setShouldAddNewSection(false);
-									}} 
-									style={{
-										backgroundColor: paletteController.mainColor,
-										...styles.titleInputButtons
-									}}
-								>
-									<ClearIcon/>
-								</IconButton>
-								<br/>
-								{ titleError ? (<Typography id='title-error' color='error'>{titleError}</Typography>) : null }
-							</Box>
-							:
-							null
-					}
+								:
+								<Box>
+									{
+										addWhitespaces(introduction).length < 1000 ?
+											<Typography 
+												id='introduction-text' 
+												component='span' 
+												style={{ color: paletteController.textColor }}
+											>
+												<ReactMarkdown source={addWhitespaces(introduction)} plugins={[breaks]}/>
+											</Typography>
+											:
+											<Box>
+												<Collapse in={opened} collapsedHeight={230}>
+													<Typography 
+														id='introduction-text' 
+														component='span' 
+														style={{ color: paletteController.textColor }}
+													>
+														<ReactMarkdown source={addWhitespaces(introduction)} plugins={[breaks]}/>
+													</Typography>
+												</Collapse>
+												<Button 
+													onClick={() => setOpened(!opened)}
+													style={{color: paletteController.textColor}}
+												>
+													{opened ? 'Collapse...' : 'View more...'}
+												</Button>
+											</Box>
+									}
+								</Box>
+
+						}
+
+						{ textError ? (<Typography id='text-error' color='error'>{textError}</Typography>) : null }
+
+						{
+							isModer ?
+								<Box>	
+									{       
+										shouldEdit ? 
+											<IconButton
+												id='save-changes-button'
+												onClick={updateIntroduction} 
+												size='small'
+												style={{
+													backgroundColor: paletteController.mainColor,
+													...styles.icons
+												}}
+											>
+												<SaveIcon/>
+											</IconButton>
+											:
+											<IconButton
+												id='edit-button'
+												onClick={() => setShouldEdit(true)} 
+												size='small'
+												style={{
+													backgroundColor: paletteController.mainColor,
+													...styles.icons
+												}}
+											>
+												<EditIcon/>
+											</IconButton>
+									}
+									<IconButton
+										id='add-section-button'
+										onClick={() => setShouldAddNewSection(true)} 
+										size='small'
+										style={{
+											backgroundColor: paletteController.mainColor,
+											...styles.icons
+										}}
+									>
+										<AddIcon/>
+									</IconButton>
+								</Box>
+								:
+								null
+						}
+
+						{
+							shouldAddNewSection ?
+								<Box>
+									<TextField
+										id='section-title-input'
+										required
+										label='New section title'
+										variant='outlined'
+										placeholder='Type title...'
+										value={newSectionTitle}
+										style={styles.titleInput}
+										onChange={ 
+											(event) => setNewSectionTitle(event.target.value)
+										}
+									/>
+									<IconButton
+										id='save-section-button'
+										onClick={saveSection} 
+										size='small'
+										style={{
+											backgroundColor: paletteController.mainColor,
+											...styles.titleInputButtons
+										}}
+									>
+										<SaveIcon/>
+									</IconButton>
+									<IconButton
+										id='remove-section-button'
+										size='small'
+										onClick={() => {
+											setNewSectionTitle('');
+											setShouldAddNewSection(false);
+										}} 
+										style={{
+											backgroundColor: paletteController.mainColor,
+											...styles.titleInputButtons
+										}}
+									>
+										<ClearIcon/>
+									</IconButton>
+									<br/>
+									{ titleError ? (<Typography id='title-error' color='error'>{titleError}</Typography>) : null }
+								</Box>
+								:
+								null
+						}
+					</Box>
 					
-					<Box style={styles.categoriesList}>
+					<Box
+						style={{
+							marginLeft: isMobile ? 50 : null,
+							marginRight: isMobile ? 50 : null,
+							...styles.categoriesList
+						}}
+					>
 						{
 							sections ? sections.map((section, index) => (
 								<Link
