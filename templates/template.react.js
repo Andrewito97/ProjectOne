@@ -10,7 +10,7 @@ function template(markup, css, deviceCheck, trackingId) {
            Also it contains elements of social media.
            The main goal - to share basic knowledge which everyone should know in modern world.
            We hope our platform will help you understand all aspects that interest you and become better.">
-           <title>Karambol - fundamental knowledge</title>
+           <title>Karambol - all you need to know</title>
            <link rel="shortcut icon" href="../client/assets/carambola.png" type="image/png">
            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />  

@@ -45,7 +45,7 @@ const HomePage = (props) => {
 					Karambol is free educational platform. <br/>
 					Also it contains elements of social media. <br/>
 					The main goal - to share basic knowledge which everyone should know in modern world.
-					We hope our platform will help you understand all aspects that interest you and become better.
+					We hope our platform will help you to make right conclusions for the future.
 				</Typography>
 				<Link to='/education'>
 					<Button 
