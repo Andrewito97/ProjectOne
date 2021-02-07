@@ -9,7 +9,7 @@ function template(markup, css, deviceCheck, trackingId) {
            <meta name="description" content="Karambol is free educational platform.
            Also it contains elements of social media.
            The main goal - to share basic knowledge which everyone should know in modern world.
-           We hope our platform will help you understand all aspects that interest you and become better.">
+           We hope our platform will help you to make right conclusions for the future.">
            <title>Karambol - things you need to know</title>
            <link rel="shortcut icon" href="../client/assets/carambola.png" type="image/png">
            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
