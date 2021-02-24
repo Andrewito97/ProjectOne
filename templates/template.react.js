@@ -11,7 +11,7 @@ function template(markup, css, deviceCheck, trackingId) {
            The main goal - to share basic knowledge which everyone should know in modern world.
            We hope our platform will help you to make right conclusions for the future.">
            <title>Karambol - things you need to know</title>
-           <link rel="shortcut icon" href="../client/assets/carambola.png" type="image/png">
+           <link rel="shortcut icon" href="https://game-icons.net/icons/ffffff/000000/1x1/delapouite/carambola.png" type="image/png">
            <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" />
            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />  
            <script type="text/plain" cookie-consent="targeting" src="https://apis.google.com/js/platform.js?onload=init" async defer></script>

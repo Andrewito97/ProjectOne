@@ -38,6 +38,9 @@ const styles = {
 	introductionField: {
 		width: '100%'
 	},
+	introductionText: {
+		maxWidth: '90vw'
+	},
 	categoriesList: {
 		display: 'flex',
 		flexWrap: 'wrap',
@@ -171,7 +174,7 @@ const EducationList = () => {
 									onChange={ (event) => setIntroduction(event.target.value) }
 								/>
 								:
-								<Box>
+								<Box style={styles.introductionText}>
 									{
 										addWhitespaces(introduction).length < 1000 ?
 											<Typography 
