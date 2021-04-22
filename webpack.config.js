@@ -2,6 +2,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const Dotenv = require('dotenv-webpack');
+const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
 
 const serverConfig = {
 	mode: 'development',
@@ -55,8 +56,10 @@ const serverConfig = {
 
 const clientConfig = {
 	mode: 'development',
-	node: {
-		fs: 'empty'
+	resolve: {
+		fallback: {
+		  	fs: false
+		}
 	},
 	devtool: 'eval-source-map',
 	entry: {
@@ -85,7 +88,7 @@ const clientConfig = {
 			use: ['file-loader']
 		}]
 	},
-	plugins: [new Dotenv()]
+	plugins: [new NodePolyfillPlugin(), new Dotenv()]
 };
 
 module.exports = [ clientConfig, serverConfig ];
