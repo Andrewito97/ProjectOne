@@ -1,11 +1,11 @@
 /* eslint-disable no-undef */
 class Movie {
 	get movieTitle() {
-		return $('#movie-title div span:nth-child(1)');
+		return $('#movie-title');
 	}
 
 	get movieGenre() {
-		return $('#movie-title div span:nth-child(2)');
+		return $('#movie-genre');
 	}
 
 	get movieDescription() {

@@ -51,9 +51,8 @@ const Music = (props) => {
 				}}
 			>
 				<CardHeader
-					id='music-title'
-					title={props.music.author}
-					subheader={props.music.genre}
+					title={<Box id='music-author'>{props.music.author}</Box>}
+					subheader={<Box id='music-genre'>{props.music.genre}</Box>}
 					style={{color: paletteController.textColor}}
 				/>
 				<CardContent>

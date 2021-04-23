@@ -69,8 +69,7 @@ const Post = (props) => {
 				}}
 			>
 				<CardHeader
-					id='post-title'
-					title={props.post.title}
+					title={<Box id='post-title'>{props.post.title}</Box>}
 					style={{
 						marginLeft: isMobile ? 20 : null,
 						marginRight: isMobile ? 20 : null,

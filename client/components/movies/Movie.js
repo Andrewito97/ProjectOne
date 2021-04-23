@@ -62,9 +62,8 @@ const Movie = (props) => {
 				}}
 			>
 				<CardHeader
-					id='movie-title'
-					title={props.movie.title}
-					subheader={props.movie.genre}
+					title={<Box id='movie-title'>{props.movie.title}</Box>}
+					subheader={<Box id='movie-genre'>{props.movie.genre}</Box>}
 					style={{
 						marginLeft: isMobile ? 20 : null,
 						marginRight: isMobile ? 20 : null,

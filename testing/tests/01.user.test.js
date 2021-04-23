@@ -36,23 +36,27 @@ describe('Check signup, signin and delete account functionality at standart flow
 		expect(SignupPage.nameError).toHaveText('Name is too short !');
 		expect(SignupPage.emailError).toHaveText('Email is required !');
 		expect(SignupPage.passwordError).toHaveText('Password is required !');
+		browser.execute(() => window.scrollBy(0, -200) );
 		clearInput(SignupPage.nameInput);
 		SignupPage.nameInput.setValue('123456789012345678901');
 		SignupPage.createButton.click();
 		expect(SignupPage.nameError).toHaveText('Name is too long !');
 		expect(SignupPage.emailError).toHaveText('Email is required !');
 		expect(SignupPage.passwordError).toHaveText('Password is required !');
+		browser.execute(() => window.scrollBy(0, -200) );
 		clearInput(SignupPage.nameInput);
 		SignupPage.nameInput.setValue('test');
 		SignupPage.createButton.click();
 		SignupPage.nameError.waitForExist({ reverse: true });
 		expect(SignupPage.emailError).toHaveText('Email is required !');
 		expect(SignupPage.passwordError).toHaveText('Password is required !');
+		browser.execute(() => window.scrollBy(0, -200) );
 		SignupPage.emailInput.setValue('test');
 		SignupPage.createButton.click();
 		SignupPage.nameError.waitForExist({ reverse: true });
 		expect(SignupPage.emailError).toHaveText('Please fill a valid email address !');
 		expect(SignupPage.passwordError).toHaveText('Password is required !');
+		browser.execute(() => window.scrollBy(0, -200) );
 		clearInput(SignupPage.emailInput);
 		SignupPage.emailInput.setValue(config.testNewUserEmail);
 		SignupPage.createButton.click();
@@ -75,7 +79,7 @@ describe('Check signup, signin and delete account functionality at standart flow
 		clearInput(SignupPage.confirmPasswordInput);
 	});
 
-	it('should successfully signup with standart flow valid data', () => {
+	it('should successfully signup with valid data', () => {
 		SignupPage.nameInput.setValue('test');
 		SignupPage.emailInput.setValue(config.testNewUserEmail);
 		SignupPage.passwordInput.setValue(config.testNewUserPassword);
@@ -109,6 +113,7 @@ describe('Check signup, signin and delete account functionality at standart flow
 		LoginPage.emailInput.setValue(config.testNewUserEmail);
 		LoginPage.passwordInput.setValue(config.testNewUserPassword);
 		LoginPage.loginButton.click();
+		TopBar.newsfeedTab.click();
 		expect(NewPostForm.pageTitle).toHaveText('Create your post');
 	});
 
@@ -150,6 +155,7 @@ describe('Check signup, signin and delete account functionality at standart flow
 		ConfirmWindow.confirmButton.click();
 		expect(SuccessWindow.content).toBeDisplayed();
 		SuccessWindow.okButton.click();
+		TopBar.newsfeedTab.click();
 		expect(Post.postTitle).toBeDisplayed();
 	});
 });

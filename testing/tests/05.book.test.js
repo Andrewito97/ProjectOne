@@ -22,7 +22,6 @@ describe('Check book functionality', () => {
 		LoginPage.emailInput.setValue(config.testExistingUserEmail);
 		LoginPage.passwordInput.setValue(config.testExistingUserPassword);
 		LoginPage.loginButton.click();
-		expect(NewBookForm.pageTitle).toHaveText('Create your post');
 		TopBar.booksTab.click();
 		expect(NewBookForm.pageTitle).toHaveText('Add book');
 	});
@@ -37,8 +36,10 @@ describe('Check book functionality', () => {
 		expect(NewBookForm.authorError).toHaveText('Author is required !');
 		expect(NewBookForm.genreError).toHaveText('Genre is required !');
 		expect(NewBookForm.descriptionError).toHaveText('Description is required !');
+		browser.execute(() => window.scrollBy(0, -200) );
 		NewBookForm.titleInput.setValue('Book title');
 		NewBookForm.addBookButton.click();
+		browser.execute(() => window.scrollBy(0, -200) );
 		NewBookForm.titleError.waitForExist({ reverse: true });
 		expect(NewBookForm.authorError).toHaveText('Author is required !');
 		expect(NewBookForm.genreError).toHaveText('Genre is required !');
@@ -51,6 +52,7 @@ describe('Check book functionality', () => {
 		expect(NewBookForm.titleError).toHaveText('Title is required !');
 		expect(NewBookForm.genreError).toHaveText('Genre is required !');
 		expect(NewBookForm.descriptionError).toHaveText('Description is required !');
+		browser.execute(() => window.scrollBy(0, -200) );
 		clearInput(NewBookForm.authorInput);
 		NewBookForm.genreInput.setValue('Book genre');
 		NewBookForm.addBookButton.click();
@@ -58,6 +60,7 @@ describe('Check book functionality', () => {
 		expect(NewBookForm.titleError).toHaveText('Title is required !');
 		expect(NewBookForm.authorError).toHaveText('Author is required !');
 		expect(NewBookForm.descriptionError).toHaveText('Description is required !');
+		browser.execute(() => window.scrollBy(0, -200) );
 		clearInput(NewBookForm.genreInput);
 		NewBookForm.descriptionInput.setValue('Book description');
 		NewBookForm.addBookButton.click();
@@ -65,6 +68,7 @@ describe('Check book functionality', () => {
 		expect(NewBookForm.titleError).toHaveText('Title is required !');
 		expect(NewBookForm.authorError).toHaveText('Author is required !');
 		expect(NewBookForm.genreError).toHaveText('Genre is required !');
+		browser.execute(() => window.scrollBy(0, -200) );
 		clearInput(NewBookForm.descriptionInput);
 	});
 

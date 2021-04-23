@@ -64,12 +64,11 @@ const Book = (props) => {
 				}}
 			>
 				<CardHeader
-					id='book-title'
-					title={props.book.title}
+					title={<Box id='book-title'>{props.book.title}</Box>}
 					subheader={
 						<Box style={{marginTop: 10}}>
-							<Box>{props.book.author}</Box>
-							<Box>{props.book.genre}</Box>
+							<Box id='book-author'>{props.book.author}</Box>
+							<Box id='book-genre'>{props.book.genre}</Box>
 						</Box>
 					}
 					style={{color: paletteController.textColor}}

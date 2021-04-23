@@ -98,7 +98,7 @@ exports.config = {
 	// with `/`, the base url gets prepended, not including the path portion of your baseUrl.
 	// If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
 	// gets prepended directly.
-	baseUrl: 'http://192.168.0.103:3000',
+	baseUrl: 'http://192.168.0.102:3000',
 	//
 	// Default timeout for all waitFor* commands.
 	waitforTimeout: 10000,
@@ -137,7 +137,10 @@ exports.config = {
 	// Test reporter for stdout.
 	// The only one supported by default is 'dot'
 	// see also: https://webdriver.io/docs/dot-reporter.html
-	reporters: ['spec', ['timeline', { outputDir: './testing/reports' }]],
+	reporters: [
+		['spec', { symbols: { passed: '+', failed: '-', skipped: '!' }}], 
+	  	['timeline', { outputDir: './testing/reports' }]
+	],
 	//
 	// Options to be passed to Mocha.
 	// See the full list at http://mochajs.org/

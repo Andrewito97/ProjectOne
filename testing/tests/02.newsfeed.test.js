@@ -22,6 +22,7 @@ describe('Check newsfeed functionality', () => {
 		LoginPage.emailInput.setValue(config.testExistingUserEmail);
 		LoginPage.passwordInput.setValue(config.testExistingUserPassword);
 		LoginPage.loginButton.click();
+		TopBar.newsfeedTab.click();
 		expect(NewPostForm.pageTitle).toHaveText('Create your post');
 	});
 

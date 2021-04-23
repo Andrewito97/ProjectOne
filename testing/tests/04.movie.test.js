@@ -23,7 +23,6 @@ describe('Check movie functionality', () => {
 		LoginPage.emailInput.setValue(config.testExistingUserEmail);
 		LoginPage.passwordInput.setValue(config.testExistingUserPassword);
 		LoginPage.loginButton.click();
-		expect(NewPostForm.pageTitle).toHaveText('Create your post');
 		TopBar.moviesTab.click();
 		expect(NewMovieForm.pageTitle).toHaveText('Add trailer');
 		browser.refresh();
@@ -44,12 +43,14 @@ describe('Check movie functionality', () => {
 		NewMovieForm.titleError.waitForExist({ reverse: true });
 		expect(NewMovieForm.genreError).toHaveText('Genre is required !');
 		expect(NewMovieForm.descriptionError).toHaveText('Description is required !');
+		browser.execute(() => window.scrollBy(0, -200) );
 		clearInput(NewMovieForm.titleInput);
 		NewMovieForm.genreInput.setValue('test genre');
 		NewMovieForm.addVideoButton.click();
 		expect(NewMovieForm.titleError).toHaveText('Title is required !');
 		NewMovieForm.genreError.waitForExist({ reverse: true });
 		expect(NewMovieForm.descriptionError).toHaveText('Description is required !');
+		browser.execute(() => window.scrollBy(0, -200) );
 		clearInput(NewMovieForm.genreInput);
 		NewMovieForm.descriptionInput.setValue('test description');
 		NewMovieForm.addVideoButton.click();
@@ -67,6 +68,7 @@ describe('Check movie functionality', () => {
 		uploadFile(NewMovieForm.hiddenVideoInput, '../assets/videos/trailer.mp4');
 		NewMovieForm.addVideoButton.click();
 		Movie.movieTitle.waitForDisplayed();
+		browser.execute(() => window.scrollBy(0, -200) );
 		expect(Movie.movieTitle).toBeDisplayed();
 		expect(Movie.movieTitle).toHaveText('Movie title');
 		expect(Movie.movieGenre).toBeDisplayed();

@@ -1,11 +1,11 @@
 /* eslint-disable no-undef */
 class Music {
 	get musicAuthor() {
-		return $('#music-title div span:nth-child(1)');
+		return $('#music-author');
 	}
 
 	get musicGenre() {
-		return $('#music-title div span:nth-child(2)');
+		return $('#music-genre');
 	}
 
 	get audioName() {

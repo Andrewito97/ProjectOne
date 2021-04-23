@@ -23,7 +23,6 @@ describe('Check music functionality', () => {
 		LoginPage.emailInput.setValue(config.testExistingUserEmail);
 		LoginPage.passwordInput.setValue(config.testExistingUserPassword);
 		LoginPage.loginButton.click();
-		expect(NewPostForm.pageTitle).toHaveText('Create your post');
 		TopBar.musicTab.click();
 		expect(NewMusicForm.pageTitle).toHaveText('Add music');
 		browser.refresh();

@@ -1,15 +1,15 @@
 /* eslint-disable no-undef */
 class Book {
 	get bookTitle() {
-		return $('#book-title div span:nth-child(1)');
+		return $('#book-title');
 	}
 
 	get bookAuthor() {
-		return $('#book-title div span:nth-child(2) > span span:nth-child(1)');
+		return $('#book-author');
 	}
 
 	get bookGenre() {
-		return $('#book-title div span:nth-child(2) > span span:nth-child(3)');
+		return $('#book-genre');
 	}
 
 	get bookDescription() {
