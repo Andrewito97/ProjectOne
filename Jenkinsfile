@@ -13,7 +13,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                bat 'npm test:jenkins'
+                bat 'npm run test:jenkins'
             }
         }
     }
