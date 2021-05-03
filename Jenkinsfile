@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Pull changes') {
             steps {
-                git clone 'https://github.com/AndrewLebowski/ProjectOne.git'
+                bat 'git clone https://github.com/AndrewLebowski/ProjectOne.git'
             }
         }
         stage('Build') {
