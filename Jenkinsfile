@@ -9,14 +9,30 @@ pipeline {
         }
         stage('Build') {
             steps {
-                bat 'npm install'
-                echo 'Start app in background...'
-                bat 'scripts/start-in-background.js'
+                dir('ProjectOne') 
+                {
+                    bat 'npm install'
+                    bat "copy D:\\Andrew\\Projects\\ProjectOne\\.env %CD%\\.env"
+                    bat 'webpack --mode=development'
+                    echo 'Start app in background...'
+                    bat '%CD%/scripts/start-in-background.js'
+                }
             }
         }
         stage('Test') {
             steps {
-                bat 'npm test'
+                dir('ProjectOne')
+                {
+                    bat 'npm test'
+                }
+            }
+        }
+    }
+    post {
+        always {
+            dir('ProjectOne')
+            {
+                deleteDir()
             }
         }
     }

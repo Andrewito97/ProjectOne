@@ -98,7 +98,7 @@ exports.config = {
 	// with `/`, the base url gets prepended, not including the path portion of your baseUrl.
 	// If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
 	// gets prepended directly.
-	baseUrl: 'http://192.168.0.102:3000',
+	baseUrl: 'http://192.168.0.104:3000',
 	//
 	// Default timeout for all waitFor* commands.
 	waitforTimeout: 10000,
