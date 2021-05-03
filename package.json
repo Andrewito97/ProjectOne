@@ -8,6 +8,7 @@
     "build": "set \"NODE_OPTIONS=--max_old_space_size=4096\" && webpack --mode=production",
     "start": "node build/generated.server.js",
     "test": "npx wdio testing/webdriver-io.config.js & %CD%/testing/reports/timeline-report.html",
+    "test:jenkins": "npx wdio testing/webdriver-io.config.js",
     "prod": "npm run build && npm start"
   },
   "repository": {

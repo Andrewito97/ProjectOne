@@ -13,13 +13,8 @@ pipeline {
         }
         stage('Test') {
             steps {
-                bat 'npm test'
+                bat 'npm test:jenkins'
             }
-        }
-    }
-    post {
-        always {
-            deleteDir()
         }
     }
 }
