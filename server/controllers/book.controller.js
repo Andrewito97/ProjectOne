@@ -15,7 +15,7 @@ const connection = mongoose.createConnection(config.booksMongoUri, {
 const Book = connection.model('Book', BookSchema);
 
 connection.once('open', function () {
-	console.log('Connected to db with books documents !');
+	console.log('\x1b[32m', 'Connected to db with books documents !');
 });
 
 connection.on('error', (error) => {

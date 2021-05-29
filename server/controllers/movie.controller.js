@@ -18,7 +18,7 @@ const Movie = connection.model('Movie', MovieSchema);
 let gridFSBucket = null;
 connection.once('open', function () {
 	gridFSBucket = new mongoose.mongo.GridFSBucket(connection.db);
-	console.log('Connected to db with movies documents !');
+	console.log( '\x1b[32m', 'Connected to db with movies documents !');
 });
 
 connection.on('error', (error) => {

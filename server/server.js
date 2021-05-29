@@ -4,7 +4,7 @@ import fs from 'fs';
 import http from 'http';
 import https from 'https';
 import path from 'path';
-import bodyParser from 'body-parser';
+import { json, urlencoded } from 'body-parser';
 import cookieParser from 'cookie-parser';
 import compress from 'compression';
 import cors from 'cors';
@@ -36,8 +36,8 @@ import isMobile from 'ismobilejs';
 const app = express();
 
 //parse body params and attache them to req.body
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(json());
+app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(compress());
 
@@ -86,7 +86,8 @@ app.get('*', (request, response) => {
 if(config.nodeEnv === 'development') {
 	const httpServer = http.createServer(app);
 	httpServer.listen(config.port, () => {
-		console.log(`Server is running on port ${config.port} in ${config.nodeEnv} mode...`);
+		console.log('\x1b[36m', `Launching mode: ${config.nodeEnv}`);
+		console.log('\x1b[36m', `Server is running on url: http://${config.host}:${config.port}`);
 	});
 } else {
 	//read credentials for enabling secure connection
@@ -95,6 +96,7 @@ if(config.nodeEnv === 'development') {
 	const credentials = { key: privateKey, cert: certificate };
 	const httpsServer = https.createServer(credentials, app);
 	httpsServer.listen(config.securePort, () => {
-		console.log(`Server is running on secure port ${config.securePort} in ${config.nodeEnv} mode...`);
+		console.log(`Launching mode: ${config.nodeEnv}`);
+		console.log(`Server is running on url: http://${config.host}:${config.securePort}`);
 	});
 }

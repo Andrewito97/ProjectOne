@@ -18,7 +18,7 @@ const Music = connection.model('Music', MusicSchema);
 let gridFSBucket = null;
 connection.once('open', function () {
 	gridFSBucket = new mongoose.mongo.GridFSBucket(connection.db);
-	console.log('Connected to db with music documents !');
+	console.log('\x1b[32m', 'Connected to db with music documents !');
 });
 
 connection.on('error', (error) => {

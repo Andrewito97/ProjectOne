@@ -1,7 +1,6 @@
-/* eslint-disable linebreak-style */
-/* eslint-disable no-undef */
-const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
 require('@babel/register');
+const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
+import getDomain from '../client/helpers/getDomain.helper';
 
 exports.config = {
 	//
@@ -98,7 +97,7 @@ exports.config = {
 	// with `/`, the base url gets prepended, not including the path portion of your baseUrl.
 	// If your `url` parameter starts without a scheme or `/` (like `some/path`), the base url
 	// gets prepended directly.
-	baseUrl: 'http://192.168.0.104:3000',
+	baseUrl: getDomain(),
 	//
 	// Default timeout for all waitFor* commands.
 	waitforTimeout: 10000,

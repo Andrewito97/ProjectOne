@@ -18,7 +18,7 @@ const connection = mongoose.createConnection(config.usersMongoUri, {
 const User = connection.model('User', UserSchema);
 
 connection.once('open', function () {
-	console.log('Connected to db with users documents !');
+	console.log('\x1b[32m', 'Connected to db with users documents !');
 });
 
 connection.on('error', (error) => {

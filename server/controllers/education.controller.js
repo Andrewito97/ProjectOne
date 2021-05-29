@@ -16,7 +16,7 @@ const connection = mongoose.createConnection(config.educationMongoUri, {
 const Education = connection.model('Education', EducationSchema);
 
 connection.once('open', function () {
-	console.log('Connected to db with education documents !');
+	console.log('\x1b[32m', 'Connected to db with education documents !');
 });
 
 connection.on('error', (error) => {

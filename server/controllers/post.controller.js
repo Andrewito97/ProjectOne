@@ -15,7 +15,7 @@ const connection = mongoose.createConnection(config.postsMongoUri, {
 const Post = connection.model('Post', PostSchema);
 
 connection.once('open', function () {
-	console.log('Connected to db with newsfeed documents !');
+	console.log('\x1b[32m', 'Connected to db with newsfeed documents !');
 });
 
 connection.on('error', (error) => {
