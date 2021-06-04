@@ -26,25 +26,23 @@ const MusicList = () => {
 	const [ skip, setSkip ] = React.useState(0);
 	const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
 	const [ audioToPlay, setAudioToPlay ] = React.useState([{}]);
-
+		
 	React.useEffect(() => {
-		const controller = new window.AbortController();
-		const signal = controller.signal;
-		if(cookieHelper.getCookie('OneProjectMusic')) {
-			setGenre(cookieHelper.getCookie('OneProjectMusic'));
-			loadMusic(cookieHelper.getCookie('OneProjectMusic'), signal);
-		} else {
-			setGenre('All');
-			loadMusic('All', signal);
-		}
-		return function cleanup() {
-			controller.abort();
-		};
+		setData();
 	}, [skip]);
 
-	const loadMusic = async (genre, signal) => {
-		let data = await musicApi.listMusic(genre, skip, signal);
-		if(data === undefined) return;
+	const setData = () => {
+		if(cookieHelper.getCookie('OneProjectMusic')) {
+			setGenre(cookieHelper.getCookie('OneProjectMusic'));
+			loadMusic(cookieHelper.getCookie('OneProjectMusic'));
+		} else {
+			setGenre('All');
+			loadMusic('All');
+		};
+	};
+
+	const loadMusic = async (genre) => {
+		let data = await musicApi.listMusic(genre, skip);
 		if(data.error) {
 			console.log(data.error);
 		} 
@@ -52,8 +50,8 @@ const MusicList = () => {
 			setMusic([...music, ...data]);
 			if(data.length === 0) {
 				setShouldLoadMore(false);
-			}
-		}
+			};
+		};
 	};
 
 	const updateMusicList = (item) => {

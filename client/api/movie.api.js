@@ -20,10 +20,9 @@ const movieApi = {
 			console.log(error);
 		}
 	},
-	async listMovies(skip, signal) {
+	async listMovies(skip) {
 		try {
 			const response = await fetch(`${domain}/myapi/movies?skip=${skip}`, {
-				signal: signal,
 				method: 'GET',
 			});
 			return response.json();

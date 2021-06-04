@@ -24,25 +24,19 @@ const MoviesList = () => {
 	const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
 
 	React.useEffect(() => {
-		const controller = new window.AbortController();
-		const signal = controller.signal;
-		loadMovies(signal);
-		return function cleanup() {
-			controller.abort();
-		};
+		loadMovies();
 	}, [skip]);
 
-	const loadMovies = async (signal) => {
-		let data = await movieApi.listMovies(skip, signal);
-		if(data === undefined) return;
+	const loadMovies = async () => {
+		let data = await movieApi.listMovies(skip);
 		if(data.error) {
 			console.log(data.error);
 		} else {
 			setMovies([...movies, ...data]);
 			if(data.length === 0) {
 				setShouldLoadMore(false);
-			}
-		}
+			};
+		};
 	};
 
 	const updateMoviesList = (item) => {

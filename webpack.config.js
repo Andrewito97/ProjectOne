@@ -2,7 +2,7 @@
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 const Dotenv = require('dotenv-webpack');
-const NodePolyfillPlugin = require("node-polyfill-webpack-plugin")
+const NodePolyfillPlugin = require('node-polyfill-webpack-plugin');
 
 const serverConfig = {
 	mode: 'development',
@@ -58,7 +58,7 @@ const clientConfig = {
 	mode: 'development',
 	resolve: {
 		fallback: {
-		  	fs: false
+			fs: false
 		}
 	},
 	devtool: 'eval-source-map',

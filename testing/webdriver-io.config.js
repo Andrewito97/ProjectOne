@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 require('@babel/register');
 const { TimelineService } = require('wdio-timeline-reporter/timeline-service');
 import getDomain from '../client/helpers/getDomain.helper';
@@ -138,7 +139,7 @@ exports.config = {
 	// see also: https://webdriver.io/docs/dot-reporter.html
 	reporters: [
 		['spec', { symbols: { passed: '+', failed: '-', skipped: '!' }}], 
-	  	['timeline', { outputDir: './testing/reports' }]
+		['timeline', { outputDir: './testing/reports' }]
 	],
 	//
 	// Options to be passed to Mocha.

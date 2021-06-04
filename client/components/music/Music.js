@@ -19,7 +19,8 @@ const styles = {
 		paddingBottom: 37
 	},
 	tracksContainer: {
-		width: '85vmin'
+		marginLeft: 7,
+		width: '85vw'
 	},
 	musicFooter: {
 		position: 'relative',

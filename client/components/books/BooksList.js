@@ -13,7 +13,7 @@ const styles = {
 	container: {
 		width: 850,
 		minHeight: '110vh',
-		marginTop: '3%',
+		marginTop: '10%',
 		marginBottom: '7%'
 	}
 };
@@ -24,25 +24,19 @@ const BooksList = () => {
 	const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
 
 	React.useEffect(() => {
-		const controller = new window.AbortController();
-		const signal = controller.signal;
-		loadBooks(signal);
-		return function cleanup() {
-			controller.abort();
-		};
+		loadBooks();
 	}, [skip]);
 
-	const loadBooks = async (signal) => {
-		let data = await bookApi.listBooks(skip, signal);
-		if(data === undefined) return;
+	const loadBooks = async () => {
+		let data = await bookApi.listBooks(skip);
 		if(data.error) {
 			console.log(data.error);
 		} else {
 			setBooks([...books, ...data]);
 			if(data.length === 0) {
 				setShouldLoadMore(false);
-			}
-		}
+			};
+		};
 	};
 
 	const updateBooks = (item) => {

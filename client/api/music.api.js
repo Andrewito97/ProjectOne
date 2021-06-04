@@ -20,10 +20,9 @@ const musicApi = {
 			console.log(error);
 		}
 	},
-	async listMusic(genre, skip, signal) {
+	async listMusic(genre, skip) {
 		try {
 			const response = await fetch(`${domain}/myapi/music?genre=${genre}&skip=${skip}`, {
-				signal: signal,
 				method: 'GET',
 			});
 			return response.json();

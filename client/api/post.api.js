@@ -20,10 +20,9 @@ const postApi = {
 			console.log(error);
 		}
 	},
-	async listNewsFeed(skip, signal) {
+	async listNewsFeed(skip) {
 		try {
 			const response = await fetch(`${domain}/myapi/newsfeed?skip=${skip}`, {
-				signal: signal,
 				method: 'GET',
 			});
 			return response.json();

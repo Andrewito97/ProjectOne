@@ -20,10 +20,9 @@ const bookApi = {
 			console.log(error);
 		}
 	},
-	async listBooks(skip, signal) {
+	async listBooks(skip) {
 		try {
 			const response = await fetch(`${domain}/myapi/books?skip=${skip}`, {
-				signal: signal,
 				method: 'GET',
 			});
 			return response.json();

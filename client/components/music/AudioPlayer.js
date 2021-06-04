@@ -30,7 +30,7 @@ const styles = {
 	},
 	playRail: {
 		position: 'relative',
-		width: '80%'
+		width: '100%'
 	},
 	playProgress:{
 		height: 34, 
