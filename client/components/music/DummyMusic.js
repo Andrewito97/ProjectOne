@@ -54,52 +54,27 @@ const DummyMusic = () => {
 	const fakeTrack =
     <Skeleton style={{backgroundColor: paletteController.additionalColor}} animation='wave' height={40} width='100%' variant='rect'/>; 
 
+	const fakeAudio = (
+	<Box style={styles.dummySong}>
+		{fakeTrackName}
+		<Box style={styles.dummyTrack}>
+			<PlayArrowIcon style={{color: paletteController.backgroundColor, ...styles.dummyPlayIcon}}/>
+			<VolumeUpIcon style={{color: paletteController.backgroundColor, ...styles.dummyVolumeIcon}}/>
+			{fakeTrack}
+		</Box>
+	</Box>)
+
 	return (
 		<Box style={styles.container}>
 			<Box style={styles.dummyTitle}>
 				{fakeAuthor}
 				{fakeGenre}
 			</Box>
-			<Box style={styles.dummySong}>
-				{fakeTrackName}
-				<Box style={styles.dummyTrack}>
-					<PlayArrowIcon style={{color: paletteController.backgroundColor, ...styles.dummyPlayIcon}}/>
-					<VolumeUpIcon style={{color: paletteController.backgroundColor, ...styles.dummyVolumeIcon}}/>
-					{fakeTrack}
-				</Box>
-			</Box>
-			<Box style={styles.dummySong}>
-				{fakeTrackName}
-				<Box style={styles.dummyTrack}>
-					<PlayArrowIcon style={{color: paletteController.backgroundColor, ...styles.dummyPlayIcon}}/>
-					<VolumeUpIcon style={{color: paletteController.backgroundColor, ...styles.dummyVolumeIcon}}/>
-					{fakeTrack}
-				</Box>
-			</Box>
-			<Box style={styles.dummySong}>
-				{fakeTrackName}
-				<Box style={styles.dummyTrack}>
-					<PlayArrowIcon style={{color: paletteController.backgroundColor, ...styles.dummyPlayIcon}}/>
-					<VolumeUpIcon style={{color: paletteController.backgroundColor, ...styles.dummyVolumeIcon}}/>
-					{fakeTrack}
-				</Box>
-			</Box>
-			<Box style={styles.dummySong}>
-				{fakeTrackName}
-				<Box style={styles.dummyTrack}>
-					<PlayArrowIcon style={{color: paletteController.backgroundColor, ...styles.dummyPlayIcon}}/>
-					<VolumeUpIcon style={{color: paletteController.backgroundColor, ...styles.dummyVolumeIcon}}/>
-					{fakeTrack}
-				</Box>
-			</Box>
-			<Box style={styles.dummySong}>
-				{fakeTrackName}
-				<Box style={styles.dummyTrack}>
-					<PlayArrowIcon style={{color: paletteController.backgroundColor, ...styles.dummyPlayIcon}}/>
-					<VolumeUpIcon style={{color: paletteController.backgroundColor, ...styles.dummyVolumeIcon}}/>
-					{fakeTrack}
-				</Box>
-			</Box>
+			{fakeAudio}
+			{fakeAudio}
+			{fakeAudio}
+			{fakeAudio}
+			{fakeAudio}
 		</Box>
 	);
 };

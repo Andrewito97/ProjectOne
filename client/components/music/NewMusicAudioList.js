@@ -47,7 +47,7 @@ const AudioList = (props) => {
 		<List>
 			{
 				props.audios ? props.audios.map( (item, i) => (
-					<ListItem style={styles.audioNameContainer} button key={i}>
+					<ListItem style={styles.audioNameContainer} button key={item._id}>
 						{   
 							props.audioNames[i].shouldEdit ?
 								<TextField

@@ -140,7 +140,7 @@ const Searchbar = (props) => {
 						:
 						items.map((item, index) => {
 							return (
-								<Link to={`/${props.activeTab}/${item._id}`} replace key={index}>
+								<Link to={`/${props.activeTab}/${item._id}`} replace key={item._id}>
 									<ListItem id={'search-result-' + (index + 1)} button>
 										<ListItemText style={{color: paletteController.textColor}}>
 											{props.activeTab === 'home' ? null : null}

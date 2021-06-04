@@ -62,7 +62,7 @@ const BooksList = () => {
 					paddingLeft: isMobile ? 0 : 10
 				}}
 			>
-				{ books.length === 0 ? <DummyBook/> : books.map( (item, index) => <Book book={item} key={index}/> ) }
+				{ books.length === 0 ? <DummyBook/> : books.map( item => <Book book={item} key={item._id}/> ) }
 			</InfiniteScroll>
 		</Box>
 	);

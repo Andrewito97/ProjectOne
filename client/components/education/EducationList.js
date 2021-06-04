@@ -310,9 +310,9 @@ const EducationList = () => {
 						}}
 					>
 						{
-							sections ? sections.map((section, index) => (
+							sections ? sections.map( section => (
 								<Link
-									key={index}
+									key={section._id}
 									to={'/education/' + section.title} 
 									style={{borderColor: paletteController.textColor, ...styles.category}}
 								>

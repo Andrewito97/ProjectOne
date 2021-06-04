@@ -102,8 +102,8 @@ const MusicList = () => {
 					music.length === 0 ? 
 						<DummyMusic/> 
 						:
-						music.map( (item, index) => (
-							<Music music={item} key={index} handleAutoplay={handleAutoplay} audioToPlay={audioToPlay}/> 
+						music.map( item => (
+							<Music music={item} key={item._id} handleAutoplay={handleAutoplay} audioToPlay={audioToPlay}/> 
 						)) 
 				}
 			</InfiniteScroll>

@@ -62,7 +62,7 @@ const MoviesList = () => {
 					paddingLeft: isMobile ? 0 : 10
 				}}
 			>
-				{ movies.length === 0 ? <DummyMovie/> : movies.map( (item, index) => <Movie movie={item} key={index}/> ) }
+				{ movies.length === 0 ? <DummyMovie/> : movies.map( item => <Movie movie={item} key={item._id}/> ) }
 			</InfiniteScroll>
 		</Box>
 	);

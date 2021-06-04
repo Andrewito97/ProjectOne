@@ -62,7 +62,7 @@ const NewsFeedList = () => {
 					paddingLeft: isMobile ? 0 : 10
 				}}
 			>
-				{ posts.length === 0 ? <DummyPost/> : posts.map( (item, index) => <Post post={item} key={index}/> ) }
+				{ posts.length === 0 ? <DummyPost/> : posts.map( item => <Post post={item} key={item._id}/> ) }
 			</InfiniteScroll>
 		</Box>
 	);

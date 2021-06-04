@@ -141,8 +141,8 @@ const UserList = () => {
 				<Divider style={{backgroundColor: paletteController.textColor}}/>
 				<List>
 					{
-						users[pageNumber - 1] ? users[pageNumber - 1].map((user, index) => (
-							<ListItem button key={index}>
+						users[pageNumber - 1] ? users[pageNumber - 1].map( user => (
+							<ListItem button key={user._id}>
 								<Tooltip title={user.name} placement='top'>
 									<Typography noWrap style={{color: paletteController.textColor, ...styles.userListItemName}}>                                        
 										{user.name}                                       

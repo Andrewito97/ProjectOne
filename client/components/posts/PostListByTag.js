@@ -34,7 +34,7 @@ const PostListByTag = () => {
 
 	return (
 		<Box style={styles.container}>
-			{ posts.length === 0 ? <DummyPost/> : posts.map( (item, index) => <Post post={item} key={index}/> ) }
+			{ posts.length === 0 ? <DummyPost/> : posts.map( item => <Post post={item} key={item._id}/> ) }
 		</Box>
 	);
 };

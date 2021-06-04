@@ -147,10 +147,10 @@ const ProfileTabs = () => {
 				<Tab id='profile-books-tab' label='Books'/>
 			</Tabs>
 			{
-				value === 0 ? posts.map( (item, index) => (
+				value === 0 ? posts.map( item => (
 					<Post 
 						post={item} 
-						key={index} 
+						key={item._id} 
 						isProfile
 						deletePost={deletePost}
 					/>
@@ -159,10 +159,10 @@ const ProfileTabs = () => {
 					null
 			}
 			{
-				value === 1 ? music.map( (item, index) => (
+				value === 1 ? music.map( item => (
 					<Music 
 						music={item} 
-						key={index} 
+						key={item._id} 
 						isProfile
 						deleteMusic={deleteMusic}
 					/>
@@ -171,10 +171,10 @@ const ProfileTabs = () => {
 					null
 			}
 			{
-				value === 2 ? movies.map( (item, index) => (
+				value === 2 ? movies.map( item => (
 					<Movie 
 						movie={item} 
-						key={index} 
+						key={item._id} 
 						isProfile
 						deleteMovie={deleteMovie}
 					/>
@@ -183,10 +183,10 @@ const ProfileTabs = () => {
 					null
 			}
 			{
-				value === 3 ? books.map( (item, index) => (
+				value === 3 ? books.map( item => (
 					<Book
 						book={item}
-						key={index}
+						key={item._id}
 						isProfile
 						deleteBook={deleteBook}
 					/>

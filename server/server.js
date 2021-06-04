@@ -96,7 +96,7 @@ if(config.nodeEnv === 'development') {
 	const credentials = { key: privateKey, cert: certificate };
 	const httpsServer = https.createServer(credentials, app);
 	httpsServer.listen(config.securePort, () => {
-		console.log(`Launching mode: ${config.nodeEnv}`);
-		console.log(`Server is running on url: http://${config.host}:${config.securePort}`);
+		console.log('\x1b[36m', `Launching mode: ${config.nodeEnv}`);
+		console.log('\x1b[36m', `Server is running on url: https://${config.host}:${config.securePort}`);
 	});
 }

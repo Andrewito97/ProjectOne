@@ -61,7 +61,7 @@ const Music = (props) => {
 						{ 
 							props.music.audios.map((name, index) => (
 								<AudioPlayer 
-									key={index}
+									key={name + index}
 									musicId={props.music._id}
 									audioName={name}
 									handleAutoplay={props.handleAutoplay}
