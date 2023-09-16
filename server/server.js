@@ -63,40 +63,40 @@ app.use('/', otherApi);
 
 //sending template with ssr markup, css and bundeled client code at every endpoint
 app.get('*', (request, response) => {
-	const deviceCheck = isMobile(request.headers['user-agent']).any;
-	const palette = request.cookies.OneProjectPalette;
-	if(palette) {
-		paletteController.choosePalette(palette);
-	} else {
-		paletteController.choosePalette('dark blue');
-	}
-	const sheets = new ServerStyleSheets();
-	const markup = ReactDOMServer.renderToString(
-		sheets.collect(
-			<StaticRouter location={request.url}>
-				<RootComponent isMobile={deviceCheck} palette={palette}/>
-			</StaticRouter>
-		)
-	);
-	const css = sheets.toString();
-	response.send( template(markup, css, deviceCheck, config.trackingId) );
+  const deviceCheck = isMobile(request.headers['user-agent']).any;
+  const palette = request.cookies.OneProjectPalette;
+  if(palette) {
+    paletteController.choosePalette(palette);
+  } else {
+    paletteController.choosePalette('dark blue');
+  }
+  const sheets = new ServerStyleSheets();
+  const markup = ReactDOMServer.renderToString(
+    sheets.collect(
+      <StaticRouter location={request.url}>
+        <RootComponent isMobile={deviceCheck} palette={palette}/>
+      </StaticRouter>
+    )
+  );
+  const css = sheets.toString();
+  response.send( template(markup, css, deviceCheck, config.trackingId) );
 });
 
 //select a server depending on the environment  
 if(config.nodeEnv === 'development') {
-	const httpServer = http.createServer(app);
-	httpServer.listen(config.port, () => {
-		console.log('\x1b[36m', `Launching mode: ${config.nodeEnv}`);
-		console.log('\x1b[36m', `Server is running on url: http://${config.host}:${config.port}`);
-	});
+  const httpServer = http.createServer(app);
+  httpServer.listen(config.port, () => {
+    console.log('\x1b[36m', `Launching mode: ${config.nodeEnv}`);
+    console.log('\x1b[36m', `Server is running on url: http://${config.host}:${config.port}`);
+  });
 } else {
-	//read credentials for enabling secure connection
-	const privateKey  = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.key'), 'utf8');
-	const certificate = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.cert'), 'utf8');
-	const credentials = { key: privateKey, cert: certificate };
-	const httpsServer = https.createServer(credentials, app);
-	httpsServer.listen(config.securePort, () => {
-		console.log('\x1b[36m', `Launching mode: ${config.nodeEnv}`);
-		console.log('\x1b[36m', `Server is running on url: https://${config.host}:${config.securePort}`);
-	});
+  //read credentials for enabling secure connection
+  const privateKey  = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.key'), 'utf8');
+  const certificate = fs.readFileSync(path.join(CURRENT_WORKING_DIR, './certificates/root.cert'), 'utf8');
+  const credentials = { key: privateKey, cert: certificate };
+  const httpsServer = https.createServer(credentials, app);
+  httpsServer.listen(config.securePort, () => {
+    console.log('\x1b[36m', `Launching mode: ${config.nodeEnv}`);
+    console.log('\x1b[36m', `Server is running on url: https://${config.host}:${config.securePort}`);
+  });
 }

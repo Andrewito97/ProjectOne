@@ -6,165 +6,165 @@ import config from '../../config';
 
 //create connection to specific database
 const connection = mongoose.createConnection(config.postsMongoUri, {
-	useNewUrlParser: true, 
-	useUnifiedTopology: true,
-	useCreateIndex: true
+  useNewUrlParser: true, 
+  useUnifiedTopology: true,
+  useCreateIndex: true
 });
 
 //append specifid schema to the connection and initialize constructor
 const Post = connection.model('Post', PostSchema);
 
 connection.once('open', function () {
-	console.log('\x1b[32m', 'Connected to db with newsfeed documents !');
+  console.log('\x1b[32m', 'Connected to db with newsfeed documents !');
 });
 
 connection.on('error', (error) => {
-	console.error('Unable to connect to database with newsfeed documents!');
-	console.error(`Reason: ${error}`);
+  console.error('Unable to connect to database with newsfeed documents!');
+  console.error(`Reason: ${error}`);
 });
 
 const postController = {
-	create(request, response) {
-		let form = new formidable.IncomingForm();
-		form.keepExtensions = true;
-		form.parse(request, (error, fields, files) => {
-			if(error) {
-				return response.status(400).json({
-					errorMessage: 'Image could not be uploaded !'
-				});
-			}
-			let tags = JSON.parse(fields.tags);
-			fields.tags = tags;
-			let post = new Post(fields);
+  create(request, response) {
+    let form = new formidable.IncomingForm();
+    form.keepExtensions = true;
+    form.parse(request, (error, fields, files) => {
+      if(error) {
+        return response.status(400).json({
+          errorMessage: 'Image could not be uploaded !'
+        });
+      }
+      let tags = JSON.parse(fields.tags);
+      fields.tags = tags;
+      let post = new Post(fields);
 			
-			if(files.image) {
-				post.image.data = fs.readFileSync(files.image.path);
-				post.image.contentType = files.image.type;
-			}
-			post.save((error, result) => {
-				if(error) {
-					return response.status(400).json({
-						error
-					});
-				} else {
-					return response.status(201).json({
-						success: result
-					});
-				}  
-			});
-		});
-	},
+      if(files.image) {
+        post.image.data = fs.readFileSync(files.image.path);
+        post.image.contentType = files.image.type;
+      }
+      post.save((error, result) => {
+        if(error) {
+          return response.status(400).json({
+            error
+          });
+        } else {
+          return response.status(201).json({
+            success: result
+          });
+        }  
+      });
+    });
+  },
 
-	listNewsFeed(request, response) {
-		Post
-			.find()
-			.skip(Number(request.query.skip))
-			.limit(5)
-			.sort('-created')
-			.exec( (error, posts) => {
-				if(error) {
-					return response.status(400).json({
-						error
-					});
-				}
-				response.json(posts);
-			});
-	},
+  listNewsFeed(request, response) {
+    Post
+      .find()
+      .skip(Number(request.query.skip))
+      .limit(5)
+      .sort('-created')
+      .exec( (error, posts) => {
+        if(error) {
+          return response.status(400).json({
+            error
+          });
+        }
+        response.json(posts);
+      });
+  },
 
-	listUserNewsFeed(request, response) {
-		Post
-			.find({ postedBy: request.profile._id })
-			.sort('-created')
-			.exec( (error, posts) => {
-				if(error || !posts) {
-					return response.status(400).json({
-						errorMessage: 'Posts not found !'
-					});
-				}
-				response.json(posts);
-			});
-	},
+  listUserNewsFeed(request, response) {
+    Post
+      .find({ postedBy: request.profile._id })
+      .sort('-created')
+      .exec( (error, posts) => {
+        if(error || !posts) {
+          return response.status(400).json({
+            errorMessage: 'Posts not found !'
+          });
+        }
+        response.json(posts);
+      });
+  },
 
-	listNewsFeedByTag(request, response) {
-		Post
-			.find({ tags: request.tag })
-			.sort('-created')
-			.exec( (error, posts) => {
-				if(error) {
-					return response.status(400).json({
-						error
-					});
-				}
-				response.json(posts);
-			});
-	},
+  listNewsFeedByTag(request, response) {
+    Post
+      .find({ tags: request.tag })
+      .sort('-created')
+      .exec( (error, posts) => {
+        if(error) {
+          return response.status(400).json({
+            error
+          });
+        }
+        response.json(posts);
+      });
+  },
 
-	getTag(request, response, nextHendlear, postTag) {
-		request.tag = postTag;
-		nextHendlear();
-	},
+  getTag(request, response, nextHendlear, postTag) {
+    request.tag = postTag;
+    nextHendlear();
+  },
 
-	getPostByID(request, response, nextHendlear, postId) {
-		Post
-			.findById(postId)
-			.exec( (error, post) => {
-				if(error || !post) {
-					return response.status(400).json({
-						errorMessage: 'Post not found !'
-					});
-				}
-				request.post = post;
-				nextHendlear();
-			});
-	},
+  getPostByID(request, response, nextHendlear, postId) {
+    Post
+      .findById(postId)
+      .exec( (error, post) => {
+        if(error || !post) {
+          return response.status(400).json({
+            errorMessage: 'Post not found !'
+          });
+        }
+        request.post = post;
+        nextHendlear();
+      });
+  },
 
-	searchPosts(request, response) {
-		Post
-			.find({ $text: { $search: request.query.text } })
-			.limit(7)
-			.exec( (error, posts) => {
-				if(error || !posts) {
-					return response.status(400).json({
-						errorMessage: 'Posts not found !'
-					});
-				}
-				response.json(posts);
-			});
-	},
+  searchPosts(request, response) {
+    Post
+      .find({ $text: { $search: request.query.text } })
+      .limit(7)
+      .exec( (error, posts) => {
+        if(error || !posts) {
+          return response.status(400).json({
+            errorMessage: 'Posts not found !'
+          });
+        }
+        response.json(posts);
+      });
+  },
 
-	findPost(request, response) {
-		Post
-			.findById(request.post._id)
-			.exec( (error, post) => {
-				if(error || !post) {
-					return response.status(400).json({
-						errorMessage: 'Post not found !'
-					});
-				}
-				response.json(post);
-			});
-	},
+  findPost(request, response) {
+    Post
+      .findById(request.post._id)
+      .exec( (error, post) => {
+        if(error || !post) {
+          return response.status(400).json({
+            errorMessage: 'Post not found !'
+          });
+        }
+        response.json(post);
+      });
+  },
 
-	deletePost(request, response) {
-		Post
-			.findByIdAndDelete(request.post._id, (error) => {
-				if(error) {
-					return response.status(400).json({
-						error
-					});
-				} else {
-					return response.status(200).json({
-						success: 'Post has been deleted !'
-					});
-				} 
-			});
-	},
+  deletePost(request, response) {
+    Post
+      .findByIdAndDelete(request.post._id, (error) => {
+        if(error) {
+          return response.status(400).json({
+            error
+          });
+        } else {
+          return response.status(200).json({
+            success: 'Post has been deleted !'
+          });
+        } 
+      });
+  },
 
-	// eslint-disable-next-line no-unused-vars
-	loadImage(request, response, nextHendlear) {
-		response.set('Content-Type', request.post.image.contentType);
-		return response.send(request.post.image.data);
-	}
+  // eslint-disable-next-line no-unused-vars
+  loadImage(request, response, nextHendlear) {
+    response.set('Content-Type', request.post.image.contentType);
+    return response.send(request.post.image.data);
+  }
 };
 
 export default postController;

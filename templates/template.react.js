@@ -1,6 +1,6 @@
 function template(markup, css, deviceCheck, trackingId) {
-	return (
-		`<!doctype html>
+  return (
+    `<!doctype html>
       <html lang="en">
         <head>
            <meta charset="utf-8">
@@ -46,7 +46,7 @@ function template(markup, css, deviceCheck, trackingId) {
            <script type="text/plain" cookie-consent="strictly-necessary" src="/build/generated.client.js"></script>   
         </body>
       </html>`
-	);
+  );
 }
 
 export default template;

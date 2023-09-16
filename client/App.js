@@ -13,52 +13,52 @@ const lime = paletteController.lime;
 const orange = paletteController.orange;
 
 const App = () => {
-	const [ palette, setPalette ] = React.useState(cookieHelper.getCookie('OneProjectPalette'));
+  const [ palette, setPalette ] = React.useState(cookieHelper.getCookie('OneProjectPalette'));
 
-	let isMobile;
+  let isMobile;
 
-	React.useEffect(() => {
+  React.useEffect(() => {
 
-		isMobile = document.querySelector('#root').getAttribute('mobile');
+    isMobile = document.querySelector('#root').getAttribute('mobile');
 
-		//initialize palette
-		const userPalette = cookieHelper.getCookie('OneProjectPalette');
-		if(userPalette) {
-			setPalette(userPalette);
-		} else {
-			setPalette('dark blue');
-		}
+    //initialize palette
+    const userPalette = cookieHelper.getCookie('OneProjectPalette');
+    if(userPalette) {
+      setPalette(userPalette);
+    } else {
+      setPalette('dark blue');
+    }
 
-		//remove server side injected css
-		const jssStyles = document.querySelector('#jss-server-side');
-		if(jssStyles) jssStyles.parentElement.removeChild(jssStyles);
+    //remove server side injected css
+    const jssStyles = document.querySelector('#jss-server-side');
+    if(jssStyles) jssStyles.parentElement.removeChild(jssStyles);
    
-	}, []);
+  }, []);
 
-	paletteController.choosePalette(palette);
+  paletteController.choosePalette(palette);
 
-	if(palette === 'standart') paletteController.overrideStyles(blue);
-	if(palette === 'dark classic') paletteController.overrideStyles(ivory, ivory, ivory);
-	if(palette === 'dark blue') paletteController.overrideStyles(ivory, ivory, ivory);
-	if(palette === 'orange') paletteController.overrideStyles(orange);
-	if(palette === 'lime') paletteController.overrideStyles(lime);
-	if(palette === 'metal') paletteController.overrideStyles(metal);
+  if(palette === 'standart') paletteController.overrideStyles(blue);
+  if(palette === 'dark classic') paletteController.overrideStyles(ivory, ivory, ivory);
+  if(palette === 'dark blue') paletteController.overrideStyles(ivory, ivory, ivory);
+  if(palette === 'orange') paletteController.overrideStyles(orange);
+  if(palette === 'lime') paletteController.overrideStyles(lime);
+  if(palette === 'metal') paletteController.overrideStyles(metal);
 
-	const customTheme = createMuiTheme({
-		overrides: paletteController.muiStyles,
-	});
+  const customTheme = createMuiTheme({
+    overrides: paletteController.muiStyles,
+  });
 
-	return (
-		<BrowserRouter>
-			<ThemeProvider theme={customTheme}>
-				<RootComponent 
-					palette={palette} 
-					setPalette={setPalette} 
-					isMobile={isMobile} 
-				/>
-			</ThemeProvider> 
-		</BrowserRouter>
-	);
+  return (
+    <BrowserRouter>
+      <ThemeProvider theme={customTheme}>
+        <RootComponent 
+          palette={palette} 
+          setPalette={setPalette} 
+          isMobile={isMobile} 
+        />
+      </ThemeProvider> 
+    </BrowserRouter>
+  );
 };
 
 ReactDOM.render(<App/>, document.getElementById('root'));

@@ -2,15 +2,15 @@
 import React from 'react';
 import { isMobile } from 'react-device-detect';
 import { Card,
-	CardContent,
-	Typography,
-	Box,
-	TextField,
-	IconButton,
-	Button,
-	CardActions,
-	Backdrop,
-	CircularProgress } from '@material-ui/core';
+  CardContent,
+  Typography,
+  Box,
+  TextField,
+  IconButton,
+  Button,
+  CardActions,
+  Backdrop,
+  CircularProgress } from '@material-ui/core';
 import MusicNoteIcon from '@material-ui/icons/MusicNote';
 import LockIcon from '@material-ui/icons/Lock';
 import authenticationHelper from '../../helpers/authentication.helper';
@@ -20,273 +20,273 @@ import musicApi from '../../api/music.api';
 import paletteController from '../../PaletteController';
 
 const styles = {
-	card: {
-		marginRight: 10,
-		marginLeft: 10,
-		marginBottom: 80
-	},
-	authorInput: {
-		marginTop: 30,
-		width: '100%'
-	},
-	selectContainer: {
-		marginTop: 30
-	},
-	genreLabel: {
-		marginBottom: 5
-	},
-	genreInput: {
-		marginTop: 30,
-		width: '100%'
-	},
-	musicNoteButton: {
-		color: 'white',
-		marginTop: 30,
-		marginLeft: 4
-	},
-	addSongButton: {
-		color: 'white',
-		marginLeft: 5
-	},
-	backdrop: {
-		zIndex: 999
-	},
-	permissionMessage: {
-		marginBottom: 30
-	}
+  card: {
+    marginRight: 10,
+    marginLeft: 10,
+    marginBottom: 80
+  },
+  authorInput: {
+    marginTop: 30,
+    width: '100%'
+  },
+  selectContainer: {
+    marginTop: 30
+  },
+  genreLabel: {
+    marginBottom: 5
+  },
+  genreInput: {
+    marginTop: 30,
+    width: '100%'
+  },
+  musicNoteButton: {
+    color: 'white',
+    marginTop: 30,
+    marginLeft: 4
+  },
+  addSongButton: {
+    color: 'white',
+    marginLeft: 5
+  },
+  backdrop: {
+    zIndex: 999
+  },
+  permissionMessage: {
+    marginBottom: 30
+  }
 };
 
 const NewMusicForm = (props) => {
-	const [ musicAuthor, setAuthor ] = React.useState('');
-	const [ authorError, setAuthorError ] = React.useState('');
-	const [ musicGenre, setGenre ] = React.useState('Pop');
-	const [ customGenre, setCustomGenre ] = React.useState('');
-	const [ genreError, setGenreError ] = React.useState('');
-	const [ audios, setAudio ] = React.useState([]);
-	const [ audioNames, setAudioNames ] = React.useState([]);
-	const [ userId, setUserId ] = React.useState('');
-	const [ isLoading, setLoading ] = React.useState(false);
-	const [ isModer, setIsModer ] = React.useState(false);
+  const [ musicAuthor, setAuthor ] = React.useState('');
+  const [ authorError, setAuthorError ] = React.useState('');
+  const [ musicGenre, setGenre ] = React.useState('Pop');
+  const [ customGenre, setCustomGenre ] = React.useState('');
+  const [ genreError, setGenreError ] = React.useState('');
+  const [ audios, setAudio ] = React.useState([]);
+  const [ audioNames, setAudioNames ] = React.useState([]);
+  const [ userId, setUserId ] = React.useState('');
+  const [ isLoading, setLoading ] = React.useState(false);
+  const [ isModer, setIsModer ] = React.useState(false);
 
-	React.useEffect( () => {
-		const user = authenticationHelper.isAuthenticated().user;
-		setUserId(user._id);
-		if(user.status !== 'user') setIsModer(true);
-	}, []);
+  React.useEffect( () => {
+    const user = authenticationHelper.isAuthenticated().user;
+    setUserId(user._id);
+    if(user.status !== 'user') setIsModer(true);
+  }, []);
 
-	const submitMusic = async () => {
-		setLoading(true);
-		let musicData = new FormData();
-		musicData.set('author', musicAuthor);
-		if(musicGenre === 'Other') {
-			musicData.set('genre', customGenre);
-		} else {
-			musicData.set('genre', musicGenre);
-		}   
-		musicData.set('postedBy', userId);
-		for(let audio of audios) {
-			musicData.append('audios', audio);
-		}
-		musicData.append('audionames', JSON.stringify(audioNames));
-		const token = authenticationHelper.isAuthenticated().accessToken;
-		const data = await musicApi.create(token, musicData);
-		setLoading(false);
-		if(data.success) {
-			setAuthor('');
-			setGenre('Pop');
-			setAudio([]);
-			setAudioNames([]);
-			setAuthorError('');
-			setGenreError('');
-			props.updateMusicList(data.success);
-		} else {
-			data.error.errors.author ? 
-				setAuthorError(data.error.errors.author.properties.message) : setAuthorError('');
-			data.error.errors.genre ? 
-				setGenreError(data.error.errors.genre.properties.message) : setGenreError('');
-		}
-	};
+  const submitMusic = async () => {
+    setLoading(true);
+    let musicData = new FormData();
+    musicData.set('author', musicAuthor);
+    if(musicGenre === 'Other') {
+      musicData.set('genre', customGenre);
+    } else {
+      musicData.set('genre', musicGenre);
+    }   
+    musicData.set('postedBy', userId);
+    for(let audio of audios) {
+      musicData.append('audios', audio);
+    }
+    musicData.append('audionames', JSON.stringify(audioNames));
+    const token = authenticationHelper.isAuthenticated().accessToken;
+    const data = await musicApi.create(token, musicData);
+    setLoading(false);
+    if(data.success) {
+      setAuthor('');
+      setGenre('Pop');
+      setAudio([]);
+      setAudioNames([]);
+      setAuthorError('');
+      setGenreError('');
+      props.updateMusicList(data.success);
+    } else {
+      data.error.errors.author ? 
+        setAuthorError(data.error.errors.author.properties.message) : setAuthorError('');
+      data.error.errors.genre ? 
+        setGenreError(data.error.errors.genre.properties.message) : setGenreError('');
+    }
+  };
 
-	const setEditingStatus = (index) => {
-		let updatedStatus = [...audioNames];
-		updatedStatus[index].shouldEdit = true;
-		setAudioNames(updatedStatus);
-	};
+  const setEditingStatus = (index) => {
+    let updatedStatus = [...audioNames];
+    updatedStatus[index].shouldEdit = true;
+    setAudioNames(updatedStatus);
+  };
 
-	const handleAudioNameChange = (index, event) => {
-		let updatedNames = [...audioNames];
-		updatedNames[index].audioname = event.target.value;
-		setAudioNames(updatedNames);
-	};
+  const handleAudioNameChange = (index, event) => {
+    let updatedNames = [...audioNames];
+    updatedNames[index].audioname = event.target.value;
+    setAudioNames(updatedNames);
+  };
 
-	const saveAudioName = (index) => {
-		let updatedStatus = [...audioNames];
-		updatedStatus[index].shouldEdit = false;
-		setAudioNames(updatedStatus);
-	};
+  const saveAudioName = (index) => {
+    let updatedStatus = [...audioNames];
+    updatedStatus[index].shouldEdit = false;
+    setAudioNames(updatedStatus);
+  };
 
-	const removeItem = (index) => {
-		let updatedAudios = [...audios];
-		updatedAudios.splice(index, 1);
-		setAudio(updatedAudios);
+  const removeItem = (index) => {
+    let updatedAudios = [...audios];
+    updatedAudios.splice(index, 1);
+    setAudio(updatedAudios);
 
-		let updatedStatus = [...audioNames];
-		updatedStatus.splice(index, 1);
-		setAudioNames(updatedStatus);
-	};
+    let updatedStatus = [...audioNames];
+    updatedStatus.splice(index, 1);
+    setAudioNames(updatedStatus);
+  };
 
-	let isDisabled = audios.length === 0 || audios.length > 7;
+  let isDisabled = audios.length === 0 || audios.length > 7;
 
-	for(let item of audioNames) {
-		if(item.shouldEdit) isDisabled = true;
-	}
+  for(let item of audioNames) {
+    if(item.shouldEdit) isDisabled = true;
+  }
 
-	return (
-		<Box>
-			<Card
-				raised
-				style={{
-					backgroundColor: paletteController.cardColor,
-					padding: isMobile ? 20 : 50,
-					...styles.card
-				}}
-			>
-				<CardContent>
-					{
-						isModer ?
-							null
-							:
-							<Typography
-								variant='h6'
-								style={{
-									color: paletteController.textColor,
-									...styles.permissionMessage
+  return (
+    <Box>
+      <Card
+        raised
+        style={{
+          backgroundColor: paletteController.cardColor,
+          padding: isMobile ? 20 : 50,
+          ...styles.card
+        }}
+      >
+        <CardContent>
+          {
+            isModer ?
+              null
+              :
+              <Typography
+                variant='h6'
+                style={{
+                  color: paletteController.textColor,
+                  ...styles.permissionMessage
 
-								}}
-							>
-								<LockIcon/>
+                }}
+              >
+                <LockIcon/>
 								Moderator status is required!
-							</Typography>
-					}
-					<Typography 
-						id='page-title'
-						variant='h5'
-						style={{
-							color: paletteController.textColor
-						}}
-					>
+              </Typography>
+          }
+          <Typography 
+            id='page-title'
+            variant='h5'
+            style={{
+              color: paletteController.textColor
+            }}
+          >
                         Add music
-					</Typography>
-					<TextField
-						id='author-input'
-						required
-						label='Author'
-						placeholder='Type author...'
-						variant='outlined'
-						value={musicAuthor}
-						style={styles.authorInput}
-						disabled={!isModer}
-						onChange={ 
-							(event) => setAuthor(event.target.value)
-						}
-					/>
-					<br/>
-					{ authorError ? (<Typography id='author-error' color='error'>{authorError}</Typography>) : null } 
+          </Typography>
+          <TextField
+            id='author-input'
+            required
+            label='Author'
+            placeholder='Type author...'
+            variant='outlined'
+            value={musicAuthor}
+            style={styles.authorInput}
+            disabled={!isModer}
+            onChange={ 
+              (event) => setAuthor(event.target.value)
+            }
+          />
+          <br/>
+          { authorError ? (<Typography id='author-error' color='error'>{authorError}</Typography>) : null } 
 
-					<Box style={styles.selectContainer}>
-						<Typography style={{color: paletteController.textColor, ...styles.genreLabel}}>
+          <Box style={styles.selectContainer}>
+            <Typography style={{color: paletteController.textColor, ...styles.genreLabel}}>
                             Genre:
-						</Typography>
-						<MusicGenreSelect 
-							value={musicGenre} 
-							handleChange={(event) => setGenre(event.target.value)} 
-							isCreation
-							isModer={isModer}
-						/>
-					</Box>
-					{
-						musicGenre === 'Other' ?
-							<TextField 
-								id='genre-input'
-								required
-								label='Genre'
-								placeholder='Type genre...'
-								variant='outlined'
-								value={customGenre}
-								style={styles.genreInput}
-								onChange={ 
-									(event) => setCustomGenre(event.target.value)
-								}
-							/>
-							:
-							null
-					}
-					<Box/>
-					{ genreError ? (<Typography id='genre-error' color='error'>{genreError}</Typography>) : null } 
+            </Typography>
+            <MusicGenreSelect 
+              value={musicGenre} 
+              handleChange={(event) => setGenre(event.target.value)} 
+              isCreation
+              isModer={isModer}
+            />
+          </Box>
+          {
+            musicGenre === 'Other' ?
+              <TextField 
+                id='genre-input'
+                required
+                label='Genre'
+                placeholder='Type genre...'
+                variant='outlined'
+                value={customGenre}
+                style={styles.genreInput}
+                onChange={ 
+                  (event) => setCustomGenre(event.target.value)
+                }
+              />
+              :
+              null
+          }
+          <Box/>
+          { genreError ? (<Typography id='genre-error' color='error'>{genreError}</Typography>) : null } 
 
-					<input 
-						accept='audio/*' 
-						style={{display: 'none'}}
-						type='file'
-						id='hidden-audio-input'
-						onChange={ 
-							(event) => {
-								if(event.target.files[0]) {
-									event.persist();
-									setAudio(prevSongs => [...prevSongs, event.target.files[0]]);
-									setAudioNames(prevNames => [...prevNames, {
-										shouldEdit: false,
-										audioname: event.target.files[0].name
-									}]);
-									setTimeout(() => event.target.value = null);
-								}
-							} 
-						}
-					/>
-					<label htmlFor='hidden-audio-input'>
-						<IconButton
-							id='music-note-button'
-							disabled={!isModer}
-							component='span'
-							style={{
-								backgroundColor: paletteController.mainColor,
-								...styles.musicNoteButton
-							}} 
-						>
-							<MusicNoteIcon/>
-						</IconButton>
-					</label>
+          <input 
+            accept='audio/*' 
+            style={{display: 'none'}}
+            type='file'
+            id='hidden-audio-input'
+            onChange={ 
+              (event) => {
+                if(event.target.files[0]) {
+                  event.persist();
+                  setAudio(prevSongs => [...prevSongs, event.target.files[0]]);
+                  setAudioNames(prevNames => [...prevNames, {
+                    shouldEdit: false,
+                    audioname: event.target.files[0].name
+                  }]);
+                  setTimeout(() => event.target.value = null);
+                }
+              } 
+            }
+          />
+          <label htmlFor='hidden-audio-input'>
+            <IconButton
+              id='music-note-button'
+              disabled={!isModer}
+              component='span'
+              style={{
+                backgroundColor: paletteController.mainColor,
+                ...styles.musicNoteButton
+              }} 
+            >
+              <MusicNoteIcon/>
+            </IconButton>
+          </label>
                     
-					<AudioList 
-						audios={audios}
-						audioNames={audioNames}
-						setEditingStatus={setEditingStatus}
-						handleAudioNameChange={handleAudioNameChange}
-						saveAudioName={saveAudioName}
-						removeItem={removeItem}
-					/>
+          <AudioList 
+            audios={audios}
+            audioNames={audioNames}
+            setEditingStatus={setEditingStatus}
+            handleAudioNameChange={handleAudioNameChange}
+            saveAudioName={saveAudioName}
+            removeItem={removeItem}
+          />
 
-					<br/>
-				</CardContent>
-				<CardActions>
-					<Button
-						id='add-song-button'
-						disabled={isDisabled} 
-						onClick={submitMusic}
-						style={{
-							backgroundColor: isDisabled ? paletteController.grey : paletteController.mainColor,
-							...styles.addSongButton
-						}}
-					>
+          <br/>
+        </CardContent>
+        <CardActions>
+          <Button
+            id='add-song-button'
+            disabled={isDisabled} 
+            onClick={submitMusic}
+            style={{
+              backgroundColor: isDisabled ? paletteController.grey : paletteController.mainColor,
+              ...styles.addSongButton
+            }}
+          >
                         ADD SONG
-					</Button>
-				</CardActions>
-			</Card>
-			<Backdrop open={isLoading} style={styles.backdrop} >
-				<CircularProgress style={{ color: paletteController.backgroundColor }} size={150} thickness={4}/>
-			</Backdrop>
-		</Box>
-	);
+          </Button>
+        </CardActions>
+      </Card>
+      <Backdrop open={isLoading} style={styles.backdrop} >
+        <CircularProgress style={{ color: paletteController.backgroundColor }} size={150} thickness={4}/>
+      </Backdrop>
+    </Box>
+  );
 };
 
 export default NewMusicForm;

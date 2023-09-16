@@ -31,104 +31,104 @@ import paletteController from './PaletteController';
 import getUserStatus from './helpers/getUserStatus.helper';
 
 const styles = {
-	container: {
-		display: 'flex',
-		justifyContent: 'center'
-	},
-	mobileHeader: {
-		position: 'relative',
-		display:'flex',
-		justifyContent: 'center',
-		height: 70
-	},
-	logoContainer: {
-		display: 'flex',
-		alignItems: 'center'
-	},
-	logoText: {
-		marginLeft: 10,
-		fontSize: 40,
-		fontFamily: 'ComicAndy'
-	},
-	wrenchButton: {
-		position: 'absolute',
-		right: '1%',
-		bottom: 5,
-		zIndex: 5
-	},
-	buildIcon: {
-		color: 'white'
-	}
+  container: {
+    display: 'flex',
+    justifyContent: 'center'
+  },
+  mobileHeader: {
+    position: 'relative',
+    display:'flex',
+    justifyContent: 'center',
+    height: 70
+  },
+  logoContainer: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  logoText: {
+    marginLeft: 10,
+    fontSize: 40,
+    fontFamily: 'ComicAndy'
+  },
+  wrenchButton: {
+    position: 'absolute',
+    right: '1%',
+    bottom: 5,
+    zIndex: 5
+  },
+  buildIcon: {
+    color: 'white'
+  }
 };
 
 const RootComponent = (props) => {
-	const [ showMobileHeader, setMobileHeader ] = React.useState(false);
+  const [ showMobileHeader, setMobileHeader ] = React.useState(false);
 
-	React.useEffect(() => {
-		setMobileHeader(true);
-	});
+  React.useEffect(() => {
+    setMobileHeader(true);
+  });
 
-	return (
-		<Box>
-			{
-				showMobileHeader && isMobile ?
-					<Box style={{backgroundColor: paletteController.backgroundColor, ...styles.mobileHeader}}>
-						<Link to='/' style={{color: paletteController.tagsColor, ...styles.logoContainer}}>
-							<GiCarambola size={33}/>
-							<Typography style={styles.logoText}>Karambol</Typography>
-						</Link>
-						{
-							getUserStatus() === 'admin' ?
-								<Link to='/admin' style={styles.wrenchButton}>
-									<IconButton>
-										<BuildIcon 
-											fontSize='large'
-											style={{backgroundColor: paletteController.additionalColor, ...styles.buildIcon}}
-										/>
-									</IconButton>
-								</Link>
-								:
-								null
-						}
-					</Box>
-					:
-					null
-			}
-			<Topbar isMobile={props.isMobile}/>
-			<Box 
-				style={{
-					backgroundColor: paletteController.backgroundColor,
-					...styles.container
-				}}
-			>
-				<Switch>
-					<Route exact path='/' component={() => <HomePage isMobile={props.isMobile}/>} />
-					<Route exact path='/education' component={EducationList} />
-					<Route exact path='/education/:sectionName' component={EducationSection} />
-					<Route exact path='/newsfeed' component={NewsFeedList} />
-					<Route exact path='/music' component={MusicList} />
-					<Route exact path='/movies' component={MoviesList} />
-					<Route exact path='/books' component={BooksList} />
-					<Route path='/newsfeed/:postId' component={SearchPost} />
-					<Route path='/tags/:postTag' component={PostListByTag} />
-					<Route path='/music/:musicId' component={SearchMusic} />
-					<Route path='/movies/:movieId' component={SearchMovie} />
-					<Route path='/books/:bookId' component={SearchBook} />
-					<Route path='/admin' component={AdminPanel} />
-					<Route path='/signup' component={SignUpForm} />
-					<Route path='/login' component={LoginForm} />
-					<Route path='/recovery' component={RecoveryForm} />
-					<Route path='/reset/:email/:resetToken' component={ResetPasswordForm} />
-					<Route path='/profile/:userId' component={Profile} />
-					<Route path='/support' component={Support} />
-					<Route path='/settings' component={() => (
-						<Settings palette={props.palette} setPalette={props.setPalette} />
-					)}/>
-				</Switch>
-			</Box>
-			<Footer/>
-		</Box>
-	);
+  return (
+    <Box>
+      {
+        showMobileHeader && isMobile ?
+          <Box style={{backgroundColor: paletteController.backgroundColor, ...styles.mobileHeader}}>
+            <Link to='/' style={{color: paletteController.tagsColor, ...styles.logoContainer}}>
+              <GiCarambola size={33}/>
+              <Typography style={styles.logoText}>Karambol</Typography>
+            </Link>
+            {
+              getUserStatus() === 'admin' ?
+                <Link to='/admin' style={styles.wrenchButton}>
+                  <IconButton>
+                    <BuildIcon 
+                      fontSize='large'
+                      style={{backgroundColor: paletteController.additionalColor, ...styles.buildIcon}}
+                    />
+                  </IconButton>
+                </Link>
+                :
+                null
+            }
+          </Box>
+          :
+          null
+      }
+      <Topbar isMobile={props.isMobile}/>
+      <Box 
+        style={{
+          backgroundColor: paletteController.backgroundColor,
+          ...styles.container
+        }}
+      >
+        <Switch>
+          <Route exact path='/' component={() => <HomePage isMobile={props.isMobile}/>} />
+          <Route exact path='/education' component={EducationList} />
+          <Route exact path='/education/:sectionName' component={EducationSection} />
+          <Route exact path='/newsfeed' component={NewsFeedList} />
+          <Route exact path='/music' component={MusicList} />
+          <Route exact path='/movies' component={MoviesList} />
+          <Route exact path='/books' component={BooksList} />
+          <Route path='/newsfeed/:postId' component={SearchPost} />
+          <Route path='/tags/:postTag' component={PostListByTag} />
+          <Route path='/music/:musicId' component={SearchMusic} />
+          <Route path='/movies/:movieId' component={SearchMovie} />
+          <Route path='/books/:bookId' component={SearchBook} />
+          <Route path='/admin' component={AdminPanel} />
+          <Route path='/signup' component={SignUpForm} />
+          <Route path='/login' component={LoginForm} />
+          <Route path='/recovery' component={RecoveryForm} />
+          <Route path='/reset/:email/:resetToken' component={ResetPasswordForm} />
+          <Route path='/profile/:userId' component={Profile} />
+          <Route path='/support' component={Support} />
+          <Route path='/settings' component={() => (
+            <Settings palette={props.palette} setPalette={props.setPalette} />
+          )}/>
+        </Switch>
+      </Box>
+      <Footer/>
+    </Box>
+  );
 };
 
 export default RootComponent;

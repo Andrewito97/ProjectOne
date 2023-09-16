@@ -10,62 +10,62 @@ import DummyMovie from './DummyMovie';
 import paletteController from '../../PaletteController';
 
 const styles = {
-	container: {
-		width: 850,
-		minHeight: '110vh',
-		marginTop: '10%',
-		marginBottom: '7%'
-	}
+  container: {
+    width: 850,
+    minHeight: '110vh',
+    marginTop: '10%',
+    marginBottom: '7%'
+  }
 };
 
 const MoviesList = () => {
-	const [ movies, setMovies ] = React.useState([]);
-	const [ skip, setSkip ] = React.useState(0);
-	const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
+  const [ movies, setMovies ] = React.useState([]);
+  const [ skip, setSkip ] = React.useState(0);
+  const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
 
-	React.useEffect(() => {
-		loadMovies();
-	}, [skip]);
+  React.useEffect(() => {
+    loadMovies();
+  }, [skip]);
 
-	const loadMovies = async () => {
-		let data = await movieApi.listMovies(skip);
-		if(data.error) {
-			console.log(data.error);
-		} else {
-			setMovies([...movies, ...data]);
-			if(data.length === 0) {
-				setShouldLoadMore(false);
-			};
-		};
-	};
+  const loadMovies = async () => {
+    let data = await movieApi.listMovies(skip);
+    if(data.error) {
+      console.log(data.error);
+    } else {
+      setMovies([...movies, ...data]);
+      if(data.length === 0) {
+        setShouldLoadMore(false);
+      }
+    }
+  };
 
-	const updateMoviesList = (item) => {
-		let updatedMovies = [...movies];
-		updatedMovies.unshift(item);
-		setMovies(updatedMovies);
-	};
+  const updateMoviesList = (item) => {
+    let updatedMovies = [...movies];
+    updatedMovies.unshift(item);
+    setMovies(updatedMovies);
+  };
 
-	return (
-		<Box style={styles.container}>
-			{authenticationHelper.isAuthenticated() ? (<NewMovieForm updateMoviesList={updateMoviesList}/>) : null}
-			<InfiniteScroll
-				dataLength={movies.length}
-				hasMore={shouldLoadMore}
-				next={() => setSkip(movies.length)}
-				loader={
-					<Typography variant='h5' align='center' style={{color: paletteController.textColor}}>
+  return (
+    <Box style={styles.container}>
+      {authenticationHelper.isAuthenticated() ? (<NewMovieForm updateMoviesList={updateMoviesList}/>) : null}
+      <InfiniteScroll
+        dataLength={movies.length}
+        hasMore={shouldLoadMore}
+        next={() => setSkip(movies.length)}
+        loader={
+          <Typography variant='h5' align='center' style={{color: paletteController.textColor}}>
 						Loading...
-					</Typography>
-				}
-				style={{
-					paddingRight: isMobile ? 0 : 10,
-					paddingLeft: isMobile ? 0 : 10
-				}}
-			>
-				{ movies.length === 0 ? <DummyMovie/> : movies.map( item => <Movie movie={item} key={item._id}/> ) }
-			</InfiniteScroll>
-		</Box>
-	);
+          </Typography>
+        }
+        style={{
+          paddingRight: isMobile ? 0 : 10,
+          paddingLeft: isMobile ? 0 : 10
+        }}
+      >
+        { movies.length === 0 ? <DummyMovie/> : movies.map( item => <Movie movie={item} key={item._id}/> ) }
+      </InfiniteScroll>
+    </Box>
+  );
 };
 
 export default MoviesList;

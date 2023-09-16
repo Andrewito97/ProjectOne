@@ -6,37 +6,37 @@ import movieApi from '../../api/movie.api';
 import DummyMovie from './DummyMovie';
 
 const styles = {
-	container: {
-		width: 850,
-		minHeight: '110vh',
-		marginTop: '10%',
-		marginBottom: '7%'
-	}
+  container: {
+    width: 850,
+    minHeight: '110vh',
+    marginTop: '10%',
+    marginBottom: '7%'
+  }
 };
 
 const SearchMovie = () => {
-	const [ movie, setMovie ] = React.useState([]);
+  const [ movie, setMovie ] = React.useState([]);
 
-	const { movieId } = useParams();
+  const { movieId } = useParams();
 
-	React.useEffect(() => {
-		loadMovie();
-	}, [movieId]);
+  React.useEffect(() => {
+    loadMovie();
+  }, [movieId]);
 
-	const loadMovie = async () => {
-		let data = await movieApi.findMovie(movieId);
-		if(data.error) {
-			console.log(data.error);
-		} else {
-			setMovie(data);
-		}
-	};
+  const loadMovie = async () => {
+    let data = await movieApi.findMovie(movieId);
+    if(data.error) {
+      console.log(data.error);
+    } else {
+      setMovie(data);
+    }
+  };
 
-	return (
-		<Box style={styles.container}>
-			{ movie.length === 0 ? <DummyMovie/> : <Movie movie={movie}/> }
-		</Box>
-	);
+  return (
+    <Box style={styles.container}>
+      { movie.length === 0 ? <DummyMovie/> : <Movie movie={movie}/> }
+    </Box>
+  );
 };
 
 export default SearchMovie;

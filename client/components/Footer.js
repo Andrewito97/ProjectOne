@@ -5,30 +5,30 @@ import CopyrightIcon from '@material-ui/icons/Copyright';
 import paletteController from '../PaletteController';
 
 const styles = {
-	container: {
-		display: 'flex',
-		height: 70,
-		alignItems: 'center',
-		justifyContent: 'center'
-	},
-	copyrightIcon: {
-		color: 'white',
-		marginRight: 8
-	},
-	text: {
-		color: 'white'
-	}
+  container: {
+    display: 'flex',
+    height: 70,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  copyrightIcon: {
+    color: 'white',
+    marginRight: 8
+  },
+  text: {
+    color: 'white'
+  }
 };
 
 const Footer = () => {
-	return (
-		<Box style={{backgroundColor: paletteController.mainColor, ...styles.container}}>
-			<CopyrightIcon style={styles.copyrightIcon}/>
-			<Typography component='span' style={styles.text}>
+  return (
+    <Box style={{backgroundColor: paletteController.mainColor, ...styles.container}}>
+      <CopyrightIcon style={styles.copyrightIcon}/>
+      <Typography component='span' style={styles.text}>
                 Copyright. All rights reserved
-			</Typography>
-		</Box>
-	);
+      </Typography>
+    </Box>
+  );
 };
 
 export default Footer;

@@ -10,62 +10,62 @@ import DummyBook from './DummyBook';
 import paletteController from '../../PaletteController';
 
 const styles = {
-	container: {
-		width: 850,
-		minHeight: '110vh',
-		marginTop: '10%',
-		marginBottom: '7%'
-	}
+  container: {
+    width: 850,
+    minHeight: '110vh',
+    marginTop: '10%',
+    marginBottom: '7%'
+  }
 };
 
 const BooksList = () => {
-	const [ books, setBooks ] = React.useState([]);
-	const [ skip, setSkip ] = React.useState(0);
-	const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
+  const [ books, setBooks ] = React.useState([]);
+  const [ skip, setSkip ] = React.useState(0);
+  const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
 
-	React.useEffect(() => {
-		loadBooks();
-	}, [skip]);
+  React.useEffect(() => {
+    loadBooks();
+  }, [skip]);
 
-	const loadBooks = async () => {
-		let data = await bookApi.listBooks(skip);
-		if(data.error) {
-			console.log(data.error);
-		} else {
-			setBooks([...books, ...data]);
-			if(data.length === 0) {
-				setShouldLoadMore(false);
-			};
-		};
-	};
+  const loadBooks = async () => {
+    let data = await bookApi.listBooks(skip);
+    if(data.error) {
+      console.log(data.error);
+    } else {
+      setBooks([...books, ...data]);
+      if(data.length === 0) {
+        setShouldLoadMore(false);
+      }
+    }
+  };
 
-	const updateBooks = (item) => {
-		let updatedBooks = [...books];
-		updatedBooks.unshift(item);
-		setBooks(updatedBooks);
-	};
+  const updateBooks = (item) => {
+    let updatedBooks = [...books];
+    updatedBooks.unshift(item);
+    setBooks(updatedBooks);
+  };
 
-	return (
-		<Box style={styles.container}>
-			{authenticationHelper.isAuthenticated() ? (<NewBookForm updateBooks={updateBooks}/>) : null}
-			<InfiniteScroll
-				dataLength={books.length}
-				hasMore={shouldLoadMore}
-				next={() => setSkip(books.length)}
-				loader={
-					<Typography variant='h5' align='center' style={{color: paletteController.textColor}}>
+  return (
+    <Box style={styles.container}>
+      {authenticationHelper.isAuthenticated() ? (<NewBookForm updateBooks={updateBooks}/>) : null}
+      <InfiniteScroll
+        dataLength={books.length}
+        hasMore={shouldLoadMore}
+        next={() => setSkip(books.length)}
+        loader={
+          <Typography variant='h5' align='center' style={{color: paletteController.textColor}}>
 						Loading...
-					</Typography>
-				}
-				style={{
-					paddingRight: isMobile ? 0 : 10,
-					paddingLeft: isMobile ? 0 : 10
-				}}
-			>
-				{ books.length === 0 ? <DummyBook/> : books.map( item => <Book book={item} key={item._id}/> ) }
-			</InfiniteScroll>
-		</Box>
-	);
+          </Typography>
+        }
+        style={{
+          paddingRight: isMobile ? 0 : 10,
+          paddingLeft: isMobile ? 0 : 10
+        }}
+      >
+        { books.length === 0 ? <DummyBook/> : books.map( item => <Book book={item} key={item._id}/> ) }
+      </InfiniteScroll>
+    </Box>
+  );
 };
 
 export default BooksList;

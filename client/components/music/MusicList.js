@@ -12,103 +12,103 @@ import musicApi from '../../api/music.api';
 import paletteController from '../../PaletteController';
 
 const styles = {
-	container: {
-		width: 850,
-		minHeight: '110vh',
-		marginTop: '10%',
-		marginBottom: '7%'
-	}
+  container: {
+    width: 850,
+    minHeight: '110vh',
+    marginTop: '10%',
+    marginBottom: '7%'
+  }
 };
 
 const MusicList = () => {
-	const [ music, setMusic ] = React.useState([]);
-	const [ genre, setGenre ] = React.useState('All');
-	const [ skip, setSkip ] = React.useState(0);
-	const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
-	const [ audioToPlay, setAudioToPlay ] = React.useState([{}]);
+  const [ music, setMusic ] = React.useState([]);
+  const [ genre, setGenre ] = React.useState('All');
+  const [ skip, setSkip ] = React.useState(0);
+  const [ shouldLoadMore, setShouldLoadMore ] = React.useState(true);
+  const [ audioToPlay, setAudioToPlay ] = React.useState([{}]);
 		
-	React.useEffect(() => {
-		setData();
-	}, [skip]);
+  React.useEffect(() => {
+    setData();
+  }, [skip]);
 
-	const setData = () => {
-		if(cookieHelper.getCookie('OneProjectMusic')) {
-			setGenre(cookieHelper.getCookie('OneProjectMusic'));
-			loadMusic(cookieHelper.getCookie('OneProjectMusic'));
-		} else {
-			setGenre('All');
-			loadMusic('All');
-		};
-	};
+  const setData = () => {
+    if(cookieHelper.getCookie('OneProjectMusic')) {
+      setGenre(cookieHelper.getCookie('OneProjectMusic'));
+      loadMusic(cookieHelper.getCookie('OneProjectMusic'));
+    } else {
+      setGenre('All');
+      loadMusic('All');
+    }
+  };
 
-	const loadMusic = async (genre) => {
-		let data = await musicApi.listMusic(genre, skip);
-		if(data.error) {
-			console.log(data.error);
-		} 
-		else {
-			setMusic([...music, ...data]);
-			if(data.length === 0) {
-				setShouldLoadMore(false);
-			};
-		};
-	};
+  const loadMusic = async (genre) => {
+    let data = await musicApi.listMusic(genre, skip);
+    if(data.error) {
+      console.log(data.error);
+    } 
+    else {
+      setMusic([...music, ...data]);
+      if(data.length === 0) {
+        setShouldLoadMore(false);
+      }
+    }
+  };
 
-	const updateMusicList = (item) => {
-		let updatedMusic = [...music];
-		updatedMusic.unshift(item);
-		setMusic(updatedMusic);
-	};
+  const updateMusicList = (item) => {
+    let updatedMusic = [...music];
+    updatedMusic.unshift(item);
+    setMusic(updatedMusic);
+  };
 
-	const handleChange = (event) => {
-		setMusic('');
-		setGenre(event.target.value);
-		cookieHelper.setCookie('OneProjectMusic', event.target.value);
-		location.reload();
-	};
+  const handleChange = (event) => {
+    setMusic('');
+    setGenre(event.target.value);
+    cookieHelper.setCookie('OneProjectMusic', event.target.value);
+    location.reload();
+  };
 
-	const handleAutoplay = (musicId, currentAudio) => {
-		const audiosToPlay = [];
-		for(let item of music) {
-			for(let audio of item.audios) {
-				audiosToPlay.push({musicId: item._id, audio: audio});
-			}
-		}
-		const nextAudio = audiosToPlay[audiosToPlay.findIndex((item) => {
-			return  item.musicId === musicId && item.audio === currentAudio;
-		}) + 1];
-		setAudioToPlay(nextAudio);
-	};
+  const handleAutoplay = (musicId, currentAudio) => {
+    const audiosToPlay = [];
+    for(let item of music) {
+      for(let audio of item.audios) {
+        audiosToPlay.push({musicId: item._id, audio: audio});
+      }
+    }
+    const nextAudio = audiosToPlay[audiosToPlay.findIndex((item) => {
+      return  item.musicId === musicId && item.audio === currentAudio;
+    }) + 1];
+    setAudioToPlay(nextAudio);
+  };
 
-	return (
-		<Box style={styles.container}>
-			{authenticationHelper.isAuthenticated() ? (<NewMusicForm updateMusicList={updateMusicList}/>) : null}
-			<MusicGenreSelect value={genre} handleChange={handleChange}/>
-			<InfiniteScroll
-				dataLength={music.length}
-				hasMore={shouldLoadMore}
-				next={() => setSkip(music.length)}
-				loader={
-					<Typography variant='h5' align='center' style={{color: paletteController.textColor}}>
+  return (
+    <Box style={styles.container}>
+      {authenticationHelper.isAuthenticated() ? (<NewMusicForm updateMusicList={updateMusicList}/>) : null}
+      <MusicGenreSelect value={genre} handleChange={handleChange}/>
+      <InfiniteScroll
+        dataLength={music.length}
+        hasMore={shouldLoadMore}
+        next={() => setSkip(music.length)}
+        loader={
+          <Typography variant='h5' align='center' style={{color: paletteController.textColor}}>
 						Loading...
-					</Typography>
-				}
-				style={{
-					paddingRight: isMobile ? 0 : 10,
-					paddingLeft: isMobile ? 0 : 10
-				}}
-			>
-				{
-					music.length === 0 ? 
-						<DummyMusic/> 
-						:
-						music.map( item => (
-							<Music music={item} key={item._id} handleAutoplay={handleAutoplay} audioToPlay={audioToPlay}/> 
-						)) 
-				}
-			</InfiniteScroll>
-		</Box>
-	);
+          </Typography>
+        }
+        style={{
+          paddingRight: isMobile ? 0 : 10,
+          paddingLeft: isMobile ? 0 : 10
+        }}
+      >
+        {
+          music.length === 0 ? 
+            <DummyMusic/> 
+            :
+            music.map( item => (
+              <Music music={item} key={item._id} handleAutoplay={handleAutoplay} audioToPlay={audioToPlay}/> 
+            )) 
+        }
+      </InfiniteScroll>
+    </Box>
+  );
 };
 
 export default MusicList;
